@@ -33,7 +33,8 @@ class IntoTheBreachWorld(World):
         self.randomized_squads = None
 
     def generate_early(self):
-        self.randomized_squads = shuffle_teams(self.multiworld.random)
+        if self.multiworld.randomize_squads[self.player]:
+            self.randomized_squads = shuffle_teams(self.multiworld.random)
 
     def create_item(self, item: str):
         if item == "Unlock Hive":
