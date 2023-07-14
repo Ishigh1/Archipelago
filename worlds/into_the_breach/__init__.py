@@ -34,7 +34,7 @@ class IntoTheBreachWorld(World):
 
     def generate_early(self):
         if self.multiworld.randomize_squads[self.player]:
-            self.randomized_squads = shuffle_teams(self.multiworld.random)
+            self.randomized_squads = shuffle_teams(self.random)
 
     def create_item(self, item: str):
         if item == "Unlock Hive":
@@ -46,6 +46,12 @@ class IntoTheBreachWorld(World):
         else:
             classification = ItemClassification.filler
         return MyGameItem(item, classification, self.item_name_to_id[item], self.player)
+
+    def get_filler_item_name(self) -> str:
+        if self.random.randint(1, 3) == 1:
+            return self.random.choice(itb_trap_items)
+        else:
+            return self.random.choice(itb_filler_items)
 
     def create_event(self, event: str):
         return MyGameItem(event, True, None, self.player)
@@ -87,14 +93,8 @@ class IntoTheBreachWorld(World):
                                for location in self.multiworld.get_locations(self.player)
                                if not location.event])
 
-        random = self.multiworld.random
         while locations_count > item_count:
-            if random.randint(1, 3) == 1:
-                item = random.choice(itb_trap_items)
-            else:
-                item = random.choice(itb_filler_items)
-
-            self.multiworld.itempool.append(self.create_item(item))
+            self.multiworld.itempool.append(self.create_item(self.get_filler_item_name()))
             item_count += 1
 
     def generate_basic(self) -> None:

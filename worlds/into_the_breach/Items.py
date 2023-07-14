@@ -36,6 +36,11 @@ itb_upgrade_items = [
 ]
 
 itb_progression_items = itb_unlock_items + itb_island_items + itb_upgrade_items
-itb_filler_items = ["1 Grid Power"]
-itb_trap_items = ["-1 Grid Power"]
+
+itb_filler_items = [
+    "1 Grid Power"
+]
+itb_trap_items = [
+    "-1 Grid Power"
+]
 itb_items = itb_progression_items + itb_filler_items + itb_trap_items
