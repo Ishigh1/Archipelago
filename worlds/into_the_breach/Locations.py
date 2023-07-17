@@ -47,7 +47,7 @@ itb_locations = {
             "Unwitting Allies",
             "Mass Displacement",
         ],
-    "Flame Behemoth":
+    "Flame Behemoths":
         [
             "Quantum Entaglement",
             "Scorched Earth",
