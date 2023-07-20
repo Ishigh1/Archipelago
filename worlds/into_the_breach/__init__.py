@@ -69,7 +69,7 @@ class IntoTheBreachWorld(World):
 
             entrance = Entrance(self.player, "Use squad " + squad_name, menu)
             if squad_name != "Rift Walkers":
-                set_rule(entrance, lambda state, squad=squad_name: state.has("Unlock " + squad, self.player))
+                set_rule(entrance, lambda state, squad=squad_name: state.has(squad, self.player))
             menu.exits.append(entrance)
             entrance.connect(squad_region)
 

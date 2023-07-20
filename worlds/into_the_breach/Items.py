@@ -5,21 +5,21 @@ class MyGameItem(Item):
     game = "Into The Breach"
 
 
-itb_unlock_items = [
-    "Unlock Rusting Hulks",
-    "Unlock Zenith Guard",
-    "Unlock Blitzkrieg",
-    "Unlock Steel Judoka",
-    "Unlock Flame Behemoths",
-    "Unlock Frozen Titans",
-    "Unlock Hazardous Mechs",
-    # "Unlock Bombermechs",
-    # "Unlock Arachnophiles",
-    # "Unlock Mist Eaters",
-    # "Unlock Heat Sinkers",
-    # "Unlock Cataclysm",
-    # "Unlock Random Squad",
-    # "Unlock Custom Squad",
+itb_squad_items = [
+    "Rusting Hulks",
+    "Zenith Guard",
+    "Blitzkrieg",
+    "Steel Judoka",
+    "Flame Behemoths",
+    "Frozen Titans",
+    "Hazardous Mechs",
+    # "Bombermechs",
+    # "Arachnophiles",
+    # "Mist Eaters",
+    # "Heat Sinkers",
+    # "Cataclysm",
+    # "Random Squad",
+    # "Custom Squad",
 ]
 
 itb_island_items = [  # Not implemented yet
@@ -35,7 +35,7 @@ itb_upgrade_items = [
     "2 Starting Grid Power",
 ]
 
-itb_progression_items = itb_unlock_items + itb_island_items + itb_upgrade_items
+itb_progression_items = itb_squad_items + itb_island_items + itb_upgrade_items
 
 itb_filler_items = [
     "1 Grid Power"
