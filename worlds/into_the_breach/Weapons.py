@@ -6,19 +6,21 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Punch an adjacent tile, damaging and pushing it.",
-        "Upgrade 1": "Dash (Power off small Power off small)",
-        "Upgrade 2": "Charge any distance before punching the target.\n+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Punchmech"
+        "Upgrade 1": "Dash (Up Up)",
+        "Upgrade 2": "Charge any distance before punching the target.\n+2 Damage (Up Up Up)",
+        "Debug Name": "Prime_Punchmech",
+        "Tags": {"Forced Move": 0, "Charge": 2, "High Damage": 3}
     },
     "Electric Whip": {
         "Class": "Prime",
         "Name": "Electric Whip",
         "Damage": 2,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Chain damage through adjacent targets.",
-        "Upgrade 1": "Building Chain (Power off small)",
-        "Upgrade 2": "Chain through Grid Buildings without causing damage.\n+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Lightning"
+        "Upgrade 1": "Building Chain (Up)",
+        "Upgrade 2": "Chain through Grid Buildings without causing damage.\n+1 Damage (Up Up Up)",
+        "Debug Name": "Prime_Lightning",
+        "Tags": {"Triple Kill": 0, "Chain": 1}
     },
     "Burst Beam": {
         "Class": "Prime",
@@ -26,9 +28,10 @@ weapon_list = {
         "Damage": "3-1",
         "Power": "Free",
         "Effect": "Fire a piercing beam that decreases in damage the further it goes.",
-        "Upgrade 1": "Ally Immune (Power off small)",
-        "Upgrade 2": "Friendly units will not take damage from this attack. (Buildings will still be damaged and shields will be removed)\n+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Lasermech"
+        "Upgrade 1": "Ally Immune (Up)",
+        "Upgrade 2": "Friendly units will not take damage from this attack. (Buildings will still be damaged and shields will be removed)\n+1 Damage (Up Up Up)",
+        "Debug Name": "Prime_Lasermech",
+        "Tags": {"Laser": 0, "Triple Kill": 0, "High Damage": 3},
     },
     "Spartan Shield": {
         "Class": "Prime",
@@ -36,9 +39,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Bash the enemy, flipping its attack direction. (Doesn't affect multi-directional attacks)",
-        "Upgrade 1": "Gain Shield (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Prime_ShieldBash"
+        "Upgrade 1": "Gain Shield (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Prime_ShieldBash",
+        "Tags": {"Shield": 1}
     },
     "Rock Launcher": {
         "Class": "Prime",
@@ -46,9 +50,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Throw a rock at a chosen target. Rock remains as an obstacle.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Rockmech"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Prime_Rockmech",
+        "Tags": {"High Damage": 5}
     },
     "Sidewinder Fist": {
         "Class": "Prime",
@@ -56,9 +61,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Punch an adjacent tile, damaging and pushing it to the left.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Prime_RightHook"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Prime_RightHook",
+        "Tags": {"Forced Move": 0, "High Damage": 4}
     },
     "Rocket Fist": {
         "Class": "Prime",
@@ -66,9 +72,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Punch an adjacent tile. Upgrades to launch as a projectile.\n(Has knockback)",
-        "Upgrade 1": "Rocket (Power off small)",
-        "Upgrade 2": "Launch the fist. Pushes the Mech if the target is not adjacent.\n+2 Damage (Power off small Power off small)",
-        "Debug Name": "Prime_RocketPunch"
+        "Upgrade 1": "Rocket (Up)",
+        "Upgrade 2": "Launch the fist. Pushes the Mech if the target is not adjacent.\n+2 Damage (Up Up)",
+        "Debug Name": "Prime_RocketPunch",
+        "Tags": {"Forced Move": 0, "High Damage": 2}
     },
     "Vice Fist": {
         "Class": "Prime",
@@ -76,9 +83,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Grab a unit and toss it behind you.\n(If a unit is thrown onto ACID, ACID will apply first, then damage)",
-        "Upgrade 1": "Ally Immune (Power off small)",
-        "Upgrade 2": "Deals no damage to allies.\n+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Shift"
+        "Upgrade 1": "Ally Immune (Up)",
+        "Upgrade 2": "n+2 Damage (Up Up Up)",
+        "Debug Name": "Prime_Shift",
+        "Tags": {"Forced Move": 0}
     },
     "Flame Thrower": {
         "Class": "Prime",
@@ -86,9 +94,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Push the target tile and light tiles on Fire. Damage units already on Fire. (Starts with 1 range.)",
-        "Upgrade 1": "+1 Range (Power off small)",
-        "Upgrade 2": "+1 Range (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Flamethrower"
+        "Upgrade 1": "+1 Range (Up)",
+        "Upgrade 2": "+1 Range (Up Up Up)",
+        "Debug Name": "Prime_Flamethrower",
+        "Tags": {"Forced Move": 0, "Fire": 0, "Triple Kill": 4}
     },
     "Explosive Vents": {
         "Class": "Prime",
@@ -96,19 +105,21 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Blast (and push) all adjacent tiles.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Prime_Areablast"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Prime_Areablast",
+        "Tags": {"Forced Move": 0, "Triple Push": 0}
     },
     "Prime Spear": {
         "Class": "Prime",
         "Name": "Prime Spear",
         "Damage": 2,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Stab multiple tiles and push the furthest hit tile. (Starts with 2-tile range.)",
-        "Upgrade 1": "A.C.I.D. Tip (Power off small)",
-        "Upgrade 2": "Adds A.C.I.D. to the furthest hit enemy.\n+1 Range (Power off small Power off small)",
-        "Debug Name": "Prime_Spear"
+        "Upgrade 1": "A.C.I.D. Tip (Up)",
+        "Upgrade 2": "Adds A.C.I.D. to the furthest hit enemy.\n+1 Range (Up Up)",
+        "Debug Name": "Prime_Spear",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Acid": 1}
     },
     "Hydraulic Legs": {
         "Class": "Prime",
@@ -116,9 +127,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Leap to a tile, damaging self and adjacent tiles (with push).",
-        "Upgrade 1": "+1 Damage Each (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Leap"
+        "Upgrade 1": "+1 Damage Each (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Prime_Leap",
+        "Tags": {"Charge": 0, "Forced Move": 0, "Triple Push": 0}
     },
     "Vortex Fist": {
         "Class": "Prime",
@@ -126,9 +138,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Damage and push all adjacent tiles to the left.",
-        "Upgrade 1": "-1 Self Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_SpinFist"
+        "Upgrade 1": "-1 Self Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Prime_SpinFist",
+        "Tags": {"Forced Move": 0, "Triple Push": 0}
     },
     "Titanite Blade": {
         "Class": "Prime",
@@ -136,9 +149,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Swing a massive sword to damage and push 3 tiles.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Sword"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Prime_Sword",
+        "Tags": {"Triple Push": 0, "High Damage": 3}
     },
     "Mercury Fist": {
         "Class": "Prime",
@@ -146,19 +160,21 @@ weapon_list = {
         "Damage": 4,
         "Power": "Free",
         "Effect": "Smash the ground, dealing huge damage and pushing adjacent tiles.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small)",
-        "Debug Name": "Prime_Smash"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+1 Damage (Up)",
+        "Debug Name": "Prime_Smash",
+        "Tags": {"High Damage": 0, "Triple Push": 0}
     },
     "Thermal Discharger": {
-        "Class": "Advanced Edition",
+        "Class": "Prime",
         "Name": "Thermal Discharger",
         "Damage": 1,
         "Power": "Free",
         "Effect": "Damage up to two or more tiles in a line and push tiles to the left and right of damaged tiles. (Starts with 2-tile range.)",
-        "Upgrade 1": "+2 Range (Power off small Power off small)",
-        "Upgrade 2": "Add Fire (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_Flamespreader"
+        "Upgrade 1": "+2 Range (Up Up)",
+        "Upgrade 2": "Add Fire (Up Up Up)",
+        "Debug Name": "Prime_Flamespreader",
+        "Tags": { "Forced Move": 0, "Triple Push": 0, "Fire": 3}
     },
     "The Big One": {
         "Class": "Prime",
@@ -166,9 +182,10 @@ weapon_list = {
         "Damage": "3-1",
         "Power": "2 self",
         "Effect": "Fires a huge missile that damages in a large cone shape.\n(Deals 3 damage to the target, 2 to 3 tiles behind it, and 1 to 5 tiles further behind.\nHas knockback.)",
-        "Upgrade 1": "-1 Self Damage (Power off small)",
-        "Upgrade 2": "-1 Self Damage (Power off small Power off small)",
-        "Debug Name": "Prime_WayTooBig"
+        "Upgrade 1": "-1 Self Damage (Up)",
+        "Upgrade 2": "-1 Self Damage (Up Up)",
+        "Debug Name": "Prime_WayTooBig",
+        "Tags": {"Triple Push": 0}
     },
     "Prism Laser": {
         "Class": "Prime",
@@ -176,9 +193,10 @@ weapon_list = {
         "Damage": "1-3",
         "Power": "Free",
         "Effect": "Laser that increases in damage for each unit that it hits.",
-        "Upgrade 1": "Ally Immune (Power off small)",
-        "Upgrade 2": "No Max Damage (Power off small Power off small)",
-        "Debug Name": "Prime_PrismLaser"
+        "Upgrade 1": "Ally Immune (Up)",
+        "Upgrade 2": "No Max Damage (Up Up)",
+        "Debug Name": "Prime_PrismLaser",
+        "Tags": {"Laser": 0, "High Damage": 2, "Triple Kill": 0}
     },
     "Hydraulic Lifter": {
         "Class": "Prime",
@@ -186,29 +204,32 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Throw an adjacent unit and damage it. (Starts with 2-tile range.)",
-        "Upgrade 1": "+2 Range (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Prime_TC_Punt"
+        "Upgrade 1": "+2 Range (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Prime_TC_Punt",
+        "Tags": {"Forced Move": 0}
     },
     "Refractor Laser": {
         "Class": "Prime",
         "Name": "Refractor Laser",
         "Damage": "1-3",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "A laser that can bend, dealing more damage to nearby tiles.",
-        "Upgrade 1": "Ally Immune (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_TC_BendBeam"
+        "Upgrade 1": "Ally Immune (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Prime_TC_BendBeam",
+        "Tags": {"Laser": 0, "Chain": 0, "High Damage": 3, "Triple Kill": 0}
     },
     "Spring-Loaded Legs": {
         "Class": "Prime",
         "Name": "Spring-Loaded Legs",
         "Damage": 2,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Leap and attack a tile (next to your landing point), dealing damage and pushing it.",
-        "Upgrade 1": "+2 Range (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Prime_TC_Feint"
+        "Upgrade 1": "+2 Range (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Prime_TC_Feint",
+        "Tags": {"Charge": 1, "Forced Move": 0, "High Damage": 3}
     },
     "Fissure Fist": {
         "Class": "Prime",
@@ -216,21 +237,23 @@ weapon_list = {
         "Damage": 3,
         "Power": "Free",
         "Effect": "Heavily damage a tile, cracking tiles behind the target on kill.\nSingle-use.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Use (Power off small)",
-        "Debug Name": "Prime_KO_Crack"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Use (Up)",
+        "Debug Name": "Prime_KO_Crack",
+        "Tags": {"High Damage": 2}
     },
 
-    # Ranged
+    # Brute
     "Taurus Cannon": {
         "Class": "Brute",
         "Name": "Taurus Cannon",
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fires a powerful projectile that damages and pushes its target.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_Tankmech"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Brute_Tankmech",
+        "Tags": {"Forced Move": 0}
     },
     "Aerial Bombs": {
         "Class": "Brute",
@@ -238,9 +261,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fly over a target, dropping an explosive smoke bomb.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Range (Power off small Power off small)",
-        "Debug Name": "Brute_Jetmech"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Range (Up Up)",
+        "Debug Name": "Brute_Jetmech",
+        "Tags": {"Smoke": 0}
     },
     "Janus Cannon": {
         "Class": "Brute",
@@ -248,9 +272,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fire two projectiles in opposite directions (with push).",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_Mirrorshot"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Brute_Mirrorshot",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0}
     },
     "Phase Cannon": {
         "Class": "Brute",
@@ -258,24 +283,27 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Shoot a projectile that phases through Grid Buildings.",
-        "Upgrade 1": "Phase Shield (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Brute_PhaseShot"
+        "Upgrade 1": "Phase Shield (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Brute_PhaseShot",
+        "Tags": {"Shield": 1, "Forced Move": 0}
     },
     "Grappling Hook": {
         "Class": "Brute",
         "Name": "Grappling Hook",
         "Power": "Free",
         "Effect": "Use a grapple to pull Mech towards immovable objects, or units to the Mech.",
-        "Upgrade 1": "Shield Ally (Power off small)",
-        "Debug Name": "Brute_Grapple"
+        "Upgrade 1": "Shield Ally (Up)",
+        "Debug Name": "Brute_Grapple",
+        "Tags": {"Forced Move": 0, "Shield": 1}
     },
     "Def. Shrapnel": {
         "Class": "Brute",
         "Name": "Def. Shrapnel",
         "Power": "Free",
         "Effect": "Fire a non-damaging projectile that pushes tiles around the target.",
-        "Debug Name": "Brute_Shrapnel"
+        "Debug Name": "Brute_Shrapnel",
+        "Tags": {"Triple Push": 0, "Deadly Pull": 0, "Forced Move": 0}
     },
     "Rail Cannon": {
         "Class": "Brute",
@@ -283,9 +311,10 @@ weapon_list = {
         "Damage": "0 - 2",
         "Power": "Free",
         "Effect": "Projectile that does more damage to targets that are further away.",
-        "Upgrade 1": "+1 Max Damage (Power off small)",
-        "Upgrade 2": "+2 Max Damage (Power off small Power off small)",
-        "Debug Name": "Brute_Sniper"
+        "Upgrade 1": "+1 Max Damage (Up)",
+        "Upgrade 2": "+2 Max Damage (Up Up)",
+        "Debug Name": "Brute_Sniper",
+        "Tags": {"Forced Move": 0, "High Damage": 2}
     },
     "Shock Cannon": {
         "Class": "Brute",
@@ -293,9 +322,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fire a projectile that hits 2 tiles, pushing them in opposite directions.",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Brute_Shockblast"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Brute_Shockblast",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Deadly Pull": 0}
     },
     "Ramming Engines": {
         "Class": "Brute",
@@ -303,9 +333,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "1 self",
         "Effect": "Fly in a line and slam into the target, pushing it and hurting yourself.\n(The self-damage is also considered as an attack to terrain)",
-        "Upgrade 1": "+1 Damage Each (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_Beetle"
+        "Upgrade 1": "+1 Damage Each (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Brute_Beetle",
+        "Tags": {"Charge": 0, "High Damage": 4, "Forced Move": 0}
     },
     "Unstable Cannon": {
         "Class": "Brute",
@@ -313,9 +344,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "1 self",
         "Effect": "Powerful projectile that causes damage to the shooter as well as the target (and push each).",
-        "Upgrade 1": "+1 Damage Each (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_Unstable"
+        "Upgrade 1": "+1 Damage Each (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Brute_Unstable",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "High Damage": 4}
     },
     "Heavy Rocket": {
         "Class": "Brute",
@@ -323,9 +355,10 @@ weapon_list = {
         "Damage": 3,
         "Power": "Free",
         "Effect": "Fire a projectile that heavily damages a target and pushes adjacent tiles.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small)",
-        "Debug Name": "Brute_Heavyrocket"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+2 Damage (Up Up)",
+        "Debug Name": "Brute_Heavyrocket",
+        "Tags": {"Triple Move": 0, "High Damage": 2}
     },
     "Splitshot": {
         "Class": "Brute",
@@ -333,9 +366,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Shoot a projectile that damages and pushes the targeted tile and the tiles to its left and right.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Brute_Splitshot"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Brute_Splitshot",
+        "Tags": {"Triple Move": 0, "Forced Move": 0}
     },
     "Astra Bombs": {
         "Class": "Brute",
@@ -343,16 +377,18 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Leap over any distance dropping a bomb on each tile you pass.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_Bombrun"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Brute_Bombrun",
+        "Tags": {"Triple Kill": 0}
     },
     "Hermes Engines": {
         "Class": "Brute",
         "Name": "Hermes Engines",
         "Power": "Free",
         "Effect": "Dash in a line, pushing adjacent tiles away.",
-        "Debug Name": "Brute_Sonic"
+        "Debug Name": "Brute_Sonic",
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Charge": 0}
     },
     "Reverse Thrusters": {
         "Class": "Brute",
@@ -360,9 +396,10 @@ weapon_list = {
         "Damage": "1-2",
         "Power": "1 self",
         "Effect": "Smoke and deal damage to a tile while dashing away. (The further you dash, the more damage it deals. Starts with 2-tile range.)",
-        "Upgrade 1": "+1 Range (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_KickBack"
+        "Upgrade 1": "+1 Range (Up)",
+        "Upgrade 2": "+1 Range (Up Up Up)",
+        "Debug Name": "Brute_KickBack",
+        "Tags": {"Smoke": 0, "High Damage": 4}
     },
     "Fracturing Shells": {
         "Class": "Brute",
@@ -370,9 +407,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fires a projectile that explodes on contact, damaging and pushing adjacent tiles.",
-        "Upgrade 1": "+2 Damage (Power off small Power off small Power off small)",
-        "Upgrade 2": "Buildings Immune (Power off small)",
-        "Debug Name": "Brute_Fracture"
+        "Upgrade 1": "+2 Damage (Up Up Up)",
+        "Upgrade 2": "Buildings Immune (Up)",
+        "Debug Name": "Brute_Fracture",
+        "Tags": {"Triple Push": 0, "Forced Move": 0}
     },
     "AP Cannon": {
         "Class": "Brute",
@@ -380,19 +418,21 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Fire a pushing projectile that pierces the first target and damages the second.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Brute_PierceShot"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Brute_PierceShot",
+        "Tags": {"Forced Move": 0, "High Damage": 4, "Triple Kill": 0}
     },
     "Guided Missile": {
         "Class": "Brute",
         "Name": "Guided Missile",
         "Damage": 2,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "A projectile that can turn once before hitting its target.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small Power off small)",
-        "Upgrade 2": "Smoke Line (Power off small)",
-        "Debug Name": "Brute_TC_GuidedMissile"
+        "Upgrade 1": "+1 Damage (Up Up Up)",
+        "Upgrade 2": "Smoke Line (Up)",
+        "Debug Name": "Brute_TC_GuidedMissile",
+        "Tags": {"Forced Move": 0, "Smoke": 1}
     },
     "Ricochet Rocket": {
         "Class": "Brute",
@@ -400,9 +440,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Bounce a projectile off one target to hit another (and push each).",
-        "Upgrade 1": "+1 Damage (Power off small Power off small Power off small)",
-        "Upgrade 2": "Ally Immune (Power off small)",
-        "Debug Name": "Brute_TC_Ricochet"
+        "Upgrade 1": "+1 Damage (Up Up Up)",
+        "Upgrade 2": "Ally Immune (Up)",
+        "Debug Name": "Brute_TC_Ricochet",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0}
     },
     "Quick-Fire Rockets": {
         "Class": "Brute",
@@ -410,9 +451,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fire two projectiles in different directions.",
-        "Upgrade 1": "Add Push (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Brute_TC_DoubleShot"
+        "Upgrade 1": "Add Push (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Brute_TC_DoubleShot",
+        "Tags": {"Forced Move": 1, "Triple Kill": 1}
     },
     "EM Railgun": {
         "Class": "Brute",
@@ -420,10 +462,12 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Pierce through any killed Enemies.\nSingle-use.",
-        "Upgrade 1": "+2 Damage (Power off small)",
-        "Upgrade 2": "Building Immune (Power off small)",
-        "Debug Name": "Brute_KO_Combo"
+        "Upgrade 1": "+2 Damage (Up)",
+        "Upgrade 2": "Building Immune (Up)",
+        "Debug Name": "Brute_KO_Combo",
+        "Tags": {"Triple Kill": 0, "High Damage": 1}
     },
+
     # Ranged
     "Artemis Artillery": {
         "Class": "Ranged",
@@ -431,9 +475,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Powerful artillery strike, damaging a single tile and pushing adjacent tiles.",
-        "Upgrade 1": "Buildings Immune (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Ranged_Artillerymech"
+        "Upgrade 1": "Buildings Immune (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Ranged_Artillerymech",
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
     "Rock Accelerator": {
         "Class": "Ranged",
@@ -441,8 +486,9 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Launch a rock at a tile, pushing tiles to the left and right.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Ranged_Rockthrow"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Debug Name": "Ranged_Rockthrow",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0}
     },
     "Cluster Artillery": {
         "Class": "Ranged",
@@ -450,9 +496,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Protect a tile by damaging and pushing adjacent tiles.",
-        "Upgrade 1": "Buildings Immune (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Ranged_Defensestrike"
+        "Upgrade 1": "Buildings Immune (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Ranged_Defensestrike",
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
     "Rocket Artillery": {
         "Class": "Ranged",
@@ -460,9 +507,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Fires a pushing artillery and creates Smoke behind the shooter.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Ranged_Rocket"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Ranged_Rocket",
+        "Tags": {"Smoke": 0, "Forced Move": 0, "High Damage": 4}
     },
     "Vulcan Artillery": {
         "Class": "Ranged",
@@ -470,9 +518,10 @@ weapon_list = {
         "Damage": 0,
         "Power": "Free",
         "Effect": "Light the target on Fire and push adjacent tiles.",
-        "Upgrade 1": "Backburn (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Ranged_Ignite"
+        "Upgrade 1": "Backburn (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Ranged_Ignite",
+        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "Deadly Pull": 0}
     },
     "Micro-Artillery": {
         "Class": "Ranged",
@@ -480,9 +529,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Artillery with potential to launch multiple small projectiles (with push).",
-        "Upgrade 1": "+2 Tiles (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Ranged_ScatterShot"
+        "Upgrade 1": "+2 Tiles (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Ranged_ScatterShot",
+        "Tags": {"Forced Move": 0, "Triple Push": 1}
     },
     "Aegon Mortar": {
         "Class": "Ranged",
@@ -490,23 +540,26 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Deals damage to two tiles, pushing one forwards and one backwards.",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Ranged_BackShot"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Ranged_BackShot",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0}
     },
     "Cryo-Launcher": {
         "Class": "Ranged",
         "Name": "Cryo-Launcher",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Freeze yourself and the target.",
-        "Debug Name": "Ranged_Ice"
+        "Debug Name": "Ranged_Ice",
+        "Tags": {"Freeze": 0}
     },
     "Smoke Mortar": {
         "Class": "Ranged",
         "Name": "Smoke Mortar",
         "Power": "Free",
         "Effect": "Artillery shot that applies Smoke and pushes two adjacent tiles.",
-        "Debug Name": "Ranged_SmokeBlast"
+        "Debug Name": "Ranged_SmokeBlast",
+        "Tags": {"Smoke": 0, "Forced Move": 0, "Triple Kill": 0}
     },
     "Burning Mortar": {
         "Class": "Ranged",
@@ -514,8 +567,9 @@ weapon_list = {
         "Damage": "0",
         "Power": "Free",
         "Effect": "Artillery attack that sets 5 tiles on Fire.",
-        "Upgrade 1": "No Self Damage (Power off small Power off small)",
-        "Debug Name": "Ranged_Fireball"
+        "Upgrade 1": "No Self Damage (Up Up)",
+        "Debug Name": "Ranged_Fireball",
+        "Tags": {"Fire": 0}
     },
     "Raining Death": {
         "Class": "Ranged",
@@ -523,9 +577,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "1 self",
         "Effect": "A dangerous projectile that damages everything it passes.",
-        "Upgrade 1": "Buildings Immune (Power off small)",
-        "Upgrade 2": "+1 Damage Each (Power off small Power off small)",
-        "Debug Name": "Ranged_RainingVolley"
+        "Upgrade 1": "Buildings Immune (Up)",
+        "Upgrade 2": "+1 Damage Each (Up Up)",
+        "Debug Name": "Ranged_RainingVolley",
+        "Tags": {"Triple Kill": 0}
     },
     "Heavy Artillery": {
         "Class": "Ranged",
@@ -533,19 +588,21 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Powerful attack that damages a large area.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Ranged_Wide"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+1 Damage (Up Up)",
+        "Debug Name": "Ranged_Wide",
+        "Tags": {"Triple Kill": 0}
     },
     "Gemini Missiles": {
         "Class": "Ranged",
         "Name": "Gemini Missiles",
         "Damage": 3,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Launch two missiles, damaging and pushing two targets.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small)",
-        "Debug Name": "Ranged_Dual"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "+1 Damage (Up)",
+        "Debug Name": "Ranged_Dual",
+        "Tags": {"Triple Kill": 0, "High Damage": 1}
     },
     "Tri-Rocket": {
         "Class": "Ranged",
@@ -553,17 +610,19 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Damage and push 3 tiles in a line. (Can aim close tile.)",
-        "Upgrade 1": "+1 Damage (Power off small Power off small Power off small)",
-        "Upgrade 2": "Building Immune (Power off small)",
-        "Debug Name": "Ranged_Crack"
+        "Upgrade 1": "+1 Damage (Up Up Up)",
+        "Upgrade 2": "Building Immune (Up)",
+        "Debug Name": "Ranged_Crack",
+        "Tags": {"Triple Push": 0, "Forced Move": 0}
     },
     "Bomb Dispenser": {
         "Class": "Ranged",
         "Name": "Bomb Dispenser",
         "Power": "Free",
         "Effect": "Launch a Walking Bomb. Unused bombs dismantle after the enemy turn.",
-        "Upgrade 1": "2 Bombs (Power off small Power off small Power off small)",
-        "Debug Name": "Ranged_DeployBomb"
+        "Upgrade 1": "2 Bombs (Up Up Up)",
+        "Debug Name": "Ranged_DeployBomb",
+        "Tags": {"Summon": 0, "Triple Kill": 0}
     },
     "Arachnoid Injector": {
         "Class": "Ranged",
@@ -571,29 +630,32 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Damage target, creating a friendly robot spider on kill.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "Acidic (Power off small)",
-        "Debug Name": "Ranged_Arachnoid"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "Acidic (Up)",
+        "Debug Name": "Ranged_Arachnoid",
+        "Tags": {"Summon": 0, "Acid": 1, "Forced Move": 0}
     },
     "Smoldering Shells": {
         "Class": "Ranged",
         "Name": "Smoldering Shells",
         "Damage": 1,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Damage and apply Fire to a tile while adding Smoke to adjacent tiles (vertical).",
-        "Upgrade 1": "More Smoke (Power off small Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Ranged_SmokeFire"
+        "Upgrade 1": "More Smoke (Up Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Ranged_SmokeFire",
+        "Tags": {"Fire": 0, "Smoke": 0}
     },
     "Rebounding Volley": {
         "Class": "Ranged",
         "Name": "Rebounding Volley",
         "Damage": 2,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Artillery attack that can bounce to an additional target. (Pull the first and push the second.)",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "Building Immune (Power off small)",
-        "Debug Name": "Ranged_TC_BounceShot"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "Building Immune (Up)",
+        "Debug Name": "Ranged_TC_BounceShot",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0}
     },
     "Quick-Fire Artillery": {
         "Class": "Ranged",
@@ -601,9 +663,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Fire two artillery shots in different directions.",
-        "Upgrade 1": "Ally Immune (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Ranged_TC_DoubleArt"
+        "Upgrade 1": "Ally Immune (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "Ranged_TC_DoubleArt",
+        "Tags": {"Forced Move": 0, "Triple Kill": 0}
     },
     "Cascading Resonator": {
         "Class": "Ranged",
@@ -611,9 +674,10 @@ weapon_list = {
         "Damage": 2,
         "Power": "1 self",
         "Effect": "Killed enemies explode; victims of splash damage also explode on death.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Upgrade 2": "+Building Immune (Power off small)",
-        "Debug Name": "Ranged_KO_Combo"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Upgrade 2": "+Building Immune (Up)",
+        "Debug Name": "Ranged_KO_Combo",
+        "Tags": {"Triple Kill": 0}
     },
 
     # Science
@@ -622,133 +686,149 @@ weapon_list = {
         "Name": "Attraction Pulse",
         "Power": "Free",
         "Effect": "Fires a projectile, pulling target towards you 1 tile.",
-        "Debug Name": "Science_Pullmech"
+        "Debug Name": "Science_Pullmech",
+        "Tags": {"Forced Move": 0}
     },
     "Grav Well": {
         "Class": "Science",
         "Name": "Grav Well",
         "Power": "Free",
         "Effect": "Artillery weapon that pulls its target towards you.",
-        "Debug Name": "Science_Gravwell"
+        "Debug Name": "Science_Gravwell",
+        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
     },
     "Repulse": {
         "Class": "Science",
         "Name": "Repulse",
         "Power": "Free",
         "Effect": "Push all adjacent tiles.",
-        "Upgrade 1": "Shield Self (Power off small)",
-        "Upgrade 2": "Shield Friendly (Power off small Power off small)",
-        "Debug Name": "Science_Repulse"
+        "Upgrade 1": "Shield Self (Up)",
+        "Upgrade 2": "Shield Friendly (Up Up)",
+        "Debug Name": "Science_Repulse",
+        "Tags": {"Triple Push": 0, "Shield": 1, "Forced Move": 0}
     },
     "Teleporter": {
         "Class": "Science",
         "Name": "Teleporter",
         "Power": "Free",
         "Effect": "Swap places with a nearby tile. (Note: if you are webbed and swap places with another unit, the other unit will become webbed.)",
-        "Upgrade 1": "+1 Range (Power off small)",
-        "Upgrade 2": "+2 Range (Power off small Power off small)",
-        "Debug Name": "Science_Swap"
+        "Upgrade 1": "+1 Range (Up)",
+        "Upgrade 2": "+2 Range (Up Up)",
+        "Debug Name": "Science_Swap",
+        "Tags": {"Teleport": 3, "Forced Move": 0}
     },
     "A.C.I.D. Projector": {
         "Class": "Science",
         "Name": "A.C.I.D. Projector",
         "Power": "Free",
         "Effect": "Fire a projectile that applies A.C.I.D. and pushes.",
-        "Debug Name": "Science_AcidShot"
+        "Debug Name": "Science_AcidShot",
+        "Tags": {"Acid": 0, "Forced Move": 0}
     },
     "Confuse Shot": {
         "Class": "Science",
         "Name": "Confuse Shot",
         "Power": "Free",
         "Effect": "Fire a projectile that flips a target's attack direction.",
-        "Debug Name": "Science_Confuse"
+        "Debug Name": "Science_Confuse",
+        "Tags": {}
     },
     "Smoke Pellets": {
         "Class": "Science",
         "Name": "Smoke Pellets",
         "Power": "Free",
         "Effect": "Surround yourself with Smoke to defend against nearby enemies.\nSingle-use.",
-        "Upgrade 1": "Ally Immune (Power off small)",
-        "Upgrade 2": "+1 Use (Power off small)",
-        "Debug Name": "Science_SmokeDefense"
+        "Upgrade 1": "Ally Immune (Up)",
+        "Upgrade 2": "+1 Use (Up)",
+        "Debug Name": "Science_SmokeDefense",
+        "Tags": {"Smoke": 1}
     },
     "Shield Projector": {
         "Class": "Science",
         "Name": "Shield Projector",
         "Power": "Free",
         "Effect": "Shield tiles from damage.\n2 uses per battle.",
-        "Upgrade 1": "+1 Use (Power off small Power off small)",
-        "Upgrade 2": "+3 Area (Power off small Power off small)",
-        "Debug Name": "Science_Shield"
+        "Upgrade 1": "+1 Use (Up Up)",
+        "Upgrade 2": "+3 Area (Up Up)",
+        "Debug Name": "Science_Shield",
+        "Tags": {"Shield": 0}
     },
     "Fire Beam": {
         "Class": "Science",
         "Name": "Fire Beam",
         "Power": "Free",
         "Effect": "Fire a beam that applies Fire in a line.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Debug Name": "Science_FireBeam"
+        "Upgrade 1": "+1 Use (Up)",
+        "Debug Name": "Science_FireBeam",
+        "Tags": {"Laser": 0, "Fire": 0}
     },
     "Frost Beam": {
         "Class": "Science",
         "Name": "Frost Beam",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Fire a beam that Freezes everything in a line.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small Power off small)",
-        "Debug Name": "Science_FreezeBeam"
+        "Upgrade 1": "+1 Use (Up Up)",
+        "Debug Name": "Science_FreezeBeam",
+        "Tags": {"Laser": 0, "Freeze": 2}
     },
     "Shield Array": {
         "Class": "Science",
         "Name": "Shield Array",
         "Power": "Free",
         "Effect": "Apply a Shield on nearby tiles.\nSingle-use.",
-        "Upgrade 1": "+1 Size (Power off small)",
-        "Upgrade 2": "+1 Use (Power off small)",
-        "Debug Name": "Science_LocalShield"
+        "Upgrade 1": "+1 Size (Up)",
+        "Upgrade 2": "+1 Use (Up)",
+        "Debug Name": "Science_LocalShield",
+        "Tags": {"Shield": 0, "Chain": 1}
     },
     "Push Beam": {
         "Class": "Science",
         "Name": "Push Beam",
         "Power": "Free",
         "Effect": "Pushes all units in a line.\nSingle-use.",
-        "Upgrade 1": "Unlimited Use (Power off small)",
-        "Debug Name": "Science_PushBeam"
+        "Upgrade 1": "Unlimited Use (Up)",
+        "Debug Name": "Science_PushBeam",
+        "Tags": {"Triple Push": 0, "Forced Move": 1}
     },
     "Raining Fire": {
         "Class": "Science",
         "Name": "Raining Fire",
         "Power": "Free",
         "Effect": "Flaming artillery that drops fire on the way to its target (and push the target). (Starts with 2-tile range.)",
-        "Upgrade 1": "+1 Range (Power off small)",
-        "Upgrade 2": "+2 Range (Power off small Power off small)",
-        "Debug Name": "Science_RainingFire"
+        "Upgrade 1": "+1 Range (Up)",
+        "Upgrade 2": "+2 Range (Up Up)",
+        "Debug Name": "Science_RainingFire",
+        "Tags": {"Forced Move": 0, "Fire": 0}
     },
     "Area Shift": {
         "Class": "Science",
         "Name": "Area Shift",
         "Power": "Free",
         "Effect": "Push self and all adjacent tiles.",
-        "Upgrade 1": "Shield Self (Power off small)",
-        "Upgrade 2": "Shield Ally (Power off small Power off small)",
-        "Debug Name": "Science_MassShift"
+        "Upgrade 1": "Shield Self (Up)",
+        "Upgrade 2": "Shield Ally (Up Up)",
+        "Debug Name": "Science_MassShift",
+        "Tags": {"Forced Move": 0, "Triple push": 0,"Shield": 1,"Deadly Pull": 1,}
     },
     "Explosive Warp": {
         "Class": "Science",
         "Name": "Explosive Warp",
         "Power": "Free",
         "Effect": "Teleport to target and push nearby tiles away.",
-        "Upgrade 1": "+2 Range (Power off small)",
-        "Upgrade 2": "+2 Range (Power off small)",
-        "Debug Name": "Science_TelePush"
+        "Upgrade 1": "+2 Range (Up)",
+        "Upgrade 2": "+2 Range (Up)",
+        "Debug Name": "Science_TelePush",
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Charge": 1}
     },
     "Shield Placer": {
         "Class": "Science",
         "Name": "Shield Placer",
         "Power": "Free",
         "Effect": "Shield target and push adjacent tiles away.",
-        "Upgrade 1": "+1 Range (Power off small)",
-        "Upgrade 2": "+1 Range (Power off small Power off small)",
-        "Debug Name": "Science_Placer"
+        "Upgrade 1": "+1 Range (Up)",
+        "Upgrade 2": "+1 Range (Up Up)",
+        "Debug Name": "Science_Placer",
+        "Tags": {"Shield": 0, "Forced Move": 0, "Triple Push": 0,"Deadly Pull": 0}
     },
     "Enrage Shot": {
         "Class": "Science",
@@ -756,28 +836,31 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Force targeted unit to attack adjacent tile.",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small)",
-        "Debug Name": "Science_TC_Enrage"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up)",
+        "Debug Name": "Science_TC_Enrage",
+        "Tags": {}
     },
     "Control Shot": {
         "Class": "Science",
         "Name": "Control Shot",
         "Power": "Free",
         "Effect": "Temporarily control a unit, moving it a short distance (2 tiles).",
-        "Upgrade 1": "+1 Move (Power off small)",
-        "Upgrade 2": "+1 Move (Power off small Power off small)",
-        "Debug Name": "Science_TC_Control"
+        "Upgrade 1": "+1 Move (Up)",
+        "Upgrade 2": "+1 Move (Up Up)",
+        "Debug Name": "Science_TC_Control",
+        "Tags": {}
     },
     "Force Swap": {
         "Class": "Science",
         "Name": "Force Swap",
         "Damage": 0,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Force a nearby unit to swap places with any other unit.",
-        "Upgrade 1": "Heal Ally (Power off small)",
-        "Upgrade 2": "Hurt Enemy (Power off small Power off small)",
-        "Debug Name": "Science_TC_SwapOther"
+        "Upgrade 1": "Heal Ally (Up)",
+        "Upgrade 2": "Hurt Enemy (Up Up)",
+        "Debug Name": "Science_TC_SwapOther",
+        "Tags": {"Forced Move": 0, "Heal": 1}
     },
     "Seismic Capacitor": {
         "Class": "Science",
@@ -785,16 +868,18 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Damage and flip target. If target is killed, crack adjacent tiles.",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "Science_KO_Crack"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
+        "Debug Name": "Science_KO_Crack",
+        "Tags": {}
     },
     "Gravity Mirror": {
         "Class": "Science",
         "Name": "Gravity Mirror",
         "Power": "Free",
         "Effect": "Fire a gravity well in 4 directions, pushing or pulling every unit. (Only available through debug)",
-        "Debug Name": "Science_TC_Gravity"
+        "Debug Name": "Science_TC_Gravity",
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
 
     # Any class
@@ -803,24 +888,27 @@ weapon_list = {
         "Name": "Boosters",
         "Power": "Free",
         "Effect": "Jump forward and push adjacent tiles away.",
-        "Debug Name": "Support_Boosters"
+        "Debug Name": "Support_Boosters",
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Charge": 0}
     },
     "Smoke Bombs": {
         "Class": "Any",
         "Name": "Smoke Bombs",
         "Power": "Free",
         "Effect": "Fly over the targets while dropping Smoke.",
-        "Upgrade 1": "+1 Range (Power off small)",
-        "Upgrade 2": "+1 Range (Power off small)",
-        "Debug Name": "Support_Smoke"
+        "Upgrade 1": "+1 Range (Up)",
+        "Upgrade 2": "+1 Range (Up)",
+        "Debug Name": "Support_Smoke",
+        "Tags": {"Smoke": 0}
     },
     "Heat Converter": {
         "Class": "Any",
         "Name": "Heat Converter",
         "Power": "Free",
         "Effect": "Freeze the tile in front but light the tile behind on Fire in the process.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Debug Name": "Support_Refrigerate"
+        "Upgrade 1": "+1 Use (Up)",
+        "Debug Name": "Support_Refrigerate",
+        "Tags": {}
     },
     "Self-Destruct": {
         "Class": "Any",
@@ -828,7 +916,8 @@ weapon_list = {
         "Damage": "Kill",
         "Power": "Free",
         "Effect": "Mech explodes, killing self and anything adjacent to Mech.\nSingle-use.",
-        "Debug Name": "Support_Destruct"
+        "Debug Name": "Support_Destruct",
+        "Tags": {"Triple Kill": 0}
     },
     "Targeted Strike": {
         "Class": "Any",
@@ -836,64 +925,72 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Call in an air strike on a single tile anywhere on the map.\nSingle-use.",
-        "Debug Name": "Support_Force"
+        "Debug Name": "Support_Force",
+        "Tags": {"Triple Push": 0, "Forced Move": 0, "Deadly Pull": 0}
     },
     "Smoke Drop": {
         "Class": "Any",
         "Name": "Smoke Drop",
         "Power": "Free",
         "Effect": "Drops Smoke on 5 tiles anywhere on the map.\nSingle-use.",
-        "Debug Name": "Support_SmokeDrop"
+        "Debug Name": "Support_SmokeDrop",
+        "Tags": {"Smoke": 0}
     },
     "Repair Drop": {
         "Class": "Any",
         "Name": "Repair Drop",
         "Power": "Free",
         "Effect": "Heal all player units (including disabled Mechs).\nSingle-use.",
-        "Debug Name": "Support_Repair"
+        "Debug Name": "Support_Repair",
+        "Tags": {"Heal": 0}
     },
     "Missile Barrage": {
         "Class": "Any",
         "Name": "Missile Barrage",
         "Damage": 1,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Fires a missile barrage that hits every enemy on the map.\nSingle-use.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small)",
-        "Debug Name": "Support_Missiles"
+        "Upgrade 1": "+1 Damage (Up Up)",
+        "Debug Name": "Support_Missiles",
+        "Tags": {"Triple Kill": 0}
     },
     "Wind Torrent": {
         "Class": "Any",
         "Name": "Wind Torrent",
         "Power": "Free",
         "Effect": "Push all units in a single direction.\nSingle-use.",
-        "Upgrade 1": "Unlimited Uses (Power off small)",
-        "Debug Name": "Support_Wind"
+        "Upgrade 1": "Unlimited Uses (Up)",
+        "Debug Name": "Support_Wind",
+        "Tags": {"Forced Move": 1, "Triple Push": 0, "Chain": 0, "Deadly Pull": 0}
     },
     "Ice Generator": {
         "Class": "Any",
         "Name": "Ice Generator",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Freeze yourself and nearby tiles.\nSingle-use.",
-        "Upgrade 1": "+1 Size (Power off small)",
-        "Upgrade 2": "+1 Size (Power off small Power off small)",
-        "Debug Name": "Support_Blizzard"
+        "Upgrade 1": "+1 Size (Up)",
+        "Upgrade 2": "+1 Size (Up Up)",
+        "Debug Name": "Support_Blizzard",
+        "Tags": {"Freeze": 3, "Chain": 1 }
     },
     "Mass Confusion": {
         "Class": "Any",
         "Name": "Mass Confusion",
         "Power": "Free",
         "Effect": "Cause nearby enemies to flip their attack direction.\nSingle-use.",
-        "Upgrade 1": "+1 Size (Power off small)",
-        "Upgrade 2": "+1 Use (Power off small)",
-        "Debug Name": "Support_Confuse"
+        "Upgrade 1": "+1 Size (Up)",
+        "Upgrade 2": "+1 Use (Up)",
+        "Debug Name": "Support_Confuse",
+        "Tags": {"Chain": 1}
     },
     "Grid Repulse": {
         "Class": "Any",
         "Name": "Grid Repulse",
         "Power": "Free",
         "Effect": "Overload the grid, causing a building to push away nearby units.",
-        "Upgrade 1": "Add Shield (Power off small)",
-        "Debug Name": "Support_GridDefense"
+        "Upgrade 1": "Add Shield (Up)",
+        "Debug Name": "Support_GridDefense",
+        "Tags": {"Forced Move": 0, "Shield": 1, "Deadly Pull": 0}
     },
     "Grid Assault": {
         "Class": "Any",
@@ -901,9 +998,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Overload the grid causing a building to damage and push an adjacent tile.",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "+1 Damage (Power off small)",
-        "Debug Name": "Support_TC_GridAtk"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up)",
+        "Debug Name": "Support_TC_GridAtk",
+        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
     },
     "Bombing Run": {
         "Class": "Any",
@@ -911,80 +1009,88 @@ weapon_list = {
         "Damage": 2,
         "Power": "Free",
         "Effect": "Call in bombers, dealing damage to every tile in a row or column.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Upgrade 2": "Building Immune (Power off small)",
-        "Debug Name": "Support_TC_Bombline"
+        "Upgrade 1": "+1 Use (Up)",
+        "Upgrade 2": "Building Immune (Up)",
+        "Debug Name": "Support_TC_Bombline",
+        "Tags": {"Triple Kill": 0}
     },
     "Grid Charger": {
         "Class": "Any",
         "Name": "Grid Charger",
         "Damage": 1,
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Killing an enemy will charge the Power Grid 1 point.",
-        "Debug Name": "Support_KO_GridCharger"
+        "Debug Name": "Support_KO_GridCharger",
+        "Tags": {}
     },
     "Flood Drill": {
         "Class": "Any",
         "Name": "Flood Drill",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Convert any liquid Tile to a Hole, spreading the liquid to adjacent tiles.\nSingle-use.",
-        "Upgrade 1": "+1 Use (Power off small)",
-        "Debug Name": "Support_Waterdrill"
+        "Upgrade 1": "+1 Use (Up)",
+        "Debug Name": "Support_Waterdrill",
+        "Tags": {}
     },
     "Light Tank": {
         "Class": "Any",
         "Name": "Light Tank",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "Deploy a small tank to help in combat.\nSingle-use.",
         "Health": 1,
         "Move": 3,
-        "Upgrade 1": "+2 Health (Power off small)",
-        "Upgrade 2": "+2 Damage (Power off small Power off small Power off small)",
-        "Debug Name": "DeploySkill_Tank"
+        "Upgrade 1": "+2 Health (Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
+        "Debug Name": "DeploySkill_Tank",
+        "Tags": {"Summon": 0}
     },
     "Shield-Tank": {
         "Class": "Any",
         "Name": "Shield-Tank",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "Deploy a Shield-Tank that can give Shields to allies.\nSingle-use.",
         "Health": 1,
         "Move": 3,
-        "Upgrade 1": "+2 Health (Power off small)",
-        "Upgrade 2": "Projectile (Power off small)",
-        "Debug Name": "DeploySkill_ShieldTank"
+        "Upgrade 1": "+2 Health (Up)",
+        "Upgrade 2": "Projectile (Up)",
+        "Debug Name": "DeploySkill_ShieldTank",
+        "Tags": {"Summon": 0, "Shield": 0}
     },
     "A.C.I.D. Tank": {
         "Class": "Any",
         "Name": "A.C.I.D. Tank",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "Deploy a Tank that can apply A.C.I.D. to targets.\nSingle-use.",
         "Health": 1,
         "Move": 3,
-        "Upgrade 1": "+2 Health (Power off small)",
-        "Upgrade 2": "Push (Power off small)",
-        "Debug Name": "DeploySkill_AcidTank"
+        "Upgrade 1": "+2 Health (Up)",
+        "Upgrade 2": "Push (Up)",
+        "Debug Name": "DeploySkill_AcidTank",
+        "Tags": {"Summon": 0, "ACID": 0, "Forced Move": 1}
     },
     "Pull-Tank": {
         "Class": "Any",
         "Name": "Pull-Tank",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "Deploy a Pull-Tank that can pull targets with a projectile.\nSingle-use.",
         "Health": 1,
         "Move": 3,
-        "Upgrade 1": "+2 Health (Power off small)",
-        "Upgrade 2": "Flying (Power off small)",
-        "Debug Name": "DeploySkill_PullTank"
+        "Upgrade 1": "+2 Health (Up)",
+        "Upgrade 2": "Flying (Up)",
+        "Debug Name": "DeploySkill_PullTank",
+        "Tags": {"Deadly Pull": 0, "Forced Move": 0, "Summon": 0}
     },
     "Ice-Tank": {
         "Class": "Any",
         "Name": "Ice-Tank",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "Deploy an Ice-Tank to that can freeze its targets. (Only available through debug)\nSingle-use.",
         "Health": 3,
         "Move": 3,
-        "Upgrade 1": "N/A (Power off small)",
-        "Upgrade 2": "N/A (Power off small)",
-        "Debug Name": "DeploySkill_IceTank"
+        "Upgrade 1": "N/A (Up)",
+        "Upgrade 2": "N/A (Up)",
+        "Debug Name": "DeploySkill_IceTank",
+        "Tags": {"Summon": 0}
     },
     # Vek
     "Ramming Speed": {
@@ -993,9 +1099,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Dash across the map, damaging and pushing the target tile.",
-        "Upgrade 1": "Smoke Behind (Power off small)",
+        "Upgrade 1": "Smoke Behind (Up)",
         "Upgrade 2": "Tile behind you gains Smoke.",
-        "Debug Name": "Vek_Beetle"
+        "Debug Name": "Vek_Beetle",
+        "Tags": {"Charge": 0, "Forced Move": 0, "Smoke": 1}
     },
     "Needle Shot": {
         "Class": "Vek",
@@ -1003,9 +1110,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Throw needles at the enemy, pushing the furthest hit tile. (Starts with 1-tile range.)",
-        "Upgrade 1": "Range & Damage (Power off small Power off small)",
+        "Upgrade 1": "Range & Damage (Up Up)",
         "Upgrade 2": "Increases potential hit tiles by 1 and damage on all tiles by 1.",
-        "Debug Name": "Vek_Hornet"
+        "Debug Name": "Vek_Hornet",
+        "Tags": {"Triple Kill": 2, "Forced Move": 0}
     },
     "Explosive Goo": {
         "Class": "Vek",
@@ -1013,9 +1121,10 @@ weapon_list = {
         "Damage": 1,
         "Power": "Free",
         "Effect": "Artillery attack that damages a tile and pushes adjacent tiles away.",
-        "Upgrade 1": "+1 Tile (Power off small)",
+        "Upgrade 1": "+1 Tile (Up)",
         "Upgrade 2": "Increases area hit by 1 tile and damage by 2.",
-        "Debug Name": "Vek_Scarab"
+        "Debug Name": "Vek_Scarab",
+        "Tags": {"Triple: Push": 0, "Forced Move": 0, "Deadly Pull": 0}
     },
 
     # Passives
@@ -1026,34 +1135,38 @@ weapon_list = {
         "Effect": "All Mechs are immune to Fire.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_FlameImmune"
+        "Debug Name": "Passive_FlameImmune",
+        "Tags": {}
     },
     "Storm Generator": {
         "Class": "Passive",
         "Name": "Storm Generator",
         "Power": "Free",
         "Effect": "All Smoke deals damage to enemy units every turn.",
-        "Upgrade 1": "+1 Damage (Power off small Power off small Power off small)",
+        "Upgrade 1": "+1 Damage (Up Up Up)",
         "Upgrade 2": "Increases Smoke damage by 1.",
-        "Debug Name": "Passive_Electric"
+        "Debug Name": "Passive_Electric",
+        "Tags": {"Electric Smoke": 0}
     },
     "Viscera Nanobots": {
         "Class": "Passive",
         "Name": "Viscera Nanobots",
         "Power": "Free",
         "Effect": "Mechs heal 1 damage when they deal a killing blow.",
-        "Upgrade 1": "+1 Heal (Power off small Power off small)",
+        "Upgrade 1": "+1 Heal (Up Up)",
         "Upgrade 2": "Increase healing to 2.",
-        "Debug Name": "Passive_Leech"
+        "Debug Name": "Passive_Leech",
+        "Tags": {"Heal": 0}
     },
     "Networked Armor": {
         "Class": "Passive",
         "Name": "Networked Armor",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "All Mechs gain +1 HP.",
-        "Upgrade 1": "+1 Health (Power off small Power off small)",
+        "Upgrade 1": "+1 Health (Up Up)",
         "Upgrade 2": "Increases health bonus to 2.",
-        "Debug Name": "Passive_Defenses"
+        "Debug Name": "Passive_Defenses",
+        "Tags": {}
     },
     "Repair Field": {
         "Class": "Passive",
@@ -1062,7 +1175,8 @@ weapon_list = {
         "Effect": "Repairing one Mech will affect all Mechs.\n(Includes disabled Mechs. Repairing a disabled Mech will save the pilot.)",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_MassRepair"
+        "Debug Name": "Passive_MassRepair",
+        "Tags": {"Heal": 0}
     },
     "Auto-Shields": {
         "Class": "Passive",
@@ -1071,16 +1185,18 @@ weapon_list = {
         "Effect": "Buildings gain a Shield after taking damage.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_AutoShields"
+        "Debug Name": "Passive_AutoShields",
+        "Tags": {"Shield": 0}
     },
     "Stabilizers": {
         "Class": "Passive",
         "Name": "Stabilizers",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "Mechs no longer take damage when blocking emerging Vek.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_Burrows"
+        "Debug Name": "Passive_Burrows",
+        "Tags": {}
     },
     "Psionic Receiver": {
         "Class": "Passive",
@@ -1089,16 +1205,18 @@ weapon_list = {
         "Effect": "Mechs use bonuses from Vek Psion.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_Psions"
+        "Debug Name": "Passive_Psions",
+        "Tags": {}
     },
     "Kickoff Boosters": {
         "Class": "Passive",
         "Name": "Kickoff Boosters",
         "Power": "Free",
         "Effect": "Mechs gain +1 move if they start their turn adjacent to each other.",
-        "Upgrade 1": "+1 Movement (Power off small Power off small)",
+        "Upgrade 1": "+1 Movement (Up Up)",
         "Upgrade 2": "Movement bonus is increased by 1.",
-        "Debug Name": "Passive_Boosters"
+        "Debug Name": "Passive_Boosters",
+        "Tags": {}
     },
     "Medical Supplies": {
         "Class": "Passive",
@@ -1107,25 +1225,28 @@ weapon_list = {
         "Effect": "All Pilots survive death.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_Medical"
+        "Debug Name": "Passive_Medical",
+        "Tags": {}
     },
     "Vek Hormones": {
         "Class": "Passive",
         "Name": "Vek Hormones",
         "Power": "Free",
         "Effect": "Enemies do +1 Damage against other enemies.",
-        "Upgrade 1": "+1 Damage (Power off small)",
-        "Upgrade 2": "Increases damage by 1.",
-        "Debug Name": "Passive_FriendlyFire"
+        "Upgrade 1": "+1 Damage (Up)",
+        "Upgrade 2": "+1 Damage (Up) (Up)",
+        "Debug Name": "Passive_FriendlyFire",
+        "Tags": {"Hormones": 3}
     },
     "Force Amp": {
         "Class": "Passive",
         "Name": "Force Amp",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "All Vek take +1 damage from Bumps and blocking emerging Vek.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_ForceAmp"
+        "Debug Name": "Passive_ForceAmp",
+        "Tags": {}
     },
     "Critical Shields": {
         "Class": "Passive",
@@ -1134,16 +1255,18 @@ weapon_list = {
         "Effect": "If Power Grid is reduced to 1, all buildings gain a Shield.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_CritDefense"
+        "Debug Name": "Passive_CritDefense",
+        "Tags": {"Shield": 0}
     },
     "Ammo Generator": {
         "Class": "Passive",
         "Name": "Ammo Generator",
-        "Power": "(Power off small)",
+        "Power": "(Up)",
         "Effect": "+1 Use to all Limited Use Weapons. (Only available through debug)",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_Ammo"
+        "Debug Name": "Passive_Ammo",
+        "Tags": {}
     },
     "Forestry Nano": {
         "Class": "Passive",
@@ -1152,7 +1275,8 @@ weapon_list = {
         "Effect": "Vek spawn Forest when they die on Ground. (Only available through debug)",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_FastDecay"
+        "Debug Name": "Passive_FastDecay",
+        "Tags": {"Fire": 0}
     },
     "Nanofilter Mending": {
         "Class": "Passive",
@@ -1161,7 +1285,8 @@ weapon_list = {
         "Effect": "Standing on Smoke repairs mechs and removes Smoke.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_HealingSmoke"
+        "Debug Name": "Passive_HealingSmoke",
+        "Tags": {"Smoke Heal": 0}
     },
     "Heat Engines": {
         "Class": "Passive",
@@ -1170,24 +1295,27 @@ weapon_list = {
         "Effect": "Standing on Fire removes Fire and gives the mech \"Boost\".",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_FireBoost"
+        "Debug Name": "Passive_FireBoost",
+        "Tags": {"Fire Boost": 0}
     },
     "Networked Shielding": {
         "Class": "Passive",
         "Name": "Networked Shielding",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "Mechs cannot take damage during the Player Turn.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_PlayerTurnShield"
+        "Debug Name": "Passive_PlayerTurnShield",
+        "Tags": {}
     },
     "Void Shocker": {
         "Class": "Passive",
         "Name": "Void Shocker",
-        "Power": "(Power off small Power off small)",
+        "Power": "(Up Up)",
         "Effect": "If a Vek deals no damage to buildings or units when attacking, it takes 1 damage.",
         "Upgrade 1": "",
         "Upgrade 2": "",
-        "Debug Name": "Passive_VoidShock"
+        "Debug Name": "Passive_VoidShock",
+        "Tags": {}
     }
 }
