@@ -9,6 +9,13 @@ class RandomizeSquads(Toggle):
     default = False
 
 
+class CustomSquad(Toggle):
+    """Only use the custom squad"""
+    display_name = "Custom Squad Only"
+    default = False
+
+
 itb_options: typing.Dict[str, type(Option)] = {
-    "randomize_squads": RandomizeSquads
+    "randomize_squads": RandomizeSquads,
+    "custom_squad": CustomSquad
 }

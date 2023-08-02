@@ -1,7 +1,7 @@
 from BaseClasses import Item
 
 
-class MyGameItem(Item):
+class ItbItem(Item):
     game = "Into The Breach"
 
 

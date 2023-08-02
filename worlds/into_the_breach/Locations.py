@@ -1,16 +1,18 @@
 from BaseClasses import Location
+from .Logic import can_get_achievement
 
 
-class MyGameLocation(Location):
+class ItbLocation(Location):
     game = "Into The Breach"
 
     # override constructor to automatically mark event locations as such
-    def __init__(self, player: int, name="", code=None, parent=None):
-        super(MyGameLocation, self).__init__(player, name, code, parent)
+    def __init__(self, player: int, name= "", code=None, parent=None):
+        super(ItbLocation, self).__init__(player, name, code, parent)
+        self.access_rule = can_get_achievement(name, player)
         self.event = code is None
 
 
-itb_locations = {
+itb_locations = {  # Will have to replace with using Achievements.py
     "Rift Walkers":
         [
             # Drown 3 enemies in water in a single battle with the Rift Walkers squad
@@ -49,7 +51,7 @@ itb_locations = {
         ],
     "Flame Behemoths":
         [
-            "Quantum Entaglement",
+            "Quantum Entanglement",
             "Scorched Earth",
             "This is Fine",
         ],

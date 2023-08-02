@@ -1,4 +1,4 @@
-weapon_list = {
+weapon_table = {
     # Prime
     "Titan Fist": {
         "Class": "Prime",
@@ -174,7 +174,7 @@ weapon_list = {
         "Upgrade 1": "+2 Range (Up Up)",
         "Upgrade 2": "Add Fire (Up Up Up)",
         "Debug Name": "Prime_Flamespreader",
-        "Tags": { "Forced Move": 0, "Triple Push": 0, "Fire": 3}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Fire": 3}
     },
     "The Big One": {
         "Class": "Prime",
@@ -303,7 +303,7 @@ weapon_list = {
         "Power": "Free",
         "Effect": "Fire a non-damaging projectile that pushes tiles around the target.",
         "Debug Name": "Brute_Shrapnel",
-        "Tags": {"Triple Push": 0, "Deadly Pull": 0, "Forced Move": 0}
+        "Tags": {"Triple Push": 0, "#Deadly Pull": 0, "Forced Move": 0}
     },
     "Rail Cannon": {
         "Class": "Brute",
@@ -325,7 +325,7 @@ weapon_list = {
         "Upgrade 1": "+1 Damage (Up)",
         "Upgrade 2": "+1 Damage (Up Up)",
         "Debug Name": "Brute_Shockblast",
-        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "#Deadly Pull": 0}
     },
     "Ramming Engines": {
         "Class": "Brute",
@@ -478,7 +478,7 @@ weapon_list = {
         "Upgrade 1": "Buildings Immune (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Ranged_Artillerymech",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
     },
     "Rock Accelerator": {
         "Class": "Ranged",
@@ -499,7 +499,7 @@ weapon_list = {
         "Upgrade 1": "Buildings Immune (Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Ranged_Defensestrike",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
     },
     "Rocket Artillery": {
         "Class": "Ranged",
@@ -521,7 +521,7 @@ weapon_list = {
         "Upgrade 1": "Backburn (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Ranged_Ignite",
-        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "Deadly Pull": 0}
+        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "#Deadly Pull": 0}
     },
     "Micro-Artillery": {
         "Class": "Ranged",
@@ -687,7 +687,7 @@ weapon_list = {
         "Power": "Free",
         "Effect": "Fires a projectile, pulling target towards you 1 tile.",
         "Debug Name": "Science_Pullmech",
-        "Tags": {"Forced Move": 0}
+        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
     },
     "Grav Well": {
         "Class": "Science",
@@ -695,7 +695,7 @@ weapon_list = {
         "Power": "Free",
         "Effect": "Artillery weapon that pulls its target towards you.",
         "Debug Name": "Science_Gravwell",
-        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0}
     },
     "Repulse": {
         "Class": "Science",
@@ -790,9 +790,9 @@ weapon_list = {
         "Debug Name": "Science_PushBeam",
         "Tags": {"Triple Push": 0, "Forced Move": 1}
     },
-    "Raining Fire": {
+    "Firestorm Generator": {
         "Class": "Science",
-        "Name": "Raining Fire",
+        "Name": "Firestorm Generator",
         "Power": "Free",
         "Effect": "Flaming artillery that drops fire on the way to its target (and push the target). (Starts with 2-tile range.)",
         "Upgrade 1": "+1 Range (Up)",
@@ -808,7 +808,7 @@ weapon_list = {
         "Upgrade 1": "Shield Self (Up)",
         "Upgrade 2": "Shield Ally (Up Up)",
         "Debug Name": "Science_MassShift",
-        "Tags": {"Forced Move": 0, "Triple push": 0,"Shield": 1,"Deadly Pull": 1,}
+        "Tags": {"Forced Move": 0, "Triple push": 0, "Shield": 1, "#Deadly Pull": 1, }
     },
     "Explosive Warp": {
         "Class": "Science",
@@ -828,7 +828,7 @@ weapon_list = {
         "Upgrade 1": "+1 Range (Up)",
         "Upgrade 2": "+1 Range (Up Up)",
         "Debug Name": "Science_Placer",
-        "Tags": {"Shield": 0, "Forced Move": 0, "Triple Push": 0,"Deadly Pull": 0}
+        "Tags": {"Shield": 0, "Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
     },
     "Enrage Shot": {
         "Class": "Science",
@@ -879,7 +879,7 @@ weapon_list = {
         "Power": "Free",
         "Effect": "Fire a gravity well in 4 directions, pushing or pulling every unit. (Only available through debug)",
         "Debug Name": "Science_TC_Gravity",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
     },
 
     # Any class
@@ -926,7 +926,7 @@ weapon_list = {
         "Power": "Free",
         "Effect": "Call in an air strike on a single tile anywhere on the map.\nSingle-use.",
         "Debug Name": "Support_Force",
-        "Tags": {"Triple Push": 0, "Forced Move": 0, "Deadly Pull": 0}
+        "Tags": {"Triple Push": 0, "Forced Move": 0, "#Deadly Pull": 0}
     },
     "Smoke Drop": {
         "Class": "Any",
@@ -961,7 +961,7 @@ weapon_list = {
         "Effect": "Push all units in a single direction.\nSingle-use.",
         "Upgrade 1": "Unlimited Uses (Up)",
         "Debug Name": "Support_Wind",
-        "Tags": {"Forced Move": 1, "Triple Push": 0, "Chain": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 1, "Triple Push": 0, "Chain": 0, "#Deadly Pull": 0}
     },
     "Ice Generator": {
         "Class": "Any",
@@ -971,7 +971,7 @@ weapon_list = {
         "Upgrade 1": "+1 Size (Up)",
         "Upgrade 2": "+1 Size (Up Up)",
         "Debug Name": "Support_Blizzard",
-        "Tags": {"Freeze": 3, "Chain": 1 }
+        "Tags": {"Freeze": 3, "Chain": 1}
     },
     "Mass Confusion": {
         "Class": "Any",
@@ -990,7 +990,7 @@ weapon_list = {
         "Effect": "Overload the grid, causing a building to push away nearby units.",
         "Upgrade 1": "Add Shield (Up)",
         "Debug Name": "Support_GridDefense",
-        "Tags": {"Forced Move": 0, "Shield": 1, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Shield": 1, "#Deadly Pull": 0}
     },
     "Grid Assault": {
         "Class": "Any",
@@ -1001,7 +1001,7 @@ weapon_list = {
         "Upgrade 1": "+1 Damage (Up)",
         "Upgrade 2": "+1 Damage (Up)",
         "Debug Name": "Support_TC_GridAtk",
-        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "#Deadly Pull": 0}
     },
     "Bombing Run": {
         "Class": "Any",
