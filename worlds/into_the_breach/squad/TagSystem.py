@@ -1,8 +1,3 @@
-from .Weapons import weapon_table
-from typing import Dict
-from collections import defaultdict
-
-
 # List of tags :
 # High Damage : can deal 4+ damage in an attack
 # Triple Kill : Can kill 3 veks in an attack
@@ -26,7 +21,7 @@ from collections import defaultdict
 # Smoke Heal : Nanofilter Mending
 # Hormones : Vek Hormones
 
-def add_tag(tags: Dict, tag: str, value: int):
+def add_tag(tags: dict[str, int], tag: str, value: int):
     """
     Add a tag to the tags dictionary. If the tag already exists, take the minimum value.
     """
@@ -36,7 +31,7 @@ def add_tag(tags: Dict, tag: str, value: int):
         tags[tag] = min(tags[tag], value)
 
 
-def add_implied_tag(tags: Dict, result: str, *requirements: str):
+def add_implied_tag(tags: dict[str, int], result: str, *requirements: str):
     """
     Add an implied tag to the tags dictionary if all the required tags exist.
     """
@@ -49,7 +44,7 @@ def add_implied_tag(tags: Dict, result: str, *requirements: str):
     add_tag(tags, result, max_value)
 
 
-def expand_tags(tags: Dict):
+def expand_tags(tags: dict[str, int]):
     """
     Add implied tags based on existing tags in the dictionary.
     """
@@ -58,25 +53,7 @@ def expand_tags(tags: Dict):
     add_implied_tag(tags, "Heal", "Smoke Heal", "Smoke")
 
 
-def add_tags(tags: Dict, new_tags: Dict):
+def add_tags(tags: dict[str, int], new_tags: dict[str, int]):
     for tag in new_tags:
         add_tag(tags, tag, new_tags[tag])
     expand_tags(tags)
-
-
-def get_tags_by_squad(squads: dict[str, list[dict]]) -> defaultdict[str, dict[str, int]]:
-    # Creation of tags_by_squad
-    tags_by_squad = defaultdict(dict)
-
-    for squad_name in squads:
-        tags = tags_by_squad[squad_name]
-        for unit in squads[squad_name]:
-            for trait in unit["Traits"]:
-                add_tag(tags, trait, 0)
-
-            for weapon_name in unit["Weapons"]:
-                weapon_tags = weapon_table[weapon_name]["Tags"]
-                for tag, value in weapon_tags.items():
-                    add_tag(tags, tag, value)
-            expand_tags(tags)
-    return tags_by_squad

@@ -1,14 +1,15 @@
-from functools import reduce
-from typing import TextIO
+from typing import TextIO, Optional
 
-from BaseClasses import ItemClassification, Region, Entrance, MultiWorld, Item
+from BaseClasses import ItemClassification, Region, Entrance, MultiWorld
 from worlds.AutoWorld import World
 from worlds.generic.Rules import set_rule
 from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items
-from .Locations import ItbLocation, itb_locations
+from .Locations import itb_locations, ItbLocation
+from .Logic import can_beat_the_game
 from .Options import itb_options
-from .Squads import shuffle_teams, vanilla_squads
-from .TagSystem import get_tags_by_squad
+from .achievement.Achievements import achievements_by_squad
+from .squad import Squad
+from .squad.Squads import shuffle_teams, squad_names, vanilla_squads
 
 
 class IntoTheBreachWorld(World):
@@ -20,24 +21,22 @@ class IntoTheBreachWorld(World):
 
     item_name_to_id = {name: id for
                        id, name in enumerate(itb_items, base_id)}
-    locations = reduce(lambda x, y: x + y, itb_locations.values(), [])
+    locations = itb_locations
     location_name_to_id = {name: id for
                            id, name in enumerate(locations, base_id)}
 
-    item_name_groups = {
-    }
+    item_name_groups = {}
+    required_server_version = (0, 4, 2)
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
-        self.squads = None
-        self.tags_by_squad = None
+        self.squads: Optional[dict[str, Squad]] = None
 
     def generate_early(self) -> None:
         if self.multiworld.randomize_squads[self.player]:
             self.squads = shuffle_teams(self.random)
         else:
             self.squads = vanilla_squads()
-        self.tags_by_squad = get_tags_by_squad(self.squads)
 
     def create_item(self, item: str):
         if item == "Unlock Hive":
@@ -56,9 +55,6 @@ class IntoTheBreachWorld(World):
         else:
             return self.random.choice(itb_filler_items)
 
-    def create_event(self, event: str) -> Item:
-        return ItbItem(event, True, None, self.player)
-
     def create_location(self, name: str, region):
         return ItbLocation(self.player, name, self.location_name_to_id[name], region)
 
@@ -72,15 +68,14 @@ class IntoTheBreachWorld(World):
             entrance.connect(squad_region)
 
             self.multiworld.regions.append(squad_region)
-            for squad_name in itb_locations:
-                squad_region.locations += [self.create_location(achievement, squad_region) for achievement in
-                                           itb_locations[squad_name]]
+            for achievement_name in itb_locations:
+                squad_region.locations.append(self.create_location(achievement_name, squad_region))
 
         else:
-            for squad_name in itb_locations:
+            for squad_name in squad_names:
                 squad_region = Region(squad_name + " Squad", self.player, self.multiworld)
-                squad_region.locations = [self.create_location(achievement, squad_region) for achievement in
-                                          itb_locations[squad_name]]
+                for achievement_name in achievements_by_squad[squad_name]:
+                    squad_region.locations.append(self.create_location(achievement_name, squad_region))
 
                 entrance = Entrance(self.player, "Use squad " + squad_name, menu)
                 if squad_name != "Rift Walkers":
@@ -113,7 +108,7 @@ class IntoTheBreachWorld(World):
             item_count += 1
 
     def generate_basic(self) -> None:
-        self.multiworld.completion_condition[self.player] = lambda state: state.can_beat_the_game(self.player)
+        self.multiworld.completion_condition[self.player] = lambda state: can_beat_the_game(state, self.player)
 
     def fill_slot_data(self) -> dict:
         result = {}
@@ -122,15 +117,19 @@ class IntoTheBreachWorld(World):
         if self.multiworld.randomize_squads[self.player]:
             squads = {}
             for squad_name in self.squads:
-                squads[squad_name] = [unit["Name"] for unit in self.squads[squad_name]]
+                squad = []
+                units = self.squads[squad_name].units
+                for unit_name in units:
+                    squad.append(units[unit_name]["Name"])
+                squads[squad_name] = squad
             result["squads"] = squads
         return result
 
     @classmethod
     def stage_write_spoiler(cls, multiworld: MultiWorld, spoiler_handle: TextIO):
-        factorio_players = multiworld.get_game_players(cls.game)
+        players = multiworld.get_game_players(cls.game)
         header = False
-        for player in factorio_players:
+        for player in players:
             if multiworld.randomize_squads[player]:
                 if not header:
                     spoiler_handle.write("\n\nInto the Breach Squads:\n")
@@ -139,7 +138,9 @@ class IntoTheBreachWorld(World):
                 spoiler_handle.write("\n" + name + " : \n")
                 squads = multiworld.worlds[player].squads
                 for squad_name in squads:
-                    squad = squads[squad_name]
+                    squad: Squad = squads[squad_name]
+                    names = []
+                    for unit_name in squad.units:
+                        names.append(unit_name)
                     spoiler_handle.write(
-                        squad_name + " : " + squad[0]["Name"] + ", " + squad[1]["Name"] + ", " +
-                        squad[2]["Name"] + "\n")
+                        squad_name + " : " + names[0] + ", " + names[1] + ", " + names[2] + "\n")

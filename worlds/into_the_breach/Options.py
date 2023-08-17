@@ -3,8 +3,7 @@ import typing
 
 
 class RandomizeSquads(Toggle):
-    """Randomize Squads
-    Note that there is no logic"""
+    """Randomize Squads"""
     display_name = "Randomize Squads"
     default = False
 
@@ -15,7 +14,7 @@ class CustomSquad(Toggle):
     default = False
 
 
-itb_options: typing.Dict[str, type(Option)] = {
+itb_options: typing.Dict[str, Option] = {
     "randomize_squads": RandomizeSquads,
     "custom_squad": CustomSquad
 }
