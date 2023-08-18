@@ -26,10 +26,12 @@ class IntoTheBreachWorld(World):
                            id, name in enumerate(locations, base_id)}
 
     item_name_groups = {}
-    required_server_version = (0, 4, 2)
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
+        from Utils import __version__
+        if __version__ == "0.4.1":
+            self.random = self.multiworld.per_slot_randoms[self.player]
         self.squads: Optional[dict[str, Squad]] = None
 
     def generate_early(self) -> None:
