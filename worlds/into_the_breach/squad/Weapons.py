@@ -53,7 +53,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Rockmech",
-        "Tags": {"High Damage": 5}
+        "Tags": {"Summon": 0, "High Damage": 5}
     },
     "Sidewinder Fist": {
         "Class": "Prime",
@@ -488,7 +488,7 @@ weapon_table = {
         "Effect": "Launch a rock at a tile, pushing tiles to the left and right.",
         "Upgrade 1": "+1 Damage (Up Up)",
         "Debug Name": "Ranged_Rockthrow",
-        "Tags": {"Forced Move": 0, "Triple Kill": 0}
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Summon": 0}
     },
     "Cluster Artillery": {
         "Class": "Ranged",

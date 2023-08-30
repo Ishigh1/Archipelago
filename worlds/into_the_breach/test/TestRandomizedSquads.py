@@ -1,15 +1,16 @@
 from BaseClasses import MultiWorld
 from . import ItbTestBase
-from ..squad import Squad
+from ..squad import unit_table
 from ..squad.Squads import class_names
 
 
-def get_squads(multiworld: MultiWorld) -> dict[str, Squad]:
+def get_squads(multiworld: MultiWorld) -> dict[str, [str]]:
     """
     A utility function to easily fetch the randomized squads
     """
-    world = multiworld.worlds[1]
-    return world.squads
+    slotdata = multiworld.worlds[1].fill_slot_data()
+    assert slotdata is not None
+    return slotdata["squads"]
 
 
 class ItbRandomizedSquadsTest(ItbTestBase):
@@ -22,8 +23,8 @@ class ItbRandomizedSquadsTest(ItbTestBase):
         for squad_name in squads:
             squad = squads[squad_name]
             class_set = set()
-            for unit_name in squad.units:
-                types = squad.units[unit_name]["Type"]
+            for unit_name in squad:
+                types = unit_table[unit_name]["Type"]
                 i = 0
                 class_name = types[0]
                 while class_name not in class_names:
@@ -37,21 +38,21 @@ class ItbRandomizedSquadsTest(ItbTestBase):
         squads = get_squads(self.multiworld)
         for squad_name in squads:
             squad = squads[squad_name]
-            for unit_name in squad.units:
-                unit = squad.units[unit_name]
+            for unit_name in squad:
+                unit = unit_table[unit_name]
                 if "Disabled" in unit:
-                    self.assertFalse(squad.units[unit_name]["Disabled"])
+                    self.assertFalse(unit["Disabled"])
 
     def test_3_units_by_squad(self):
         squads = get_squads(self.multiworld)
         for squad_name in squads:
-            self.assertEqual(len(squads[squad_name].units), 3,
-                             f"{squad_name} has more than 3 units ({squads[squad_name].units}")
+            self.assertEqual(len(squads[squad_name]), 3,
+                             f"{squad_name} has more than 3 units ({squads[squad_name]}")
 
     def test_no_duplicate_unit(self):
         squads = get_squads(self.multiworld)
         units = set()
         for squad_name in squads:
-            for unit_name in squads[squad_name].units:
+            for unit_name in squads[squad_name]:
                 self.assertNotIn(unit_name, units, "Duplicate unit found")
                 units.add(unit_name)
