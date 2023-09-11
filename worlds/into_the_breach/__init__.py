@@ -29,9 +29,6 @@ class IntoTheBreachWorld(World):
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
-        from Utils import __version__
-        if __version__ == "0.4.1":
-            self.random = self.multiworld.per_slot_randoms[self.player]
         self.squads: Optional[dict[str, Squad]] = None
 
     def generate_early(self) -> None:
