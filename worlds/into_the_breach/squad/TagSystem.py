@@ -21,30 +21,17 @@
 # Smoke Heal : Nanofilter Mending
 # Hormones : Vek Hormones
 
-def add_tag(tags: dict[str, int], tag: str, value: int):
-    """
-    Add a tag to the tags dictionary. If the tag already exists, take the minimum value.
-    """
-    if tag not in tags:
-        tags[tag] = value
-    else:
-        tags[tag] = min(tags[tag], value)
-
-
-def add_implied_tag(tags: dict[str, int], result: str, *requirements: str):
+def add_implied_tag(tags: set[str], result: str, *requirements: str):
     """
     Add an implied tag to the tags dictionary if all the required tags exist.
     """
-    max_value = 0
     for tag in requirements:
-        if tag in tags:
-            max_value = max(max_value, tags[tag])
-        else:
+        if tag not in tags:
             return
-    add_tag(tags, result, max_value)
+    tags.add(result)
 
 
-def expand_tags(tags: dict[str, int]):
+def expand_tags(tags: set[str]):
     """
     Add implied tags based on existing tags in the dictionary.
     """
@@ -53,7 +40,7 @@ def expand_tags(tags: dict[str, int]):
     add_implied_tag(tags, "Heal", "Smoke Heal", "Smoke")
 
 
-def add_tags(tags: dict[str, int], new_tags: dict[str, int]):
+def add_tags(tags: set[str], new_tags: set[str]):
     for tag in new_tags:
-        add_tag(tags, tag, new_tags[tag])
+        tags.add(tag)
     expand_tags(tags)

@@ -4,7 +4,6 @@ from . import Squad
 from .SquadInfo import class_names, squad_names
 from .Units import unit_table
 from random import Random
-
 from ..achievement.AchievementHelper import can_get_all_achievements
 
 
@@ -30,10 +29,13 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
 
     while len(not_picked) < squad_amount:
         not_picked.append(class_names[random.randint(0, 3)])
-    random.shuffle(not_picked)
 
+    # Order not_picked based on the number of available units
+    not_picked = sorted(not_picked, key=lambda class_name: len(units_by_class[class_name]))
+
+    shuffled_squad_names = random.sample(squad_names, len(squad_names))
     squads = {}  # dict squad_name -> squad, also the return value
-    for squad_name in squad_names:
+    for squad_name in shuffled_squad_names:
         squad = Squad(squad_name)
         squad.set_units(units.copy())
         squads[squad_name] = squad
@@ -44,9 +46,7 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
 
 def select_units(not_picked: [str], random: Random, squads: dict[str, Squad],
                  units_by_class: dict[str, [dict]]):
-    squads_to_handle = []
-    for squad_name in squad_names:
-        squads_to_handle.append(squad_name)
+    squads_to_handle = list(squads.keys())
 
     random.shuffle(squads_to_handle)  # Last ones in line are less likely to have units used in other's achievements
 
@@ -80,7 +80,8 @@ def select_units_for_squad(not_picked: [str], random: Random, squads: dict[str, 
                 for class_name in class_names:
                     if class_name != forbidden_class:
                         other_class_names.append(class_name)
-                random.shuffle(other_class_names)  # The last one of this list is more likely to be essential for the achievements
+                random.shuffle(
+                    other_class_names)  # The last one of this list is more likely to be essential for the achievements
 
                 if select_unit_for_class(0, random, squad, squads_to_handle, units_by_class,
                                          other_class_names, squads,

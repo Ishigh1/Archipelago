@@ -1,4 +1,4 @@
-from .TagSystem import add_tag, expand_tags
+from .TagSystem import expand_tags
 from .Units import unit_table
 from .Weapons import weapon_table
 
@@ -8,6 +8,7 @@ class Squad:
         self._cached = False
         self.units: dict[str, dict] = {}
         self.name = name
+        self._tags: set[str]
 
     def add_unit(self, unit: dict) -> bool:
         unit_name = unit["Name"]
@@ -32,22 +33,23 @@ class Squad:
             self._cached = False
         self.units = units
 
-    def get_tags(self) -> dict[str, int]:
+    def get_tags(self) -> set[str]:
         if not self._cached:
             self._compute_tags()
         return self._tags
 
     def _compute_tags(self):
-        tags = dict()
         self._cached = True
-        for unit_name in self.units:
-            unit = self.units[unit_name]
-            for trait in unit["Traits"]:
-                add_tag(tags, trait, 0)
 
-            for weapon_name in unit["Weapons"]:
-                weapon_tags = weapon_table[weapon_name]["Tags"]
-                for tag, value in weapon_tags.items():
-                    add_tag(tags, tag, value)
-            expand_tags(tags)
+        # Pre-fetch traits and weapon tags
+        unit_traits = self.units.values()
+        # Flatten and collect individual weapon tags
+        tags = {tag for unit_name in self.units for weapon_name in self.units[unit_name]["Weapons"]
+                for tag in weapon_table[weapon_name]["Tags"].keys()}
+
+        for unit in unit_traits:
+            for trait in unit["Traits"]:
+                tags.add(trait)
+
+        expand_tags(tags)
         self._tags = tags

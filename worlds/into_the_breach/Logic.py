@@ -24,8 +24,8 @@ def can_beat_the_game(state: CollectionState, player: int) -> bool:
     return has_defense(state, player, 15) and has_starting_energy(state, player, 5)
 
 
-def unlocked_tags(state: CollectionState, player: int) -> dict[str, int]:
-    tags = {}
+def unlocked_tags(state: CollectionState, player: int) -> set[str]:
+    tags = set()
     for squad_name in squad_names:
         if state.has(squad_name, player):
             add_tags(tags, state.multiworld.worlds[player].squads[squad_name].get_tags())
