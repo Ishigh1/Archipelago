@@ -20,7 +20,7 @@ weapon_table = {
         "Upgrade 1": "Building Chain (Up)",
         "Upgrade 2": "Chain through Grid Buildings without causing damage.\n+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Lightning",
-        "Tags": {"Triple Kill": 0, "Chain": 1}
+        "Tags": {"Triple Kill": 0, "Piercing": 0, "Chain": 1}
     },
     "Burst Beam": {
         "Class": "Prime",
@@ -31,7 +31,7 @@ weapon_table = {
         "Upgrade 1": "Ally Immune (Up)",
         "Upgrade 2": "Friendly units will not take damage from this attack. (Buildings will still be damaged and shields will be removed)\n+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Lasermech",
-        "Tags": {"Laser": 0, "Triple Kill": 0, "High Damage": 3},
+        "Tags": {"Laser": 0, "Triple Kill": 0, "Piercing": 0, "High Damage": 3},
     },
     "Spartan Shield": {
         "Class": "Prime",
@@ -97,7 +97,7 @@ weapon_table = {
         "Upgrade 1": "+1 Range (Up)",
         "Upgrade 2": "+1 Range (Up Up Up)",
         "Debug Name": "Prime_Flamethrower",
-        "Tags": {"Forced Move": 0, "Fire": 0, "Triple Kill": 4}
+        "Tags": {"Forced Move": 0, "Fire": 0, "Piercing": 0, "Triple Kill": 4}
     },
     "Explosive Vents": {
         "Class": "Prime",
@@ -119,7 +119,7 @@ weapon_table = {
         "Upgrade 1": "A.C.I.D. Tip (Up)",
         "Upgrade 2": "Adds A.C.I.D. to the furthest hit enemy.\n+1 Range (Up Up)",
         "Debug Name": "Prime_Spear",
-        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Acid": 1}
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Piercing": 0, "Acid": 1}
     },
     "Hydraulic Legs": {
         "Class": "Prime",
@@ -174,7 +174,7 @@ weapon_table = {
         "Upgrade 1": "+2 Range (Up Up)",
         "Upgrade 2": "Add Fire (Up Up Up)",
         "Debug Name": "Prime_Flamespreader",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Fire": 3}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Piercing": 0, "Fire": 3}
     },
     "The Big One": {
         "Class": "Prime",
@@ -185,7 +185,7 @@ weapon_table = {
         "Upgrade 1": "-1 Self Damage (Up)",
         "Upgrade 2": "-1 Self Damage (Up Up)",
         "Debug Name": "Prime_WayTooBig",
-        "Tags": {"Triple Push": 0}
+        "Tags": {"Triple Push": 0, "Piercing": 0}
     },
     "Prism Laser": {
         "Class": "Prime",
@@ -196,7 +196,7 @@ weapon_table = {
         "Upgrade 1": "Ally Immune (Up)",
         "Upgrade 2": "No Max Damage (Up Up)",
         "Debug Name": "Prime_PrismLaser",
-        "Tags": {"Laser": 0, "High Damage": 2, "Triple Kill": 0}
+        "Tags": {"Laser": 0, "Triple Kill": 0, "Piercing": 0, "High Damage": 2}
     },
     "Hydraulic Lifter": {
         "Class": "Prime",
@@ -218,7 +218,7 @@ weapon_table = {
         "Upgrade 1": "Ally Immune (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Prime_TC_BendBeam",
-        "Tags": {"Laser": 0, "Chain": 0, "High Damage": 3, "Triple Kill": 0}
+        "Tags": {"Laser": 0, "Chain": 0, "Triple Kill": 0, "Piercing": 0, "High Damage": 3}
     },
     "Spring-Loaded Legs": {
         "Class": "Prime",
@@ -229,7 +229,7 @@ weapon_table = {
         "Upgrade 1": "+2 Range (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Prime_TC_Feint",
-        "Tags": {"Charge": 1, "Forced Move": 0, "High Damage": 3}
+        "Tags": {"Forced Move": 0, "Charge": 1, "High Damage": 3}
     },
     "Fissure Fist": {
         "Class": "Prime",
@@ -286,7 +286,7 @@ weapon_table = {
         "Upgrade 1": "Phase Shield (Up)",
         "Upgrade 2": "+1 Damage (Up Up)",
         "Debug Name": "Brute_PhaseShot",
-        "Tags": {"Shield": 1, "Forced Move": 0}
+        "Tags": {"Forced Move": 0, "Shield": 1}
     },
     "Grappling Hook": {
         "Class": "Brute",
@@ -303,7 +303,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Fire a non-damaging projectile that pushes tiles around the target.",
         "Debug Name": "Brute_Shrapnel",
-        "Tags": {"Triple Push": 0, "#Deadly Pull": 0, "Forced Move": 0}
+        "Tags": {"Triple Push": 0, "Deadly Pull": 0, "Forced Move": 0}
     },
     "Rail Cannon": {
         "Class": "Brute",
@@ -314,7 +314,7 @@ weapon_table = {
         "Upgrade 1": "+1 Max Damage (Up)",
         "Upgrade 2": "+2 Max Damage (Up Up)",
         "Debug Name": "Brute_Sniper",
-        "Tags": {"Forced Move": 0, "High Damage": 2}
+        "Tags": {"Forced Move": 0, "Piercing": 0, "High Damage": 2}
     },
     "Shock Cannon": {
         "Class": "Brute",
@@ -325,7 +325,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up)",
         "Upgrade 2": "+1 Damage (Up Up)",
         "Debug Name": "Brute_Shockblast",
-        "Tags": {"Forced Move": 0, "Triple Kill": 0, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Deadly Pull": 0}
     },
     "Ramming Engines": {
         "Class": "Brute",
@@ -421,7 +421,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "+1 Damage (Up Up)",
         "Debug Name": "Brute_PierceShot",
-        "Tags": {"Forced Move": 0, "High Damage": 4, "Triple Kill": 0}
+        "Tags": {"Forced Move": 0, "Piercing": 0, "High Damage": 4, "Triple Kill": 0}
     },
     "Guided Missile": {
         "Class": "Brute",
@@ -465,7 +465,7 @@ weapon_table = {
         "Upgrade 1": "+2 Damage (Up)",
         "Upgrade 2": "Building Immune (Up)",
         "Debug Name": "Brute_KO_Combo",
-        "Tags": {"Triple Kill": 0, "High Damage": 1}
+        "Tags": {"Triple Kill": 0, "Piercing": 0, "High Damage": 1}
     },
 
     # Ranged
@@ -478,7 +478,7 @@ weapon_table = {
         "Upgrade 1": "Buildings Immune (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Ranged_Artillerymech",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
     "Rock Accelerator": {
         "Class": "Ranged",
@@ -499,7 +499,7 @@ weapon_table = {
         "Upgrade 1": "Buildings Immune (Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Ranged_Defensestrike",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
     "Rocket Artillery": {
         "Class": "Ranged",
@@ -521,7 +521,7 @@ weapon_table = {
         "Upgrade 1": "Backburn (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Ranged_Ignite",
-        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "#Deadly Pull": 0}
+        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "Deadly Pull": 0}
     },
     "Micro-Artillery": {
         "Class": "Ranged",
@@ -602,7 +602,7 @@ weapon_table = {
         "Upgrade 1": "+1 Use (Up)",
         "Upgrade 2": "+1 Damage (Up)",
         "Debug Name": "Ranged_Dual",
-        "Tags": {"Triple Kill": 0, "High Damage": 1}
+        "Tags": {"Triple Kill": 0, "Piercing": 0, "High Damage": 1}
     },
     "Tri-Rocket": {
         "Class": "Ranged",
@@ -613,7 +613,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up Up)",
         "Upgrade 2": "Building Immune (Up)",
         "Debug Name": "Ranged_Crack",
-        "Tags": {"Triple Push": 0, "Forced Move": 0}
+        "Tags": {"Triple Push": 0, "Forced Move": 0, "Piercing": 0}
     },
     "Bomb Dispenser": {
         "Class": "Ranged",
@@ -633,7 +633,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "Acidic (Up)",
         "Debug Name": "Ranged_Arachnoid",
-        "Tags": {"Summon": 0, "Acid": 1, "Forced Move": 0}
+        "Tags": {"Summon": 0, "Forced Move": 0, "Acid": 1}
     },
     "Smoldering Shells": {
         "Class": "Ranged",
@@ -655,7 +655,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "Building Immune (Up)",
         "Debug Name": "Ranged_TC_BounceShot",
-        "Tags": {"Forced Move": 0, "Triple Kill": 0}
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Piercing": 0}
     },
     "Quick-Fire Artillery": {
         "Class": "Ranged",
@@ -677,7 +677,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "+Building Immune (Up)",
         "Debug Name": "Ranged_KO_Combo",
-        "Tags": {"Triple Kill": 0}
+        "Tags": {"Triple Kill": 0, "Piercing": 0}
     },
 
     # Science
@@ -715,7 +715,7 @@ weapon_table = {
         "Upgrade 1": "+1 Range (Up)",
         "Upgrade 2": "+2 Range (Up Up)",
         "Debug Name": "Science_Swap",
-        "Tags": {"Teleport": 3, "Forced Move": 0}
+        "Tags": {"Forced Move": 0, "Teleport": 3, }
     },
     "A.C.I.D. Projector": {
         "Class": "Science",
@@ -788,7 +788,7 @@ weapon_table = {
         "Effect": "Pushes all units in a line.\nSingle-use.",
         "Upgrade 1": "Unlimited Use (Up)",
         "Debug Name": "Science_PushBeam",
-        "Tags": {"Triple Push": 0, "Forced Move": 1}
+        "Tags": {"Triple Push": 0, "Piercing": 0, "Forced Move": 1}
     },
     "Firestorm Generator": {
         "Class": "Science",
@@ -808,7 +808,7 @@ weapon_table = {
         "Upgrade 1": "Shield Self (Up)",
         "Upgrade 2": "Shield Ally (Up Up)",
         "Debug Name": "Science_MassShift",
-        "Tags": {"Forced Move": 0, "Triple push": 0, "Shield": 1, "#Deadly Pull": 1, }
+        "Tags": {"Forced Move": 0, "Triple push": 0, "Shield": 1, "Deadly Pull": 1, }
     },
     "Explosive Warp": {
         "Class": "Science",
@@ -828,7 +828,7 @@ weapon_table = {
         "Upgrade 1": "+1 Range (Up)",
         "Upgrade 2": "+1 Range (Up Up)",
         "Debug Name": "Science_Placer",
-        "Tags": {"Shield": 0, "Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
+        "Tags": {"Shield": 0, "Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
     "Enrage Shot": {
         "Class": "Science",
@@ -879,7 +879,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Fire a gravity well in 4 directions, pushing or pulling every unit. (Only available through debug)",
         "Debug Name": "Science_TC_Gravity",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
     },
 
     # Any class
@@ -926,7 +926,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Call in an air strike on a single tile anywhere on the map.\nSingle-use.",
         "Debug Name": "Support_Force",
-        "Tags": {"Triple Push": 0, "Forced Move": 0, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
     },
     "Smoke Drop": {
         "Class": "Any",
@@ -961,7 +961,7 @@ weapon_table = {
         "Effect": "Push all units in a single direction.\nSingle-use.",
         "Upgrade 1": "Unlimited Uses (Up)",
         "Debug Name": "Support_Wind",
-        "Tags": {"Forced Move": 1, "Triple Push": 0, "Chain": 0, "#Deadly Pull": 0}
+        "Tags": {"Triple Push": 0, "Chain": 0, "Deadly Pull": 0, "Piercing": 0, "Forced Move": 1, }
     },
     "Ice Generator": {
         "Class": "Any",
@@ -971,7 +971,7 @@ weapon_table = {
         "Upgrade 1": "+1 Size (Up)",
         "Upgrade 2": "+1 Size (Up Up)",
         "Debug Name": "Support_Blizzard",
-        "Tags": {"Freeze": 3, "Chain": 1}
+        "Tags": {"Chain": 1, "Freeze": 3, }
     },
     "Mass Confusion": {
         "Class": "Any",
@@ -990,7 +990,7 @@ weapon_table = {
         "Effect": "Overload the grid, causing a building to push away nearby units.",
         "Upgrade 1": "Add Shield (Up)",
         "Debug Name": "Support_GridDefense",
-        "Tags": {"Forced Move": 0, "Shield": 1, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Deadly Pull": 0, "Piercing": 0, "Shield": 1, }
     },
     "Grid Assault": {
         "Class": "Any",
@@ -1001,7 +1001,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up)",
         "Upgrade 2": "+1 Damage (Up)",
         "Debug Name": "Support_TC_GridAtk",
-        "Tags": {"Forced Move": 0, "#Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Deadly Pull": 0}
     },
     "Bombing Run": {
         "Class": "Any",
@@ -1111,9 +1111,9 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Throw needles at the enemy, pushing the furthest hit tile. (Starts with 1-tile range.)",
         "Upgrade 1": "Range & Damage (Up Up)",
-        "Upgrade 2": "Increases potential hit tiles by 1 and damage on all tiles by 1.",
+        "Upgrade 2": "Range & Damage (Up Up)",
         "Debug Name": "Vek_Hornet",
-        "Tags": {"Triple Kill": 2, "Forced Move": 0}
+        "Tags": {"Triple Kill": 2, "Forced Move": 0, "Piercing": 2, }
     },
     "Explosive Goo": {
         "Class": "Vek",
@@ -1122,9 +1122,9 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Artillery attack that damages a tile and pushes adjacent tiles away.",
         "Upgrade 1": "+1 Tile (Up)",
-        "Upgrade 2": "Increases area hit by 1 tile and damage by 2.",
+        "Upgrade 2": "Increases damage by 2. (Up Up)",
         "Debug Name": "Vek_Scarab",
-        "Tags": {"Triple: Push": 0, "Forced Move": 0, "Deadly Pull": 0}
+        "Tags": {"Triple Push": 0, "Forced Move": 0, "Deadly Pull": 0, "Piercing": 1, }
     },
 
     # Passives

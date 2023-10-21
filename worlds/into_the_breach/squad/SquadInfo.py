@@ -6,7 +6,8 @@ squad_names = [
     "Steel Judoka",
     "Flame Behemoths",
     "Frozen Titans",
-    "Hazardous Mechs"
+    "Hazardous Mechs",
+    "Bombermechs"
 ]
 
 class_names = [

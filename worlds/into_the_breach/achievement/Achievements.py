@@ -185,16 +185,19 @@ achievement_info_table = {
         "squad": "Bombermechs",
         "name": "Hold the Door",
         "description": "Block 30 Emerging Vek enemies by the end of Island 2",
+        "required_tags": None,
     },
     "No Survivors": {
         "squad": "Bombermechs",
         "name": "No Survivors",
         "description": "Have 7 units (any team) die in a single turn",
+        "required_tags": ("Triple Kill",)
     },
     "Powered Blast": {
         "squad": "Bombermechs",
         "name": "Powered Blast",
         "description": "Pierce a Walking Bomb with the AP Cannon to kill an Enemy",
+        "required_tags": (("Summon", "Piercing"),)
     },
     "Spider Breeding": {
         "squad": "Arachnophiles",

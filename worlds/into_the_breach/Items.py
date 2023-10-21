@@ -13,7 +13,7 @@ itb_squad_items = [
     "Flame Behemoths",
     "Frozen Titans",
     "Hazardous Mechs",
-    # "Bombermechs",
+    "Bombermechs",
     # "Arachnophiles",
     # "Mist Eaters",
     # "Heat Sinkers",
