@@ -41,6 +41,7 @@ itb_filler_items = [
     "1 Grid Power"
 ]
 itb_trap_items = [
-    "-1 Grid Power"
+    "-1 Grid Power",
+    "Boss Enemy"
 ]
 itb_items = itb_progression_items + itb_filler_items + itb_trap_items
