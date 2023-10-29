@@ -17,7 +17,7 @@ class Achievement:
     def get_access_rule(self, player: int) -> Callable[[CollectionState], bool]:
         return lambda state: self.is_doable_by_tags(unlocked_tags(state, player))
 
-    def is_doable_by_tags(self, tags: dict[str, int]) -> bool:
+    def is_doable_by_tags(self, tags: set[str]) -> bool:
         if self.required_tags is None:
             return True
         for option in self.required_tags:

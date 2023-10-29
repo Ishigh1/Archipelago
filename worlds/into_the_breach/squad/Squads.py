@@ -48,10 +48,11 @@ def select_units(not_picked: [str], random: Random, squads: dict[str, Squad],
                  units_by_class: dict[str, [dict]]):
     squads_to_handle = list(squads.keys())
 
-    random.shuffle(squads_to_handle)  # Last ones in line are less likely to have units used in other's achievements
+    while True:
+        random.shuffle(squads_to_handle)  # Last ones in line are less likely to have units used in other's achievements
 
-    if not select_units_for_squad(not_picked, random, squads, units_by_class, squads_to_handle):
-        raise Exception("Couldn't select units!")
+        if select_units_for_squad(not_picked, random, squads, units_by_class, squads_to_handle):
+            break
     return
 
 
@@ -114,6 +115,7 @@ def select_unit_for_class(class_id: int, random: Random, squad: Squad,
         squad.remove_unit(unit)
 
     units["ready"] = squad.units
+    fails = 0
 
     for i in range(len(class_units)):
         squad.set_units(units["ready"].copy())
@@ -132,8 +134,11 @@ def select_unit_for_class(class_id: int, random: Random, squad: Squad,
                     assert len(squad.units) == 3
                     return True
                 units_by_class[class_name] = class_units.copy()
+                fails = fails + 1
             for squad_name in squads_to_handle:
                 squads[squad_name].set_units(units[squad_name].copy())
+            if fails == 5:  # probably a bad pick, let's skip
+                break
     squad.set_units(units["self"])
     return False
 
