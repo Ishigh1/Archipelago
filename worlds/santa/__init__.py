@@ -33,11 +33,11 @@ class SantaWorld(World):
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
         self.multiworld.regions.append(menu)
-        for i in range(self.options.locations.value):
+        for i in range(self.multiworld.locations[self.player].value):
             menu.locations.append(self.create_location("Happy Kid", i + 1, menu))
 
     def create_items(self) -> None:
-        for _ in range(self.options.locations.value):
+        for _ in range(self.multiworld.locations[self.player].value):
             self.multiworld.itempool.append(self.create_item("Gift"))
 
     def generate_basic(self) -> None:
@@ -45,5 +45,5 @@ class SantaWorld(World):
 
     def fill_slot_data(self) -> Dict[str, Any]:
         return {
-            "locations": self.options.locations.value
+            "locations": self.multiworld.locations[self.player].value
         }
