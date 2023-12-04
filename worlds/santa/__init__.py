@@ -34,7 +34,7 @@ class SantaWorld(World):
         menu = Region("Menu", self.player, self.multiworld)
         self.multiworld.regions.append(menu)
         for i in range(self.multiworld.locations[self.player].value):
-            menu.locations.append(self.create_location("Happy Kid", i + 1, menu))
+            menu.locations.append(self.create_location("Happy Kid", i, menu))
 
     def create_items(self) -> None:
         for _ in range(self.multiworld.locations[self.player].value):
