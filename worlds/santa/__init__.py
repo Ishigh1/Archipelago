@@ -2,6 +2,7 @@ from typing import Dict, Any
 
 from BaseClasses import Item, ItemClassification, Location, Region
 from .Options import options
+from .Rules import can_dlc_gift
 from ..AutoWorld import World
 
 
@@ -31,10 +32,26 @@ class SantaWorld(World):
         raise KeyError(name)
 
     def create_regions(self) -> None:
-        menu = Region("Menu", self.player, self.multiworld)
-        self.multiworld.regions.append(menu)
+        region = Region("Menu", self.player, self.multiworld)
+        self.multiworld.regions.append(region)
+        for player in self.multiworld.player_ids:
+            world: World = self.multiworld.worlds[player]
+            if world.game == "DLCQuest":
+                player_menu = self.multiworld.get_region("Menu", player)
+                gift_event = Item(f"Player {player} gifts", ItemClassification.progression, None, self.player)
+                gift_location = Location(self.player, "Can Gift", parent=player_menu)
+                gift_location.event = True
+                gift_location.access_rule = lambda state, p=player, w=world: can_dlc_gift(state, p, w)
+                gift_location.place_locked_item(gift_event)
+                player_menu.locations.append(gift_location)
+
+                new_region = Region(f"Player {player} can gift", self.player, self.multiworld)
+                region.connect(new_region, rule=lambda state, p=player: state.has(f"Player {p} gifts", self.player))
+                self.multiworld.regions.append(new_region)
+                region = new_region
+
         for i in range(self.options.locations.value):
-            menu.locations.append(self.create_location("Happy Kid", i, menu))
+            region.locations.append(self.create_location("Happy Kid", i, region))
 
     def create_items(self) -> None:
         for _ in range(self.options.locations.value):
