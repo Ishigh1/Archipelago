@@ -309,14 +309,44 @@ def make_d4_logic(player: int):
             ])
         ])],
 
-        ["enter gohma", "d4 boss", False, lambda state: all([
-            any([
-                oos_has_slingshot(state, player),
-                oos_option_hard_logic(state, player)  # You can kill Gohma with the satchel. Yup...
+        ["enter gohma", "d4 boss", False, lambda state: any([
+            all([
+                # kill with pincer
+                oos_option_medium_logic(state, player),
+                any([
+                    oos_has_slingshot(state, player),
+                    oos_option_hard_logic(state, player)  # You can kill Gohma with the satchel. Yup...
+                ]),
+                any([
+                    oos_has_scent_seeds(state, player),
+                    oos_has_ember_seeds(state, player)
+                ])
             ]),
-            any([
-                oos_has_scent_seeds(state, player),
-                oos_has_ember_seeds(state, player)
+            # kill after destroying pincer
+            all([
+                # With a sword's laser
+                oos_option_medium_logic(state, player),
+                any([
+                    oos_has_noble_sword(state, player), # Gohma's minions give enough hearts to justify it
+                    all([
+                        oos_has_sword(state, player),
+                        state.has("Energy Ring", player)
+                    ])
+                ])
+            ]),
+            all([
+                any([
+                    oos_has_sword(state, player),
+                    oos_has_fools_ore(state, player)
+                ]),
+                any([
+                    oos_can_use_ember_seeds(state, player, False),
+                    oos_can_use_scent_seeds(state, player),
+                    all([
+                        oos_option_medium_logic(state, player),
+                        oos_can_use_mystery_seeds(state, player)
+                    ])
+                ])
             ])
         ])],
     ]
