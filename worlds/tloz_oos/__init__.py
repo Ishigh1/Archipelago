@@ -548,8 +548,135 @@ class OracleOfSeasonsWorld(World):
         ]
         return self.random.choice(FILLER_ITEM_NAMES)
 
+    def load_data_from_csv(self, file_name):
+        data = {}
+        with open(file_name, 'r', newline='') as csvfile:
+            csvreader = csv.reader(csvfile)
+            csv_data = list(csvreader)
+
+            # Assuming the first row contains item names (excluding the first empty cell)
+            item_names = csv_data[0][1:]
+
+            # Extract location names from the first column (excluding the first row)
+            location_names = [row[0] for row in csv_data[1:]]
+
+            # Extract data values from the rest of the rows
+            for row in csv_data[1:]:
+                location_name = row[0]
+                for i, item_name in enumerate(item_names):
+                    key = (item_name, location_name)
+                    value = int(row[i + 1])  # Adding 1 to skip the location name in each row
+                    if value > 0:
+                        data[key] = value
+        item_names = set(item_names)
+        location_names = set(location_names)
+        return data, item_names, location_names
+
+    def save_data_in_csv(self, file_name, data, item_names, location_names):
+        csv_data = []
+        item_line = sorted(item_names)
+        item_line.insert(0, "")
+        csv_data.append(item_line)
+        for location_name in sorted(location_names):
+            csv_line = [location_name]
+            for item_name in item_line[1:]:
+                key = (item_name, location_name)
+                if key not in data:
+                    csv_line.append(0)
+                else:
+                    csv_line.append(data[key])
+            csv_data.append(csv_line)
+
+        # Writing data to CSV file
+        with open(file_name, 'w', newline='') as csvfile:
+            csvwriter = csv.writer(csvfile)
+            csvwriter.writerows(csv_data)
+
     def generate_output(self, output_directory: str):
-        write_patcherdata_file(self, output_directory)
+        file_name = "result.csv"
+        if os.path.exists(file_name):
+            data, item_names, location_names = self.load_data_from_csv(file_name)
+        else:
+            data = {}
+            item_names = set()
+            location_names = set()
+
+        for location in self.multiworld.get_locations():
+            if location.address is not None:
+                location_names.add(location.name)
+                if location.item is not None:
+                    item_names.add(location.item.name)
+                    key = (location.item.name, location.name)
+                    if key not in data:
+                        data[key] = 1
+                    else:
+                        data[key] += 1
+
+        self.save_data_in_csv(file_name, data, item_names, location_names)
+        data2, item_names2, location_names2 = self.load_data_from_csv(file_name)
+        assert item_names2 == item_names
+        assert location_names2 == location_names
+        assert data == data2
+
+        raise Exception()
+
+        yamlObj = {
+            "settings": {
+                "game": "seasons",
+                "version": VERSION,
+                "companion": COMPANIONS[self.options.animal_companion.value],
+                "warp_to_start": self.options.warp_to_start.current_key,
+                "required_essences": self.options.required_essences.value,
+                "fools_ore_damage": 3 if self.options.fools_ore == "balanced" else 12,
+                "heart_beep_interval": self.options.heart_beep_interval.current_key,
+                "lost_woods_item_sequence": ' '.join(self.lost_woods_item_sequence),
+                "samasa_gate_sequence": ' '.join([str(x) for x in self.samasa_gate_code]),
+                "golden_beasts_requirement": self.options.golden_beasts_requirement.value,
+                "treehouse_old_man_requirement": self.options.treehouse_old_man_requirement.value,
+                "tarm_gate_required_jewels": self.options.tarm_gate_required_jewels.value,
+                "reveal_golden_ore_tiles": self.options.shuffle_golden_ore_spots == "shuffled_visible",
+                "quick_flute": self.options.quick_flute.current_key,
+                "open_advance_shop": self.options.advance_shop.current_key,
+                "character_sprite": self.options.character_sprite.current_key,
+                "character_palette": self.options.character_palette.current_key,
+                "slot_name": self.multiworld.get_player_name(self.player)
+            },
+            "default seasons": {},
+            "old man rupee values": {},
+            "locations": {},
+            "shop prices": self.shop_prices
+        }
+
+        for region_name, season in self.default_seasons.items():
+            yamlObj["default seasons"][REGIONS_CONVERSION_TABLE[region_name]] = season
+        if self.options.horon_village_season == "chaotic":
+            yamlObj["default seasons"][REGIONS_CONVERSION_TABLE["HORON_VILLAGE"]] = "chaotic"
+
+        for region_name, value in self.old_man_rupee_values.items():
+            yamlObj["old man rupee values"][region_name] = value
+
+        if self.options.shuffle_dungeons != "vanilla":
+            yamlObj["dungeon entrances"] = {}
+            for entrance, dungeon in self.dungeon_entrances.items():
+                yamlObj["dungeon entrances"][entrance] = dungeon.replace("enter ", "")
+
+        if self.options.shuffle_portals != "vanilla":
+            yamlObj["subrosia portals"] = {}
+            for portal_holo, portal_sub in self.portal_connections.items():
+                yamlObj["subrosia portals"][PORTALS_CONVERSION_TABLE[portal_holo]] = PORTALS_CONVERSION_TABLE[
+                    portal_sub]
+
+        for loc in self.multiworld.get_locations(self.player):
+            if loc.address is None:
+                continue
+            item_name = loc.item.name if loc.item.player == loc.player else "Archipelago Item"
+            loc_patcher_name = find_patcher_name_for_location(loc.name)
+            if loc_patcher_name != "":
+                yamlObj["locations"][loc_patcher_name] = item_name
+
+        filename = f"{self.multiworld.get_out_file_name_base(self.player)}.patcherdata"
+        with open(os.path.join(output_directory, filename), 'w') as f:
+            yaml.dump(yamlObj, f)
 
     def write_spoiler(self, spoiler_handle):
         spoiler_handle.write(f"\n\nDefault Seasons ({self.multiworld.player_name[self.player]}):\n")
