@@ -1,4 +1,6 @@
 from BaseClasses import CollectionState
+from Options import Accessibility
+from worlds.generic.Rules import location_item_name
 from worlds.tloz_oos.data.Constants import DUNGEON_NAMES, SEASON_ITEMS, ESSENCES, JEWELS
 
 
@@ -941,3 +943,9 @@ def oos_season_in_horon_village(state: CollectionState, player: int, season: str
     if oos_get_default_season(state, player, "HORON_VILLAGE") == season:
         return True
     return oos_has_season(state, player, season)
+
+
+def location_holds_item(state: CollectionState, location_name: str, item_name: str, player: int):
+    if state.multiworld.worlds[player].options.accessibility == Accessibility.option_locations:
+        return False
+    return location_item_name(state, location_name, player) == (item_name, player)

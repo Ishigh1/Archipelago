@@ -1,3 +1,4 @@
+from worlds.generic.Rules import location_item_name
 from worlds.tloz_oos.data.logic.LogicPredicates import *
 
 
@@ -18,7 +19,10 @@ def make_d0_logic(player: int):
         ])],
 
         # 1 key
-        ["enter d0", "d0 sword chest", False, lambda state: oos_has_small_keys(state, player, 0, 1)],
+        ["enter d0", "d0 sword chest", False, lambda state: any([
+            oos_has_small_keys(state, player, 0, 1),
+            location_holds_item(state, "Hero's Cave: Final Chest", f"Small Key ({DUNGEON_NAMES[0]})", player)
+        ])],
     ]
 
 
@@ -73,10 +77,15 @@ def make_d1_logic(player: int):
         ["d1 railway chest", "d1 button chest", False, None],
 
         # 2 keys
-        ["d1 railway chest", "d1 basement", False, lambda state: all([
-            oos_has_bombs(state, player),
-            oos_has_small_keys(state, player, 1, 2),
-            oos_can_kill_armored_enemy(state, player)
+        ["d1 railway chest", "d1 basement", False, lambda state: any([
+            all([
+                oos_has_bombs(state, player),
+                oos_can_kill_armored_enemy(state, player),
+                oos_has_small_keys(state, player, 1, 2),
+            ]),
+            # We can't get that key if it's self-locked
+            location_holds_item(state, "Gnarled Root Dungeon: Item in Basement",
+                                f"Small Key ({DUNGEON_NAMES[1]})", player)
         ])],
     ]
 
@@ -123,7 +132,10 @@ def make_d2_logic(player: int):
                 oos_can_kill_d2_far_moblin(state, player)
             ])
         ])],
-        ["d2 spinner", "d2 terrace chest", False, lambda state: oos_has_small_keys(state, player, 2, 3)],
+        ["d2 spinner", "d2 terrace chest", False, lambda state: any([
+            oos_has_small_keys(state, player, 2, 3),
+            location_holds_item(state, "Snake's Remains: Chest on Terrace", f"Small Key ({DUNGEON_NAMES[2]})", player)
+        ])],
     ]
 
 
@@ -161,8 +173,12 @@ def make_d3_logic(player: int):
 
         # 2 keys
         ["d3 water room", "d3 mimic chest", False, lambda state: all([
-            oos_has_small_keys(state, player, 3, 2),
-            oos_can_kill_normal_enemy(state, player)
+            oos_can_kill_normal_enemy(state, player),
+            any([
+                oos_has_small_keys(state, player, 3, 2),
+                location_holds_item(state, "Poison Moth's Lair (1F): Chest in Mimics Room",
+                                    f"Small Key ({DUNGEON_NAMES[3]})", player)
+            ]),
         ])],
         ["d3 mimic stairs", "d3 omuai stairs", False, lambda state: all([
             oos_has_feather(state, player),
@@ -278,21 +294,32 @@ def make_d4_logic(player: int):
         ])],
 
         # 5 keys
-        ["d4 final minecart", "d4 cracked floor room", False, lambda state: oos_has_small_keys(state, player, 4, 5)],
+        ["d4 final minecart", "d4 cracked floor room", False, lambda state: any([
+            oos_has_small_keys(state, player, 4, 5),
+            location_holds_item(state, "Dancing Dragon Dungeon (1F): Crumbling Room Chest",
+                                f"Small Key ({DUNGEON_NAMES[4]})", player)
+        ])],
         ["d4 final minecart", "d4 dive spot", False, lambda state: all([
             any([  # hit distant levers
                 oos_has_magic_boomerang(state, player),
                 oos_has_slingshot(state, player)
             ]),
             oos_can_jump_2_wide_pit(state, player),
-            oos_has_small_keys(state, player, 4, 5),
-            oos_has_flippers(state, player)
+            oos_has_flippers(state, player),
+            any([
+                oos_has_small_keys(state, player, 4, 5),
+                location_holds_item(state, "Dancing Dragon Dungeon (1F): Eye Diving Spot Item",
+                                    f"Small Key ({DUNGEON_NAMES[4]})", player)
+            ])
         ])],
 
-        ["d4 cracked floor room", "d4 basement stairs", False, lambda state: any([
-            oos_has_boomerang(state, player),
-            oos_has_slingshot(state, player),
-            oos_option_hard_logic(state, player)
+        ["d4 final minecart", "d4 basement stairs", False, lambda state: all([
+            oos_has_small_keys(state, player, 4, 5),
+            any([
+                oos_has_boomerang(state, player),
+                oos_has_slingshot(state, player),
+                oos_option_hard_logic(state, player)
+            ])
         ])],
 
         ["d4 basement stairs", "gohma owl", False, lambda state: oos_can_use_mystery_seeds(state, player)],
@@ -445,16 +472,19 @@ def make_d5_logic(player: int):
                     oos_can_jump_3_wide_liquid(state, player),
                 ])
             ]),
-            oos_has_small_keys(state, player, 5, 5),
+            any([
+                oos_has_small_keys(state, player, 5, 5),
+                location_holds_item(state, "Unicorn's Cave: Magnet Gloves Chest",
+                                    f"Small Key ({DUNGEON_NAMES[5]})", player)
+            ])
         ])],
 
         ["d5 pot room", "d5 post syger", False, lambda state: all([
-            oos_has_small_keys(state, player, 5, 5),
+            oos_has_small_keys(state, player, 5, 3),
             oos_can_kill_armored_enemy(state, player)
         ])],
 
         ["d5 post syger", "d5 basement", False, lambda state: all([
-            oos_has_small_keys(state, player, 5, 5),
             state.has("_dropped_d5_magnet_ball", player),
             oos_has_magnet_gloves(state, player),
             any([
@@ -463,6 +493,11 @@ def make_d5_logic(player: int):
                     oos_option_medium_logic(state, player),
                     oos_has_feather(state, player)
                 ])
+            ]),
+            any([
+                oos_has_small_keys(state, player, 5, 5),
+                location_holds_item(state, "Unicorn's Cave: Treadmills Basement Item",
+                                    f"Small Key ({DUNGEON_NAMES[5]})", player)
             ])
         ])],
 
@@ -671,7 +706,8 @@ def make_d7_logic(player: int):
                 any([
                     oos_can_kill_armored_enemy(state, player),
                     oos_has_shield(state, player),  # To push the darknut, the rod not really working
-                    oos_option_medium_logic(state, player) # Pull the right darknut by just going and stalling in the hole
+                    oos_option_medium_logic(state, player)
+                    # Pull the right darknut by just going and stalling in the hole
                 ])
             ]),
             all([
@@ -716,7 +752,6 @@ def make_d7_logic(player: int):
 
         # 5 keys
         ["d7 maze chest", "d7 stalfos chest", False, lambda state: all([
-            oos_has_small_keys(state, player, 7, 5),
             any([
                 oos_can_jump_5_wide_pit(state, player),
                 all([
@@ -725,11 +760,23 @@ def make_d7_logic(player: int):
                 ])
             ]),
             oos_can_kill_stalfos(state, player),
+            any([
+                oos_has_small_keys(state, player, 7, 5),
+                location_holds_item(state, "Explorer's Crypt (B1F): Chest in Jumping Stalfos Room",
+                                    f"Small Key ({DUNGEON_NAMES[7]})", player)
+            ])
         ])],
 
         ["d7 stalfos chest", "shining blue owl", False, lambda state: oos_can_use_mystery_seeds(state, player)],
 
-        ["enter d7", "d7 right of entrance", False, lambda state: oos_has_small_keys(state, player, 7, 5)],
+        ["enter d7", "d7 right of entrance", False, lambda state: any([
+            oos_has_small_keys(state, player, 7, 5),
+            all([
+                oos_has_small_keys(state, player, 7, 1),
+                location_holds_item(state, "Explorer's Crypt (1F): Chest Right of Entrance",
+                                    f"Small Key ({DUNGEON_NAMES[7]})", player)
+            ])
+        ])],
 
         ["d7 maze chest", "d7 boss", False, lambda state: all([
             oos_has_boss_key(state, player, 7),
@@ -901,4 +948,63 @@ def make_d8_logic(player: int):
                 oos_has_fools_ore(state, player)
             ])
         ])],
+    ]
+
+
+def make_dungeon_self_locking_logic(player):
+    return [
+        ["Hero's Cave: Final Chest", f"Small Key ({DUNGEON_NAMES[0]})", None],
+        ["Gnarled Root Dungeon: Item in Basement", f"Small Key ({DUNGEON_NAMES[1]})", lambda state: \
+            oos_has_small_keys(state, player, 1, 1)],
+        ["Snake's Remains: Chest on Terrace", f"Small Key ({DUNGEON_NAMES[2]})", lambda state: \
+            oos_has_small_keys(state, player, 2, 2)],
+        ["Poison Moth's Lair (1F): Chest in Mimics Room", f"Small Key ({DUNGEON_NAMES[3]})", lambda state: all([
+            oos_has_small_keys(state, player, 3, 1),
+            oos_can_kill_normal_enemy(state, player)
+        ])],
+        ["Dancing Dragon Dungeon (1F): Crumbling Room Chest", f"Small Key ({DUNGEON_NAMES[4]})", lambda state: \
+            oos_has_small_keys(state, player, 4, 2)],
+        ["Dancing Dragon Dungeon (1F): Eye Diving Spot Item", f"Small Key ({DUNGEON_NAMES[4]})", lambda state: all([
+            any([  # hit distant levers
+                oos_has_magic_boomerang(state, player),
+                oos_has_slingshot(state, player)
+            ]),
+            oos_can_jump_2_wide_pit(state, player),
+            oos_has_flippers(state, player),
+            oos_has_small_keys(state, player, 4, 2),
+        ])],
+        ["Unicorn's Cave: Magnet Gloves Chest", f"Small Key ({DUNGEON_NAMES[5]})", lambda state: any([
+            oos_has_flippers(state, player),
+            oos_can_jump_6_wide_liquid(state, player),
+            all([
+                oos_option_medium_logic(state, player),
+                oos_can_jump_3_wide_liquid(state, player),
+            ]),
+            oos_has_small_keys(state, player, 5, 1),
+        ])],
+        ["Unicorn's Cave: Treadmills Basement Item", f"Small Key ({DUNGEON_NAMES[5]})", lambda state: all([
+            state.has("_dropped_d5_magnet_ball", player),
+            oos_has_magnet_gloves(state, player),
+            any([
+                oos_can_kill_magunesu(state, player),
+                all([
+                    oos_option_medium_logic(state, player),
+                    oos_has_feather(state, player)
+                ])
+            ]),
+            oos_has_small_keys(state, player, 5, 3),
+        ])],
+        ["Explorer's Crypt (B1F): Chest in Jumping Stalfos Room", f"Small Key ({DUNGEON_NAMES[7]})", lambda state: all([
+            any([
+                oos_can_jump_5_wide_pit(state, player),
+                all([
+                    oos_option_hard_logic(state, player),
+                    oos_can_jump_1_wide_pit(state, player, False)
+                ])
+            ]),
+            oos_can_kill_stalfos(state, player),
+            oos_has_small_keys(state, player, 7, 4)  # Not counting poe skip
+        ])],
+        ["Explorer's Crypt (1F): Chest Right of Entrance", f"Small Key ({DUNGEON_NAMES[7]})", lambda state: \
+            oos_has_small_keys(state, player, 7, 1)],
     ]

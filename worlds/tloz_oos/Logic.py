@@ -1,7 +1,5 @@
 from BaseClasses import MultiWorld
-from worlds.tloz_oos.data.logic.DungeonsLogic import (make_d0_logic, make_d1_logic, make_d2_logic, make_d3_logic,
-                                                      make_d4_logic, make_d5_logic, make_d6_logic, make_d7_logic,
-                                                      make_d8_logic)
+from worlds.tloz_oos.data.logic.DungeonsLogic import *
 from worlds.tloz_oos.data.logic.OverworldLogic import make_holodrum_logic
 from worlds.tloz_oos.data.logic.SubrosiaLogic import make_subrosia_logic
 
@@ -42,3 +40,22 @@ def create_connections(multiworld: MultiWorld, player: int):
             region_1.connect(region_2, None, rule)
             if is_two_way:
                 region_2.connect(region_1, None, rule)
+
+    self_lock_logic = [
+        make_dungeon_self_locking_logic(player)
+    ]
+
+    for logic_array in self_lock_logic:
+        for logic in logic_array:
+            location_name = logic[0]
+            i_name = logic[1]
+            rule = logic[2]
+
+            location = multiworld.get_location(location_name, player)
+            if rule is None:
+                location.always_allow = lambda state, item, item_name=i_name, lock_rule=rule: (item.player == player and
+                                                                                               item.name == item_name)
+            else:
+                location.always_allow = lambda state, item, item_name=i_name, lock_rule=rule: (item.player == player and
+                                                                                               item.name == item_name and
+                                                                                               lock_rule(state))
