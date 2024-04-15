@@ -3,7 +3,8 @@
 # Triple Kill : Can kill 3 veks in an attack
 # Forced Move : Can move veks once per round
 # Triple Push : Can push 3 enemies with a single attack
-# Deadly pull : ["Attraction Pulse", "Gravity Mirror", "Pull-Tank"] -> Can pull to self
+# Quadruple Move : Can move 4 units with it
+# Deadly pull : Can pull to self
 # Charge : Can charge 4 tiles towards an enemy and kill it
 # Fire : can make 5 fire in a mission
 # Smoke : Can generate 5 smoke in a mission
@@ -11,7 +12,8 @@
 # Laser : ["Burst Beam", "Prism Laser", "Refractor Laser", "Fire Beam", "Frost Beam"] extends LaserDefault in code
 # Shield : Can create 4 shields in a mission
 # Chain : can target 10+ tiles in a single attack
-# Summon : Can create allies
+# Summon : Can add pawns
+# Many Summons : Can summon something at least thrice per mission
 # Teleport : "Teleporter" 3 cores
 # Freeze : Can freeze 8 units in a mission
 # Heal : Heal at least 5 damage in a mission
@@ -35,7 +37,9 @@ def expand_tags(tags: set[str]):
     """
     Add implied tags based on existing tags in the dictionary.
     """
+    add_implied_tag(tags, "Triple Push", "Quadruple Move")
     add_implied_tag(tags, "Triple Kill", "Triple Push")
+    add_implied_tag(tags, "Summon", "Many Summons")
     add_implied_tag(tags, "Boost", "Fire Boost", "Fire")
     add_implied_tag(tags, "Heal", "Smoke Heal", "Smoke")
 

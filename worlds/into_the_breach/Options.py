@@ -1,5 +1,7 @@
-from Options import Option, Toggle
+from Options import Option, Toggle, Range
 import typing
+
+from worlds.into_the_breach import itb_squad_items
 
 
 class RandomizeSquads(Toggle):
@@ -14,7 +16,16 @@ class CustomSquad(Toggle):
     default = False
 
 
-itb_options: typing.Dict[str, Option] = {
+class RequiredAchievements(Range):
+    """Number of achievements required to win"""
+    display_name = "Required achievements"
+    range_start = 0
+    range_end = (len(itb_squad_items) + 1)*3
+    default = 9
+
+
+itb_options: typing.Dict[str, type(Option)] = {
     "randomize_squads": RandomizeSquads,
-    "custom_squad": CustomSquad
+    "custom_squad": CustomSquad,
+    "required_achievements": RequiredAchievements
 }

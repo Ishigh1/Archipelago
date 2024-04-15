@@ -21,7 +21,7 @@ def has_starting_energy(state: CollectionState, player: int, count: int) -> bool
 
 
 def can_beat_the_game(state: CollectionState, player: int) -> bool:
-    return has_defense(state, player, 15) and has_starting_energy(state, player, 5)
+    return has_defense(state, player, 10) and has_starting_energy(state, player, 3)
 
 
 def unlocked_tags(state: CollectionState, player: int) -> set[str]:

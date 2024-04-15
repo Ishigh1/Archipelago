@@ -203,16 +203,19 @@ achievement_info_table = {
         "squad": "Arachnophiles",
         "name": "Spider Breeding",
         "description": "Spawn 15 Arachnoids in one Island",
+        "required_tags": ("Many Summons",)
     },
     "Working Together": {
         "squad": "Arachnophiles",
         "name": "Working Together",
         "description": "Area Shift 4 units at once",
+        "required_tags": ("Quadruple Move",)
     },
     "Efficient Explosives": {
         "squad": "Arachnophiles",
         "name": "Efficient Explosives",
         "description": "Kill 3 Enemies with 1 shot of the Ricochet Rocket",
+        "required_tags": ("Triple Kill",)
     },
     "Stay With Me": {
         "squad": "Mist Eaters",

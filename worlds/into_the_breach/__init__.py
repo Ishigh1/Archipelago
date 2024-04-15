@@ -1,9 +1,9 @@
 from typing import TextIO, Optional
 
-from BaseClasses import ItemClassification, Region, Entrance, MultiWorld
+from BaseClasses import ItemClassification, Region, Entrance, MultiWorld, CollectionState, Item
 from worlds.AutoWorld import World
 from worlds.generic.Rules import set_rule
-from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items
+from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items, itb_squad_items
 from .Locations import itb_locations, ItbLocation
 from .Logic import can_beat_the_game
 from .Options import itb_options
@@ -16,6 +16,7 @@ class IntoTheBreachWorld(World):
     """A strategy turn based game"""
     game = "Into the Breach"
     option_definitions = itb_options
+    options: itb_options
 
     base_id = 6777699702823011  # thanks random.org
 
@@ -32,7 +33,7 @@ class IntoTheBreachWorld(World):
         self.squads: Optional[dict[str, Squad]] = None
 
     def generate_early(self) -> None:
-        if self.multiworld.randomize_squads[self.player]:
+        if self.options.randomize_squads:
             self.squads = shuffle_teams(self.random)
         else:
             self.squads = vanilla_squads()
@@ -46,7 +47,11 @@ class IntoTheBreachWorld(World):
             classification = ItemClassification.trap
         else:
             classification = ItemClassification.filler
-        return ItbItem(item, classification, self.item_name_to_id[item], self.player)
+        ap_item = ItbItem(item, classification, self.item_name_to_id[item], self.player)
+        if classification == ItemClassification.progression:
+            if item in itb_squad_items:
+                ap_item.squad = True
+        return ap_item
 
     def get_filler_item_name(self) -> str:
         if self.random.randint(1, 3) == 1:
@@ -60,7 +65,7 @@ class IntoTheBreachWorld(World):
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
         self.multiworld.regions.append(menu)
-        if self.multiworld.custom_squad[self.player]:
+        if self.options.custom_squad:
             squad_region = Region("Custom Squad", self.player, self.multiworld)
             entrance = Entrance(self.player, "Use custom squad", menu)
             menu.exits.append(entrance)
@@ -107,13 +112,13 @@ class IntoTheBreachWorld(World):
             item_count += 1
 
     def generate_basic(self) -> None:
-        self.multiworld.completion_condition[self.player] = lambda state: can_beat_the_game(state, self.player)
+        self.multiworld.completion_condition[self.player] = lambda state: (state.prog_items["squads", self.player] + 1) * 3 >= self.options.required_achievements and can_beat_the_game(state, self.player)
 
     def fill_slot_data(self) -> dict:
         result = {}
-        if self.multiworld.custom_squad[self.player]:
+        if self.options.custom_squad:
             result["custom"] = True
-        if self.multiworld.randomize_squads[self.player]:
+        if self.options.randomize_squads:
             squads = {}
             for squad_name in self.squads:
                 squad = []
@@ -122,6 +127,7 @@ class IntoTheBreachWorld(World):
                     squad.append(units[unit_name]["Name"])
                 squads[squad_name] = squad
             result["squads"] = squads
+        result["required_achievements"] = self.options.required_achievements
         return result
 
     @classmethod
@@ -143,3 +149,17 @@ class IntoTheBreachWorld(World):
                         names.append(unit_name)
                     spoiler_handle.write(
                         squad_name + " : " + names[0] + ", " + names[1] + ", " + names[2] + "\n")
+
+    def collect(self, state: CollectionState, item: ItbItem) -> bool:
+        change = super().collect(state, item)
+        if change:
+            if item.squad:
+                state.prog_items["squads", self.player] += 1
+        return change
+
+    def remove(self, state: CollectionState, item: ItbItem) -> bool:
+        change = super().remove(state, item)
+        if change:
+            if item.squad:
+                state.prog_items["squads", self.player] -= 1
+        return change

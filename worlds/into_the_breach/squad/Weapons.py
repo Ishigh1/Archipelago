@@ -7,7 +7,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Punch an adjacent tile, damaging and pushing it.",
         "Upgrade 1": "Dash (Up Up)",
-        "Upgrade 2": "Charge any distance before punching the target.\n+2 Damage (Up Up Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Prime_Punchmech",
         "Tags": {"Forced Move": 0, "Charge": 2, "High Damage": 3}
     },
@@ -18,7 +18,7 @@ weapon_table = {
         "Power": "(Up)",
         "Effect": "Chain damage through adjacent targets.",
         "Upgrade 1": "Building Chain (Up)",
-        "Upgrade 2": "Chain through Grid Buildings without causing damage.\n+1 Damage (Up Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Lightning",
         "Tags": {"Triple Kill": 0, "Piercing": 0, "Chain": 1}
     },
@@ -29,7 +29,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Fire a piercing beam that decreases in damage the further it goes.",
         "Upgrade 1": "Ally Immune (Up)",
-        "Upgrade 2": "Friendly units will not take damage from this attack. (Buildings will still be damaged and shields will be removed)\n+1 Damage (Up Up Up)",
+        "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Lasermech",
         "Tags": {"Laser": 0, "Triple Kill": 0, "Piercing": 0, "High Damage": 3},
     },
@@ -53,7 +53,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Rockmech",
-        "Tags": {"Summon": 0, "High Damage": 5}
+        "Tags": {"Multiple Summons": 0, "High Damage": 5}
     },
     "Sidewinder Fist": {
         "Class": "Prime",
@@ -73,7 +73,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Punch an adjacent tile. Upgrades to launch as a projectile.\n(Has knockback)",
         "Upgrade 1": "Rocket (Up)",
-        "Upgrade 2": "Launch the fist. Pushes the Mech if the target is not adjacent.\n+2 Damage (Up Up)",
+        "Upgrade 2": "+2 Damage (Up Up)",
         "Debug Name": "Prime_RocketPunch",
         "Tags": {"Forced Move": 0, "High Damage": 2}
     },
@@ -84,7 +84,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Grab a unit and toss it behind you.\n(If a unit is thrown onto ACID, ACID will apply first, then damage)",
         "Upgrade 1": "Ally Immune (Up)",
-        "Upgrade 2": "n+2 Damage (Up Up Up)",
+        "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Prime_Shift",
         "Tags": {"Forced Move": 0}
     },
@@ -108,7 +108,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "+1 Damage (Up Up)",
         "Debug Name": "Prime_Areablast",
-        "Tags": {"Forced Move": 0, "Triple Push": 0}
+        "Tags": {"Forced Move": 0, "Quadruple Move": 0}
     },
     "Prime Spear": {
         "Class": "Prime",
@@ -130,7 +130,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage Each (Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Leap",
-        "Tags": {"Charge": 0, "Forced Move": 0, "Triple Push": 0}
+        "Tags": {"Charge": 0, "Forced Move": 0, "Quadruple Move": 0}
     },
     "Vortex Fist": {
         "Class": "Prime",
@@ -141,7 +141,7 @@ weapon_table = {
         "Upgrade 1": "-1 Self Damage (Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_SpinFist",
-        "Tags": {"Forced Move": 0, "Triple Push": 0}
+        "Tags": {"Forced Move": 0, "Quadruple Move": 0}
     },
     "Titanite Blade": {
         "Class": "Prime",
@@ -185,7 +185,7 @@ weapon_table = {
         "Upgrade 1": "-1 Self Damage (Up)",
         "Upgrade 2": "-1 Self Damage (Up Up)",
         "Debug Name": "Prime_WayTooBig",
-        "Tags": {"Triple Push": 0, "Piercing": 0}
+        "Tags": {"Piercing": 0}
     },
     "Prism Laser": {
         "Class": "Prime",
@@ -303,7 +303,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Fire a non-damaging projectile that pushes tiles around the target.",
         "Debug Name": "Brute_Shrapnel",
-        "Tags": {"Triple Push": 0, "Deadly Pull": 0, "Forced Move": 0}
+        "Tags": {"Quadruple Move": 0, "Deadly Pull": 0, "Forced Move": 0}
     },
     "Rail Cannon": {
         "Class": "Brute",
@@ -388,7 +388,7 @@ weapon_table = {
         "Power": "Free",
         "Effect": "Dash in a line, pushing adjacent tiles away.",
         "Debug Name": "Brute_Sonic",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Charge": 0}
+        "Tags": {"Forced Move": 0, "Quadruple Move": 0, "Charge": 0}
     },
     "Reverse Thrusters": {
         "Class": "Brute",
@@ -410,7 +410,7 @@ weapon_table = {
         "Upgrade 1": "+2 Damage (Up Up Up)",
         "Upgrade 2": "Buildings Immune (Up)",
         "Debug Name": "Brute_Fracture",
-        "Tags": {"Triple Push": 0, "Forced Move": 0}
+        "Tags": {"Quadruple Move": 0, "Forced Move": 0}
     },
     "AP Cannon": {
         "Class": "Brute",
@@ -478,7 +478,7 @@ weapon_table = {
         "Upgrade 1": "Buildings Immune (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Ranged_Artillerymech",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Quadruple Move": 0, "Deadly Pull": 0}
     },
     "Rock Accelerator": {
         "Class": "Ranged",
@@ -499,7 +499,7 @@ weapon_table = {
         "Upgrade 1": "Buildings Immune (Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Ranged_Defensestrike",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Deadly Pull": 0}
+        "Tags": {"Forced Move": 0, "Quadruple Move": 0, "Deadly Pull": 0}
     },
     "Rocket Artillery": {
         "Class": "Ranged",
@@ -552,7 +552,7 @@ weapon_table = {
         "Effect": "Freeze yourself and the target.",
         "Debug Name": "Ranged_Ice",
         "Tags": {"Freeze": 0}
-    },
+    },--
     "Smoke Mortar": {
         "Class": "Ranged",
         "Name": "Smoke Mortar",

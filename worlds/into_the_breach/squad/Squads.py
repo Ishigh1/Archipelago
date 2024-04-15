@@ -22,38 +22,38 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
         units_by_class[class_name] = class_units
 
     squad_amount = len(squad_names)
-    not_picked = []  # list of classes to not pick
-    for (class_name, class_units) in units_by_class.items():
-        if len(class_units) < squad_amount:
-            not_picked += [class_name] * (squad_amount - len(class_units))
+    while True:
+        not_picked = []  # list of classes to not pick
+        for (class_name, class_units) in units_by_class.items():
+            if len(class_units) < squad_amount:
+                not_picked += [class_name] * (squad_amount - len(class_units))
 
-    while len(not_picked) < squad_amount:
-        not_picked.append(class_names[random.randint(0, 3)])
+        while len(not_picked) < squad_amount:
+            not_picked.append(class_names[random.randint(0, 3)])
 
-    # Order not_picked based on the number of available units
-    not_picked = sorted(not_picked, key=lambda class_name: len(units_by_class[class_name]))
+        # Order not_picked based on the number of available units
+        not_picked = sorted(not_picked, key=lambda class_name: len(units_by_class[class_name]))
 
-    shuffled_squad_names = random.sample(squad_names, len(squad_names))
-    squads = {}  # dict squad_name -> squad, also the return value
-    for squad_name in shuffled_squad_names:
-        squad = Squad(squad_name)
-        squad.set_units(units.copy())
-        squads[squad_name] = squad
+        shuffled_squad_names = random.sample(squad_names, len(squad_names))
+        squads = {}  # dict squad_name -> squad, also the return value
+        for squad_name in shuffled_squad_names:
+            squad = Squad(squad_name)
+            squad.set_units(units.copy())
+            squads[squad_name] = squad
 
-    select_units(not_picked, random, squads, units_by_class)
+        if select_units(not_picked, random, squads, units_by_class):
+            break
     return squads
 
 
 def select_units(not_picked: [str], random: Random, squads: dict[str, Squad],
-                 units_by_class: dict[str, [dict]]):
+                 units_by_class: dict[str, [dict]]) -> bool:
     squads_to_handle = list(squads.keys())
+    random.shuffle(squads_to_handle)  # Last ones in line are less likely to have units used in other's achievements
 
-    while True:
-        random.shuffle(squads_to_handle)  # Last ones in line are less likely to have units used in other's achievements
-
-        if select_units_for_squad(not_picked, random, squads, units_by_class, squads_to_handle):
-            break
-    return
+    if not select_units_for_squad(not_picked, random, squads, units_by_class, squads_to_handle):
+        return False
+    return True
 
 
 def select_units_for_squad(not_picked: [str], random: Random, squads: dict[str, Squad],
