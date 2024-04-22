@@ -54,7 +54,7 @@ class IntoTheBreachWorld(World):
         return ap_item
 
     def get_filler_item_name(self) -> str:
-        if self.random.randint(1, 3) == 1:
+        if self.random.randint(1, 5) == 1:
             return self.random.choice(itb_trap_items)
         else:
             return self.random.choice(itb_filler_items)
@@ -112,7 +112,9 @@ class IntoTheBreachWorld(World):
             item_count += 1
 
     def generate_basic(self) -> None:
-        self.multiworld.completion_condition[self.player] = lambda state: (state.prog_items["squads", self.player] + 1) * 3 >= self.options.required_achievements and can_beat_the_game(state, self.player)
+        self.multiworld.completion_condition[self.player] = lambda state: (
+                (state.prog_items[self.player]["squads"] + 1) * 3 >= self.options.required_achievements
+                and can_beat_the_game(state, self.player))
 
     def fill_slot_data(self) -> dict:
         result = {}
@@ -127,7 +129,7 @@ class IntoTheBreachWorld(World):
                     squad.append(units[unit_name]["Name"])
                 squads[squad_name] = squad
             result["squads"] = squads
-        result["required_achievements"] = self.options.required_achievements
+        result["required_achievements"] = self.options.required_achievements.value
         return result
 
     @classmethod
@@ -154,12 +156,12 @@ class IntoTheBreachWorld(World):
         change = super().collect(state, item)
         if change:
             if item.squad:
-                state.prog_items["squads", self.player] += 1
+                state.prog_items[self.player]["squads"] += 1
         return change
 
     def remove(self, state: CollectionState, item: ItbItem) -> bool:
         change = super().remove(state, item)
         if change:
             if item.squad:
-                state.prog_items["squads", self.player] -= 1
+                state.prog_items[self.player]["squads"] -= 1
         return change

@@ -13,11 +13,11 @@ def has_islands(state, player: int, count: int) -> bool:
 
 
 def has_defense(state: CollectionState, player: int, count: int) -> bool:
-    return state.item_count("3 Starting Grid Defense", player) * 3 >= count
+    return state.has("3 Starting Grid Defense", player, (count + 2) / 3)
 
 
 def has_starting_energy(state: CollectionState, player: int, count: int) -> bool:
-    return state.item_count("2 Starting Grid Power", player) * 2 + 1 >= count
+    return state.has("2 Starting Grid Power", player, count / 2)
 
 
 def can_beat_the_game(state: CollectionState, player: int) -> bool:

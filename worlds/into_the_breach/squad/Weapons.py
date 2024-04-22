@@ -552,7 +552,7 @@ weapon_table = {
         "Effect": "Freeze yourself and the target.",
         "Debug Name": "Ranged_Ice",
         "Tags": {"Freeze": 0}
-    },--
+    },
     "Smoke Mortar": {
         "Class": "Ranged",
         "Name": "Smoke Mortar",
