@@ -91,17 +91,20 @@ class IntoTheBreachWorld(World):
 
     def create_items(self) -> None:
         item_count = 0
-        for item in itb_progression_items:
-            if item == "3 Starting Grid Defense":
+        for item_name in itb_progression_items:
+            if item_name == "3 Starting Grid Defense":
                 count = 5
-            elif item == "2 Starting Grid Power":
+            elif item_name == "2 Starting Grid Power":
                 count = 2
             else:
                 count = 1
 
             item_count += count
             for i in range(count):
-                self.multiworld.itempool.append(self.create_item(item))
+                item = self.create_item(item_name)
+                self.multiworld.itempool.append(item)
+            if item_name == squad_names[0]:
+                self.multiworld.push_precollected(item)
 
         locations_count = len([location
                                for location in self.multiworld.get_locations(self.player)
@@ -113,7 +116,7 @@ class IntoTheBreachWorld(World):
 
     def generate_basic(self) -> None:
         self.multiworld.completion_condition[self.player] = lambda state: (
-                (state.prog_items[self.player]["squads"] + 1) * 3 >= self.options.required_achievements
+                state.prog_items[self.player]["squads"] * 3 >= self.options.required_achievements
                 and can_beat_the_game(state, self.player))
 
     def fill_slot_data(self) -> dict:

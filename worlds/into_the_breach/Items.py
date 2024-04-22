@@ -1,4 +1,5 @@
 from BaseClasses import Item
+from worlds.into_the_breach.squad.SquadInfo import squad_names
 
 
 class ItbItem(Item):
@@ -6,23 +7,7 @@ class ItbItem(Item):
     squad = False
 
 
-itb_squad_items = [
-    "Rusting Hulks",
-    "Zenith Guard",
-    "Blitzkrieg",
-    "Steel Judoka",
-    "Flame Behemoths",
-    "Frozen Titans",
-    "Hazardous Mechs",
-    "Bombermechs",
-    "Arachnophiles",
-    # "Mist Eaters",
-    # "Heat Sinkers",
-    # "Cataclysm",
-    # "Secret Squad",
-    # "Random Squad",
-    # "Custom Squad",
-]
+itb_squad_items = squad_names
 
 itb_island_items = [  # Not implemented yet
     # "Unlock Museum Island",

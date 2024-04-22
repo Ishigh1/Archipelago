@@ -7,7 +7,14 @@ squad_names = [
     "Flame Behemoths",
     "Frozen Titans",
     "Hazardous Mechs",
-    "Bombermechs"
+    "Bombermechs",
+    "Arachnophiles",
+    # "Mist Eaters",
+    # "Heat Sinkers",
+    # "Cataclysm",
+    # "Secret Squad",
+    # "Random Squad",
+    # "Custom Squad",
 ]
 
 class_names = [
