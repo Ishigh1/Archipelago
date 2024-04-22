@@ -53,7 +53,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Prime_Rockmech",
-        "Tags": {"Multiple Summons": 0, "High Damage": 5}
+        "Tags": {"Many Summons": 0, "High Damage": 5}
     },
     "Sidewinder Fist": {
         "Class": "Prime",
@@ -488,7 +488,7 @@ weapon_table = {
         "Effect": "Launch a rock at a tile, pushing tiles to the left and right.",
         "Upgrade 1": "+1 Damage (Up Up)",
         "Debug Name": "Ranged_Rockthrow",
-        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Summon": 0}
+        "Tags": {"Forced Move": 0, "Triple Kill": 0, "Many Summons": 0}
     },
     "Cluster Artillery": {
         "Class": "Ranged",
@@ -622,7 +622,7 @@ weapon_table = {
         "Effect": "Launch a Walking Bomb. Unused bombs dismantle after the enemy turn.",
         "Upgrade 1": "2 Bombs (Up Up Up)",
         "Debug Name": "Ranged_DeployBomb",
-        "Tags": {"Summon": 0, "Triple Kill": 0}
+        "Tags": {"Many Summons": 0, "Triple Kill": 0}
     },
     "Arachnoid Injector": {
         "Class": "Ranged",
@@ -633,7 +633,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "Acidic (Up)",
         "Debug Name": "Ranged_Arachnoid",
-        "Tags": {"Summon": 0, "Forced Move": 0, "Acid": 1}
+        "Tags": {"Many Summons": 0, "Forced Move": 0, "Acid": 1}
     },
     "Smoldering Shells": {
         "Class": "Ranged",
