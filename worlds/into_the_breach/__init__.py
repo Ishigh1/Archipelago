@@ -82,8 +82,7 @@ class IntoTheBreachWorld(World):
                     squad_region.locations.append(self.create_location(achievement_name, squad_region))
 
                 entrance = Entrance(self.player, "Use squad " + squad_name, menu)
-                if squad_name != "Rift Walkers":
-                    set_rule(entrance, lambda state, squad=squad_name: state.has(squad, self.player))
+                set_rule(entrance, lambda state, squad=squad_name: state.has(squad, self.player))
                 menu.exits.append(entrance)
                 entrance.connect(squad_region)
 
@@ -102,9 +101,10 @@ class IntoTheBreachWorld(World):
             item_count += count
             for i in range(count):
                 item = self.create_item(item_name)
-                self.multiworld.itempool.append(item)
-            if item_name == squad_names[0]:
-                self.multiworld.push_precollected(item)
+                if item_name == squad_names[0]:
+                    self.multiworld.push_precollected(item)
+                else:
+                    self.multiworld.itempool.append(item)
 
         locations_count = len([location
                                for location in self.multiworld.get_locations(self.player)
