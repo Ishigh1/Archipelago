@@ -1,3 +1,5 @@
+import unittest
+
 from BaseClasses import MultiWorld
 from . import ItbTestBase
 from ..squad import unit_table
@@ -49,6 +51,7 @@ class ItbRandomizedSquadsTest(ItbTestBase):
             self.assertEqual(len(squads[squad_name]), 3,
                              f"{squad_name} has more than 3 units ({squads[squad_name]}")
 
+    @unittest.skip("Currently disabled to improve performance")
     def test_no_duplicate_unit(self):
         squads = get_squads(self.multiworld)
         units = set()

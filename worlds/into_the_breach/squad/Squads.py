@@ -84,7 +84,7 @@ def select_units_for_squad(not_picked: [str], random: Random, squads: dict[str, 
                 random.shuffle(
                     other_class_names)  # The last one of this list is more likely to be essential for the achievements
 
-                if select_unit_for_class(0, random, squad, squads_to_handle, units_by_class,
+                if select_unit_for_class_with_duplicates(0, random, squad, squads_to_handle, units_by_class,
                                          other_class_names, squads,
                                          lambda: select_units_for_squad(not_picked, random, squads, units_by_class,
                                                                         squads_to_handle)):
@@ -94,6 +94,31 @@ def select_units_for_squad(not_picked: [str], random: Random, squads: dict[str, 
             tried_to_not_pick.add(forbidden_class)
             squad.set_units(units)
     squads_to_handle.append(squad_name)
+    return False
+
+
+def select_unit_for_class_with_duplicates(class_id: int, random: Random, squad: Squad,
+                                          squads_to_handle: [str], units_by_class: dict[str, [dict]],
+                                          other_class_names: [str],
+                                          squads: dict[str, Squad], after: Callable[[], bool]) -> bool:
+    if class_id == len(other_class_names):
+        return after()
+    class_name = other_class_names[class_id]
+    class_units = units_by_class[class_name].copy()
+
+    for unit in class_units:
+        squad.remove_unit(unit)
+
+    random.shuffle(class_units)
+    for i in range(len(class_units)):
+        unit = class_units[i]
+        squad.add_unit(unit)
+        if can_get_all_achievements(squad):
+            if select_unit_for_class_with_duplicates(class_id + 1, random, squad, squads_to_handle,
+                                     units_by_class, other_class_names, squads, after):
+                assert len(squad.units) == 3
+                return True
+        squad.remove_unit(unit)
     return False
 
 
