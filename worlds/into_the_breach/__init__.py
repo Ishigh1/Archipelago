@@ -102,7 +102,7 @@ class IntoTheBreachWorld(World):
             item_count += count
             for i in range(count):
                 item = self.create_item(item_name)
-                if item_name == squad_names[0]:
+                if item_name == squad_names[starting_squad]:
                     self.multiworld.push_precollected(item)
                 else:
                     self.multiworld.itempool.append(item)
