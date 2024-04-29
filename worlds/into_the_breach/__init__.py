@@ -89,7 +89,8 @@ class IntoTheBreachWorld(World):
                 self.multiworld.regions.append(squad_region)
 
     def create_items(self) -> None:
-        item_count = 0
+        item_count = -1  # Filter out the precollected squad
+        starting_squad = self.random.randrange(0, len(squad_names))
         for item_name in itb_progression_items:
             if item_name == "3 Starting Grid Defense":
                 count = 5
