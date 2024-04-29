@@ -141,13 +141,14 @@ class IntoTheBreachWorld(World):
         players = multiworld.get_game_players(cls.game)
         header = False
         for player in players:
-            if multiworld.randomize_squads[player]:
+            world: IntoTheBreachWorld = multiworld.worlds[player]
+            if world.options.randomize_squads:
                 if not header:
                     spoiler_handle.write("\n\nInto the Breach Squads:\n")
                     header = True
                 name = multiworld.get_player_name(player)
                 spoiler_handle.write("\n" + name + " : \n")
-                squads = multiworld.worlds[player].squads
+                squads = world.squads
                 for squad_name in squads:
                     squad: Squad = squads[squad_name]
                     names = []
