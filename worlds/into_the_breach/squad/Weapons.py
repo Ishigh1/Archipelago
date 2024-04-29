@@ -97,7 +97,7 @@ weapon_table = {
         "Upgrade 1": "+1 Range (Up)",
         "Upgrade 2": "+1 Range (Up Up Up)",
         "Debug Name": "Prime_Flamethrower",
-        "Tags": {"Forced Move": 0, "Fire": 0, "Piercing": 0, "Triple Kill": 4}
+        "Tags": {"Forced Move": 0, "Fire": 0, "Piercing": 0, "Triple Fire": 4, "Triple Kill": 4}
     },
     "Explosive Vents": {
         "Class": "Prime",
@@ -174,7 +174,7 @@ weapon_table = {
         "Upgrade 1": "+2 Range (Up Up)",
         "Upgrade 2": "Add Fire (Up Up Up)",
         "Debug Name": "Prime_Flamespreader",
-        "Tags": {"Forced Move": 0, "Triple Push": 0, "Piercing": 0, "Fire": 3}
+        "Tags": {"Forced Move": 0, "Triple Push": 0, "Piercing": 0, "Fire": 3, "Triple Fire": 5}
     },
     "The Big One": {
         "Class": "Prime",
@@ -521,7 +521,9 @@ weapon_table = {
         "Upgrade 1": "Backburn (Up)",
         "Upgrade 2": "+2 Damage (Up Up Up)",
         "Debug Name": "Ranged_Ignite",
-        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "Deadly Pull": 0}
+        "Tags": {"Fire": 0, "Triple Move": 0, "Forced Move": 0, "Deadly Pull": 0,
+                 "Triple Fire": 1  # Not exactly true, but the push can move units to fire tiles
+                 }
     },
     "Micro-Artillery": {
         "Class": "Ranged",
@@ -569,7 +571,7 @@ weapon_table = {
         "Effect": "Artillery attack that sets 5 tiles on Fire.",
         "Upgrade 1": "No Self Damage (Up Up)",
         "Debug Name": "Ranged_Fireball",
-        "Tags": {"Fire": 0}
+        "Tags": {"Fire": 0, "Triple Fire": 2}
     },
     "Raining Death": {
         "Class": "Ranged",
@@ -760,7 +762,7 @@ weapon_table = {
         "Effect": "Fire a beam that applies Fire in a line.\nSingle-use.",
         "Upgrade 1": "+1 Use (Up)",
         "Debug Name": "Science_FireBeam",
-        "Tags": {"Laser": 0, "Fire": 0}
+        "Tags": {"Laser": 0, "Fire": 0, "Triple Fire": 0}
     },
     "Frost Beam": {
         "Class": "Science",
@@ -798,7 +800,7 @@ weapon_table = {
         "Upgrade 1": "+1 Range (Up)",
         "Upgrade 2": "+2 Range (Up Up)",
         "Debug Name": "Science_RainingFire",
-        "Tags": {"Forced Move": 0, "Fire": 0}
+        "Tags": {"Forced Move": 0, "Fire": 0, "Triple Fire": 1}
     },
     "Area Shift": {
         "Class": "Science",
@@ -808,7 +810,7 @@ weapon_table = {
         "Upgrade 1": "Shield Self (Up)",
         "Upgrade 2": "Shield Ally (Up Up)",
         "Debug Name": "Science_MassShift",
-        "Tags": {"Forced Move": 0, "Triple push": 0, "Shield": 1, "Deadly Pull": 1, }
+        "Tags": {"Forced Move": 0, "Triple push": 0, "Shield": 1, "Deadly Pull": 1}
     },
     "Explosive Warp": {
         "Class": "Science",
@@ -849,7 +851,7 @@ weapon_table = {
         "Upgrade 1": "+1 Move (Up)",
         "Upgrade 2": "+1 Move (Up Up)",
         "Debug Name": "Science_TC_Control",
-        "Tags": {}
+        "Tags": {"Forced Move": 0}
     },
     "Force Swap": {
         "Class": "Science",
@@ -871,7 +873,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up)",
         "Upgrade 2": "+1 Damage (Up Up Up)",
         "Debug Name": "Science_KO_Crack",
-        "Tags": {}
+        "Tags": {"Crack": 0}
     },
     "Gravity Mirror": {
         "Class": "Science",

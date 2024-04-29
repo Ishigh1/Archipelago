@@ -221,46 +221,58 @@ achievement_info_table = {
         "squad": "Mist Eaters",
         "name": "Stay With Me",
         "description": "Heal 12 damage over the course of a single Island",
+        "required_tags": ("Heal",)
     },
     "Let's Walk": {
         "squad": "Mist Eaters",
         "name": "Let's Walk",
         "description": "Move Enemies with Control Shot 120 spaces in one game",
+        "required_tags": ("Forced Move",)
     },
     "On the Backburner": {
         "squad": "Mist Eaters",
         "name": "On the Backburner",
         "description": "Do 4 damage with the Reverse Thrusters",
+        "required_tags": ("High Damage",)
     },
     "Boosted": {
         "squad": "Heat Sinkers",
         "name": "Boosted",
         "description": "Boost 8 Mechs in one mission",
+        "required_tags": ("Boost",)
     },
     "Feed the Flame": {
         "squad": "Heat Sinkers",
         "name": "Feed the Flame",
         "description": "Light 3 Enemies on fire with a single attack",
+        "required_tags": ("Triple Fire",)
     },
     "Maximum Firepower": {
         "squad": "Heat Sinkers",
         "name": "Maximum Firepower",
         "description": "Deal 8 damage with a single activation of the Quick-Fire Rockets",
+        "required_tags": (("Acid", "Boost"),
+                          ("Acid", "High Damage"),
+                          ("Boost", "High Damage"),
+                          ("High Damage", "Triple Kill"))
     },
     "Unstable Ground": {
         "squad": "Cataclysm",
         "name": "Unstable Ground",
         "description": "Crack 10 tiles in one mission",
+        "required_tags": ("Crack",)
     },
     "Core of the Earth": {
         "squad": "Cataclysm",
         "name": "Core of the Earth",
         "description": "Drop 10 Enemies into pits on one Island",
+        "required_tags": ("Crack",)
     },
     "Miner Inconvenience": {
         "squad": "Cataclysm",
         "name": "Miner Inconvenience",
         "description": "Destroy 20 mountains in one game",
+        "required_tags": None
     }
 }
 

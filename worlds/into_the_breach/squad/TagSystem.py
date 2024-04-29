@@ -7,6 +7,7 @@
 # Deadly pull : Can pull to self
 # Charge : Can charge 4 tiles towards an enemy and kill it
 # Fire : can make 5 fire in a mission
+# Triple Fire : Can light 3 units on fire at once
 # Smoke : Can generate 5 smoke in a mission
 # Electric Smoke : ["Storm Generator"]
 # Laser : ["Burst Beam", "Prism Laser", "Refractor Laser", "Fire Beam", "Frost Beam"] extends LaserDefault in code
@@ -18,7 +19,8 @@
 # Freeze : Can freeze 8 units in a mission
 # Heal : Heal at least 5 damage in a mission
 # ACID : Can give acid debuff
-# Boost : Can boost once in a mission
+# Boost : Can boost 5 times in a mission
+# Crack : Can crack 10 tiles in one mission
 # Fire Boost : Heat Engine
 # Smoke Heal : Nanofilter Mending
 # Hormones : Vek Hormones
@@ -39,6 +41,7 @@ def expand_tags(tags: set[str]):
     """
     add_implied_tag(tags, "Triple Push", "Quadruple Move")
     add_implied_tag(tags, "Triple Kill", "Triple Push")
+    add_implied_tag(tags, "Triple Fire", "Fire", "Triple Push")
     add_implied_tag(tags, "Summon", "Many Summons")
     add_implied_tag(tags, "Boost", "Fire Boost", "Fire")
     add_implied_tag(tags, "Heal", "Smoke Heal", "Smoke")
