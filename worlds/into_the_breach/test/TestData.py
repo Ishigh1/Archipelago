@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ..squad.Squads import class_names
+from ..squad.SquadRando import class_names
 from ..squad.Units import unit_table
 
 

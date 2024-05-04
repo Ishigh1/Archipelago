@@ -24,8 +24,19 @@
 # Fire Boost : Heat Engine
 # Smoke Heal : Nanofilter Mending
 # Hormones : Vek Hormones
+from typing import Iterable
 
-def add_implied_tag(tags: set[str], result: str, *requirements: str):
+tag_implications = {
+    "Triple Push": ("Quadruple Move",),
+    "Triple Kill": ("Triple Push",),
+    "Triple Fire": ("Fire", "Triple Push",),
+    "Summon": ("Many Summons",),
+    "Boost": ("Fire Boost", "Fire",),
+    "Heal": ("Smoke Heal", "Smoke",),
+}
+
+
+def add_implied_tag(tags: set[str], result: str, requirements: Iterable[str]):
     """
     Add an implied tag to the tags dictionary if all the required tags exist.
     """
@@ -39,12 +50,8 @@ def expand_tags(tags: set[str]):
     """
     Add implied tags based on existing tags in the dictionary.
     """
-    add_implied_tag(tags, "Triple Push", "Quadruple Move")
-    add_implied_tag(tags, "Triple Kill", "Triple Push")
-    add_implied_tag(tags, "Triple Fire", "Fire", "Triple Push")
-    add_implied_tag(tags, "Summon", "Many Summons")
-    add_implied_tag(tags, "Boost", "Fire Boost", "Fire")
-    add_implied_tag(tags, "Heal", "Smoke Heal", "Smoke")
+    for result in tag_implications:
+        add_implied_tag(tags, result, tag_implications[result])
 
 
 def add_tags(tags: set[str], new_tags: set[str]):

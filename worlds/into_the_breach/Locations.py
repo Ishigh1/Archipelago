@@ -1,5 +1,5 @@
 from BaseClasses import Location
-from .squad.Squads import squad_names
+from .squad.SquadRando import squad_names
 from .achievement.Achievements import achievement_table, achievements_by_squad
 
 

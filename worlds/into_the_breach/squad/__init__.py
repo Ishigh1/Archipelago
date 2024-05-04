@@ -2,7 +2,6 @@ from .TagSystem import expand_tags
 from .Units import unit_table
 from .Weapons import weapon_table
 
-
 class Squad:
     def __init__(self, name: str):
         self._cached = False

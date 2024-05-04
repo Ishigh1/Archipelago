@@ -3,7 +3,7 @@ import unittest
 from BaseClasses import MultiWorld
 from . import ItbTestBase
 from ..squad import unit_table
-from ..squad.Squads import class_names
+from ..squad.SquadRando import class_names
 
 
 def get_squads(multiworld: MultiWorld) -> dict[str, [str]]:

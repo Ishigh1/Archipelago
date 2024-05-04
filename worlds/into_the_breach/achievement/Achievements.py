@@ -5,19 +5,19 @@ achievement_info_table = {
     #   "squad": "squad name",
     #   "name": "achievement name,
     #   "description": "Whatever",
-    #   "required_tags: (option1, (mandatory_for_option_2, other_mandatory_for_option_2))
+    #   "required_tags: (mandatory_option1, (option_for_mandatory_option_2, option_for_mandatory_option_2))
     # },
     "Watery Grave": {
         "squad": "Rift Walkers",
         "name": "Watery Grave",
         "description": "Drown 3 enemies in water in a single battle with the Rift Walkers squad",
-        "required_tags": ("Forced Move",)
+        "required_tags": (("Forced Move",),)
     },
     "Ramming Speed": {
         "squad": "Rift Walkers",
         "name": "Ramming Speed",
         "description": "Kill an enemy 5 or more tiles away with a Dash Punch with the Rift Walkers squad",
-        "required_tags": ("Charge",)
+        "required_tags": (("Charge",),)
     },
     "Island Secure": {
         "squad": "Rift Walkers",
@@ -35,7 +35,7 @@ achievement_info_table = {
         "squad": "Rusting Hulks",
         "name": "Stormy Weather",
         "description": "Deal 12 damage with Electric Smoke in a single battle with the Rusting Hulks squad",
-        "required_tags": (("Electric Smoke", "Smoke"),)
+        "required_tags": (("Electric Smoke",), ("Smoke",))
     },
     "Perfect Battle": {
         "squad": "Rusting Hulks",
@@ -47,25 +47,25 @@ achievement_info_table = {
         "squad": "Zenith Guard",
         "name": "Get Over Here",
         "description": "Kill an enemy by pulling it into yourself with the Zenith Guard squad",
-        "required_tags": ("Deadly Pull",)
+        "required_tags": (("Deadly Pull",),)
     },
     "Glittering C-Beam": {
         "squad": "Zenith Guard",
         "name": "Glittering C-Beam",
         "description": "Hit 4 enemies with a single laser with the Zenith Guard squad",
-        "required_tags": ("Laser",)
+        "required_tags": (("Laser",),)
     },
     "Shield Mastery": {
         "squad": "Zenith Guard",
         "name": "Shield Mastery",
         "description": "Block damage with a Shield 4 times in a single battle with the Zenith Guard squad",
-        "required_tags": ("Shield",)
+        "required_tags": (("Shield",),)
     },
     "Chain Attack": {
         "squad": "Blitzkrieg",
         "name": "Chain Attack",
         "description": "Have the Chain Whip attack chain through 10 tiles with the Blitzkrieg squad",
-        "required_tags": ("Chain",)
+        "required_tags": (("Chain",),)
     },
     "Lightning War": {
         "squad": "Blitzkrieg",
@@ -77,67 +77,67 @@ achievement_info_table = {
         "squad": "Blitzkrieg",
         "name": "Hold the Line",
         "description": "Block 4 emerging Vek in a single turn with the Blitzkrieg squad",
-        "required_tags": ("Forced Move", "Summon")
+        "required_tags": (("Forced Move", "Summon"),)
     },
     "Unbreakable": {
         "squad": "Steel Judoka",
         "name": "Unbreakable",
         "description": "Have Mech Armor absorb 5 damage in a single battle with the Steel Judoka squad",
-        "required_tags": ("Armor",)
+        "required_tags": (("Armor",),)
     },
     "Unwitting Allies": {
         "squad": "Steel Judoka",
         "name": "Unwitting Allies",
         "description": "Have 4 enemies die from enemy fire in a single battle with the Steel Judoka squad",
-        "required_tags": ("Forced Move",)
+        "required_tags": (("Forced Move",),)
     },
     "Mass Displacement": {
         "squad": "Steel Judoka",
         "name": "Mass Displacement",
         "description": "Push 3 enemies with a single attack with the Steel Judoka squad",
-        "required_tags": ("Triple Push",)
+        "required_tags": (("Triple Push",),)
     },
     "Quantum Entanglement": {
         "squad": "Flame Behemoths",
         "name": "Quantum Entanglement",
         "description": "Teleport a unit 4 tiles away with the Flame Behemoths squad",
-        "required_tags": ("Teleport",)
+        "required_tags": (("Teleport",),)
     },
     "Scorched Earth": {
         "squad": "Flame Behemoths",
         "name": "Scorched Earth",
         "description": "End a battle with 12 tiles on Fire with the Flame Behemoths squad",
-        "required_tags": ("Fire",)
+        "required_tags": (("Fire",),)
     },
     "This is Fine": {
         "squad": "Flame Behemoths",
         "name": "This is Fine",
         "description": "Have 5 enemies on Fire simultaneously with the Flame Behemoths squad",
-        "required_tags": ("Fire",)
+        "required_tags": (("Fire",),)
     },
     "Cryo Expert": {
         "squad": "Frozen Titans",
         "name": "Cryo Expert",
         "description": "Shoot the Cryo-Launcher 4 times in a single battle with the Frozen Titans squad",
-        "required_tags": ("Freeze",)
+        "required_tags": (("Freeze",),)
     },
     "Pacifist": {
         "squad": "Frozen Titans",
         "name": "Pacifist",
         "description": "Kill less than 3 enemies in a single battle with the Frozen Titans squad",
-        "required_tags": ("Forced Move",)
+        "required_tags": (("Forced Move",),)
     },
     "Trick Shot": {
         "squad": "Frozen Titans",
         "name": "Trick Shot",
         "description": "Kill 3 enemies with a single attack of the Janus Cannon with the Frozen Titans squad",
-        "required_tags": ("Triple Kill",)
+        "required_tags": (("Triple Kill",),)
     },
     "Healing": {
         "squad": "Hazardous Mechs",
         "name": "Healing",
         "description": "Heal 10 Mech Health in a single battle with the Hazardous Mechs squad",
-        "required_tags": ("Heal",)
+        "required_tags": (("Heal",),)
     },
     "Immortal": {
         "squad": "Hazardous Mechs",
@@ -149,7 +149,7 @@ achievement_info_table = {
         "squad": "Hazardous Mechs",
         "name": "Overkill",
         "description": "Deal 8 damage to a unit with a single attack with the Hazardous Mechs squad",
-        "required_tags": (("Acid", "Boost"), ("Acid", "Hormones"), ("Acid", "High Damage"), ("Boost", "High Damage"))
+        "required_tags": (("Acid", "Boost"), ("Acid", "Hormones"), ("Hormones", "Boost", "High Damage"))
     },
     "Change the Odds": {
         "squad": "Random Squad",
@@ -191,82 +191,82 @@ achievement_info_table = {
         "squad": "Bombermechs",
         "name": "No Survivors",
         "description": "Have 7 units (any team) die in a single turn",
-        "required_tags": ("Triple Kill",)
+        "required_tags": (("Triple Kill",),)
     },
     "Powered Blast": {
         "squad": "Bombermechs",
         "name": "Powered Blast",
         "description": "Pierce a Walking Bomb with the AP Cannon to kill an Enemy",
-        "required_tags": (("Summon", "Piercing"),)
+        "required_tags": (("Summon",), ("Piercing",),)
     },
     "Spider Breeding": {
         "squad": "Arachnophiles",
         "name": "Spider Breeding",
         "description": "Spawn 15 Arachnoids in one Island",
-        "required_tags": ("Many Summons",)
+        "required_tags": (("Many Summons",),)
     },
     "Working Together": {
         "squad": "Arachnophiles",
         "name": "Working Together",
         "description": "Area Shift 4 units at once",
-        "required_tags": ("Quadruple Move",)
+        "required_tags": (("Quadruple Move",),)
     },
     "Efficient Explosives": {
         "squad": "Arachnophiles",
         "name": "Efficient Explosives",
         "description": "Kill 3 Enemies with 1 shot of the Ricochet Rocket",
-        "required_tags": ("Triple Kill",)
+        "required_tags": (("Triple Kill",),)
     },
     "Stay With Me": {
         "squad": "Mist Eaters",
         "name": "Stay With Me",
         "description": "Heal 12 damage over the course of a single Island",
-        "required_tags": ("Heal",)
+        "required_tags": (("Heal",),)
     },
     "Let's Walk": {
         "squad": "Mist Eaters",
         "name": "Let's Walk",
         "description": "Move Enemies with Control Shot 120 spaces in one game",
-        "required_tags": ("Forced Move",)
+        "required_tags": (("Forced Move",),)
     },
     "On the Backburner": {
         "squad": "Mist Eaters",
         "name": "On the Backburner",
         "description": "Do 4 damage with the Reverse Thrusters",
-        "required_tags": ("High Damage",)
+        "required_tags": (("High Damage",),)
     },
     "Boosted": {
         "squad": "Heat Sinkers",
         "name": "Boosted",
         "description": "Boost 8 Mechs in one mission",
-        "required_tags": ("Boost",)
+        "required_tags": (("Boost",),)
     },
     "Feed the Flame": {
         "squad": "Heat Sinkers",
         "name": "Feed the Flame",
         "description": "Light 3 Enemies on fire with a single attack",
-        "required_tags": ("Triple Fire",)
+        "required_tags": (("Triple Fire",),)
     },
     "Maximum Firepower": {
         "squad": "Heat Sinkers",
         "name": "Maximum Firepower",
         "description": "Deal 8 damage with a single activation of the Quick-Fire Rockets",
-        "required_tags": (("Acid", "Boost"),
-                          ("Acid", "High Damage"),
-                          ("Boost", "High Damage"),
-                          ("High Damage", "Triple Kill"))
+        "required_tags": (("Acid", "High Damage", "Triple Kill"),
+                          ("Boost", "High Damage", "Acid"),
+                          ("Boost", "Triple Kill", "Acid"),
+                          ("High Damage", "Triple Kill", "Boost"))
     },
     "Unstable Ground": {
         "squad": "Cataclysm",
         "name": "Unstable Ground",
         "description": "Crack 10 tiles in one mission",
-        "required_tags": ("Crack",)
+        "required_tags": (("Crack",),)
     },
     "Core of the Earth": {
         "squad": "Cataclysm",
         "name": "Core of the Earth",
         "description": "Drop 10 Enemies into pits on one Island",
-        "required_tags": ("Crack",)
+        "required_tags": (("Crack",),)
     },
     "Miner Inconvenience": {
         "squad": "Cataclysm",

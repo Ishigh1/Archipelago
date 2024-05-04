@@ -9,7 +9,9 @@ from .Logic import can_beat_the_game
 from .Options import itb_options
 from .achievement.Achievements import achievements_by_squad
 from .squad import Squad
-from .squad.Squads import shuffle_teams, squad_names, vanilla_squads
+from .squad.VanillaSquads import vanilla_squads
+from .squad.SquadInfo import squad_names
+from .squad.SquadRando import shuffle_teams
 
 
 class IntoTheBreachWorld(World):

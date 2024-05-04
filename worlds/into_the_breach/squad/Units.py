@@ -1,4 +1,6 @@
 # This file will list all the units, their categories, and their weapons
+from .TagSystem import expand_tags
+from .Weapons import weapon_table
 
 unit_table = {
     # Rift Walkers (Squad Archive A)
@@ -370,3 +372,13 @@ unit_table = {
         "Disabled": True
     },
 }
+
+
+def tags_from_unit(unit) -> set[str]:
+    tags = {tag for weapon_name in unit["Weapons"]
+            for tag in weapon_table[weapon_name]["Tags"].keys()}
+
+    for trait in unit["Traits"]:
+        tags.add(trait)
+
+    return tags
