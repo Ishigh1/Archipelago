@@ -18,7 +18,7 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
 
     for unit_name in unit_table:
         unit = unit_table[unit_name]
-        if not unit["Disabled"]:
+        if "Disabled" not in unit:
             units_per_class[unit["Type"][0]].append(unit_name)
             tag_list = tags_from_unit(unit)
             for tag in tag_list:
@@ -63,16 +63,17 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
     for squad_id in range(squad_count):
         for unit_id_1 in range(1, unit_count + 1):
             unit_1 = unit_table[unit_name_from_id[unit_id_1]]
-            if unit_1["Disabled"]:
+            if "Disabled" in unit_1:
                 solver.add_clause([-get_id_from_ids(unit_id_1, squad_id)])
             else:
                 unit_type_1 = unit_1["Type"][0]
                 for unit_id_2 in range(unit_id_1 + 1, unit_count + 1):
                     unit_2 = unit_table[unit_name_from_id[unit_id_2]]
-                    if not unit_1["Disabled"]:
+                    if "Disabled" not in unit_2:
                         unit_type_2 = unit_2["Type"][0]
                         if unit_type_1 == unit_type_2:
-                            solver.add_clause([-get_id_from_ids(unit_id_1, squad_id), -get_id_from_ids(unit_id_2, squad_id)])
+                            solver.add_clause(
+                                [-get_id_from_ids(unit_id_1, squad_id), -get_id_from_ids(unit_id_2, squad_id)])
 
     tmp = []
     # At least 3 units per squad
