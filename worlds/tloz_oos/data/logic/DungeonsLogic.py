@@ -46,6 +46,12 @@ def make_d1_logic(player: int):
                 # Medium logic expects the player to be able to use bushes
                 oos_option_medium_logic(state, player),
                 oos_has_bracelet(state, player)
+            ]),
+            all([
+                # refill ember seeds with the boomerang
+                oos_option_insane_logic(state, player),
+                oos_can_use_ember_seeds(state, player, False),
+                oos_can_break_bush(state, player)
             ])
         ])],
 
@@ -59,12 +65,33 @@ def make_d1_logic(player: int):
         # 1 key
         ["enter d1", "d1 stalfos chest", False, lambda state: all([
             oos_has_small_keys(state, player, 1, 1),
-            oos_can_kill_stalfos(state, player)
+            any([
+                oos_can_kill_stalfos(state, player),
+                all([
+                    # Throw the bushes from the previous room while staying in the entrance for the first three
+                    oos_option_insane_logic(state, player),
+                    any([
+                        oos_has_bracelet(state, player),
+                        all([
+                            # refill ember seeds with the boomerang
+                            oos_can_use_ember_seeds(state, player, False),
+                            oos_can_break_bush(state, player)
+                        ])
+                    ])
+                ])
+            ])
         ])],
 
-        ["d1 stalfos chest", "d1 goriya chest", False, lambda state: any([
+        ["d1 stalfos chest", "d1 goriya chest", False, lambda state: all([
             oos_can_use_ember_seeds(state, player, True),
-            oos_can_kill_normal_enemy(state, player, True)
+            any([
+                oos_can_kill_normal_enemy(state, player, True),
+                all([
+                    # refill ember/mystery at the previous room
+                    oos_option_insane_logic(state, player),
+                    oos_can_break_bush(state, player)
+                ])
+            ])
         ])],
 
         ["d1 stalfos chest", "d1 lever room", False, None],
@@ -74,6 +101,12 @@ def make_d1_logic(player: int):
             all([
                 oos_option_hard_logic(state, player),
                 oos_has_bracelet(state, player)
+            ]),
+            all([
+                # refill ember seeds with the boomerang
+                oos_option_insane_logic(state, player),
+                oos_can_use_ember_seeds(state, player, False),
+                oos_can_break_bush(state, player)
             ])
         ])],
 
@@ -104,7 +137,14 @@ def make_d2_logic(player: int):
         # 0 keys
         ["enter d2", "d2 torch room", False, None],
         ["d2 torch room", "d2 left from entrance", False, None],
-        ["d2 torch room", "d2 rope drop", False, lambda state: oos_can_kill_normal_enemy(state, player)],
+        ["d2 torch room", "d2 rope drop", False, lambda state: any([
+            oos_can_kill_normal_enemy(state, player),
+            all([
+                # Come with a pot and wait for the coil to rush into you, dropping the pot on them while waiting in the entrance
+                oos_option_insane_logic(state, player),
+                oos_has_bracelet(state, player)
+            ])
+        ])],
         ["d2 torch room", "d2 arrow room", False, lambda state: oos_can_use_ember_seeds(state, player, True)],
 
         ["d2 arrow room", "d2 torch room", False, lambda state: any([

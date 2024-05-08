@@ -134,11 +134,15 @@ def oos_has_boss_key(state: CollectionState, player: int, dungeon_id: int):
 # Options and generation predicates ###########################################
 
 def oos_option_medium_logic(state: CollectionState, player: int):
-    return state.multiworld.worlds[player].options.logic_difficulty in ["medium", "hard"]
+    return state.multiworld.worlds[player].options.logic_difficulty in ["medium", "hard", "insane"]
 
 
 def oos_option_hard_logic(state: CollectionState, player: int):
-    return state.multiworld.worlds[player].options.logic_difficulty == "hard"
+    return state.multiworld.worlds[player].options.logic_difficulty in ["hard", "insane"]
+
+
+def oos_option_insane_logic(state: CollectionState, player: int):
+    return state.multiworld.worlds[player].options.logic_difficulty == "insane"
 
 
 def oos_option_shuffled_dungeons(state: CollectionState, player: int):

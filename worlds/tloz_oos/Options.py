@@ -29,6 +29,7 @@ class OracleOfSeasonsLogicDifficulty(Choice):
     option_casual = 0
     option_medium = 1
     option_hard = 2
+    option_insane = 3
 
     default = 0
 
