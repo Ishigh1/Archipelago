@@ -556,6 +556,26 @@ class FriendsanityHeartSize(Range):
     default = 4
     # step = 1
 
+class Tilesanity(Choice):
+    """Enables tilesanity. You need the permission of the host to enable it.
+    Locations means every tile will hold an item with no consequence on the game
+    Full means both every tile additionally requires to be unlocked"""
+    internal_name = "tilesanity"
+    display_name = "Tilesanity"
+    option_nope = 0
+    option_locations = 1
+    option_full = 2
+    default = option_nope
+
+# Conditional Setting - Tilesanity is not nope
+class TilesanitySize(Range):
+    """Changes the size of tiles for tilesanity."""
+    internal_name = "tilesanity_size"
+    display_name = "Tilesanity Size"
+    range_start = 1
+    range_end = 10
+    default = 5
+
 
 class Booksanity(Choice):
     """Shuffle Books?
@@ -818,6 +838,8 @@ class StardewValleyOptions(PerGameCommonOptions):
     friendsanity_heart_size: FriendsanityHeartSize
     booksanity: Booksanity
     walnutsanity: Walnutsanity
+    tilesanity: Tilesanity
+    tilesanity_size: TilesanitySize
     exclude_ginger_island: ExcludeGingerIsland
     quick_start: QuickStart
     starting_money: StartingMoney

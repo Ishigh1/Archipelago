@@ -183,6 +183,7 @@ class LogicRegion:
     night_market = "Night Market"
     winter_star = "Feast of the Winter Star"
     squidfest = "SquidFest"
+    racoon_tree = "Racoon Tree"
     raccoon_daddy = "Raccoon Bundles"
     raccoon_shop = "Raccoon Shop"
     bookseller_1 = "Bookseller Experience Books"

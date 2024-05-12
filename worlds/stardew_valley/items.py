@@ -15,7 +15,7 @@ from .logic.logic_event import all_events
 from .mods.mod_data import ModNames
 from .options import StardewValleyOptions, TrapItems, FestivalLocations, ExcludeGingerIsland, SpecialOrderLocations, SeasonRandomization, Museumsanity, \
     BuildingProgression, SkillProgression, ToolProgression, ElevatorProgression, BackpackProgression, ArcadeMachineLocations, Monstersanity, Goal, \
-    Chefsanity, Craftsanity, BundleRandomization, EntranceRandomization, Shipsanity, Walnutsanity, EnabledFillerBuffs
+    Chefsanity, Craftsanity, BundleRandomization, EntranceRandomization, Shipsanity, Walnutsanity, EnabledFillerBuffs, Tilesanity
 from .strings.ap_names.ap_option_names import OptionName
 from .strings.ap_names.ap_weapon_names import APWeapon
 from .strings.ap_names.buff_names import Buff
@@ -23,6 +23,7 @@ from .strings.ap_names.community_upgrade_names import CommunityUpgrade
 from .strings.ap_names.mods.mod_items import SVEQuestItem
 from .strings.currency_names import Currency
 from .strings.wallet_item_names import Wallet
+from .tilesanity import tilesanity_coord_from_name, tilesanity_name_from_coord, alternate_name
 
 ITEM_CODE_OFFSET = 717000
 
@@ -87,6 +88,11 @@ class Group(enum.Enum):
     BOOK_POWER = enum.auto()
     LOST_BOOK = enum.auto()
     PLAYER_BUFF = enum.auto()
+
+    # Tilesanity
+    TILESANITY = enum.auto()
+    NOT_TILE = enum.auto()
+
     # Mods
     MAGIC_SPELL = enum.auto()
     MOD_WARP = enum.auto()
@@ -130,6 +136,17 @@ def load_item_csv():
         from importlib_resources import files  # noqa
 
     items = []
+    with files(data).joinpath("tilesanity.csv").open() as file:
+        item_reader = csv.DictReader(file)
+        for item in item_reader:
+            region = item["region"]
+            if region == "Farmhouse":
+                continue
+            id = int(item["id"]) if item["id"] else None
+            classification = ItemClassification.progression_skip_balancing
+            groups = {Group[group] for group in item["tags"].split(",") if group}
+            mod_name = str(item["mod_name"]) if item["mod_name"] else None
+            items.append(ItemData(id, item["name"], classification, mod_name, groups))
     with files(data).joinpath("items.csv").open() as file:
         item_reader = csv.DictReader(file)
         for item in item_reader:
@@ -260,6 +277,7 @@ def create_unique_items(item_factory: StardewItemFactory, options: StardewValley
     create_goal_items(item_factory, options, items)
     items.append(item_factory("Golden Egg"))
     items.append(item_factory(CommunityUpgrade.mr_qi_plane_ride))
+    create_tilesanity_items(item_factory, options, items)
 
     create_sve_special_items(item_factory, options, items)
     create_magic_mod_spells(item_factory, options, items)
@@ -717,6 +735,27 @@ def create_quest_rewards_sve(item_factory: StardewItemFactory, options: StardewV
     if exclude_ginger_island:
         return
     items.extend([item_factory(item) for item in SVEQuestItem.sve_quest_items_ginger_island])
+
+
+def create_tilesanity_items(item_factory: StardewItemFactory, options: StardewValleyOptions, items: List[Item]):
+    if options.tilesanity < Tilesanity.option_full:
+        return
+
+    all_tiles = set()
+    tile_size = options.tilesanity_size
+    farm_name = alternate_name("Farm", options)
+
+    for item_data in items_by_group[Group.TILESANITY]:
+        if Group.NOT_TILE not in item_data.groups:
+            map_name, x, y = tilesanity_coord_from_name(item_data.name)
+            if map_name == "FarmHouse":
+                continue
+            if map_name.endswith("Farm") and map_name != farm_name:
+                continue
+            all_tiles.add((map_name, int(x / tile_size), int(y / tile_size)))
+
+    for _ in all_tiles:
+        items.append(item_factory("Progressive Tile"))
 
 
 def create_unique_filler_items(item_factory: StardewItemFactory, options: StardewValleyOptions, random: Random,
