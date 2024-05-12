@@ -10,7 +10,7 @@ from .content.game_content import StardewContent
 from .data.game_item import ItemTag
 from .data.museum_data import all_museum_items
 from .mods.mod_data import ModNames
-from .options import ExcludeGingerIsland, ArcadeMachineLocations, SpecialOrderLocations, Museumsanity, \
+from .options import ExcludeGingerIsland, ArcadeMachineLocations, SpecialOrderLocations, Museumsanity, Tilesanity, \
     FestivalLocations, SkillProgression, BuildingProgression, ToolProgression, ElevatorProgression, BackpackProgression, FarmType
 from .options import StardewValleyOptions, Craftsanity, Chefsanity, Cooksanity, Shipsanity, Monstersanity
 from .strings.goal_names import Goal
@@ -101,6 +101,11 @@ class LocationTags(enum.Enum):
     BOOKSANITY_POWER = enum.auto()
     BOOKSANITY_SKILL = enum.auto()
     BOOKSANITY_LOST = enum.auto()
+
+    # Tilesanity
+    TILESANITY = enum.auto()
+    NOT_TILE = enum.auto()
+    
     # Mods
     # Skill Mods
     LUCK_LEVEL = enum.auto()
@@ -135,16 +140,20 @@ def load_location_csv() -> List[LocationData]:
     except ImportError:
         from importlib_resources import files
 
-    with files(data).joinpath("locations.csv").open() as file:
-        reader = csv.DictReader(file)
-        return [LocationData(int(location["id"]) if location["id"] else None,
-                             location["region"],
-                             location["name"],
-                             str(location["mod_name"]) if location["mod_name"] else None,
-                             frozenset(LocationTags[group]
-                                       for group in location["tags"].split(",")
-                                       if group))
-                for location in reader]
+    location_data = []
+    data_files = ["locations.csv", "tilesanity.csv"]
+    for file_path in data_files:
+        with files(data).joinpath(file_path).open() as file:
+            reader = csv.DictReader(file)
+            for location in reader:
+                location_id = int(location["id"]) if location["id"] else None
+                region = location["region"]
+                name = location["name"]
+                mod_name = str(location["mod_name"]) if location["mod_name"] else None
+                tags = frozenset(LocationTags[group] for group in location["tags"].split(",") if group)
+                location_data.append(LocationData(location_id, region, name, mod_name, tags))
+
+    return location_data
 
 
 events_locations = [
@@ -463,6 +472,32 @@ def extend_walnutsanity_locations(randomized_locations: List[LocationData], opti
         randomized_locations.extend(locations_by_tag[LocationTags.WALNUTSANITY_REPEATABLE])
 
 
+def extend_tilesanity_locations(randomized_locations, options):
+    if options.tilesanity == Tilesanity.option_nope:
+        return
+    from .tilesanity import alternate_name, tilesanity_coord_from_name, tilesanity_name_from_coord
+
+    tiles = []
+    tile_names = set()
+    tile_size = options.tilesanity_size
+    farm_name = alternate_name("Farm", options)
+    for location_data in locations_by_tag[LocationTags.TILESANITY]:
+        if LocationTags.NOT_TILE not in location_data.tags:
+            if location_data.region.endswith("Farm"):
+                if location_data.region != farm_name:
+                    continue
+
+            if tile_size == 1:
+                tiles.append(location_data)
+            else:
+                region, x, y = tilesanity_coord_from_name(location_data.name)
+                tile_name = tilesanity_name_from_coord(region, int(x / tile_size), int(y / tile_size))
+                if tile_name not in tile_names:
+                    tile_names.add(tile_name)
+                    tiles.append(location_table[tile_name])
+    randomized_locations.extend(tiles)
+
+
 def create_locations(location_collector: StardewLocationCollector,
                      bundle_rooms: List[BundleRoom],
                      options: StardewValleyOptions,
@@ -514,6 +549,7 @@ def create_locations(location_collector: StardewLocationCollector,
     extend_craftsanity_locations(randomized_locations, options)
     extend_quests_locations(randomized_locations, options)
     extend_book_locations(randomized_locations, content)
+    extend_tilesanity_locations(randomized_locations, options)
     extend_walnutsanity_locations(randomized_locations, options)
 
     # Mods
@@ -557,3 +593,18 @@ def filter_disabled_locations(options: StardewValleyOptions, locations: Iterable
     locations_masteries_filter = filter_masteries_locations(options, locations_qi_filter)
     locations_mod_filter = filter_modded_locations(options, locations_masteries_filter)
     return locations_mod_filter
+
+
+def filter_farm_tilesanity_locations(options, tilesanity_locations):
+    from .tilesanity import alternate_name
+    new_tilesanity_locations = []
+    farm_name = alternate_name("Farm", options)
+    for tilesanity_location in tilesanity_locations:
+        if tilesanity_location.region.endswith("Farm"):
+            if tilesanity_location.region == farm_name:
+                new_tilesanity_locations.append(
+                    LocationData(tilesanity_location.code_without_offset, "Farm", tilesanity_location.name,
+                                 tilesanity_location.mod_name, tilesanity_location.tags))
+        else:
+            new_tilesanity_locations.append(tilesanity_location)
+    return new_tilesanity_locations

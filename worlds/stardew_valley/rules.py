@@ -1033,7 +1033,7 @@ def set_entrance_rule(multiworld, player, entrance: str, rule: StardewRule):
             for region in potentially_required_regions:
                 multiworld.register_indirect_condition(multiworld.get_region(region, player), multiworld.get_entrance(entrance, player))
 
-        MultiWorldRules.set_rule(multiworld.get_entrance(entrance, player), rule)
+        MultiWorldRules.add_rule(multiworld.get_entrance(entrance, player), rule, "and")
     except KeyError as ex:
         print(f"Failed to evaluate indirect connection in {entrance}")
         print(explain(rule, CollectionState(multiworld)))

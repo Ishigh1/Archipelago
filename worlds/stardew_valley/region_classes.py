@@ -1,4 +1,6 @@
 from copy import deepcopy
+from enum import IntFlag
+from typing import Optional, List, Tuple
 from dataclasses import dataclass, field
 from enum import IntFlag
 from typing import Optional, List, Set
@@ -28,6 +30,7 @@ class RegionData:
     exits: List[str] = field(default_factory=list)
     flag: ModificationFlag = ModificationFlag.NOT_MODIFIED
     is_ginger_island: bool = False
+    main_point: Optional[Tuple[int, int]] = None
 
     def get_merged_with(self, exits: List[str]):
         merged_exits = []
@@ -51,6 +54,8 @@ class ConnectionData:
     destination: str
     origin: Optional[str] = None
     reverse: Optional[str] = None
+    entry_coord: Optional[Tuple[int, int]] = None
+    exit_coord: Optional[Tuple[int, int]] = None
     flag: RandomizationFlag = RandomizationFlag.NOT_RANDOMIZED
 
     def __post_init__(self):
