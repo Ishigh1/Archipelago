@@ -217,9 +217,9 @@ achievement_info_table = {
         "description": "Kill 3 Enemies with 1 shot of the Ricochet Rocket",
         "required_tags": (("Triple Kill",),)
     },
-    "Stay With Me": {
+    "Stay With Me!": {
         "squad": "Mist Eaters",
-        "name": "Stay With Me",
+        "name": "Stay With Me!",
         "description": "Heal 12 damage over the course of a single Island",
         "required_tags": (("Heal",),)
     },
