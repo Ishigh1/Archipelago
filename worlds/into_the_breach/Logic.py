@@ -1,15 +1,10 @@
 from BaseClasses import CollectionState
-from .Items import itb_island_items
 from .squad.SquadInfo import squad_names
 from .squad.TagSystem import add_tags
 
 
 def count_if_in(state: CollectionState, player: int, items: [str]) -> int:
     return sum(state.has(item, player) for item in items)
-
-
-def has_islands(state, player: int, count: int) -> bool:
-    return count_if_in(state, player, itb_island_items) >= count
 
 
 def has_defense(state: CollectionState, player: int, count: int) -> bool:
