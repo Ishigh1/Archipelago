@@ -1,13 +1,12 @@
-import typing
 from dataclasses import dataclass
 
-from Options import Option, Toggle, Range, PerGameCommonOptions, StartInventoryPool
+from Options import Toggle, Range, PerGameCommonOptions, StartInventoryPool
 
 
 class RandomizeSquads(Toggle):
     """Randomize Squads"""
     display_name = "Randomize Squads"
-    default = False
+    default = True
 
 
 class CustomSquad(Toggle):

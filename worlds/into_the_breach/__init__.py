@@ -125,8 +125,7 @@ class IntoTheBreachWorld(World):
         for squad_name in self.squads:
             item = self.create_item(squad_name)
             if squad_name in self.options.start_inventory_from_pool.value:
-                self.multiworld.push_precollected(item)
-                self.options.start_inventory_from_pool.value[squad_name] = 0
+                del self.options.start_inventory_from_pool.value[squad_name]
             else:
                 item_count += 1
                 self.multiworld.itempool.append(item)
