@@ -1,7 +1,7 @@
-from Options import Option, Toggle, Range
 import typing
+from dataclasses import dataclass
 
-from worlds.into_the_breach import itb_squad_items
+from Options import Option, Toggle, Range, PerGameCommonOptions, StartInventoryPool
 
 
 class RandomizeSquads(Toggle):
@@ -17,15 +17,25 @@ class CustomSquad(Toggle):
 
 
 class RequiredAchievements(Range):
-    """Number of achievements required to win"""
-    display_name = "Required achievements"
+    """Percentage of achievements required to win"""
+    display_name = "Required achievements%"
     range_start = 0
-    range_end = (len(itb_squad_items) + 1)*3
-    default = 9
+    range_end = 100
+    default = 24
 
 
-itb_options: typing.Dict[str, type(Option)] = {
-    "randomize_squads": RandomizeSquads,
-    "custom_squad": CustomSquad,
-    "required_achievements": RequiredAchievements
-}
+class SquadNumber(Range):
+    """Number of squads included in the rando. Be careful to include at least as many as a third of required achievements"""
+    display_name = "Squad number"
+    range_start = 3
+    range_end = 13
+    default = 13
+
+
+@dataclass
+class IntoTheBreachOptions(PerGameCommonOptions):
+    randomize_squads: RandomizeSquads
+    custom_squad: CustomSquad
+    required_achievements: RequiredAchievements
+    squad_number: SquadNumber
+    start_inventory_from_pool: StartInventoryPool

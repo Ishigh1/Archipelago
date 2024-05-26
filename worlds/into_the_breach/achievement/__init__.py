@@ -26,8 +26,8 @@ class Achievement:
                     return True
             else:
                 for required_part in option:
-                    if required_part not in tags:
+                    if required_part in tags:
                         break
                 else:
-                    return True
-        return False
+                    return False
+        return True

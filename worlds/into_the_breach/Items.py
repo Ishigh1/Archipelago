@@ -9,20 +9,12 @@ class ItbItem(Item):
 
 itb_squad_items = squad_names
 
-itb_island_items = [  # Not implemented yet
-    # "Unlock Museum Island",
-    # "Unlock Desert Island",
-    # "Unlock Ice Island",
-    # "Unlock Factory Island",
-    # "Unlock Hive"
-]
-
 itb_upgrade_items = [
     "3 Starting Grid Defense",
     "2 Starting Grid Power",
 ]
 
-itb_progression_items = itb_squad_items + itb_island_items + itb_upgrade_items
+itb_progression_items = itb_squad_items + itb_upgrade_items
 
 itb_filler_items = [
     "1 Grid Power"

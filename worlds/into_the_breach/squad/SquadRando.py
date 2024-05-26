@@ -2,13 +2,13 @@
 from random import Random
 from typing import Tuple
 from . import Squad
-from .SquadInfo import squad_names, class_names
+from .SquadInfo import class_names
 from .TagSystem import tag_implications
 from .Units import unit_table, tags_from_unit
 from ..achievement.Achievements import achievement_info_table
 
 
-def shuffle_teams(random: Random) -> dict[str, Squad]:
+def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, Squad]:
     from pysat.solvers import Glucose42
     units_per_tag: dict[str, set] = {}
     units_per_class: dict[str, list] = {}
@@ -28,9 +28,9 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
 
     solver = Glucose42()
     squad_ids = {}
-    for squad_id, squad_name in enumerate(squad_names):
+    for squad_id, squad_name in enumerate(filtered_squad_names):
         squad_ids[squad_name] = squad_id
-    squad_count = len(squad_names)
+    squad_count = len(filtered_squad_names)
 
     unit_ids = {}
     unit_name_from_id = {}
@@ -51,7 +51,7 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
         if unit_id == 0:
             squad_id -= 1
             unit_id = squad_count
-        return unit_name_from_id[unit_id], squad_names[squad_id]
+        return unit_name_from_id[unit_id], filtered_squad_names[squad_id]
 
     # Unit uniqueness
     for unit_id in range(1, unit_count + 1):
@@ -96,7 +96,7 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
         for unit_name_2 in units_per_class["Brute"]:
             for unit_name_3 in units_per_class["Ranged"]:
                 for unit_name_4 in units_per_class["Science"]:
-                    for squad_name in squad_names:
+                    for squad_name in filtered_squad_names:
                         solver.add_clause([-get_id_from_names(unit_name_1, squad_name),
                                            -get_id_from_names(unit_name_2, squad_name),
                                            -get_id_from_names(unit_name_3, squad_name),
@@ -162,6 +162,8 @@ def shuffle_teams(random: Random) -> dict[str, Squad]:
         if "required_tags" in achievement:
             tag_clauses = get_tag_clauses_from_achievement(achievement)
             squad_name = achievement["squad"]
+            if squad_name not in filtered_squad_names:
+                continue
             for tag_clause in tag_clauses:
                 unit_clause = set()
                 for tag in tag_clause:

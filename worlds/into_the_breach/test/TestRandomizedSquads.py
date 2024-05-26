@@ -1,7 +1,8 @@
 import unittest
 
-from BaseClasses import MultiWorld
+from BaseClasses import MultiWorld, CollectionState
 from . import ItbTestBase
+from .. import achievements_by_squad
 from ..squad import unit_table
 from ..squad.SquadRando import class_names
 
@@ -51,7 +52,6 @@ class ItbRandomizedSquadsTest(ItbTestBase):
             self.assertEqual(len(squads[squad_name]), 3,
                              f"{squad_name} has more than 3 units ({squads[squad_name]}")
 
-    @unittest.skip("Currently disabled to improve performance")
     def test_no_duplicate_unit(self):
         squads = get_squads(self.multiworld)
         units = set()
@@ -59,3 +59,15 @@ class ItbRandomizedSquadsTest(ItbTestBase):
             for unit_name in squads[squad_name]:
                 self.assertNotIn(unit_name, units, "Duplicate unit found")
                 units.add(unit_name)
+
+    def test_squad_can_beat_achievements(self):
+        squads = get_squads(self.multiworld)
+        for item in self.multiworld.itempool:
+            for squad_name in squads:
+                if squad_name != item.name:
+                    continue
+                state = CollectionState(self.multiworld)
+                state.collect(item)
+                for achievement_name in achievements_by_squad[squad_name]:
+                    self.assertTrue(state.can_reach_location(achievement_name, 1), f"{squads[squad_name]} can't beat {achievement_name}")
+                break
