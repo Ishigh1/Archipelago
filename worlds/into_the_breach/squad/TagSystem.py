@@ -10,6 +10,7 @@
 # Triple Fire : Can light 3 units on fire at once
 # Smoke : Can generate 5 smoke in a mission
 # Electric Smoke : ["Storm Generator"]
+# Electric Smoke 2 : upgraded storm generator
 # Laser : ["Burst Beam", "Prism Laser", "Refractor Laser", "Fire Beam", "Frost Beam"] extends LaserDefault in code
 # Shield : Can create 4 shields in a mission
 # Chain : can target 10+ tiles in a single attack
@@ -36,17 +37,22 @@ tag_implications = {
 }
 
 
-def add_implied_tag(tags: set[str], result: str, requirements: Iterable[str]):
+def add_implied_tag(tags: dict[str, int], result: str, requirements: Iterable[str]):
     """
     Add an implied tag to the tags dictionary if all the required tags exist.
     """
+    total_core_requirement = 0
     for tag in requirements:
         if tag not in tags:
             return
-    tags.add(result)
+        core_requirement = tags[tag]
+        if core_requirement > total_core_requirement:
+            total_core_requirement = core_requirement
+    if result not in tags or total_core_requirement < tags[result]:
+        tags[result] = total_core_requirement
 
 
-def expand_tags(tags: set[str]):
+def expand_tags(tags: dict[str, int]):
     """
     Add implied tags based on existing tags in the dictionary.
     """
@@ -54,7 +60,9 @@ def expand_tags(tags: set[str]):
         add_implied_tag(tags, result, tag_implications[result])
 
 
-def add_tags(tags: set[str], new_tags: set[str]):
+def add_tags(tags: dict[str, int], new_tags: dict[str, int]):
     for tag in new_tags:
-        tags.add(tag)
+        cores = new_tags[tag]
+        if tag not in tags or cores < tags[tag]:
+            tags[tag] = cores
     expand_tags(tags)

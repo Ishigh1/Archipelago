@@ -12,9 +12,6 @@ squad_names = [
     "Mist Eaters",
     "Heat Sinkers",
     "Cataclysm",
-    # "Secret Squad",
-    # "Random Squad",
-    # "Custom Squad",
 ]
 
 class_names = [

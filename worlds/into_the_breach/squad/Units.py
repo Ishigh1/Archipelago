@@ -1,5 +1,4 @@
 # This file will list all the units, their categories, and their weapons
-from .TagSystem import expand_tags
 from .Weapons import weapon_table
 
 unit_table = {
@@ -374,11 +373,16 @@ unit_table = {
 }
 
 
-def tags_from_unit(unit) -> set[str]:
-    tags = {tag for weapon_name in unit["Weapons"]
-            for tag in weapon_table[weapon_name]["Tags"].keys()}
+def tags_from_unit(unit) -> dict[str, int]:
+    tags = {}
+    for weapon_name in unit["Weapons"]:
+        weapon_tags = weapon_table[weapon_name]["Tags"]
+        for tag in weapon_tags:
+            cores = weapon_tags[tag]
+            if tag not in tags or cores < tags[tag]:
+                tags[tag] = cores
 
     for trait in unit["Traits"]:
-        tags.add(trait)
+        tags[trait] = 0
 
     return tags

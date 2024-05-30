@@ -1,6 +1,7 @@
 # The SAT version
+import math
 from random import Random
-from typing import Tuple
+from typing import Tuple, Optional
 from . import Squad
 from .SquadInfo import class_names
 from .TagSystem import tag_implications
@@ -20,8 +21,8 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
         unit = unit_table[unit_name]
         if "Disabled" not in unit:
             units_per_class[unit["Type"][0]].append(unit_name)
-            tag_list = tags_from_unit(unit)
-            for tag in tag_list:
+            tags = tags_from_unit(unit)
+            for tag in tags:
                 if tag not in units_per_tag:
                     units_per_tag[tag] = set()
                 units_per_tag[tag].add(unit_name)
@@ -38,6 +39,8 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
         unit_ids[unit_name] = unit_id
         unit_name_from_id[unit_id] = unit_name
     unit_count = len(unit_table)
+
+    next_id = squad_count * (unit_count + 1)
 
     def get_id_from_ids(unit_id: int, squad_id: int) -> int:
         return squad_id + unit_id * squad_count
@@ -129,7 +132,13 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
             return []
         required_tags = list(achievement["required_tags"])
         for i in range(len(required_tags)):
-            required_tags[i] = list(required_tags[i])
+            if isinstance(required_tags[i][-1], str):
+                required_tags[i] = list(required_tags[i])
+            else:
+                if len(required_tags[i]) == 1:
+                    del required_tags[i]
+                else:
+                    required_tags[i] = list(required_tags[i][:-1])
 
         current_line_number = 0
         while current_line_number < len(required_tags):
@@ -171,10 +180,10 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
                         unit_clause.update(units_per_tag[tag])
                 solver.add_clause([get_id_from_names(unit_name, squad_name) for unit_name in unit_clause])
 
-    all_atoms = list(range(1, squad_count * (unit_count + 1)))
-    random.shuffle(all_atoms)
+    all_unit_atoms = list(range(1, squad_count * (unit_count + 1)))
+    random.shuffle(all_unit_atoms)
     assumptions = []
-    for i in all_atoms:
+    for i in all_unit_atoms:
         new_assumptions = assumptions + [-i]
         if solver.solve(new_assumptions):
             assumptions = new_assumptions

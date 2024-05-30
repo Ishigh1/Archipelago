@@ -29,13 +29,13 @@ achievement_info_table = {
         "squad": "Rusting Hulks",
         "name": "Overpowered",
         "description": "Overpower your Power Grid twice by earning or buying Power when it is full with the Rusting Hulks squad",
-        "required_tags": None
+        "required_tags": ((1,),)
     },
     "Stormy Weather": {
         "squad": "Rusting Hulks",
         "name": "Stormy Weather",
         "description": "Deal 12 damage with Electric Smoke in a single battle with the Rusting Hulks squad",
-        "required_tags": (("Electric Smoke",), ("Smoke",))
+        "required_tags": (("Electric Smoke 2",), ("Smoke",))
     },
     "Perfect Battle": {
         "squad": "Rusting Hulks",
@@ -71,7 +71,7 @@ achievement_info_table = {
         "squad": "Blitzkrieg",
         "name": "Lightning War",
         "description": "Finish the first 2 Corporate Islands in under 30 minutes with the Blitzkrieg squad",
-        "required_tags": None
+        "required_tags": ((3,),)
     },
     "Hold the Line": {
         "squad": "Blitzkrieg",
@@ -89,13 +89,13 @@ achievement_info_table = {
         "squad": "Steel Judoka",
         "name": "Unwitting Allies",
         "description": "Have 4 enemies die from enemy fire in a single battle with the Steel Judoka squad",
-        "required_tags": (("Forced Move",),)
+        "required_tags": (("Forced Move",), (1,))
     },
     "Mass Displacement": {
         "squad": "Steel Judoka",
         "name": "Mass Displacement",
         "description": "Push 3 enemies with a single attack with the Steel Judoka squad",
-        "required_tags": (("Triple Push",),)
+        "required_tags": (("Triple Push",), (1,))
     },
     "Quantum Entanglement": {
         "squad": "Flame Behemoths",
@@ -107,13 +107,13 @@ achievement_info_table = {
         "squad": "Flame Behemoths",
         "name": "Scorched Earth",
         "description": "End a battle with 12 tiles on Fire with the Flame Behemoths squad",
-        "required_tags": (("Fire",),)
+        "required_tags": (("Fire",), (1,))
     },
     "This is Fine": {
         "squad": "Flame Behemoths",
         "name": "This is Fine",
         "description": "Have 5 enemies on Fire simultaneously with the Flame Behemoths squad",
-        "required_tags": (("Fire",),)
+        "required_tags": (("Fire",), (2,))
     },
     "Cryo Expert": {
         "squad": "Frozen Titans",
@@ -143,13 +143,13 @@ achievement_info_table = {
         "squad": "Hazardous Mechs",
         "name": "Immortal",
         "description": "Finish 4 Corporate Islands without a Mech being destroyed at the end of a battle with the Hazardous Mechs squad",
-        "required_tags": None
+        "required_tags": ((5,),)
     },
     "Overkill": {
         "squad": "Hazardous Mechs",
         "name": "Overkill",
         "description": "Deal 8 damage to a unit with a single attack with the Hazardous Mechs squad",
-        "required_tags": (("Acid", "Boost"), ("Acid", "Hormones"), ("Hormones", "Boost", "High Damage"))
+        "required_tags": (("Acid", "Boost"), ("Acid", "Hormones"), ("Hormones", "Boost", "High Damage"), (2,))
     },
     "Change the Odds": {
         "squad": "Random Squad",
@@ -185,13 +185,13 @@ achievement_info_table = {
         "squad": "Bombermechs",
         "name": "Hold the Door",
         "description": "Block 30 Emerging Vek enemies by the end of Island 2",
-        "required_tags": None,
+        "required_tags": ((2,),),
     },
     "No Survivors": {
         "squad": "Bombermechs",
         "name": "No Survivors",
         "description": "Have 7 units (any team) die in a single turn",
-        "required_tags": (("Triple Kill",),)
+        "required_tags": (("Triple Kill",), (2,))
     },
     "Powered Blast": {
         "squad": "Bombermechs",
@@ -209,7 +209,7 @@ achievement_info_table = {
         "squad": "Arachnophiles",
         "name": "Working Together",
         "description": "Area Shift 4 units at once",
-        "required_tags": (("Quadruple Move",),)
+        "required_tags": (("Quadruple Move",), (1,))
     },
     "Efficient Explosives": {
         "squad": "Arachnophiles",
@@ -227,7 +227,7 @@ achievement_info_table = {
         "squad": "Mist Eaters",
         "name": "Let's Walk",
         "description": "Move Enemies with Control Shot 120 spaces in one game",
-        "required_tags": (("Forced Move",),)
+        "required_tags": (("Forced Move",), (3,))
     },
     "On the Backburner": {
         "squad": "Mist Eaters",
@@ -239,7 +239,7 @@ achievement_info_table = {
         "squad": "Heat Sinkers",
         "name": "Boosted",
         "description": "Boost 8 Mechs in one mission",
-        "required_tags": (("Boost",),)
+        "required_tags": (("Boost",), (1,))
     },
     "Feed the Flame": {
         "squad": "Heat Sinkers",
@@ -266,13 +266,13 @@ achievement_info_table = {
         "squad": "Cataclysm",
         "name": "Core of the Earth",
         "description": "Drop 10 Enemies into pits on one Island",
-        "required_tags": (("Crack",),)
+        "required_tags": (("Crack",), ("Forced Move",), (1,))
     },
     "Miner Inconvenience": {
         "squad": "Cataclysm",
         "name": "Miner Inconvenience",
         "description": "Destroy 20 mountains in one game",
-        "required_tags": None
+        "required_tags": ((2,),)
     }
 }
 

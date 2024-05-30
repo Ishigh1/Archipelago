@@ -8,10 +8,14 @@ class ItbLocation(Location):
     game = "Into The Breach"
 
     # override constructor to automatically mark event locations as such
-    def __init__(self, player: int, name="", code=None, parent=None, randomized=False):
+    def __init__(self, world: "IntoTheBreachWorld", player: int, name="", code=None, parent=None, custom=False):
         super(ItbLocation, self).__init__(player, name, code, parent)
-        if randomized:
-            self.access_rule = achievement_table[name].get_access_rule(player)
+        if custom:
+            self.access_rule = achievement_table[name].get_custom_access_rule(player)
+        else:
+            rule = achievement_table[name].get_core_access_rule(world, player)
+            if rule is not None:
+                self.access_rule = achievement_table[name].get_core_access_rule(world, player)
         self.event = False
 
 

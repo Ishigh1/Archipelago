@@ -1146,9 +1146,8 @@ weapon_table = {
         "Power": "Free",
         "Effect": "All Smoke deals damage to enemy units every turn.",
         "Upgrade 1": "+1 Damage (Up Up Up)",
-        "Upgrade 2": "Increases Smoke damage by 1.",
         "Debug Name": "Passive_Electric",
-        "Tags": {"Electric Smoke": 0}
+        "Tags": {"Electric Smoke": 0, "Electric Smoke 2": 3}
     },
     "Viscera Nanobots": {
         "Class": "Passive",

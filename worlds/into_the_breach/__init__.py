@@ -33,25 +33,27 @@ class IntoTheBreachWorld(World):
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
+        self.starting_squads = []
         self.squads: Optional[dict[str, Squad]] = None
 
     def generate_early(self) -> None:
         squad_names_copy = squad_names.copy()
         filtered_squad_names = []
         additional_squads = self.options.squad_number.value
-        has_starting_squad = False
         for item in self.options.start_inventory_from_pool.value:
             if item in squad_names_copy:
                 filtered_squad_names.append(item)
                 squad_names_copy.remove(item)
                 additional_squads -= 1
-                has_starting_squad = True
+                self.starting_squads.append(item)
+        for item in self.starting_squads:
+            del self.options.start_inventory_from_pool.value[item]
 
         if additional_squads > 0:
             self.random.shuffle(squad_names_copy)
             filtered_squad_names += squad_names_copy[0:additional_squads]
-            if not has_starting_squad:
-                self.options.start_inventory_from_pool.value[filtered_squad_names[0]] = 1
+            if len(self.starting_squads) == 0:
+                self.starting_squads.append(filtered_squad_names[0])
         elif additional_squads < 0:
             player_name = self.multiworld.player_name[self.player]
             logging.warning(f"player {self.player} ({player_name}) has more squads in the start inventory than they asked for")
@@ -80,8 +82,8 @@ class IntoTheBreachWorld(World):
         else:
             return self.random.choice(itb_filler_items)
 
-    def create_location(self, name: str, region: Region, randomized: bool):
-        return ItbLocation(self.player, name, self.location_name_to_id[name], region, randomized)
+    def create_location(self, name: str, region: Region, custom: bool):
+        return ItbLocation(self, self.player, name, self.location_name_to_id[name], region, custom)
 
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
@@ -124,8 +126,8 @@ class IntoTheBreachWorld(World):
                 self.multiworld.itempool.append(item)
         for squad_name in self.squads:
             item = self.create_item(squad_name)
-            if squad_name in self.options.start_inventory_from_pool.value:
-                del self.options.start_inventory_from_pool.value[squad_name]
+            if squad_name in self.starting_squads:
+                self.multiworld.push_precollected(self.create_item(squad_name))
             else:
                 item_count += 1
                 self.multiworld.itempool.append(item)

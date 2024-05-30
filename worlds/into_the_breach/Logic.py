@@ -8,21 +8,45 @@ def count_if_in(state: CollectionState, player: int, items: [str]) -> int:
 
 
 def has_defense(state: CollectionState, player: int, count: int) -> bool:
-    return state.has("3 Starting Grid Defense", player, (count + 2) / 3)
+    return state.has("3 Starting Grid Defense", player, count / 3)
 
 
 def has_starting_energy(state: CollectionState, player: int, count: int) -> bool:
     return state.has("2 Starting Grid Power", player, count / 2)
 
 
+def can_get_2_cores(state: CollectionState, player: int) -> bool:
+    return has_starting_energy(state, player, 2)
+
+
+def can_get_3_cores(state: CollectionState, player: int) -> bool:
+    return has_defense(state, player, 6) and has_starting_energy(state, player, 2)
+
+
+def can_get_4_cores(state: CollectionState, player: int) -> bool:
+    return has_defense(state, player, 6) and has_starting_energy(state, player, 3)
+
+
+def can_get_5_cores(state: CollectionState, player: int) -> bool:
+    return has_defense(state, player, 12) and has_starting_energy(state, player, 4)
+
+
 def can_beat_the_game(state: CollectionState, player: int) -> bool:
     return has_defense(state, player, 10) and has_starting_energy(state, player, 3)
 
 
-def unlocked_tags(state: CollectionState, player: int) -> set[str]:
-    tags = set()
+def unlocked_tags(state: CollectionState, player: int) -> dict[str, int]:
+    tags = {}
     for squad_name in squad_names:
         if state.has(squad_name, player):
             add_tags(tags, state.multiworld.worlds[player].squads[squad_name].get_tags())
 
     return tags
+
+
+core_function = {
+    2: can_get_2_cores,
+    3: can_get_3_cores,
+    4: can_get_4_cores,
+    5: can_get_5_cores,
+}
