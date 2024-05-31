@@ -6,7 +6,7 @@ from worlds.AutoWorld import World
 from worlds.generic.Rules import set_rule
 from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items, itb_squad_items, itb_upgrade_items
 from .Locations import ItbLocation, get_locations_names
-from .Logic import can_beat_the_game, core_function, can_get_5_cores
+from .Logic import core_function, can_get_5_cores
 from .Options import IntoTheBreachOptions
 from .achievement.Achievements import achievements_by_squad, achievement_table
 from .squad import Squad

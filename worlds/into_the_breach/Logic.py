@@ -31,10 +31,6 @@ def can_get_5_cores(state: CollectionState, player: int) -> bool:
     return has_defense(state, player, 12) and has_starting_energy(state, player, 4)
 
 
-def can_beat_the_game(state: CollectionState, player: int) -> bool:
-    return has_defense(state, player, 10) and has_starting_energy(state, player, 3)
-
-
 def unlocked_tags(state: CollectionState, player: int) -> dict[str, int]:
     tags = {}
     for squad_name in squad_names:
