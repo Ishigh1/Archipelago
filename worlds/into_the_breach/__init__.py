@@ -1,14 +1,14 @@
 import logging
-from typing import TextIO, Optional
+from typing import TextIO, Optional, Callable
 
 from BaseClasses import ItemClassification, Region, Entrance, MultiWorld, CollectionState
 from worlds.AutoWorld import World
 from worlds.generic.Rules import set_rule
 from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items, itb_squad_items, itb_upgrade_items
 from .Locations import ItbLocation, get_locations_names
-from .Logic import can_beat_the_game
+from .Logic import can_beat_the_game, core_function, can_get_5_cores
 from .Options import IntoTheBreachOptions
-from .achievement.Achievements import achievements_by_squad
+from .achievement.Achievements import achievements_by_squad, achievement_table
 from .squad import Squad
 from .squad.SquadInfo import squad_names
 from .squad.SquadRando import shuffle_teams
@@ -25,16 +25,18 @@ class IntoTheBreachWorld(World):
 
     item_name_to_id = {name: id for
                        id, name in enumerate(itb_items, base_id)}
-    locations = get_locations_names(squad_names)
+    locations_names = get_locations_names(squad_names)
     location_name_to_id = {name: id for
-                           id, name in enumerate(locations, base_id)}
+                           id, name in enumerate(locations_names, base_id)}
 
     item_name_groups = {}
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
+        self.required_achievements = 0
         self.starting_squads = []
         self.squads: Optional[dict[str, Squad]] = None
+        self.achievements: list[ItbLocation] = []
 
     def generate_early(self) -> None:
         squad_names_copy = squad_names.copy()
@@ -82,8 +84,8 @@ class IntoTheBreachWorld(World):
         else:
             return self.random.choice(itb_filler_items)
 
-    def create_location(self, name: str, region: Region, custom: bool):
-        return ItbLocation(self, self.player, name, self.location_name_to_id[name], region, custom)
+    def create_location(self, name: str, region: Region):
+        return ItbLocation(self.player, name, self.location_name_to_id[name], region)
 
     def create_regions(self) -> None:
         menu = Region("Menu", self.player, self.multiworld)
@@ -95,20 +97,44 @@ class IntoTheBreachWorld(World):
             entrance.connect(squad_region)
 
             self.multiworld.regions.append(squad_region)
-            for achievement_name in get_locations_names(list(self.squads)):
-                squad_region.locations.append(self.create_location(achievement_name, squad_region, True))
+            for squad_name in self.squads:
+                for achievement_name in achievements_by_squad[squad_name]:
+                    location = self.create_location(achievement_name, squad_region)
+                    self.achievements.append(location)
+                    squad_region.locations.append(location)
+                    location.access_rule = achievement_table[achievement_name].get_custom_access_rule(self.player)
         else:
             for squad_name in self.squads:
-                squad_region = Region(squad_name + " Squad", self.player, self.multiworld)
+                squad_region = Region(f"{squad_name} Squad", self.player, self.multiworld)
                 for achievement_name in achievements_by_squad[squad_name]:
-                    squad_region.locations.append(self.create_location(achievement_name, squad_region, False))
+                    location = self.create_location(achievement_name, squad_region)
+                    self.achievements.append(location)
+                    squad_region.locations.append(location)
 
-                entrance = Entrance(self.player, "Use squad " + squad_name, menu)
+                    achievement = achievement_table[achievement_name]
+                    rule = achievement.get_core_access_rule(self, self.player)
+                    if rule is not None:
+                        location.access_rule = rule
+
+                entrance = Entrance(self.player, f"Use squad {squad_name}", menu)
                 set_rule(entrance, lambda state, squad=squad_name: state.has(squad, self.player))
                 menu.exits.append(entrance)
                 entrance.connect(squad_region)
 
                 self.multiworld.regions.append(squad_region)
+
+        previous_island = menu
+        for i in range(1, 5):
+            new_island = Region(f"Clear island {i}", self.player, self.multiworld)
+            new_island.locations.append(self.create_location(f"Island {i} cleared", new_island))
+            entrance = Entrance(self.player, f"Clear island {i}", previous_island)
+            if i > 1:
+                rule = core_function[i]
+                set_rule(entrance, lambda state, island_rule=rule: island_rule(state, self.player))
+            menu.exits.append(entrance)
+            entrance.connect(new_island)
+            self.multiworld.regions.append(new_island)
+            previous_island = new_island
 
     def create_items(self) -> None:
         item_count = 0
@@ -132,8 +158,7 @@ class IntoTheBreachWorld(World):
                 item_count += 1
                 self.multiworld.itempool.append(item)
 
-        locations_count = len([location
-                               for location in self.multiworld.get_locations(self.player)
+        locations_count = len([location for location in self.multiworld.get_locations(self.player)
                                if not location.event])
 
         while locations_count > item_count:
@@ -141,9 +166,11 @@ class IntoTheBreachWorld(World):
             item_count += 1
 
     def generate_basic(self) -> None:
-        self.multiworld.completion_condition[self.player] = lambda state: (
-                state.prog_items[self.player]["squads"] * 3 >= self.options.required_achievements.value * len(self.squads) // 100
-                and can_beat_the_game(state, self.player))
+        self.required_achievements = self.options.required_achievements.value * len(self.squads) // 100
+        self.multiworld.completion_condition[self.player] = (
+            lambda state: (state.prog_items[self.player]["squads"] * 3 >= self.required_achievements
+                           and can_get_5_cores(state, self.player))
+        )
 
     def fill_slot_data(self) -> dict:
         result = {}
@@ -158,7 +185,7 @@ class IntoTheBreachWorld(World):
                     squad.append(units[unit_name]["Name"])
                 squads[squad_name] = squad
             result["squads"] = squads
-        result["required_achievements"] = self.options.required_achievements.value * len(self.squads) // 100
+        result["required_achievements"] = self.required_achievements
         return result
 
     @classmethod
@@ -172,7 +199,7 @@ class IntoTheBreachWorld(World):
                     spoiler_handle.write("\n\nInto the Breach Squads:\n")
                     header = True
                 name = multiworld.get_player_name(player)
-                spoiler_handle.write("\n" + name + " : \n")
+                spoiler_handle.write(f"\n{name} : \n")
                 squads = world.squads
                 for squad_name in squads:
                     squad: Squad = squads[squad_name]
@@ -180,11 +207,19 @@ class IntoTheBreachWorld(World):
                     for unit_name in squad.units:
                         names.append(unit_name)
                     spoiler_handle.write(
-                        squad_name + " : " + names[0] + ", " + names[1] + ", " + names[2] + "\n")
+                        f"{squad_name} : {names[0]}, {names[1]}, {names[2]}\n")
+
+    def count_achievements(self, state: CollectionState):
+        reachable_achievements = 0
+        for location in self.achievements:
+            if location.can_reach(state):
+                reachable_achievements += 1
+        return reachable_achievements
 
     def collect(self, state: CollectionState, item: ItbItem) -> bool:
         change = super().collect(state, item)
         if change:
+            assert (item.advancement & ItemClassification.progression) != 0
             if item.squad:
                 state.prog_items[self.player]["squads"] += 1
         return change
@@ -192,6 +227,7 @@ class IntoTheBreachWorld(World):
     def remove(self, state: CollectionState, item: ItbItem) -> bool:
         change = super().remove(state, item)
         if change:
+            assert (item.advancement & ItemClassification.progression) != 0
             if item.squad:
                 state.prog_items[self.player]["squads"] -= 1
         return change
