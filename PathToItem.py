@@ -6,12 +6,17 @@ from worlds.stardew_valley.test import setup_solo_multiworld
 
 
 if __name__ == "__main__":
-    spot_name = "Craft Slime Egg-Press"
+    spot_name = "Baked Fish Recipe"
+    def can_reach(state: CollectionState) -> bool:
+        return state.can_reach_location(spot_name, 1)
+
     world_options = {
         "tilesanity": Tilesanity.option_nope,
         "farm_type": FarmType.option_riverland,
+        "fishsanity": Fishsanity.option_all,
         "shipsanity": Shipsanity.option_everything,
         "craftsanity": Craftsanity.option_all,
+        "chefsanity": Chefsanity.option_all
     }
     multiworld = setup_solo_multiworld(world_options)
     progitempool = []
@@ -32,7 +37,7 @@ if __name__ == "__main__":
                 state.collect(item, True)
             state.prog_items[1]["fake_items"] = fake_items
             state.sweep_for_events()
-            if not state.can_reach_location(spot_name, 1):
+            if not can_reach(state):
                 forced_items.append(prog_item)
         if min_items is None or len(min_items) > len(forced_items):
             attempt = 0
@@ -53,7 +58,7 @@ if __name__ == "__main__":
             state.collect(item, True)
         state.prog_items[1]["fake_items"] = fake_items
         state.sweep_for_events()
-        if not state.can_reach_location(spot_name, 1):
+        if not can_reach(state):
             break
         fake_items -= 1
     fake_items += 1
@@ -63,7 +68,7 @@ if __name__ == "__main__":
         state.collect(item, True)
     state.prog_items[1]["fake_items"] = fake_items
     state.sweep_for_events()
-    assert state.can_reach_location(spot_name, 1)
+    assert can_reach(state)
 
     min_items.sort()
     for item in min_items:
