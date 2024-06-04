@@ -4,11 +4,13 @@ from BaseClasses import CollectionState
 from worlds.stardew_valley.options import *
 from worlds.stardew_valley.test import setup_solo_multiworld
 
-
 if __name__ == "__main__":
     spot_name = "Baked Fish Recipe"
+
+
     def can_reach(state: CollectionState) -> bool:
         return state.can_reach_location(spot_name, 1)
+
 
     world_options = {
         "tilesanity": Tilesanity.option_nope,
