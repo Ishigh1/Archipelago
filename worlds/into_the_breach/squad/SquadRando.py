@@ -1,7 +1,7 @@
 # The SAT version
-import math
 from random import Random
-from typing import Tuple, Optional
+from typing import Tuple
+
 from . import Squad
 from .SquadInfo import class_names
 from .TagSystem import tag_implications

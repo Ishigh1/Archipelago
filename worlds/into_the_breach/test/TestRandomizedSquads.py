@@ -19,7 +19,7 @@ class ItbRandomizedSquadsTest(ItbTestBase):
         "randomize_squads": True
     }
 
-    def test_one_pawn_per_class(self):
+    def test_one_pawn_per_class(self) -> None:
         squads = get_squads(self.multiworld)
         for squad_name in squads:
             with self.subTest("Squad should have no 3 different classes", squad=squad_name):
@@ -36,7 +36,7 @@ class ItbRandomizedSquadsTest(ItbTestBase):
                     self.assertNotIn(class_name, class_set)
                     class_set.add(class_name)
 
-    def test_no_disabled_unit(self):
+    def test_no_disabled_unit(self) -> None:
         squads = get_squads(self.multiworld)
         for squad_name in squads:
             with self.subTest("Squad should have no disabled unit", squad=squad_name):
@@ -46,14 +46,14 @@ class ItbRandomizedSquadsTest(ItbTestBase):
                     if "Disabled" in unit:
                         self.assertFalse(unit["Disabled"])
 
-    def test_3_units_by_squad(self):
+    def test_3_units_by_squad(self) -> None:
         squads = get_squads(self.multiworld)
         for squad_name in squads:
             with self.subTest("Squad should have 3 units", squad=squad_name):
                 self.assertEqual(len(squads[squad_name]), 3,
                                  f"{squad_name} has more than 3 units ({squads[squad_name]}")
 
-    def test_no_duplicate_unit(self):
+    def test_no_duplicate_unit(self) -> None:
         squads = get_squads(self.multiworld)
         units = set()
         for squad_name in squads:
@@ -62,7 +62,7 @@ class ItbRandomizedSquadsTest(ItbTestBase):
                     self.assertNotIn(unit_name, units, "Duplicate unit found")
                     units.add(unit_name)
 
-    def test_squad_can_beat_achievements(self):
+    def test_squad_can_beat_achievements(self) -> None:
         squads = get_squads(self.multiworld)
         state = CollectionState(self.multiworld)
         # First get all energy and defense

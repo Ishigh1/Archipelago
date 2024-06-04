@@ -1,5 +1,5 @@
 import logging
-from typing import TextIO, Optional, Callable
+from typing import TextIO, Optional
 
 from BaseClasses import ItemClassification, Region, Entrance, MultiWorld, CollectionState
 from worlds.AutoWorld import World
@@ -158,8 +158,7 @@ class IntoTheBreachWorld(World):
                 item_count += 1
                 self.multiworld.itempool.append(item)
 
-        locations_count = len([location for location in self.multiworld.get_locations(self.player)
-                               if not location.event])
+        locations_count = len([location for location in self.multiworld.get_locations(self.player)])
 
         while locations_count > item_count:
             self.multiworld.itempool.append(self.create_item(self.get_filler_item_name()))

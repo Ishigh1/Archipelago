@@ -5,7 +5,7 @@ from ..squad.Units import unit_table
 
 
 class TestData(TestCase):
-    def test_one_class_per_unit(self):
+    def test_one_class_per_unit(self) -> None:
         for unit_name in unit_table:
             unit = unit_table[unit_name]
             class_found = 0
@@ -14,7 +14,7 @@ class TestData(TestCase):
                     class_found += 1
             self.assertEqual(class_found, 1)
 
-    def test_unit_consistent_name(self):
+    def test_unit_consistent_name(self) -> None:
         """
         Checks keys in unit_table are always equal to unit["Name"]
         """

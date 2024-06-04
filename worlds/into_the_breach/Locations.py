@@ -1,7 +1,7 @@
 from typing import Iterator
 
 from BaseClasses import Location, Region
-from .achievement.Achievements import achievement_table, achievements_by_squad
+from .achievement.Achievements import achievements_by_squad
 
 
 class ItbLocation(Location):

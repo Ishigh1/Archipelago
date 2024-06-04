@@ -38,7 +38,7 @@ class Squad:
             self._compute_tags()
         return self._tags
 
-    def _compute_tags(self):
+    def _compute_tags(self) -> None:
         self._cached = True
 
         tags = {}
