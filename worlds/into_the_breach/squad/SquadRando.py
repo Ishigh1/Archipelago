@@ -78,7 +78,6 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
                             solver.add_clause(
                                 [-get_id_from_ids(unit_id_1, squad_id), -get_id_from_ids(unit_id_2, squad_id)])
 
-    tmp = []
     # At least 3 units per squad
     # So the list of all units -2 units always contain a unit in the squad
     for squad_id in range(squad_count):
@@ -90,8 +89,6 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
                 clause = incomplete_clause.copy()
                 clause.remove(get_id_from_ids(unit_id_2, squad_id))
                 solver.add_clause(clause)
-                if squad_id == 6 and unit_id_1 == 21 and unit_id_2 == 23:
-                    tmp.append(clause)
 
     # At most 3 units per squad
     # So each group of 4 different units must include one not in the squad
