@@ -9,7 +9,7 @@ from .Units import unit_table, tags_from_unit
 from ..achievement.Achievements import achievement_info_table
 
 
-def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, Squad]:
+def shuffle_teams(random: Random, filtered_squad_names: list[str], unit_plando: dict[str, str]) -> dict[str, Squad]:
     from pysat.solvers import Glucose42
     units_per_tag: dict[str, set] = {}
     units_per_class: dict[str, list] = {}
@@ -179,6 +179,12 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str]) -> dict[str, 
 
     all_unit_atoms = list(range(1, squad_count * (unit_count + 1)))
     random.shuffle(all_unit_atoms)
+
+    for unit_name in unit_plando:
+        forced_atom = get_id_from_names(unit_name, unit_plando[unit_name])
+        all_unit_atoms.pop(forced_atom)
+        all_unit_atoms.append(forced_atom)
+
     assumptions = []
     for i in all_unit_atoms:
         new_assumptions = assumptions + [-i]

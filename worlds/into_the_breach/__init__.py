@@ -58,11 +58,14 @@ class IntoTheBreachWorld(World):
                 self.starting_squads.append(filtered_squad_names[0])
         elif additional_squads < 0:
             player_name = self.multiworld.player_name[self.player]
-            logging.warning(f"player {self.player} ({player_name}) has more squads in the start inventory than they asked for")
+            logging.warning(f"Player {self.player} ({player_name}) has more squads in the start inventory than they asked for")
 
         if self.options.randomize_squads:
-            self.squads = shuffle_teams(self.random, filtered_squad_names)
+            self.squads = shuffle_teams(self.random, filtered_squad_names, self.options.unit_plando.value)
         else:
+            if len(self.options.unit_plando.value) > 0:
+                player_name = self.multiworld.player_name[self.player]
+                logging.warning(f"Player {self.player} ({player_name}) ")
             self.squads = vanilla_squads(filtered_squad_names)
 
     def create_item(self, item: str):

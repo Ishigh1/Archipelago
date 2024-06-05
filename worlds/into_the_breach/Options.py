@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 
-from Options import Toggle, Range, PerGameCommonOptions, StartInventoryPool
+from schema import Schema, Or
+
+from Options import Toggle, Range, PerGameCommonOptions, StartInventoryPool, OptionDict, Visibility
+from worlds.into_the_breach.squad.SquadInfo import squad_names
+from worlds.into_the_breach.squad.Units import unit_table
 
 
 class RandomizeSquads(Toggle):
@@ -17,19 +21,28 @@ class CustomSquad(Toggle):
 
 class RequiredAchievements(Range):
     """Percentage of achievements required to win"""
-    display_name = "Required achievements%"
+    display_name = "Required achievements% before clearing the final island wins the game"
     range_start = 0
     range_end = 100
     default = 24
 
 
 class SquadNumber(Range):
-    """Number of squads included in the rando. Be careful to include at least as many as a third of required achievements"""
+    """Number of squads included in the rando."""
     display_name = "Squad number"
     range_start = 3
     range_end = 13
     default = 13
 
+
+class UnitPlando(OptionDict):
+    """If you want some units in some squads, use the form unit "name: squad name"."""
+    visibility = Visibility.template | Visibility.spoiler
+    value: dict[str, str]
+    valid_keys = frozenset(unit_table)
+    schema = Schema({
+        Or(*unit_table): Or(*squad_names)
+    })
 
 @dataclass
 class IntoTheBreachOptions(PerGameCommonOptions):
@@ -38,3 +51,4 @@ class IntoTheBreachOptions(PerGameCommonOptions):
     required_achievements: RequiredAchievements
     squad_number: SquadNumber
     start_inventory_from_pool: StartInventoryPool
+    unit_plando: UnitPlando
