@@ -182,7 +182,7 @@ def shuffle_teams(random: Random, filtered_squad_names: list[str], unit_plando: 
 
     for unit_name in unit_plando:
         forced_atom = get_id_from_names(unit_name, unit_plando[unit_name])
-        all_unit_atoms.pop(forced_atom)
+        all_unit_atoms.remove(forced_atom)
         all_unit_atoms.append(forced_atom)
 
     assumptions = []

@@ -42,6 +42,7 @@ class IntoTheBreachWorld(World):
         squad_names_copy = squad_names.copy()
         filtered_squad_names = []
         additional_squads = self.options.squad_number.value
+        unit_plando = self.options.unit_plando.value
         for item in self.options.start_inventory_from_pool.value:
             if item in squad_names_copy:
                 filtered_squad_names.append(item)
@@ -51,21 +52,36 @@ class IntoTheBreachWorld(World):
         for item in self.starting_squads:
             del self.options.start_inventory_from_pool.value[item]
 
-        if additional_squads > 0:
+        for unit in unit_plando:
+            if additional_squads == 0:
+                break
+            squad_name = unit_plando[unit]
+            if squad_name not in filtered_squad_names:
+                filtered_squad_names.append(squad_name)
+                squad_names_copy.remove(squad_name)
+
+        if additional_squads >= 0:
             self.random.shuffle(squad_names_copy)
             filtered_squad_names += squad_names_copy[0:additional_squads]
             if len(self.starting_squads) == 0:
                 self.starting_squads.append(filtered_squad_names[0])
         elif additional_squads < 0:
-            player_name = self.multiworld.player_name[self.player]
-            logging.warning(f"Player {self.player} ({player_name}) has more squads in the start inventory than they asked for")
+            logging.warning(f"Player {self.player} ({self.player_name}) "
+                            f"has more squads in the start inventory than they asked for")
 
         if self.options.randomize_squads:
-            self.squads = shuffle_teams(self.random, filtered_squad_names, self.options.unit_plando.value)
+            self.squads = shuffle_teams(self.random, filtered_squad_names, unit_plando)
+            for unit_name in unit_plando:
+                squad_name = unit_plando[unit_name]
+                if squad_name not in self.squads:
+                    logging.warning(f"Player {self.player} ({self.player_name}) "
+                                    f"unit plando couldn't fully work, {squad_name} was excluded")
+                elif unit_name in self.squads[squad_name].units:
+                    logging.warning(f"Player {self.player} ({self.player_name}) "
+                                    f"unit plando couldn't fully work, {unit_name} couldn't fit in {squad_name}")
         else:
-            if len(self.options.unit_plando.value) > 0:
-                player_name = self.multiworld.player_name[self.player]
-                logging.warning(f"Player {self.player} ({player_name}) ")
+            if len(unit_plando) > 0:
+                logging.warning(f"Player {self.player} ({self.player_name}) had unit plando active but not squad rando")
             self.squads = vanilla_squads(filtered_squad_names)
 
     def create_item(self, item: str):
