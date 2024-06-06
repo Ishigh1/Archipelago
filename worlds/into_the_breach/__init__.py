@@ -184,7 +184,7 @@ class IntoTheBreachWorld(World):
             item_count += 1
 
     def generate_basic(self) -> None:
-        self.required_achievements = self.options.required_achievements.value * len(self.squads) // 100
+        self.required_achievements = self.options.required_achievements.value * len(self.squads) * 3 // 100
         self.multiworld.completion_condition[self.player] = (
             lambda state: (state.prog_items[self.player]["squads"] * 3 >= self.required_achievements
                            and can_get_5_cores(state, self.player))
