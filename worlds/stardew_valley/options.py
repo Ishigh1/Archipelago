@@ -559,10 +559,10 @@ class Tilesanity(Choice):
     Full means both every tile additionally requires to be unlocked"""
     internal_name = "tilesanity"
     display_name = "Tilesanity"
-    default = 2
     option_nope = 0
     option_locations = 1
     option_full = 2
+    default = option_full
 
 # Conditional Setting - Tilesanity is full
 class TilesanitySimplification(Range):

@@ -107,6 +107,7 @@ class StardewValleyWorld(World):
         super().__init__(multiworld, player)
         self.filler_item_pool_names = []
         self.total_progression_items = 0
+        self.excluded_tiles = []
         # self.all_progression_items = dict()
 
     def generate_early(self):
@@ -338,8 +339,9 @@ class StardewValleyWorld(World):
             #     self.all_progression_items[item.name] = 0
             # self.all_progression_items[item.name] += 1
 
-        if self.options.tilesanity == Tilesanity.option_full and item.name in self.excluded_tiles:
-            override_classification = ItemClassification.filler
+        if hasattr(self, "options"):  # Just to succeed tests
+            if self.options.tilesanity == Tilesanity.option_full and item.name in self.excluded_tiles:
+                override_classification = ItemClassification.filler
 
         return StardewItem(item.name, override_classification, item.code, self.player)
 

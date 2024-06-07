@@ -36,7 +36,7 @@ vanilla_regions = [
     RegionData(Region.forest,
                [Entrance.forest_to_town, Entrance.enter_secret_woods, Entrance.forest_to_wizard_tower, Entrance.forest_to_marnie_ranch,
                 Entrance.forest_to_leah_cottage, Entrance.forest_to_sewer, Entrance.forest_to_mastery_cave, LogicEntrance.buy_from_traveling_merchant,
-                LogicEntrance.complete_raccoon_requests, LogicEntrance.attend_flower_dance, LogicEntrance.attend_trout_derby,
+                LogicEntrance.racoon_tree, LogicEntrance.attend_flower_dance, LogicEntrance.attend_trout_derby,
                 LogicEntrance.attend_festival_of_ice], main_point=(109, 81)),
     RegionData(Region.farm_cave),
     RegionData(Region.greenhouse,
@@ -235,6 +235,7 @@ vanilla_regions = [
     RegionData(LogicRegion.traveling_cart_thursday),
     RegionData(LogicRegion.traveling_cart_friday),
     RegionData(LogicRegion.traveling_cart_saturday),
+    RegionData(LogicRegion.racoon_tree, [LogicEntrance.complete_raccoon_requests]),
     RegionData(LogicRegion.raccoon_daddy, [LogicEntrance.buy_from_raccoon]),
     RegionData(LogicRegion.raccoon_shop),
 
@@ -458,7 +459,7 @@ vanilla_connections = [
 
     ConnectionData(LogicEntrance.talk_to_mines_dwarf, LogicRegion.mines_dwarf_shop),
 
-    ConnectionData(LogicEntrance.buy_from_traveling_merchant, LogicRegion.traveling_cart),
+    ConnectionData(LogicEntrance.buy_from_traveling_merchant, LogicRegion.traveling_cart, entry_coord=(27, 12)),
     ConnectionData(LogicEntrance.buy_from_traveling_merchant_sunday, LogicRegion.traveling_cart_sunday),
     ConnectionData(LogicEntrance.buy_from_traveling_merchant_monday, LogicRegion.traveling_cart_monday),
     ConnectionData(LogicEntrance.buy_from_traveling_merchant_tuesday, LogicRegion.traveling_cart_tuesday),
@@ -466,6 +467,7 @@ vanilla_connections = [
     ConnectionData(LogicEntrance.buy_from_traveling_merchant_thursday, LogicRegion.traveling_cart_thursday),
     ConnectionData(LogicEntrance.buy_from_traveling_merchant_friday, LogicRegion.traveling_cart_friday),
     ConnectionData(LogicEntrance.buy_from_traveling_merchant_saturday, LogicRegion.traveling_cart_saturday),
+    ConnectionData(LogicEntrance.racoon_tree, LogicRegion.racoon_tree, entry_coord=(56, 7)),
     ConnectionData(LogicEntrance.complete_raccoon_requests, LogicRegion.raccoon_daddy),
     ConnectionData(LogicEntrance.buy_from_raccoon, LogicRegion.raccoon_shop),
     ConnectionData(LogicEntrance.farmhouse_cooking, LogicRegion.kitchen),

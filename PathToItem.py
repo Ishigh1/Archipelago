@@ -2,10 +2,11 @@ import random
 
 from BaseClasses import CollectionState
 from worlds.stardew_valley.options import *
+from worlds.stardew_valley.strings.quest_names import Quest
 from worlds.stardew_valley.test import setup_solo_multiworld
 
 if __name__ == "__main__":
-    spot_name = "Baked Fish Recipe"
+    spot_name = "Traveling Merchant Sunday Item 1"
 
 
     def can_reach(state: CollectionState) -> bool:
@@ -13,7 +14,8 @@ if __name__ == "__main__":
 
 
     world_options = {
-        "tilesanity": Tilesanity.option_nope,
+        "tilesanity": Tilesanity.option_full,
+        "tilesanity_size": 10,
         "farm_type": FarmType.option_riverland,
         "fishsanity": Fishsanity.option_all,
         "shipsanity": Shipsanity.option_everything,
@@ -47,12 +49,7 @@ if __name__ == "__main__":
         for item in forced_items:
             progitempool.remove(item)
             progitempool.append(item)
-        else:
-            attempt += 1
-            if attempt == 50:
-                break
-            if attempt % 10 == 0:
-                random.shuffle(progitempool)
+        break
 
     while fake_items > -1:
         state = CollectionState(multiworld)

@@ -320,7 +320,6 @@ def create_regions_tilesanity(world, region_factory: RegionFactory, region_data:
             else:
                 entry_points[ref] = [connection_data]
 
-    world.excluded_tiles = []
     all_tiles = list_all_tiles(options)
     if options.tilesanity_simplification == 100:
         create_tiles_full(entrances_by_name, region_factory, regions_by_name, all_tiles, tiles_by_coords)
