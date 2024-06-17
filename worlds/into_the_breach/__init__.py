@@ -204,6 +204,7 @@ class IntoTheBreachWorld(World):
                 squads[squad_name] = squad
             result["squads"] = squads
         result["required_achievements"] = self.required_achievements
+        result["difficulty"] = self.options.difficulty.value
         return result
 
     @classmethod
