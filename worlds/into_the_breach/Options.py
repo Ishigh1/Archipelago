@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from schema import Schema, Or
+from schema import Schema, Or, Optional
 
 from Options import Toggle, Range, PerGameCommonOptions, StartInventoryPool, OptionDict, Visibility, Choice
 from worlds.into_the_breach.squad.SquadInfo import squad_names
@@ -50,7 +50,7 @@ class UnitPlando(OptionDict):
     value: dict[str, str]
     valid_keys = frozenset(unit_table)
     schema = Schema({
-        Or(*unit_table): Or(*squad_names)
+        Optional(Or(*unit_table)): Or(*squad_names)
     })
 
 
