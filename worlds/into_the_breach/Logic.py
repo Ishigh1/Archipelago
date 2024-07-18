@@ -12,11 +12,15 @@ def has_defense(state: CollectionState, player: int, count: int) -> bool:
 
 
 def has_starting_energy(state: CollectionState, player: int, count: int) -> bool:
-    return state.has("2 Starting Grid Power", player, count / 2)
+    return state.prog_items[player]["start_power"] >= count
+
+
+def has_starting_cores(state: CollectionState, player: int, count: int) -> bool:
+    return state.has("1 Starting Power Core", player, count)
 
 
 def can_get_2_cores(state: CollectionState, player: int) -> bool:
-    return has_starting_energy(state, player, 2)
+    return has_starting_energy(state, player, 1)
 
 
 def can_get_3_cores(state: CollectionState, player: int) -> bool:
@@ -24,11 +28,15 @@ def can_get_3_cores(state: CollectionState, player: int) -> bool:
 
 
 def can_get_4_cores(state: CollectionState, player: int) -> bool:
-    return has_defense(state, player, 6) and has_starting_energy(state, player, 3)
+    return (has_defense(state, player, 6)
+            and has_starting_energy(state, player, 3)
+            and has_starting_energy(state, player, 1))
 
 
 def can_get_5_cores(state: CollectionState, player: int) -> bool:
-    return has_defense(state, player, 12) and has_starting_energy(state, player, 4)
+    return (has_defense(state, player, 12)
+            and has_starting_energy(state, player, 4)
+            and has_starting_energy(state, player, 1))
 
 
 def unlocked_tags(state: CollectionState, player: int) -> dict[str, int]:

@@ -4,7 +4,8 @@ from typing import TextIO, Optional
 from BaseClasses import ItemClassification, Region, Entrance, MultiWorld, CollectionState
 from worlds.AutoWorld import World
 from worlds.generic.Rules import set_rule
-from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items, itb_squad_items, itb_upgrade_items
+from .Items import ItbItem, itb_items, itb_trap_items, itb_progression_items, itb_filler_items, itb_squad_items, \
+    itb_upgrade_items, itb_common_trap_items, itb_uncommon_trap_items, itb_legendary_trap_items
 from .Locations import ItbLocation, get_locations_names
 from .Logic import core_function, can_get_5_cores
 from .Options import IntoTheBreachOptions
@@ -29,7 +30,15 @@ class IntoTheBreachWorld(World):
     location_name_to_id = {name: id for
                            id, name in enumerate(locations_names, base_id)}
 
-    item_name_groups = {}
+    item_name_groups = {
+        "Starting Grid Power": [
+            "1 Starting Grid Power",
+            "2 Starting Grid Power"
+        ],
+        "Squad": itb_squad_items,
+        "Upgrade": itb_upgrade_items,
+        "Traps": itb_trap_items,
+    }
 
     def __init__(self, multiworld: MultiWorld, player: int):
         super().__init__(multiworld, player)
@@ -95,13 +104,28 @@ class IntoTheBreachWorld(World):
         if classification == ItemClassification.progression:
             if item in itb_squad_items:
                 ap_item.squad = True
+            elif item == "1 Starting Grid Power":
+                ap_item.start_power = 1
+            elif item == "2 Starting Grid Power":
+                ap_item.start_power = 2
         return ap_item
 
     def get_filler_item_name(self) -> str:
-        if self.random.randint(1, 5) == 1:
-            return self.random.choice(itb_trap_items)
-        else:
+        """
+        50% filler
+        30% common trap
+        15% uncommon trap
+        5% legendary trap
+        """
+        r = self.random.randint(1, 20)
+        if r <= 10:
             return self.random.choice(itb_filler_items)
+        elif r <= 16:
+            return self.random.choice(itb_common_trap_items)
+        elif r <= 19:
+            return self.random.choice(itb_uncommon_trap_items)
+        else:
+            return self.random.choice(itb_legendary_trap_items)
 
     def create_location(self, name: str, region: Region):
         return ItbLocation(self.player, name, self.location_name_to_id[name], region)
@@ -161,9 +185,15 @@ class IntoTheBreachWorld(World):
             if item_name == "3 Starting Grid Defense":
                 count = 5
             elif item_name == "2 Starting Grid Power":
+                if len(self.squads) >= 7:
+                    continue
                 count = 2
+            elif item_name == "1 Starting Grid Power":
+                if len(self.squads) < 7:
+                    continue
+                count = 4
             else:
-                raise Exception()
+                count = 1
 
             item_count += count
             for i in range(count):
@@ -241,6 +271,7 @@ class IntoTheBreachWorld(World):
             assert (item.advancement & ItemClassification.progression) != 0
             if item.squad:
                 state.prog_items[self.player]["squads"] += 1
+            state.prog_items[self.player]["start_power"] += item.start_power
         return change
 
     def remove(self, state: CollectionState, item: ItbItem) -> bool:
@@ -249,4 +280,5 @@ class IntoTheBreachWorld(World):
             assert (item.advancement & ItemClassification.progression) != 0
             if item.squad:
                 state.prog_items[self.player]["squads"] -= 1
+            state.prog_items[self.player]["start_power"] -= item.start_power
         return change
