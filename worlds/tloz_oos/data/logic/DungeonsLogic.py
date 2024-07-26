@@ -581,12 +581,7 @@ def make_d6_logic(player: int):
                     oos_has_feather(state, player),
                     oos_has_bombs(state, player),
 
-                    any([
-                        # Kill Vire
-                        oos_has_sword(state, player, False),
-                        oos_has_fools_ore(state, player),
-                        # state.has("expert's ring", player)
-                    ])
+                    state.has("_killed_vire", player)
                 ]),
                 all([
                     oos_has_small_keys(state, player, 6, 2),
@@ -597,24 +592,24 @@ def make_d6_logic(player: int):
                             oos_has_bombs(state, player),
                         ]),
 
-                        # Kill Vire
-                        oos_has_sword(state, player, False),
-                        oos_has_fools_ore(state, player),
-                        # state.has("expert's ring", player)
+                        state.has("_killed_vire", player)
                     ])
                 ]),
                 oos_has_small_keys(state, player, 6, 3),
             ])
         ])],
 
-        ["d6 vire chest", "enter vire", False, lambda state: oos_has_small_keys(state, player, 6, 3)],
-        ["enter vire", "d6 pre-boss room", False, lambda state: all([
+        ["d6 vire chest", "d6 kill vire", False, lambda state: all([
+            oos_has_small_keys(state, player, 6, 1),
             any([
                 # Kill Vire
                 oos_has_sword(state, player, False),
                 oos_has_fools_ore(state, player),
                 # state.has("expert's ring", player)
-            ]),
+            ])
+        ])],
+        ["d6 kill vire", "d6 pre-boss room", False, lambda state: all([
+            oos_has_small_keys(state, player, 6, 3),
             any([
                 # Kill hardhats
                 oos_has_magnet_gloves(state, player),
