@@ -149,7 +149,7 @@ achievement_info_table = {
         "squad": "Hazardous Mechs",
         "name": "Overkill",
         "description": "Deal 8 damage to a unit with a single attack with the Hazardous Mechs squad",
-        "required_tags": (("Acid", "Boost"), ("Acid", "Hormones"), ("Hormones", "Boost", "High Damage"), (2,))
+        "required_tags": (("Acid", "Hormones"), (2,))
     },
     "Change the Odds": {
         "squad": "Random Squad",
@@ -251,10 +251,9 @@ achievement_info_table = {
         "squad": "Heat Sinkers",
         "name": "Maximum Firepower",
         "description": "Deal 8 damage with a single activation of the Quick-Fire Rockets",
-        "required_tags": (("Acid", "High Damage", "Triple Kill"),
-                          ("Boost", "High Damage", "Acid"),
-                          ("Boost", "Triple Kill", "Acid"),
-                          ("High Damage", "Triple Kill", "Boost"))
+        "required_tags": (("High Damage", "Acid"),
+                          ("Triple Kill", "Acid"),
+                          ("High Damage", "Triple Kill"))
     },
     "Unstable Ground": {
         "squad": "Cataclysm",

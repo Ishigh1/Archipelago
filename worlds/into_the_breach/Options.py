@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from schema import Schema, Or, Optional
 
-from Options import Toggle, Range, PerGameCommonOptions, StartInventoryPool, OptionDict, Visibility, Choice
+from Options import Toggle, Range, PerGameCommonOptions, StartInventoryPool, OptionDict, Choice
 from worlds.into_the_breach.squad.SquadInfo import squad_names
 from worlds.into_the_breach.squad.Units import unit_table
 
