@@ -1,1 +1,1 @@
-for /l %%x in (1, 1, 10000) do .\venv2\Scripts\Python.exe Generate.py < NUL
+for /l %%x in (1, 1, 10000) do .\venv2\Scripts\Python.exe -O Generate.py < NUL
