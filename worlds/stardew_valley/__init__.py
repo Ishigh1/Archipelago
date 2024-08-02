@@ -1,4 +1,5 @@
 import logging
+from argparse import Namespace
 from random import Random
 from typing import Dict, Any, Iterable, Optional, Union, List, TextIO
 
@@ -112,26 +113,33 @@ class StardewValleyWorld(World):
             logger.warning(f"World was generated before Universal Tracker support. Tracker might not be accurate.")
         return seed
 
-    def generate_early(self):
-        self.force_change_options_if_incompatible()
-        self.content = create_content(self.options)
-
-    def force_change_options_if_incompatible(self):
-        goal_is_walnut_hunter = self.options.goal == Goal.option_greatest_walnut_hunter
-        goal_is_perfection = self.options.goal == Goal.option_perfection
+    @classmethod
+    def validate_options(cls, options: StardewValleyOptions, player_name: str, multiworld_options: Namespace) -> None:
+        goal_is_walnut_hunter = options.goal == Goal.option_greatest_walnut_hunter
+        goal_is_perfection = options.goal == Goal.option_perfection
         goal_is_island_related = goal_is_walnut_hunter or goal_is_perfection
-        exclude_ginger_island = self.options.exclude_ginger_island == ExcludeGingerIsland.option_true
+        exclude_ginger_island = options.exclude_ginger_island == ExcludeGingerIsland.option_true
         if goal_is_island_related and exclude_ginger_island:
-            self.options.exclude_ginger_island.value = ExcludeGingerIsland.option_false
-            goal_name = self.options.goal.current_key
-            player_name = self.multiworld.player_name[self.player]
-            logger.warning(
-                f"Goal '{goal_name}' requires Ginger Island. Exclude Ginger Island setting forced to 'False' for player {self.player} ({player_name})")
-        if exclude_ginger_island and self.options.walnutsanity != Walnutsanity.preset_none:
-            self.options.walnutsanity.value = Walnutsanity.preset_none
-            player_name = self.multiworld.player_name[self.player]
-            logger.warning(
-                f"Walnutsanity requires Ginger Island. Ginger Island was excluded from {self.player} ({player_name})'s world, so walnutsanity was force disabled")
+            goal_name = options.goal.current_key
+            if multiworld_options is None:
+                logger.warning(
+                    f"Goal '{goal_name}' requires Ginger Island. Exclude Ginger Island should be 'False' for player {player_name}")
+            else:
+                options.exclude_ginger_island.value = ExcludeGingerIsland.option_false
+                logger.warning(
+                    f"Goal '{goal_name}' requires Ginger Island. Exclude Ginger Island setting forced to 'False' for player {player_name}")
+        if exclude_ginger_island and options.walnutsanity != Walnutsanity.preset_none:
+            if multiworld_options is None:
+                logger.warning(
+                    f"Walnutsanity requires Ginger Island. Ginger Island was excluded from {player_name}'s world, "
+                    f"so either walnutsanity should be disabled or Ginger Island shouldn't be excluded")
+            else:
+                options.walnutsanity.value = Walnutsanity.preset_none
+                logger.warning(
+                    f"Walnutsanity requires Ginger Island. Ginger Island was excluded from {player_name}'s world, so walnutsanity was force disabled")
+
+    def generate_early(self):
+        self.content = create_content(self.options)
 
     def create_regions(self):
         def create_region(name: str, exits: Iterable[str]) -> Region:
