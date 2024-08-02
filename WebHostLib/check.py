@@ -1,5 +1,4 @@
 import os
-import typing
 import zipfile
 import base64
 from typing import Union, Dict, Set, Tuple
@@ -7,13 +6,11 @@ from typing import Union, Dict, Set, Tuple
 from flask import request, flash, redirect, url_for, render_template
 from markupsafe import Markup
 
-import Options
 from WebHostLib import app
 from WebHostLib.upload import allowed_options, allowed_options_extensions, banned_file
 
 from Generate import roll_settings, PlandoOptions
 from Utils import parse_yamls
-from worlds import AutoWorld
 
 
 @app.route('/check', methods=['GET', 'POST'])
@@ -28,23 +25,7 @@ def check():
             if isinstance(options, str):
                 flash(options)
             else:
-                results, rolled_results = roll_options(options)
-                for filename in results:
-                    if results[filename] is True:
-                        try:
-                            world_type = AutoWorld.AutoWorldRegister.world_types.get(rolled_results[filename].game)
-                            if world_type is None:
-                                results[filename] = f"{filename} is an unsupported world ({rolled_results[filename].game})"
-                                continue
-                            options_dataclass: typing.Type[Options.PerGameCommonOptions] = world_type.options_dataclass
-                            world_options = options_dataclass(**{option_key: getattr(rolled_results[filename], option_key)
-                                                                         for option_key in options_dataclass.type_hints})
-                            world_type.validate_options(world_options, rolled_results[filename].name, None)
-                        except Exception as e:
-                            if e.__cause__:
-                                results[filename] = f"Invalid options in {filename}: {e} - {e.__cause__}"
-                            else:
-                                results[filename] = f"Invalid options in {filename}: {e}"
+                results, _ = roll_options(options)
                 if len(options) > 1:
                     # offer combined file back
                     combined_yaml = "\n---\n".join(f"# original filename: {file_name}\n{file_content.decode('utf-8-sig')}"
