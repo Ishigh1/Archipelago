@@ -44,9 +44,6 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
     multiworld.sprite = args.sprite.copy()
     multiworld.sprite_pool = args.sprite_pool.copy()
 
-    multiworld.set_options(args)
-    multiworld.set_item_links()
-    multiworld.state = CollectionState(multiworld)
     logger.info('Archipelago Version %s  -  Seed: %s\n', __version__, multiworld.seed)
 
     logger.info(f"Found {len(AutoWorld.AutoWorldRegister.world_types)} World Types:")
@@ -75,6 +72,12 @@ def main(args, seed=None, baked_server_options: Optional[Dict[str, object]] = No
                         f"{max(cls.location_id_to_name):{location_digits}})")
 
     del item_digits, location_digits, item_count, location_count
+
+    logger.info('')
+
+    multiworld.set_options(args)
+    multiworld.set_item_links()
+    multiworld.state = CollectionState(multiworld)
 
     # This assertion method should not be necessary to run if we are not outputting any multidata.
     if not args.skip_output:

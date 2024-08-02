@@ -5,6 +5,7 @@ import logging
 import pathlib
 import sys
 import time
+from argparse import Namespace
 from random import Random
 from dataclasses import make_dataclass
 from typing import (Any, Callable, ClassVar, Dict, FrozenSet, List, Mapping, Optional, Set, TextIO, Tuple,
@@ -342,6 +343,17 @@ class World(metaclass=AutoWorldRegister):
         """
         Checks that a game is capable of generating, such as checking for some base file like a ROM.
         This gets called once per present world type. Not run for unittests since they don't produce output.
+        """
+        pass
+
+    @classmethod
+    def validate_options(cls, options: PerGameCommonOptions, player_name: str, multiworld_options: Namespace) -> None:
+        """
+        Method for checking if the options are valid.
+        If multiworld_options is None, it means the options are being checked
+        for validity and only warnings and errors are relevant.
+        If multiworld_options is not None, it means the options are being checked before generating. They can be
+        modified if relevant.
         """
         pass
 
