@@ -16,6 +16,7 @@
 # Chain : can target 10+ tiles in a single attack
 # Summon : Can add pawns
 # Many Summons : Can summon something at least thrice per mission
+# Hoard Summons : Can summon something at least thrice per mission then kill them at once
 # Teleport : "Teleporter" 3 cores
 # Freeze : Can freeze 8 units in a mission
 # Heal : Heal at least 5 damage in a mission
@@ -32,8 +33,9 @@ tag_implications = {
     "Triple Kill": ("Triple Push",),
     "Triple Fire": ("Fire", "Triple Push",),
     "Summon": ("Many Summons",),
+    "Many Summon": ("Hoard Summons",),
     "Boost": ("Fire Boost", "Fire",),
-    "Heal": ("Smoke Heal", "Smoke",),
+    "Heal": (("Smoke Heal", "Boost"), ("Smoke", "Boost"),),
 }
 
 

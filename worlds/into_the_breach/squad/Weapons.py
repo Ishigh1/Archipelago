@@ -635,7 +635,7 @@ weapon_table = {
         "Upgrade 1": "+1 Damage (Up Up)",
         "Upgrade 2": "Acidic (Up)",
         "Debug Name": "Ranged_Arachnoid",
-        "Tags": {"Many Summons": 0, "Forced Move": 0, "Acid": 1}
+        "Tags": {"Hoard Summons": 0, "Forced Move": 0, "Acid": 1}
     },
     "Smoldering Shells": {
         "Class": "Ranged",

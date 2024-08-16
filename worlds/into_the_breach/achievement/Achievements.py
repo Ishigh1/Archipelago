@@ -191,7 +191,7 @@ achievement_info_table = {
         "squad": "Bombermechs",
         "name": "No Survivors",
         "description": "Have 7 units (any team) die in a single turn",
-        "required_tags": (("Triple Kill",), (2,))
+        "required_tags": (("Triple Kill", "Hoard Summon"), (2,))
     },
     "Powered Blast": {
         "squad": "Bombermechs",
