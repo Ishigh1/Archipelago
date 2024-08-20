@@ -43,7 +43,12 @@ def alternate_name(region: str, option: StardewValleyOptions):
         farm_name = "Standard Farm"
     elif farm_type == FarmType.option_riverland:
         farm_name = "Riverland Farm"
+    elif farm_type == FarmType.option_forest:
+        farm_name = "Forest Farm"
+    elif farm_type == FarmType.option_hill_top:
+        farm_name = "Hilltop Farm"
     else:
+        # farm_name = "Farm Farm"
         raise NotImplemented("Farm type is not implemented")
     if region == "Farm":
         return farm_name
