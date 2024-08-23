@@ -168,7 +168,7 @@ def define_additional_tile_replacements(assembler: Z80Assembler, patch_data):
             0x01, 0x3a, 0x00, 0x46, 0x2f,  # Temple of Seasons digging spot
             0x01, 0x07, 0x00, 0x13, 0x2f,  # Northern volcanoes digging spot
             0x01, 0x20, 0x00, 0x68, 0x2f,  # D8 portal digging spot
-            0x01, 0x42, 0x00, 0x14, 0x2f   # Western volcanoes digging spot
+            0x01, 0x42, 0x00, 0x14, 0x2f  # Western volcanoes digging spot
         ])
     # If D0 alternate entrance is removed, put stairs inside D0 to make chest reachable without the alternate entrance
     if patch_data["options"]["remove_d0_alt_entrance"] > 0:
@@ -230,7 +230,7 @@ def define_location_constants(assembler: Z80Assembler, patch_data):
     # Process deterministic Gasha Nut locations to define a table
     deterministic_gasha_table = []
     for i in range(int(patch_data["options"]["deterministic_gasha_locations"])):
-        item = patch_data["locations"][f"Gasha Nut #{i+1}"]
+        item = patch_data["locations"][f"Gasha Nut #{i + 1}"]
         item_id, item_subid = get_item_id_and_subid(item)
         deterministic_gasha_table.extend([item_id, item_subid])
     assembler.add_floating_chunk("deterministicGashaLootTable", deterministic_gasha_table)
@@ -701,3 +701,19 @@ def define_dungeon_items_text_constants(assembler: Z80Assembler, patch_data):
             compasses_text.extend(dungeon_precision)
         compasses_text.extend([0x05, 0xd8, 0x00])  # "\color(WHITE)!(end)"
         assembler.add_floating_chunk(f"text.compassD{i}", compasses_text)
+
+
+def set_misc_warps(rom: RomData, patch_data):
+    warp_matchings = patch_data["misc_entrances"]
+    trans_values = {name: rom.read_bytes(info[0], 2) for name, info in NORMAL_EXITS.items()}
+
+    # Apply warp matchings expressed in the patch
+    for from_name, to_name in warp_matchings:
+        entrance_addr = NORMAL_EXITS[from_name][0]
+        destination_data_name = NORMAL_EXITS[to_name][1]
+        destination_values = trans_values[destination_data_name]
+
+        rom.write_byte(entrance_addr, destination_values[0])  # pointer to room destination
+        group = destination_values[1] & 0xF0
+        trans_type = trans_values[from_name][1] & 0x0F  # This one needs to not change
+        rom.write_byte(entrance_addr + 1, group | trans_type)

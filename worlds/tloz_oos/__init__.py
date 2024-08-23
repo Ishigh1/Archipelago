@@ -1,10 +1,11 @@
 import os
 import logging
-from typing import List, Union, ClassVar
+from typing import List, Union, ClassVar, Tuple
 import settings
-from BaseClasses import Tutorial, Region, Location, LocationProgressType, Item, ItemClassification
+from BaseClasses import Tutorial, Region, Location, LocationProgressType, Item, ItemClassification, Entrance
 from Fill import fill_restrictive, FillError
 from Options import Accessibility
+from entrance_rando import randomize_entrances, disconnect_entrance_for_randomization
 from worlds.AutoWorld import WebWorld, World
 
 from .Util import *
@@ -93,6 +94,7 @@ class OracleOfSeasonsWorld(World):
     options: OracleOfSeasonsOptions
     required_client_version = (0, 5, 0)
     web = OracleOfSeasonsWeb()
+    topology_present = True
 
     settings: ClassVar[OracleOfSeasonsSettings]
     settings_key = "tloz_oos_options"
@@ -116,6 +118,8 @@ class OracleOfSeasonsWorld(World):
         self.shop_prices: Dict[str, int] = SHOP_PRICES_DIVIDERS.copy()
         self.random_rings_pool: List[str] = []
         self.remaining_progressive_gasha_seeds = 0
+        self.entrances_to_randomize: List[Entrance] = []
+        self.randomized_entrances: List[Tuple[str, str]] = []
 
     def generate_early(self):
         self.remaining_progressive_gasha_seeds = self.options.deterministic_gasha_locations.value
@@ -209,6 +213,14 @@ class OracleOfSeasonsWorld(World):
                     break
             self.dungeon_entrances["d3 entrance"] = dungeon_to_swap
 
+    def shuffle_entrances(self):
+        if not self.options.randomize_entrances:
+            return
+        for entrance in self.entrances_to_randomize:
+            disconnect_entrance_for_randomization(entrance)
+        randomized_entrances = randomize_entrances(self, True, {0: [0]})
+        self.randomized_entrances = randomized_entrances.pairings
+
     def shuffle_portals(self):
         holodrum_portals = list(PORTAL_CONNECTIONS.keys())
         subrosian_portals = list(PORTAL_CONNECTIONS.values())
@@ -234,7 +246,7 @@ class OracleOfSeasonsWorld(World):
             self.portal_connections[guaranteed_portal_holodrum] = guaranteed_portal_subrosia
 
         # If accessibility is not locations, don't perform any check on what was randomly picked
-        if self.options.accessibility != Accessibility.option_locations:
+        if self.options.accessibility != Accessibility.option_full:
             return
 
         # If accessibility IS locations, we need to ensure that Temple Remains upper portal doesn't lead to the volcano
@@ -370,6 +382,7 @@ class OracleOfSeasonsWorld(World):
         self.create_event("subrosian dance hall", "_reached_subrosian_dance_hall")
         self.create_event("subrosia pirates sector", "_met_pirates")
         self.create_event("tower of autumn", "_opened_tower_of_autumn")
+        self.create_event("lost woods deku", "_learned_main_sequence")
         self.create_event("d2 moblin chest", "_reached_d2_bracelet_room")
         self.create_event("d5 drop ball", "_dropped_d5_magnet_ball")
         self.create_event("d8 SE crystal", "_dropped_d8_SE_crystal")
@@ -538,6 +551,7 @@ class OracleOfSeasonsWorld(World):
     def pre_fill(self) -> None:
         self.pre_fill_seeds()
         self.pre_fill_dungeon_items()
+        self.shuffle_entrances()
 
     def filter_confined_dungeon_items_from_pool(self):
         my_items = [item for item in self.multiworld.itempool if item.player == self.player]
@@ -711,3 +725,8 @@ class OracleOfSeasonsWorld(World):
             spoiler_handle.write(f"\nSubrosia Portals ({self.multiworld.player_name[self.player]}):\n")
             for portal_holo, portal_sub in self.portal_connections.items():
                 spoiler_handle.write(f"\t- {portal_holo} --> {portal_sub}\n")
+
+        if self.options.randomize_entrances:
+            spoiler_handle.write(f"\nEntrances ({self.multiworld.player_name[self.player]}):\n")
+            for ent, out in self.randomized_entrances:
+                spoiler_handle.write(f"\t- {ent} --> {out}\n")

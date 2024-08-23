@@ -463,6 +463,13 @@ class OracleOfSeasonsRemoveItemsFromPool(ItemDict):
     verify_item_name = False
 
 
+class OracleOfSeasonsRandomizeEntrances(Toggle):
+    """
+    If enabled, the entrances are randomized.
+    """
+    display_name = "Randomize Entrances"
+
+
 @dataclass
 class OracleOfSeasonsOptions(PerGameCommonOptions):
     start_inventory_from_pool: StartInventoryPool
@@ -503,5 +510,6 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     combat_difficulty: OracleOfSeasonsCombatDifficulty
     quick_flute: OracleOfSeasonsQuickFlute
     starting_maps_compasses: OracleOfSeasonsStartingMapsCompasses
+    randomize_entrances: OracleOfSeasonsRandomizeEntrances
     remove_items_from_pool: OracleOfSeasonsRemoveItemsFromPool
     death_link: DeathLink

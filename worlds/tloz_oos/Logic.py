@@ -1,4 +1,5 @@
-from BaseClasses import MultiWorld
+from BaseClasses import MultiWorld, EntranceType
+from entrance_rando import disconnect_entrance_for_randomization
 from worlds.tloz_oos import LOCATIONS_DATA
 from worlds.tloz_oos.data.logic.DungeonsLogic import *
 from worlds.tloz_oos.data.logic.OverworldLogic import make_holodrum_logic
@@ -6,12 +7,14 @@ from worlds.tloz_oos.data.logic.SubrosiaLogic import make_subrosia_logic
 
 
 def create_connections(multiworld: MultiWorld, player: int):
+    oos_world = multiworld.worlds[player]
+
     dungeon_entrances = []
-    for reg1, reg2 in multiworld.worlds[player].dungeon_entrances.items():
+    for reg1, reg2 in oos_world.dungeon_entrances.items():
         dungeon_entrances.append([reg1, reg2, True, None])
 
     portal_connections = []
-    for reg1, reg2 in multiworld.worlds[player].portal_connections.items():
+    for reg1, reg2 in oos_world.portal_connections.items():
         portal_connections.append([reg1, reg2, True, None])
 
     all_logic = [
@@ -37,14 +40,26 @@ def create_connections(multiworld: MultiWorld, player: int):
             region_2 = multiworld.get_region(entrance_desc[1], player)
             is_two_way = entrance_desc[2]
             rule = entrance_desc[3]
+            if rule is True:
+                if oos_world.options.randomize_entrances:
+                    entrance = region_1.connect(region_2, entrance_desc[0])
+                    oos_world.entrances_to_randomize.append(entrance)
+                    if is_two_way:
+                        entrance.randomization_type = EntranceType.TWO_WAY
 
+                        entrance = region_2.connect(region_1, entrance_desc[1])
+                        entrance.randomization_type = EntranceType.TWO_WAY
+                        oos_world.entrances_to_randomize.append(entrance)
+                    continue
+                else:
+                    rule = None
             region_1.connect(region_2, None, rule)
             if is_two_way:
                 region_2.connect(region_1, None, rule)
 
 
 def apply_self_locking_rules(multiworld: MultiWorld, player: int):
-    if multiworld.worlds[player].options.accessibility == Accessibility.option_locations:
+    if multiworld.worlds[player].options.accessibility == Accessibility.option_full:
         return
 
     # Process self-locking keys first

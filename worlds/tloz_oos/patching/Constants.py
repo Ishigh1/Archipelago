@@ -64,7 +64,7 @@ EOB_ADDR = [
     0x4000,  # 3c
     0x4000,  # 3d
     0x4000,  # 3e
-    0x314b   # 3f - also here
+    0x314b  # 3f - also here
 ]
 
 DEFINES = {
@@ -471,6 +471,91 @@ DUNGEON_EXITS = {
     "d6": 0x13921,
     "d7": 0x13a89,
     "d8": 0x13a8d,
+}
+
+# Format = name: (transition_address, opposite entrance name)
+NORMAL_EXITS = {
+    # # Group 0 / Overworld
+    # Horon Village
+    "enter shop": (0x134D9, "inside shop"),
+    "enter tick tock": (0x135E5, "inside tick tock"),
+    "enter mayor's house": (0x134A5, "inside mayor's house"),
+    "enter vasu": (0x134AD, "inside vasu"),
+    "enter village portal room": (0x134E1, "inside village portal room"),
+    "enter know-it-all birds": (0x13605, "inside know-it-all birds"),
+
+    # Eyeglass Lake
+    "enter lon lon": (0x13495, "inside lon lon"),
+
+    # Easter Suburbs
+    "top of guru guru": (0x13525, "top guru guru staircase"),
+
+    # Woods of Winter
+    # "enter woods of winter, 1st cave": (0x1351D, "inside woods of winter, 1st cave"),
+
+    # Holodrum Plain
+    "enter treehouse": (0x134B5, "inside treehouse"),
+    "enter Mrs Ruul": (0x134E5, "inside Mrs Ruul"),
+    "enter Blaino": (0x134E9, "inside Blaino"),
+
+    # Sunken City
+    "enter ingo": (0x134B9, "inside ingo"),
+    "enter syrup": (0x134C1, "inside syrup"),
+    "enter flooded house": (0x134C5, "inside flooded house"),
+    "enter treasure hunter": (0x134C9, "inside treasure hunter"),
+    "enter bomb house": (0x134CD, "inside bomb house"),
+    "enter master diver house": (0x134F1, "inside master diver house"),
+    "enter sunken city, summer cave": (0x1352D, "inside sunken city, summer cave"),
+
+    # Lost Woods
+    "enter lost woods deku": (0x134F5, "inside lost woods deku"),
+
+    # Tarm Ruins
+    "enter tarm ruins, under tree": (0x134BD, "inside tarm ruins, under tree"),
+
+    # Temple Ruins
+    "enter d8 fairy room": (0x134DD, "inside d8 fairy room"),
+
+    # # Group 3
+    # Horon Village
+    "inside shop": (0x1387D, "enter shop"),
+    "inside tick tock": (0x13805, "enter tick tock"),
+    "inside mayor's house": (0x1380D, "enter mayor's house"),
+    "inside vasu": (0x13829, "enter vasu"),
+    "inside village portal room": (0x13901, "enter village portal room"),
+    "inside know-it-all birds": (0x13809, "enter know-it-all birds"),
+
+    # Eyeglass Lake
+    "inside lon lon": (0x137F9, "enter lon lon"),
+
+    # Holodrum Plain
+    "inside treehouse": (0x13835, "enter treehouse"),
+    "inside Mrs Ruul": (0x138AD, "enter Mrs Ruul"),
+    "inside Blaino": (0x138B1, "enter Blaino"),
+
+    # Sunken City
+    "inside ingo": (0x13849, "enter ingo"),
+    "inside syrup": (0x13855, "enter syrup"),
+    "inside flooded house": (0x13859, "enter flooded house"),
+    "inside treasure hunter": (0x13861, "enter treasure hunter"),
+    "inside bomb house": (0x13895, "enter bomb house"),
+    "inside master diver": (0x138B9, "enter master diver"),
+
+    # Lost Woods
+    "inside lost woods deku": (0x138C1, "enter lost woods deku"),
+
+    # Tarm Ruins
+    "inside tarm ruins, under tree": (0x13851, "enter tarm ruins, under tree"),
+
+    # Temple Ruins
+    "inside d8 fairy room": (0x13889, "enter d8 fairy room"),
+
+    # # Group 5
+    # Easter Suburbs
+    "top guru guru staircase": (0x13CB1, "top of guru guru"),
+
+    # Sunken City
+    "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
 }
 
 PORTAL_WARPS = {

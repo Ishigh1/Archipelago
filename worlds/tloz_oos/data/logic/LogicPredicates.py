@@ -213,8 +213,7 @@ def oos_can_reach_lost_woods_pedestal(state: CollectionState, player: int):
 def oos_can_complete_lost_woods_main_sequence(state: CollectionState, player: int):
     world = state.multiworld.worlds[player]
     return all([
-        oos_can_break_mushroom(state, player, False),
-        oos_has_shield(state, player),
+        state.has("_learned_main_sequence", player),
         SEASON_WINTER not in world.lost_woods_main_sequence or oos_has_winter(state, player),
         SEASON_SPRING not in world.lost_woods_main_sequence or oos_has_spring(state, player),
         SEASON_SUMMER not in world.lost_woods_main_sequence or oos_has_summer(state, player),
@@ -999,7 +998,7 @@ def oos_season_in_horon_village(state: CollectionState, player: int, season: str
 # Self-locking items helper predicates ##########################################
 
 def oos_self_locking_item(state: CollectionState, player: int, region_name: str, item_name: str):
-    if state.multiworld.worlds[player].options.accessibility == Accessibility.option_locations:
+    if state.multiworld.worlds[player].options.accessibility == Accessibility.option_full:
         return False
 
     region = state.multiworld.get_region(region_name, player)

@@ -131,6 +131,7 @@ REGIONS = [
     "d4 entrance",
     "chest in goron mountain",
     "tarm ruins",
+    "lost woods deku",
     "lost woods stump",
     "lost woods",
     "d6 sector",
@@ -399,4 +400,86 @@ REGIONS = [
     "gasha tree 14",
     "gasha tree 15",
     "gasha tree 16",
+
+    # # ER
+    # Horon Village
+    "enter shop",
+    "enter tick tock",
+    "enter mayor's house",
+    "enter vasu",
+    "enter village portal room",
+    "enter know-it-all birds",
+
+    # Eyeglass Lake
+    "enter lon lon",
+
+    # Easter Suburbs
+    "top of guru guru",
+
+    # Woods of Winter
+    # "enter woods of winter, 1st cave" # Bomb wall
+
+    # Holodrum Plain
+    "enter treehouse",
+    "enter Mrs Ruul",
+    "enter Blaino",
+
+    # Sunken City
+    "enter ingo",
+    "enter syrup",
+    "enter flooded house",
+    "enter treasure hunter",
+    "enter bomb house",
+    "enter master diver house",
+    "enter sunken city, summer cave",
+
+    # Lost Woods
+    "enter lost woods deku",
+
+    # Tarm Ruins
+    "enter tarm ruins, under tree",
+
+    # Temple Ruins
+    "enter d8 fairy room",
+
+    # # Group 3
+    # Horon Village
+    "inside shop",
+    "inside tick tock",
+    "inside mayor's house",
+    "inside vasu",
+    "inside village portal room",
+    "inside know-it-all birds",
+
+    # Eyeglass Lake
+    "inside lon lon",
+
+    # Holodrum Plain
+    "inside treehouse",
+    "inside Mrs Ruul",
+    "inside Blaino",
+
+    # Sunken City
+    "inside ingo",
+    "inside syrup",
+    "inside flooded house",
+    "inside treasure hunter",
+    "inside bomb house",
+    "inside master diver",
+
+    # Lost Woods
+    "inside lost woods deku",
+
+    # Tarm Ruins
+    "inside tarm ruins, under tree",
+
+    # Temple Ruins
+    "inside d8 fairy room",
+
+    # # Group 5
+    # Easter Suburbs
+    "top guru guru staircase",
+
+    # Sunken City
+    "inside sunken city, summer cave",
 ]

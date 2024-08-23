@@ -53,6 +53,7 @@ class OoSPatchExtensions(APPatchExtension):
         set_old_men_rupee_values(rom_data, patch_data)
         set_dungeon_warps(rom_data, patch_data)
         set_portal_warps(rom_data, patch_data)
+        set_misc_warps(rom_data, patch_data)
         apply_miscellaneous_options(rom_data, patch_data)
         set_fixed_subrosia_seaside_location(rom_data, patch_data)
 
