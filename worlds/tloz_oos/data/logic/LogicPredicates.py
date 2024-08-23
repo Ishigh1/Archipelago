@@ -207,8 +207,7 @@ def oos_can_reach_lost_woods_pedestal(state: CollectionState, player: int):
     seasons_in_pedestal_sequence = [season for [_, season] in world.lost_woods_item_sequence]
 
     return all([
-        oos_can_use_ember_seeds(state, player, False),
-        state.has("Phonograph", player),
+        state.has("_learned_pedestal_sequence", player),
         oos_can_complete_season_sequence(state, player, seasons_in_pedestal_sequence)
     ])
 
@@ -218,8 +217,7 @@ def oos_can_complete_lost_woods_main_sequence(state: CollectionState, player: in
     seasons_in_main_sequence = [season for [_, season] in world.lost_woods_main_sequence]
 
     return all([
-        oos_can_break_mushroom(state, player, False),
-        oos_has_shield(state, player),
+        state.has("_learned_main_sequence", player),
         oos_can_complete_season_sequence(state, player, seasons_in_main_sequence)
     ])
 
@@ -970,87 +968,6 @@ def oos_can_remove_rockslide(state: CollectionState, player: int, can_summon_com
 
 def oos_can_meet_maple(state: CollectionState, player: int):
     return oos_can_kill_normal_enemy(state, player, False, False)
-
-
-# Season in region predicates ##########################################
-
-def oos_season_in_spool_swamp(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "SPOOL_SWAMP") == season:
-        return True
-    return oos_has_season(state, player, season) and state.has("_reached_spool_stump", player)
-
-
-def oos_season_in_eyeglass_lake(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "EYEGLASS_LAKE") == season:
-        return True
-    return oos_has_season(state, player, season) and state.has("_reached_eyeglass_stump", player)
-
-
-def oos_season_in_temple_remains(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "TEMPLE_REMAINS") == season:
-        return True
-    return oos_has_season(state, player, season) and state.has("_reached_remains_stump", player)
-
-
-def oos_season_in_holodrum_plain(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "HOLODRUM_PLAIN") == season:
-        return True
-    return oos_has_season(state, player, season) and state.has("_reached_ghastly_stump", player)
-
-
-def oos_season_in_western_coast(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "WESTERN_COAST") == season:
-        return True
-    return oos_has_season(state, player, season) and state.has("_reached_coast_stump", player)
-
-
-def oos_season_in_eastern_suburbs(state: CollectionState, player: int, season: int):
-    return (oos_get_default_season(state, player, "EASTERN_SUBURBS") == season
-            or oos_has_season(state, player, season))
-
-
-def oos_season_in_sunken_city(state: CollectionState, player: int, season: int):
-    return (oos_get_default_season(state, player, "SUNKEN_CITY") == season
-            or oos_has_season(state, player, season))
-
-
-def oos_season_in_woods_of_winter(state: CollectionState, player: int, season: int):
-    return (oos_get_default_season(state, player, "WOODS_OF_WINTER") == season
-            or oos_has_season(state, player, season))
-
-
-def oos_season_in_central_woods_of_winter(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "WOODS_OF_WINTER") == season:
-        return True
-    return oos_has_season(state, player, season) and state.has("_reached_d2_stump", player)
-
-
-def oos_season_in_mt_cucco(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "SUNKEN_CITY") == season:
-        return True
-    return oos_has_season(state, player, season)
-
-
-def oos_season_in_lost_woods(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "LOST_WOODS") == season:
-        return True
-    return oos_has_season(state, player, season)
-
-
-def oos_season_in_tarm_ruins(state: CollectionState, player: int, season: int):
-    if oos_get_default_season(state, player, "TARM_RUINS") == season:
-        return True
-    return oos_has_season(state, player, season)
-
-
-def oos_season_in_horon_village(state: CollectionState, player: int, season: int):
-    # With vanilla behavior, you can randomly have any season inside Horon, making any season virtually accessible
-    if not state.multiworld.worlds[player].options.normalize_horon_village_season:
-        return True
-    if oos_get_default_season(state, player, "HORON_VILLAGE") == season:
-        return True
-    return oos_has_season(state, player, season)
-
 
 # Self-locking items helper predicates ##########################################
 

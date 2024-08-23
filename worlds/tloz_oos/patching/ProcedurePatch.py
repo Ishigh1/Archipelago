@@ -16,6 +16,13 @@ class OoSPatchExtensions(APPatchExtension):
     @staticmethod
     def apply_patches(caller: APProcedurePatch, rom: bytes, patch_file: str) -> bytes:
         rom_data = RomData(rom)
+        for bank in range(0x40, 0x80):
+            rom_data.add_bank(bank)
+        rom_data.update_rom_size()
+
+        # Perform moves inside the assembly
+        copy_warp_dest_table(rom_data)
+
         patch_data = yaml.load(caller.get_file(patch_file).decode("utf-8"), yaml.Loader)
 
         if patch_data["version"] != VERSION:
@@ -71,6 +78,7 @@ class OoSPatchExtensions(APPatchExtension):
         set_old_men_rupee_values(rom_data, patch_data)
         set_dungeon_warps(rom_data, patch_data)
         set_portal_warps(rom_data, patch_data)
+        set_misc_warps(rom_data, patch_data)
         apply_miscellaneous_options(rom_data, patch_data)
         set_fixed_subrosia_seaside_location(rom_data, patch_data)
 
