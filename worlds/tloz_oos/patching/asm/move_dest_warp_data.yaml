@@ -1,0 +1,84 @@
+40//warpDestTable: |
+  dw $4000
+  dw $4180
+  dw $4200
+  dw $42C0
+  dw $43B0
+  dw $44D0
+  dw $46F0
+  dw $4720
+
+40//applyWarpDest: |
+  bit 7,a
+  jr nz,reset_season_transition
+  ld a,(wWarpDestGroup)
+  and $0f
+  cp $02
+  jr nz,label_04_032
+  
+  ld hl,warpDestTable
+  rst 18      ; rst_addDoubleIndex
+  ldi a,(hl)
+  ld h,(hl)
+  ld l,a
+  ld a,(wWarpDestRoom)
+  ld b,a
+  ld a,($c6e5)
+  add a,b
+  jr label_04_033
+
+  label_04_032:
+  ld hl,warpDestTable
+  rst 18      ; rst_addDoubleIndex
+  ldi a,(hl)
+  ld h,(hl)
+  ld l,a
+  ld a,(wWarpDestRoom)
+  
+  label_04_033:
+  ld c,a
+  ld b,$00
+  add hl,bc
+  add hl,bc
+  add hl,bc
+  ldi a,(hl)
+  ld (wWarpDestRoom),a
+  ldi a,(hl)
+  ld (wWarpDestPos),a
+  ldi a,(hl)
+  or $80
+  ld (wWarpTransition),a
+  
+  reset_season_transition:
+  ld a,(wWarpTransition)
+  cp $82
+  jr nz,@natzu_transition
+  
+  @set_data:
+  sub a
+  ld (wWarpTransition),a
+  ld (wActiveRoomPack),a ; non-existent room pack to invalidate it
+  jr @reset_flags
+  
+  @natzu_transition:
+  ld b,a
+  ld a,(wActiveRoomPack)
+  cp $ff ; Natzu
+  jr nz,@end
+  
+  @reset_flags:
+  xor a ; same as ld a,$00
+  ld (wActiveGroup),a ; it needs to be < 3 to load the season
+  ld (wRoomStateModifier),a ; Natzu spring
+  
+  @end:
+  ld e,$04
+  ld hl,$460C
+  jp interBankCall
+
+04/05D3/: |
+  ld e,$40
+  ld hl,applyWarpDest
+  jp interBankCall
+
+# 04:45DC to 04:460B is free

@@ -1,10 +1,11 @@
 import os
 import logging
-from typing import List, Union, ClassVar
+from typing import List, Union, ClassVar, Tuple
 import settings
-from BaseClasses import Tutorial, Region, Location, LocationProgressType, Item, ItemClassification
+from BaseClasses import Tutorial, Region, Location, LocationProgressType, Item, ItemClassification, Entrance
 from Fill import fill_restrictive, FillError
 from Options import Accessibility
+from entrance_rando import randomize_entrances, disconnect_entrance_for_randomization
 from worlds.AutoWorld import WebWorld, World
 
 from .Util import *
@@ -13,8 +14,9 @@ from .Logic import create_connections, apply_self_locking_rules
 from .PatchWriter import oos_create_ap_procedure_patch
 from .data import LOCATIONS_DATA
 from .data.Constants import *
+from .data.EntranceType import OoSEntranceType, OoSRandomizationGroup
 from .data.Items import ITEMS_DATA
-from .data.Regions import REGIONS
+from .data.Regions import REGIONS, SeasonRegion
 
 from .Client import OracleOfSeasonsClient  # Unused, but required to register with BizHawkClient
 
@@ -93,6 +95,7 @@ class OracleOfSeasonsWorld(World):
     options: OracleOfSeasonsOptions
     required_client_version = (0, 5, 0)
     web = OracleOfSeasonsWeb()
+    topology_present = True
 
     settings: ClassVar[OracleOfSeasonsSettings]
     settings_key = "tloz_oos_options"
@@ -116,6 +119,8 @@ class OracleOfSeasonsWorld(World):
         self.shop_prices: Dict[str, int] = SHOP_PRICES_DIVIDERS.copy()
         self.random_rings_pool: List[str] = []
         self.remaining_progressive_gasha_seeds = 0
+        self.entrances_to_randomize: List[Entrance] = []
+        self.randomized_entrances: List[Tuple[str, str]] = []
 
     def generate_early(self):
         self.remaining_progressive_gasha_seeds = self.options.deterministic_gasha_locations.value
@@ -123,11 +128,6 @@ class OracleOfSeasonsWorld(World):
         self.restrict_non_local_items()
         self.randomize_default_seasons()
         self.randomize_old_men()
-
-        if self.options.shuffle_dungeons:
-            self.shuffle_dungeons()
-        if self.options.shuffle_portals != "vanilla":
-            self.shuffle_portals()
 
         if self.options.randomize_lost_woods_item_sequence:
             # Pick 4 random seasons & directions (last one has to be "left")
@@ -184,65 +184,83 @@ class OracleOfSeasonsWorld(World):
                 continue
             self.default_seasons[region] = self.random.choice(seasons_pool)
 
-    def shuffle_dungeons(self):
-        shuffled_dungeons = list(self.dungeon_entrances.values())
-        self.random.shuffle(shuffled_dungeons)
-        self.dungeon_entrances = dict(zip(self.dungeon_entrances, shuffled_dungeons))
-
-        # If alt entrances are left as-is, we need to ensure D3 entrance doesn't lead to a dungeon with an alternate
-        # entrance (D0 or D2) because people might leave by the front door and get caught in a drowning loop of doom
-        forbidden_d3_dungeons = []
-        if not self.options.remove_d0_alt_entrance:
-            forbidden_d3_dungeons.append("enter d0")
-        if not self.options.remove_d2_alt_entrance:
-            forbidden_d3_dungeons.append("enter d2")
-
-        d3_dungeon = self.dungeon_entrances["d3 entrance"]
-        if d3_dungeon in forbidden_d3_dungeons:
-            # Randomly pick a valid dungeon for D3 entrance, and make the entrance that was going to that dungeon
-            # lead to the problematic dungeon instead
-            allowed_dungeons = [d for d in DUNGEON_CONNECTIONS.values() if d not in forbidden_d3_dungeons]
-            dungeon_to_swap = self.random.choice(allowed_dungeons)
-            for k in self.dungeon_entrances.keys():
-                if self.dungeon_entrances[k] == dungeon_to_swap:
-                    self.dungeon_entrances[k] = d3_dungeon
-                    break
-            self.dungeon_entrances["d3 entrance"] = dungeon_to_swap
-
-    def shuffle_portals(self):
-        holodrum_portals = list(PORTAL_CONNECTIONS.keys())
-        subrosian_portals = list(PORTAL_CONNECTIONS.values())
-        if self.options.shuffle_portals == "shuffle_outwards":
-            # Shuffle Outwards: connect Holodrum portals with random Subrosian portals
-            self.random.shuffle(subrosian_portals)
-            self.portal_connections = dict(zip(holodrum_portals, subrosian_portals))
+    def shuffle_entrances(self):
+        if self.options.randomize_entrances == OracleOfSeasonsRandomizeEntrances.option_decoupled:
+            decoupled = True
         else:
-            # Shuffle: connect any portal with any other portal. To keep both dimensions available, we need to ensure
-            # that at least one Subrosian portal that is not D8 portal is connected to Holodrum
-            self.random.shuffle(holodrum_portals)
-            guaranteed_portal_holodrum = holodrum_portals.pop(0)
+            decoupled = False
+        for entrance in self.entrances_to_randomize:
+            if ((self.options.randomize_entrances.option_disabled and entrance.randomization_group <= OoSRandomizationGroup.Dive)
+                    or ((self.options.shuffle_dungeons == OracleOfSeasonsDungeonShuffle.option_false or decoupled)
+                        and entrance.randomization_group == OoSRandomizationGroup.DungeonOutside
+                        and entrance.randomization_group == OoSRandomizationGroup.DungeonInside)
+                    or ((self.options.shuffle_portals == OracleOfSeasonsPortalShuffle.option_vanilla or decoupled)
+                        and entrance.randomization_group >= OoSRandomizationGroup.PortalOverworld)):
+                continue
+            assert isinstance(entrance.parent_region, SeasonRegion)
+            if entrance.parent_region.children_regions:
+                for child in entrance.parent_region.children_regions:
+                    self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(entrance)
+            assert isinstance(entrance.connected_region, SeasonRegion)
+            for child_entrance in entrance.connected_region.children_entrances:
+                self.multiworld.indirect_connections.get(entrance.parent_region, set()).discard(child_entrance)
+                if entrance.parent_region.children_regions:
+                    for child in entrance.parent_region.children_regions:
+                        self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(child_entrance)
+            disconnect_entrance_for_randomization(entrance)
+        self.spring_western_coast = [
+            "enter old man near western coast house",
+            "enter pirate ship",
+            "enter beach fairy cave",
+            "enter coast house",
+            "enter graveyard cave",
+            "outside graveyard chimney",
+            "enter hidden graveyard stairs"
+        ][self.random.randrange(7)]
+        self.autumn_graveyard = [
+            "outside graveyard chimney",
+            "enter hidden graveyard stairs"
+        ][self.random.randrange(2)]
 
-            self.random.shuffle(subrosian_portals)
-            if subrosian_portals[0] == "d8 entrance portal":
-                subrosian_portals[0], subrosian_portals[1] = subrosian_portals[1], subrosian_portals[0]
-            guaranteed_portal_subrosia = subrosian_portals.pop(0)
+        target_group_lookup = {
+            OoSRandomizationGroup.Normal: [OoSRandomizationGroup.Normal],
+            OoSRandomizationGroup.Waterfall: [OoSRandomizationGroup.Waterfall],
+            OoSRandomizationGroup.Dive: [OoSRandomizationGroup.Dive],
+            OoSRandomizationGroup.DungeonOutside: [OoSRandomizationGroup.DungeonInside],
+            OoSRandomizationGroup.DungeonInside: [OoSRandomizationGroup.DungeonOutside],
+            OoSRandomizationGroup.PortalOverworld: [OoSRandomizationGroup.PortalSubrosia],
+            OoSRandomizationGroup.PortalSubrosia: [OoSRandomizationGroup.PortalOverworld]
+        }
 
-            shuffled_portals = holodrum_portals + subrosian_portals
-            self.random.shuffle(shuffled_portals)
-            it = iter(shuffled_portals)
-            self.portal_connections = dict(zip(it, it))
-            self.portal_connections[guaranteed_portal_holodrum] = guaranteed_portal_subrosia
+        if self.options.shuffle_portals.option_shuffle:
+            target_group_lookup[OoSRandomizationGroup.PortalOverworld] = target_group_lookup[OoSRandomizationGroup.PortalSubrosia] = \
+                [OoSRandomizationGroup.PortalOverworld, OoSRandomizationGroup.PortalSubrosia]
 
-        # If accessibility is not locations, don't perform any check on what was randomly picked
-        if self.options.accessibility != Accessibility.option_locations:
-            return
+        randomized_entrances = randomize_entrances(self, not decoupled, target_group_lookup)
 
-        # If accessibility IS locations, we need to ensure that Temple Remains upper portal doesn't lead to the volcano
-        # that can be triggered to open Temple Remains cave, since it would make it unreachable forever.
-        # Same goes with D8 <-> Volcanoes west portal in free shuffle mode.
-        # In that case, just redo the shuffle recursively until we end up with a satisfying shuffle.
-        if not self.is_volcanoes_west_portal_reachable():
-            self.shuffle_portals()
+        if not decoupled and self.options.shuffle_dungeons == OracleOfSeasonsDungeonShuffle.option_true:
+            for dungeon_entrance in self.dungeon_entrances:
+                self.dungeon_entrances[dungeon_entrance] = self.get_entrance(dungeon_entrance).connected_region.name
+        if not decoupled and self.options.shuffle_portals != OracleOfSeasonsPortalShuffle.option_vanilla:
+            new_portal_connections = {}
+            for portal in self.portal_connections:
+                if portal not in new_portal_connections:
+                    target = self.get_entrance(portal).connected_region.name
+                    new_portal_connections[target] = portal
+                portal = self.portal_connections[portal]
+                if portal not in new_portal_connections:
+                    target = self.get_entrance(portal).connected_region.name
+                    new_portal_connections[target] = portal
+            self.portal_connections = new_portal_connections
+
+        if self.options.randomize_entrances != OracleOfSeasonsRandomizeEntrances.option_decoupled:
+            self.randomized_entrances = [pairing for pairing in randomized_entrances.pairings if
+                                         self.get_entrance(pairing[0]).randomization_group <= OoSRandomizationGroup.Dive]
+
+        if decoupled:
+            self.options.randomize_entrances = OracleOfSeasonsRandomizeEntrances.option_disabled
+            self.shuffle_entrances()
+            self.options.randomize_entrances = OracleOfSeasonsRandomizeEntrances.option_decoupled
 
     def are_portals_connected(self, portal_1, portal_2):
         if portal_1 in self.portal_connections:
@@ -323,9 +341,10 @@ class OracleOfSeasonsWorld(World):
 
     def create_regions(self):
         # Create regions
-        for region_name in REGIONS:
-            region = Region(region_name, self.player, self.multiworld)
-            self.multiworld.regions.append(region)
+        for super_region_name in REGIONS:
+            for region_name in REGIONS[super_region_name]:
+                region = SeasonRegion(region_name, self.player, self.multiworld, super_region_name)
+                self.multiworld.regions.append(region)
 
         # Create locations
         for location_name, location_data in LOCATIONS_DATA.items():
@@ -368,8 +387,17 @@ class OracleOfSeasonsWorld(World):
         # Various events to help with logic
         self.create_event("subrosia market sector", "_reached_rosa")
         self.create_event("subrosian dance hall", "_reached_subrosian_dance_hall")
-        self.create_event("subrosia pirates sector", "_met_pirates")
+        self.create_event("floodgate keyhole", "_opened_floodgate")
+        self.create_event("open swamp bomb cave", "_opened_swamp_bomb_cave")
+        self.create_event("dragon keyhole", "_opened_d4")
         self.create_event("tower of autumn", "_opened_tower_of_autumn")
+        self.create_event("inside strange brothers right", "_met_strange_brothers")
+        self.create_event("lost woods statue", "_pushed_lost_woods_statue")
+        self.create_event("lost woods deku", "_learned_main_sequence")
+        self.create_event("phonograph deku", "_learned_pedestal_sequence")
+        self.create_event("tarm ruins top", "_pushed_tarm_statue")
+        self.create_event("pirate captain", "_met_pirates"),
+        self.create_event("inside desert ship", "_met_pirate_head")
         self.create_event("d2 moblin chest", "_reached_d2_bracelet_room")
         self.create_event("d5 drop ball", "_dropped_d5_magnet_ball")
         self.create_event("d8 SE crystal", "_dropped_d8_SE_crystal")
@@ -538,6 +566,7 @@ class OracleOfSeasonsWorld(World):
     def pre_fill(self) -> None:
         self.pre_fill_seeds()
         self.pre_fill_dungeon_items()
+        self.shuffle_entrances()
 
     def filter_confined_dungeon_items_from_pool(self):
         my_items = [item for item in self.multiworld.itempool if item.player == self.player]
@@ -711,3 +740,8 @@ class OracleOfSeasonsWorld(World):
             spoiler_handle.write(f"\nSubrosia Portals ({self.multiworld.player_name[self.player]}):\n")
             for portal_holo, portal_sub in self.portal_connections.items():
                 spoiler_handle.write(f"\t- {portal_holo} --> {portal_sub}\n")
+
+        if self.options.randomize_entrances:
+            spoiler_handle.write(f"\nEntrances ({self.multiworld.player_name[self.player]}):\n")
+            for ent, out in self.randomized_entrances:
+                spoiler_handle.write(f"\t- {ent} --> {out}\n")
