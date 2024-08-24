@@ -62,6 +62,8 @@ def make_subrosia_logic(player: int):
 
         # Locations ###############################################################
 
+        ["subrosia temple sector", "enter boomerang cave", True, lambda state: oos_can_jump_1_wide_pit(state, player, False)],
+        ["enter boomerang cave", "inside boomerang cave", True, True],
         ["subrosia temple sector", "subrosian dance hall", False, None],
         ["subrosia temple sector", "subrosian smithy ore", False, lambda state: any([
             state.has("Hard Ore", player),
@@ -71,11 +73,18 @@ def make_subrosia_logic(player: int):
             state.has("Rusty Bell", player),
             oos_self_locking_item(state, player, "subrosian smithy bell", "Rusty Bell")
         ])],
-        ["subrosia temple sector", "temple of seasons", False, None],
-        ["subrosia temple sector", "tower of winter", False, lambda state: any([
+
+        ["subrosia temple sector", "enter temple of seasons", True, None],
+        ["enter temple of seasons", "inside temple of seasons", True, True],
+        ["inside temple of seasons", "temple of seasons", False, None],
+
+        ["subrosia temple sector", "enter winter temple", True, None],
+        ["enter winter temple", "inside winter temple", True, True],
+        ["inside winter temple", "tower of winter", False, lambda state: any([
             oos_has_feather(state, player),
             oos_can_trigger_far_switch(state, player)
         ])],
+
         ["subrosia temple sector", "tower of summer", False, lambda state: all([
             oos_can_date_rosa(state, player),
             oos_has_bracelet(state, player),
@@ -86,11 +95,13 @@ def make_subrosia_logic(player: int):
         ])],
 
         ["subrosia market sector", "subrosia seaside", False, lambda state: oos_has_shovel(state, player)],
-        ["subrosia market sector", "subrosia market star ore", False, lambda state: any([
+        ["subrosia market sector", "enter subrosian market", True, None],
+        ["enter subrosian market", "inside subrosian market", True, True],
+        ["inside subrosian market", "subrosia market star ore", False, lambda state: any([
             state.has("Star Ore", player),
             oos_self_locking_item(state, player, "subrosia market star ore", "Star Ore")
         ])],
-        ["subrosia market sector", "subrosia market ore chunks", False, lambda state: \
+        ["inside subrosian market", "subrosia market ore chunks", False, lambda state: \
             oos_has_ore_chunks(state, player, 100)],
 
         ["subrosia hide and seek sector", "subrosia hide and seek", False, lambda state: oos_has_shovel(state, player)],
@@ -111,10 +122,15 @@ def make_subrosia_logic(player: int):
             oos_has_shovel(state, player)
         ])],
 
-        ["subrosia hide and seek sector", "subrosian house", False, lambda state: oos_has_feather(state, player)],
+        ["subrosia hide and seek sector", "enter house above hide and seek", True, None],
+        ["enter house above hide and seek", "inside house above hide and seek", True, True],
+        ["inside house above hide and seek", "subrosian house", False, lambda state: oos_has_feather(state, player)],
+
         ["subrosia hide and seek sector", "subrosian 2d cave", False, lambda state: oos_has_feather(state, player)],
 
-        ["subrosia bridge sector", "subrosia, open cave", False, None],
+        ["subrosia bridge sector", "enter open cave", True, None],
+        ["enter open cave", "inside open cave", True, True],
+        ["inside open cave", "subrosia, open cave", False, None],
         ["subrosia bridge sector", "subrosia, locked cave", False, lambda state: all([
             oos_can_date_rosa(state, player),
             oos_has_feather(state, player)
@@ -159,4 +175,3 @@ def make_subrosia_logic(player: int):
 
         ["subrosia bridge sector", "subrosia bridge digging spot", False, lambda state: oos_has_shovel(state, player)],
     ]
-

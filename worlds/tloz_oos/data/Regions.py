@@ -132,6 +132,7 @@ REGIONS = [
     "chest in goron mountain",
     "tarm ruins",
     "lost woods deku",
+    "phonograph deku",
     "lost woods stump",
     "lost woods",
     "d6 sector",
@@ -401,7 +402,8 @@ REGIONS = [
     "gasha tree 15",
     "gasha tree 16",
 
-    # # ER
+    # ER ################################################################
+    # Group 0
     # Horon Village
     "enter shop",
     "enter tick tock",
@@ -409,20 +411,38 @@ REGIONS = [
     "enter vasu",
     "enter village portal room",
     "enter know-it-all birds",
+    "enter bipin left",
+    "enter bipin right",
+    "enter advance shop",
+    "enter dr left old man",
+
+    # Western Coast
+    "enter old man near western coast house",
 
     # Eyeglass Lake
     "enter lon lon",
 
-    # Easter Suburbs
+    # Eastern Suburbs
+    "enter guru guru",
+    "enter winter guru guru",
     "top of guru guru",
+    "enter suburb spring cave",
 
     # Woods of Winter
     # "enter woods of winter, 1st cave" # Bomb wall
+    "enter peek cave near d2",
+    "enter magnet cave near d2",
 
     # Holodrum Plain
     "enter treehouse",
     "enter Mrs Ruul",
     "enter Blaino",
+    "enter old man near blaino",
+
+    # Spool Swamp
+    "enter floodgate left",
+    "enter floodgate right",
+    "enter floodgate house",
 
     # Sunken City
     "enter ingo",
@@ -435,6 +455,7 @@ REGIONS = [
 
     # Lost Woods
     "enter lost woods deku",
+    "enter phonograph deku",
 
     # Tarm Ruins
     "enter tarm ruins, under tree",
@@ -442,7 +463,15 @@ REGIONS = [
     # Temple Ruins
     "enter d8 fairy room",
 
-    # # Group 3
+    # Group 1
+    "enter open cave",
+    "enter boomerang cave",
+    "enter subrosian market",
+    "enter house above hide and seek",
+    "enter temple of seasons",
+    "enter winter temple",
+
+    # Group 3, 4, 5 ################################################################
     # Horon Village
     "inside shop",
     "inside tick tock",
@@ -450,6 +479,23 @@ REGIONS = [
     "inside vasu",
     "inside village portal room",
     "inside know-it-all birds",
+    "inside bipin left",
+    "inside bipin right",
+    "inside advance shop",
+    "inside dr left old man",
+
+    # Western Coast
+    "inside old man near western coast house",
+
+    # Eastern Suburbs
+    "top guru guru staircase",
+    "inside guru guru",
+    "inside winter guru guru",
+    "inside suburb spring cave",
+
+    # Woods of Winter
+    "inside peek cave near d2",
+    "inside magnet cave near d2",
 
     # Eyeglass Lake
     "inside lon lon",
@@ -458,6 +504,12 @@ REGIONS = [
     "inside treehouse",
     "inside Mrs Ruul",
     "inside Blaino",
+    "inside old man near blaino",
+
+    # Spool Swamp
+    "inside floodgate left",
+    "inside floodgate right",
+    "inside floodgate house",
 
     # Sunken City
     "inside ingo",
@@ -466,9 +518,11 @@ REGIONS = [
     "inside treasure hunter",
     "inside bomb house",
     "inside master diver",
+    "inside sunken city, summer cave",
 
     # Lost Woods
     "inside lost woods deku",
+    "inside phonograph deku",
 
     # Tarm Ruins
     "inside tarm ruins, under tree",
@@ -476,10 +530,11 @@ REGIONS = [
     # Temple Ruins
     "inside d8 fairy room",
 
-    # # Group 5
-    # Easter Suburbs
-    "top guru guru staircase",
-
-    # Sunken City
-    "inside sunken city, summer cave",
+    # Subrosia
+    "inside open cave",
+    "inside boomerang cave",
+    "inside subrosian market",
+    "inside house above hide and seek",
+    "inside temple of seasons",
+    "inside winter temple",
 ]

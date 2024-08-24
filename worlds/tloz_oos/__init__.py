@@ -379,10 +379,12 @@ class OracleOfSeasonsWorld(World):
         self.create_event("frypolar room wild mystery", "_wild_mystery_seeds")
         # Various events to help with logic
         self.create_event("subrosia market sector", "_reached_rosa")
+        self.create_event("floodgate keeper's house", "_flipped_floodgate_lever")
         self.create_event("subrosian dance hall", "_reached_subrosian_dance_hall")
         self.create_event("subrosia pirates sector", "_met_pirates")
         self.create_event("tower of autumn", "_opened_tower_of_autumn")
         self.create_event("lost woods deku", "_learned_main_sequence")
+        self.create_event("phonograph deku", "_learned_pedestal_sequence")
         self.create_event("d2 moblin chest", "_reached_d2_bracelet_room")
         self.create_event("d5 drop ball", "_dropped_d5_magnet_ball")
         self.create_event("d8 SE crystal", "_dropped_d8_SE_crystal")

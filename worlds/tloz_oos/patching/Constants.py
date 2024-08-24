@@ -475,7 +475,7 @@ DUNGEON_EXITS = {
 
 # Format = name: (transition_address, opposite entrance name)
 NORMAL_EXITS = {
-    # # Group 0 / Overworld
+    # Group 0 / Overworld ################################################################
     # Horon Village
     "enter shop": (0x134D9, "inside shop"),
     "enter tick tock": (0x135E5, "inside tick tock"),
@@ -483,20 +483,38 @@ NORMAL_EXITS = {
     "enter vasu": (0x134AD, "inside vasu"),
     "enter village portal room": (0x134E1, "inside village portal room"),
     "enter know-it-all birds": (0x13605, "inside know-it-all birds"),
+    "enter bipin left": (0x13625, "inside bipin left"),
+    "enter bipin right": (0x13629, "inside bipin right"),
+    "enter advance shop": (0x13609, "inside advance shop"),
+    "enter dr left old man": (0x13631, "inside dr left old man"),
+
+    # Western Coast
+    "enter old man near western coast house": (0x13641, "inside old man near western coast house"),
 
     # Eyeglass Lake
     "enter lon lon": (0x13495, "inside lon lon"),
 
     # Easter Suburbs
+    "enter guru guru": (0x13675, "inside guru guru"),
     "top of guru guru": (0x13525, "top guru guru staircase"),
+    "enter winter guru guru": (0x13679, "inside winter guru guru"),
+    "enter suburb spring cave": (0x13585, "inside suburb spring cave"),
 
     # Woods of Winter
     # "enter woods of winter, 1st cave": (0x1351D, "inside woods of winter, 1st cave"),
+    "enter peek cave near d2": (0x13665, "inside peek cave near d2"),
+    "enter magnet cave near d2": (0x13669, "inside magnet cave near d2"),
 
     # Holodrum Plain
     "enter treehouse": (0x134B5, "inside treehouse"),
     "enter Mrs Ruul": (0x134E5, "inside Mrs Ruul"),
     "enter Blaino": (0x134E9, "inside Blaino"),
+    "enter old man near blaino": (0x135AD, "inside old man near blaino"),
+
+    # Spool Swamp
+    "enter floodgate left": (0x1366D, "inside floodgate left"),
+    "enter floodgate right": (0x1361D, "inside floodgate right"),
+    "enter floodgate house": (0x13621, "inside floodgate house"),
 
     # Sunken City
     "enter ingo": (0x134B9, "inside ingo"),
@@ -516,7 +534,15 @@ NORMAL_EXITS = {
     # Temple Ruins
     "enter d8 fairy room": (0x134DD, "inside d8 fairy room"),
 
-    # # Group 3
+    # Group 1 / Subrosia ################################################################
+    "enter open cave": (0x13711, "inside open cave"),
+    "enter boomerang cave": (0x1370D, "inside boomerang cave"),
+    "enter subrosian market": (0x136ED, "inside subrosian market"),
+    "enter house above hide and seek": (0x136F1, "inside house above hide and seek"),
+    "enter temple of seasons": (0x136A1, "inside temple of seasons"),
+    "enter winter temple": (0x136B1, "inside winter temple"),
+
+    # Group 3, 4, 5 / Caves ################################################################
     # Horon Village
     "inside shop": (0x1387D, "enter shop"),
     "inside tick tock": (0x13805, "enter tick tock"),
@@ -524,6 +550,23 @@ NORMAL_EXITS = {
     "inside vasu": (0x13829, "enter vasu"),
     "inside village portal room": (0x13901, "enter village portal room"),
     "inside know-it-all birds": (0x13809, "enter know-it-all birds"),
+    "inside bipin left": (0x1382D, "enter bipin left"),
+    "inside bipin right": (0x13831, "enter bipin right"),
+    "inside advance shop": (0x13899, "enter advance shop"),
+    "inside dr left old man": (0x13AAD, "enter dr left old man"),
+
+    # Western Coast
+    "inside old man near western coast house": (0x13C21, "enter old man near western coast house"),
+
+    # Eastern Suburbs
+    "inside guru guru": (0x13B61, "enter guru guru"),
+    "top guru guru staircase": (0x13CB1, "top of guru guru"),
+    "inside winter guru guru": (0x13B6D, "enter winter guru guru"),
+    "inside suburb spring cave": (0x13A41, "enter suburb spring cave"),
+
+    # Woods of Winter
+    "inside peek cave near d2": (0x13B75, "enter peek cave near d2"),
+    "inside magnet cave near d2": (0x13B79, "enter magnet cave near d2"),
 
     # Eyeglass Lake
     "inside lon lon": (0x137F9, "enter lon lon"),
@@ -532,8 +575,15 @@ NORMAL_EXITS = {
     "inside treehouse": (0x13835, "enter treehouse"),
     "inside Mrs Ruul": (0x138AD, "enter Mrs Ruul"),
     "inside Blaino": (0x138B1, "enter Blaino"),
+    "inside old man near blaino": (0x13C19, "enter old man near blaino"),
+
+    # Spool Swamp
+    "inside floodgate left": (0x13A79, "enter floodgate left"),
+    "inside floodgate right": (0x139F1, "enter floodgate right"),
+    "inside floodgate house": (0x138B9, "enter floodgate house"),
 
     # Sunken City
+    "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
     "inside ingo": (0x13849, "enter ingo"),
     "inside syrup": (0x13855, "enter syrup"),
     "inside flooded house": (0x13859, "enter flooded house"),
@@ -543,19 +593,22 @@ NORMAL_EXITS = {
 
     # Lost Woods
     "inside lost woods deku": (0x138C1, "enter lost woods deku"),
+    "enter phonograph deku": (0x13589, "inside phonograph deku"),
 
     # Tarm Ruins
     "inside tarm ruins, under tree": (0x13851, "enter tarm ruins, under tree"),
+    "inside phonograph deku": (0x13A45, "enter phonograph deku"),
 
     # Temple Ruins
     "inside d8 fairy room": (0x13889, "enter d8 fairy room"),
 
-    # # Group 5
-    # Easter Suburbs
-    "top guru guru staircase": (0x13CB1, "top of guru guru"),
-
-    # Sunken City
-    "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
+    # Subrosia
+    "inside open cave": (0x13A1D, "enter open cave"),
+    "inside boomerang cave": (0x13A19, "enter boomerang cave"),
+    "inside subrosian market": (0x13865, "enter subrosian market"),
+    "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
+    "inside temple of seasons": (0x138E9, "enter temple of seasons"),
+    "inside winter temple": (0x13C65, "enter winter temple"),
 }
 
 PORTAL_WARPS = {

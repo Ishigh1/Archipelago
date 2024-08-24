@@ -9,22 +9,30 @@ def make_holodrum_logic(player: int):
         ["enter mayor's house", "inside mayor's house", True, True],
         ["inside mayor's house", "mayor's gift", False, None],
         ["inside mayor's house", "mayor's house secret room", False, lambda state: oos_has_bombs(state, player)],
+
         ["horon village", "enter vasu", True, None],
         ["enter vasu", "inside vasu", True, True],
         ["inside vasu", "vasu's gift", False, None],
+
         ["horon village", "horon heart piece", False, lambda state: oos_can_use_ember_seeds(state, player, False)],
         ["horon village", "dr. left reward", False, lambda state: oos_can_use_ember_seeds(state, player, True)],
-        ["horon village", "old man in horon", False, lambda state: oos_can_use_ember_seeds(state, player, False)],
+
+        ["horon village", "enter dr left old man", False, lambda state: oos_can_use_ember_seeds(state, player, False)],
+        ["enter dr left old man", "inside dr left old man", True, True],
+        ["inside dr left old man", "old man in horon", False, None],
+
         ["horon village", "old man trade", False, lambda state: any([
             state.has("Fish", player),
             oos_self_locking_item(state, player, "old man trade", "Fish")
         ])],
+
         ["horon village", "enter tick tock", True, None],
         ["enter tick tock", "inside tick tock", True, True],
         ["inside tick tock", "tick tock trade", False, lambda state: any([
             state.has("Wooden Bird", player),
             oos_self_locking_item(state, player, "tick tock trade", "Wooden Bird")
         ])],
+
         ["horon village", "maku tree", False, lambda state: oos_has_sword(state, player, False)],
         ["horon village", "horon village SE chest", False, lambda state: all([
             oos_has_bombs(state, player),
@@ -63,7 +71,9 @@ def make_holodrum_logic(player: int):
         ["horon village", "enter shop", True, None],
         ["enter shop", "inside shop", True, True],
         ["inside shop", "horon shop", False, lambda state: oos_has_rupees(state, player, 150)],
-        ["horon village", "advance shop", False, lambda state: oos_has_rupees(state, player, 300)],
+        ["horon village", "enter advance shop", True, None],
+        ["enter advance shop", "inside advance shop", True, True],
+        ["inside advance shop", "advance shop", False, lambda state: oos_has_rupees(state, player, 300)],
         ["horon village", "member's shop", False, lambda state: all([
             state.has("Member's Card", player),
             oos_has_rupees(state, player, 450)
@@ -71,6 +81,12 @@ def make_holodrum_logic(player: int):
 
         ["horon village", "enter know-it-all birds", True, None],
         ["enter know-it-all birds", "inside know-it-all birds", True, True],
+
+        ["horon village", "enter bipin left", True, None],
+        ["enter bipin left", "inside bipin left", True, True],
+        ["horon village", "enter bipin right", True, None],
+        ["enter bipin right", "inside bipin right", True, True],
+        ["inside bipin left", "inside bipin right", True, None],
 
         # WESTERN COAST ##############################################################################################
 
@@ -128,21 +144,29 @@ def make_holodrum_logic(player: int):
 
         ["horon village", "suburbs", True, lambda state: oos_can_use_ember_seeds(state, player, False)],
 
-        ["suburbs", "windmill heart piece", False, lambda state: oos_season_in_eastern_suburbs(state, player, SEASON_WINTER)],
-        ["suburbs", "top of guru guru", True, None],
-        ["top of guru guru", "top guru guru staircase", True, True],
-        ["top guru guru staircase", "guru-guru trade", False, lambda state: any([
+        ["suburbs", "enter guru guru", True, None],
+        ["suburbs", "enter winter guru guru", False, lambda state: oos_season_in_eastern_suburbs(state, player, SEASON_WINTER)],
+        ["enter winter guru guru", "suburbs", False, None],
+        ["enter winter guru guru", "inside winter guru guru", True, True],
+        ["inside winter guru guru", "windmill heart piece", False, None],
+        ["windmill heart piece", "inside guru guru", False, None],
+        ["enter guru guru", "inside guru guru", True, True],
+        ["inside guru guru", "top guru guru staircase", True, None],
+        ["top guru guru staircase", "top of guru guru", True, True],
+        ["top of guru guru", "guru-guru trade", False, lambda state: any([
             state.has("Engine Grease", player),
             oos_self_locking_item(state, player, "guru-guru trade", "Engine Grease")
         ])],
 
-        ["suburbs", "eastern suburbs spring cave", False, lambda state: all([
+        ["suburbs", "enter suburb spring cave", False, lambda state: all([
             oos_has_bracelet(state, player),
-            oos_season_in_eastern_suburbs(state, player, SEASON_SPRING),
-            any([
-                oos_has_magnet_gloves(state, player),
-                oos_can_jump_3_wide_pit(state, player)
-            ])
+            oos_season_in_eastern_suburbs(state, player, SEASON_SPRING)
+        ])],
+        ["enter suburb spring cave", "suburbs", False, lambda state: oos_has_bracelet(state, player)],
+        ["enter suburb spring cave", "inside suburb spring cave", True, True],
+        ["inside suburb spring cave", "eastern suburbs spring cave", False, lambda state: any([
+            oos_has_magnet_gloves(state, player),
+            oos_can_jump_3_wide_pit(state, player)
         ])],
 
         ["eastern suburbs portal", "suburbs", False, lambda state: oos_can_break_bush(state, player, False)],
@@ -222,13 +246,27 @@ def make_holodrum_logic(player: int):
 
         ["central woods of winter", "woods of winter tree", False, lambda state: oos_can_harvest_tree(state, player, True)],
         ["central woods of winter", "d2 entrance", True, lambda state: oos_can_break_bush(state, player, True)],
-        ["central woods of winter", "cave outside D2", False, lambda state: all([
+
+        ["central woods of winter", "enter peek cave near d2", False, lambda state: any([
+            oos_can_jump_1_wide_liquid(state, player, False),
+            oos_can_swim(state, player, False),
+            oos_get_default_season(state, player, "WOODS_OF_WINTER") == SEASON_AUTUMN
+        ])],
+        ["enter peek cave near d2", "central woods of winter", False, lambda state: any([
+            oos_can_jump_1_wide_liquid(state, player, False),
+            oos_can_swim(state, player, False),
+            oos_season_in_central_woods_of_winter(state, player, SEASON_AUTUMN)
+        ])],
+        ["enter peek cave near d2", "inside peek cave near d2", True, True],
+
+        ["central woods of winter", "enter magnet cave near d2", False, lambda state: all([
             oos_season_in_central_woods_of_winter(state, player, SEASON_AUTUMN),
             oos_can_break_mushroom(state, player, True),
-            any([
-                oos_can_jump_4_wide_pit(state, player),
-                oos_has_magnet_gloves(state, player)
-            ])
+        ])],
+        ["enter magnet cave near d2", "inside magnet cave near d2", True, True],
+        ["inside magnet cave near d2", "cave outside D2", False, lambda state: any([
+            oos_can_jump_4_wide_pit(state, player),
+            oos_has_magnet_gloves(state, player)
         ])],
 
         ["central woods of winter", "d2 stump", True, None],
@@ -380,21 +418,27 @@ def make_holodrum_logic(player: int):
         # NORTH HORON / HOLODRUM PLAIN ###############################################################################
 
         ["north horon", "north horon tree", False, lambda state: oos_can_harvest_tree(state, player, True)],
+
         ["north horon", "enter Blaino", True, None],
         ["enter Blaino", "inside Blaino", True, True],
         ["inside Blaino", "blaino prize", False, lambda state: oos_can_farm_rupees(state, player)],
+
         ["north horon", "cave north of D1", False, lambda state: all([
             oos_season_in_holodrum_plain(state, player, SEASON_AUTUMN),
             oos_can_break_mushroom(state, player, True),
             oos_has_flippers(state, player)
         ])],
-        ["north horon", "old man near blaino", False, lambda state: all([
+
+        ["north horon", "enter old man near blaino", True, lambda state: all([
             any([
                 oos_season_in_holodrum_plain(state, player, SEASON_SUMMER),
                 oos_can_summon_ricky(state, player)
             ]),
             oos_can_use_ember_seeds(state, player, False)
         ])],
+        ["enter old man near blaino", "inside old man near blaino", True, True],
+        ["inside old man near blaino", "old man near blaino", False, None],
+
         ["north horon", "underwater item below natzu bridge", False, lambda state: oos_can_swim(state, player, False)],
 
         ["north horon", "temple remains lower stump", True, lambda state: oos_can_jump_3_wide_pit(state, player)],
@@ -449,7 +493,9 @@ def make_holodrum_logic(player: int):
 
         ["spool swamp north", "spool swamp tree", False, lambda state: oos_can_harvest_tree(state, player, True)],
 
-        ["spool swamp north", "floodgate keeper's house", False, lambda state: any([
+        ["spool swamp north", "enter floodgate house", True, None],
+        ["enter floodgate house", "inside floodgate house", True, True],
+        ["inside floodgate house", "floodgate keeper's house", False, lambda state: any([
             oos_can_trigger_lever(state, player),
             all([
                 oos_option_hard_logic(state, player),
@@ -462,7 +508,13 @@ def make_holodrum_logic(player: int):
             oos_has_shovel(state, player)
         ])],
 
-        ["floodgate keeper's house", "floodgate keyhole", False, lambda state: all([
+        ["spool swamp north", "enter floodgate left", False, lambda state: state.has("_flipped_floodgate_lever")],
+        ["enter floodgate left", "spool swamp north", False, lambda state: any([
+            state.has("_flipped_floodgate_lever"),
+            oos_can_swim(state, player, False)
+        ])],
+        ["enter floodgate left", "inside floodgate left", True, True],
+        ["inside floodgate left", "inside floodgate right", True, lambda state: all([
             any([
                 oos_can_use_pegasus_seeds(state, player),
                 oos_has_flippers(state, player),
@@ -470,6 +522,9 @@ def make_holodrum_logic(player: int):
             ]),
             oos_has_bracelet(state, player)
         ])],
+        ["inside floodgate right", "enter floodgate right", True, True],
+        ["enter floodgate right", "floodgate keyhole", False, None],
+        ["floodgate keyhole", "spool swamp north", False, lambda state: oos_can_swim(state, player, True)],
         ["floodgate keyhole", "spool stump", False, lambda state: state.has("Floodgate Key", player)],
 
         ["spool stump", "d3 entrance", False, lambda state: oos_season_in_spool_swamp(state, player, SEASON_SUMMER)],
@@ -808,6 +863,10 @@ def make_holodrum_logic(player: int):
         ["lost woods stump", "enter lost woods deku", False, None],
         ["enter lost woods deku", "inside lost woods deku", True, True],
         ["inside lost woods deku", "lost woods deku", False, lambda state: oos_has_shield(state, player)],
+
+        ["lost woods stump", "enter phonograph deku", False, lambda state: oos_can_use_ember_seeds(state, player, False)],
+        ["enter phonograph deku", "inside phonograph deku", True, True],
+        ["inside phonograph deku", "phonograph deku", False, lambda state: state.has("Phonograph", player)],
 
         ["lost woods stump", "lost woods", False, lambda state: oos_can_reach_lost_woods_pedestal(state, player)],
         ["lost woods stump", "d6 sector", False, lambda state: oos_can_complete_lost_woods_main_sequence(state, player)],

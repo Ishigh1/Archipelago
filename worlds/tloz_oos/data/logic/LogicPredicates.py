@@ -201,8 +201,7 @@ def oos_has_required_jewels(state: CollectionState, player: int):
 def oos_can_reach_lost_woods_pedestal(state: CollectionState, player: int):
     world = state.multiworld.worlds[player]
     return all([
-        oos_can_use_ember_seeds(state, player, False),
-        state.has("Phonograph", player),
+        state.has("_learned_pedestal_sequence", player),
         SEASON_WINTER not in world.lost_woods_item_sequence or oos_has_winter(state, player),
         SEASON_SPRING not in world.lost_woods_item_sequence or oos_has_spring(state, player),
         SEASON_SUMMER not in world.lost_woods_item_sequence or oos_has_summer(state, player),
