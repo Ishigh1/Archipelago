@@ -29,6 +29,7 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/essence_sanity.yaml")
     if get_settings()["tloz_oos_options"]["remove_music"]:
         asm_files.append("asm/conditional/mute_music.yaml")
+    asm_files.append("asm/conditional/instant_rosa.yaml")
     return asm_files
 
 
