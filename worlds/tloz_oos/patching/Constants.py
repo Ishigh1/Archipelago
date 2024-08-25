@@ -486,7 +486,7 @@ NORMAL_EXITS = {
     "enter bipin left": (0x13625, "inside bipin left"),
     "enter bipin right": (0x13629, "inside bipin right"),
     "enter advance shop": (0x13609, "inside advance shop"),
-    "enter dr left old man": (0x13631, "inside dr left old man"),
+    "enter dr left old man": (0x1362D, "inside dr left old man"),
 
     # Western Coast
     "enter old man near western coast house": (0x13641, "inside old man near western coast house"),
@@ -552,8 +552,8 @@ NORMAL_EXITS = {
     "inside know-it-all birds": (0x13809, "enter know-it-all birds"),
     "inside bipin left": (0x1382D, "enter bipin left"),
     "inside bipin right": (0x13831, "enter bipin right"),
-    "inside advance shop": (0x13899, "enter advance shop"),
-    "inside dr left old man": (0x13AAD, "enter dr left old man"),
+    "inside advance shop": (0x1389D, "enter advance shop"),
+    "inside dr left old man": (0x13C25, "enter dr left old man"),
 
     # Western Coast
     "inside old man near western coast house": (0x13C21, "enter old man near western coast house"),
@@ -580,7 +580,7 @@ NORMAL_EXITS = {
     # Spool Swamp
     "inside floodgate left": (0x13A79, "enter floodgate left"),
     "inside floodgate right": (0x139F1, "enter floodgate right"),
-    "inside floodgate house": (0x138B9, "enter floodgate house"),
+    "inside floodgate house": (0x138B5, "enter floodgate house"),
 
     # Sunken City
     "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),

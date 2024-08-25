@@ -508,13 +508,13 @@ def make_holodrum_logic(player: int):
             oos_has_shovel(state, player)
         ])],
 
-        ["spool swamp north", "enter floodgate left", False, lambda state: state.has("_flipped_floodgate_lever")],
-        ["enter floodgate left", "spool swamp north", False, lambda state: any([
-            state.has("_flipped_floodgate_lever"),
+        ["spool swamp north", "enter floodgate right", False, lambda state: state.has("_flipped_floodgate_lever", player)],
+        ["enter floodgate right", "spool swamp north", False, lambda state: any([
+            state.has("_flipped_floodgate_lever", player),
             oos_can_swim(state, player, False)
         ])],
-        ["enter floodgate left", "inside floodgate left", True, True],
-        ["inside floodgate left", "inside floodgate right", True, lambda state: all([
+        ["enter floodgate right", "inside floodgate right", True, True],
+        ["inside floodgate right", "inside floodgate left", False, lambda state: all([
             any([
                 oos_can_use_pegasus_seeds(state, player),
                 oos_has_flippers(state, player),
@@ -522,8 +522,15 @@ def make_holodrum_logic(player: int):
             ]),
             oos_has_bracelet(state, player)
         ])],
-        ["inside floodgate right", "enter floodgate right", True, True],
-        ["enter floodgate right", "floodgate keyhole", False, None],
+        ["inside floodgate left", "inside floodgate right", False, lambda state: all([
+            any([
+                oos_can_jump_3_wide_liquid(state, player),
+                oos_has_flippers(state, player),
+                oos_has_bracelet(state, player)
+            ]),
+        ])],
+        ["inside floodgate left", "enter floodgate left", True, True],
+        ["enter floodgate left", "floodgate keyhole", False, None],
         ["floodgate keyhole", "spool swamp north", False, lambda state: oos_can_swim(state, player, True)],
         ["floodgate keyhole", "spool stump", False, lambda state: state.has("Floodgate Key", player)],
 
