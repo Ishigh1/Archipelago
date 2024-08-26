@@ -718,3 +718,15 @@ def set_misc_warps(rom: RomData, patch_data):
         group = destination_values[1] & 0xF0
         trans_type = trans_values[from_name][1] & 0x0F  # This one needs to not change
         rom.write_byte(entrance_addr + 1, group | trans_type)
+
+        if from_name == "inside dance hall":
+            group >>= 4
+            warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
+            room = rom.read_byte(warp_dest_data_addr)
+            position = rom.read_byte(warp_dest_data_addr + 1)
+            rom.write_bytes(0x25DCA, [
+                group | 0x80,
+                room,
+                0x00,
+                position
+            ])

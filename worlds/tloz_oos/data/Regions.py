@@ -470,6 +470,15 @@ REGIONS = [
     "enter house above hide and seek",
     "enter temple of seasons",
     "enter winter temple",
+    "enter Rosa corridor left",
+    "enter Rosa corridor right",
+    "enter Summer tower",
+    "enter Autumn tower",
+    "enter Closed cave",
+    "enter Useless subrosian house",
+    "enter subrosian cook",
+    "enter volcano cave",
+    "enter dance hall",
 
     # Group 3, 4, 5 ################################################################
     # Horon Village
@@ -537,4 +546,13 @@ REGIONS = [
     "inside house above hide and seek",
     "inside temple of seasons",
     "inside winter temple",
+    "inside Rosa corridor left",
+    "inside Rosa corridor right",
+    "inside Summer tower",
+    "inside Autumn tower",
+    "inside Closed cave",
+    "inside Useless subrosian house",
+    "inside subrosian cook",
+    "inside volcano cave",
+    "inside dance hall",
 ]

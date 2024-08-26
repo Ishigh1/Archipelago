@@ -473,6 +473,17 @@ DUNGEON_EXITS = {
     "d8": 0x13a8d,
 }
 
+WARP_DEST_ADDR = [
+    0x12D5E,
+    0x12ED2,
+    0x12F47,
+    0x12FFB,
+    0x130DF,
+    0x131F6,
+    0x13406,
+    0x13436
+]
+
 # Format = name: (transition_address, opposite entrance name)
 NORMAL_EXITS = {
     # Group 0 / Overworld ################################################################
@@ -541,6 +552,15 @@ NORMAL_EXITS = {
     "enter house above hide and seek": (0x136F1, "inside house above hide and seek"),
     "enter temple of seasons": (0x136A1, "inside temple of seasons"),
     "enter winter temple": (0x136B1, "inside winter temple"),
+    "enter Rosa corridor left": (0x1373D, "inside Rosa corridor left"),
+    "enter Rosa corridor right": (0x13741, "inside Rosa corridor right"),
+    "enter Summer tower": (0x136A9, "inside Summer tower"),
+    "enter Autumn tower": (0x136AD, "inside Autumn tower"),
+    "enter Closed cave": (0x136CD, "inside Closed cave"),
+    "enter Useless subrosian house": (0x136E1, "inside Useless subrosian house"),
+    "enter subrosian cook": (0x136D9, "inside subrosian cook"),
+    "enter volcano cave": (0x13709, "inside volcano cave"),
+    "enter dance hall": (0x136DD, "inside dance hall"),
 
     # Group 3, 4, 5 / Caves ################################################################
     # Horon Village
@@ -603,12 +623,21 @@ NORMAL_EXITS = {
     "inside d8 fairy room": (0x13889, "enter d8 fairy room"),
 
     # Subrosia
-    "inside open cave": (0x13A1D, "enter open cave"),
     "inside boomerang cave": (0x13A19, "enter boomerang cave"),
     "inside subrosian market": (0x13865, "enter subrosian market"),
     "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
     "inside temple of seasons": (0x138E9, "enter temple of seasons"),
     "inside winter temple": (0x13C65, "enter winter temple"),
+    "inside Rosa corridor left": (0x13A49, "enter Rosa corridor left"),
+    "inside Rosa corridor right": (0x13A4D, "enter Rosa corridor right"),
+    "inside Summer tower": (0x13C5D, "enter Summer tower"),
+    "inside Autumn tower": (0x13C61, "enter Autumn tower"),
+    "inside open cave": (0x13A1D, "enter open cave"),
+    "inside Closed cave": (0x13BC1, "enter Closed cave"),
+    "inside Useless subrosian house": (0x1383D, "enter Useless subrosian house"),
+    "inside subrosian cook": (0x13825, "enter subrosian cook"),
+    "inside volcano cave": (0x13709, "enter volcano cave"),
+    "inside dance hall": (0x13839, "enter dance hall"),
 }
 
 PORTAL_WARPS = {

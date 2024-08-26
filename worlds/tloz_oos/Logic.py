@@ -1,5 +1,4 @@
 from BaseClasses import MultiWorld, EntranceType
-from entrance_rando import disconnect_entrance_for_randomization
 from worlds.tloz_oos import LOCATIONS_DATA
 from worlds.tloz_oos.data.logic.DungeonsLogic import *
 from worlds.tloz_oos.data.logic.OverworldLogic import make_holodrum_logic
@@ -11,11 +10,11 @@ def create_connections(multiworld: MultiWorld, player: int):
 
     dungeon_entrances = []
     for reg1, reg2 in oos_world.dungeon_entrances.items():
-        dungeon_entrances.append([reg1, reg2, True, None])
+        dungeon_entrances.append([reg1, reg2, OoSEntranceType.TwoWay, None])
 
     portal_connections = []
     for reg1, reg2 in oos_world.portal_connections.items():
-        portal_connections.append([reg1, reg2, True, None])
+        portal_connections.append([reg1, reg2, OoSEntranceType.TwoWay, None])
 
     all_logic = [
         make_holodrum_logic(player),
@@ -38,23 +37,23 @@ def create_connections(multiworld: MultiWorld, player: int):
         for entrance_desc in logic_array:
             region_1 = multiworld.get_region(entrance_desc[0], player)
             region_2 = multiworld.get_region(entrance_desc[1], player)
-            is_two_way = entrance_desc[2]
+            entrance_type = entrance_desc[2]
             rule = entrance_desc[3]
-            if rule is True:
-                if oos_world.options.randomize_entrances:
-                    entrance = region_1.connect(region_2, entrance_desc[0])
-                    oos_world.entrances_to_randomize.append(entrance)
-                    if is_two_way:
-                        entrance.randomization_type = EntranceType.TWO_WAY
+            if OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances:
+                entrance = region_1.connect(region_2, entrance_desc[0], rule)
+                oos_world.entrances_to_randomize.append(entrance)
 
-                        entrance = region_2.connect(region_1, entrance_desc[1])
-                        entrance.randomization_type = EntranceType.TWO_WAY
-                        oos_world.entrances_to_randomize.append(entrance)
-                    continue
-                else:
-                    rule = None
+                if OoSEntranceType.DoorTwoWayFlag in entrance_type:
+                    entrance.randomization_type = EntranceType.TWO_WAY
+
+                if OoSEntranceType.TwoWay in entrance_type:
+                    entrance = region_2.connect(region_1, entrance_desc[1], rule)
+                    entrance.randomization_type = EntranceType.TWO_WAY
+                    oos_world.entrances_to_randomize.append(entrance)
+
+                continue
             region_1.connect(region_2, None, rule)
-            if is_two_way:
+            if OoSEntranceType.TwoWay in entrance_type:
                 region_2.connect(region_1, None, rule)
 
 
