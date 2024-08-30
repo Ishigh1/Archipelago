@@ -100,7 +100,13 @@ def make_holodrum_logic(player: int):
             oos_can_kill_armored_enemy(state, player),
         ])],
 
+        ["horon village", "enter beach fairy cave", OoSEntranceType.TwoWay, None],
+        ["enter beach fairy cave", "inside beach fairy cave", OoSEntranceType.DoorTwoWay, None],
+
         ["horon village", "d0 entrance", OoSEntranceType.TwoWay, None],
+
+        ["western coast after ship", "enter pirate ship", OoSEntranceType.TwoWay, None],
+        ["enter pirate ship", "inside pirate ship", OoSEntranceType.DoorTwoWay, lambda state: state.has("Pirate's Bell", player)],
 
         ["western coast after ship", "coast stump", OoSEntranceType.OneWay, lambda state: all([
             oos_has_bombs(state, player),
@@ -110,8 +116,10 @@ def make_holodrum_logic(player: int):
             ])
         ])],
 
-        ["western coast after ship", "old man near western coast house", OoSEntranceType.OneWay, lambda state: \
+        ["western coast after ship", "enter old man near western coast house", OoSEntranceType.TwoWay, None],
+        ["enter old man near western coast house", "inside old man near western coast house", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
+        ["inside old man near western coast house", "old man near western coast house", OoSEntranceType.OneWay, None],
 
         ["western coast after ship", "graveyard (winter)", OoSEntranceType.OneWay, lambda state: all([
             oos_can_jump_3_wide_pit(state, player),
@@ -248,21 +256,20 @@ def make_holodrum_logic(player: int):
         ["central woods of winter", "woods of winter tree", OoSEntranceType.OneWay, lambda state: oos_can_harvest_tree(state, player, True)],
         ["central woods of winter", "d2 entrance", OoSEntranceType.TwoWay, lambda state: oos_can_break_bush(state, player, True)],
 
-        ["central woods of winter", "enter peek cave near d2", OoSEntranceType.OneWay, lambda state: any([
-            oos_can_jump_1_wide_liquid(state, player, False),
-            oos_can_swim(state, player, False),
-            oos_get_default_season(state, player, "WOODS_OF_WINTER") == SEASON_AUTUMN
-        ])],
-        ["enter peek cave near d2", "central woods of winter", OoSEntranceType.OneWay, lambda state: any([
+        ["central woods of winter", "enter peek cave near d2", OoSEntranceType.TwoWay, None],
+        ["enter peek cave near d2", "inside peek cave near d2", OoSEntranceType.DoorTwoWay, lambda state: any([
             oos_can_jump_1_wide_liquid(state, player, False),
             oos_can_swim(state, player, False),
             oos_season_in_central_woods_of_winter(state, player, SEASON_AUTUMN)
         ])],
-        ["enter peek cave near d2", "inside peek cave near d2", OoSEntranceType.DoorTwoWay, None],
 
         ["central woods of winter", "enter magnet cave near d2", OoSEntranceType.OneWay, lambda state: all([
             oos_season_in_central_woods_of_winter(state, player, SEASON_AUTUMN),
             oos_can_break_mushroom(state, player, True),
+        ])],
+        ["enter magnet cave near d2", "central woods of winter", OoSEntranceType.OneWay, lambda state: all([
+            oos_get_default_season(state, player, "WOODS_OF_WINTER") == SEASON_AUTUMN,
+            oos_can_break_mushroom(state, player, False),
         ])],
         ["enter magnet cave near d2", "inside magnet cave near d2", OoSEntranceType.DoorTwoWay, None],
         ["inside magnet cave near d2", "cave outside D2", OoSEntranceType.OneWay, lambda state: any([
@@ -513,8 +520,7 @@ def make_holodrum_logic(player: int):
             state.has("_flipped_floodgate_lever", player),
             oos_can_swim(state, player, False)
         ])],
-        ["enter floodgate right", "inside floodgate right", OoSEntranceType.DoorComplexTwoWay, lambda state: state.has("_flipped_floodgate_lever", player)],
-        ["inside floodgate right", "enter floodgate right", OoSEntranceType.DoorComplexTwoWay, None],
+        ["enter floodgate right", "inside floodgate right", OoSEntranceType.DoorTwoWay, lambda state: state.has("_flipped_floodgate_lever", player)],
         ["inside floodgate right", "inside floodgate left", OoSEntranceType.OneWay, lambda state: all([
             any([
                 oos_can_use_pegasus_seeds(state, player),
@@ -740,10 +746,12 @@ def make_holodrum_logic(player: int):
         ])],
         ["sunken city dimitri", "chest in master diver's cave", OoSEntranceType.OneWay, None],
 
-        ["sunken city", "enter sunken city, summer cave", OoSEntranceType.TwoWay, lambda state: all([
+        ["sunken city", "enter sunken city, summer cave", OoSEntranceType.OneWay, lambda state: all([
             oos_season_in_sunken_city(state, player, SEASON_SUMMER),
             oos_has_flippers(state, player),
         ])],
+        ["enter sunken city, summer cave", "sunken city", OoSEntranceType.OneWay, lambda state: \
+            oos_has_flippers(state, player)],
         ["enter sunken city, summer cave", "inside sunken city, summer cave", OoSEntranceType.DoorTwoWay, None],
         ["inside sunken city, summer cave", "sunken city, summer cave", OoSEntranceType.OneWay, lambda state: all([
             any([
@@ -758,8 +766,15 @@ def make_holodrum_logic(player: int):
             oos_has_flippers(state, player),
             oos_season_in_sunken_city(state, player, SEASON_SUMMER)
         ])],
-        ["sunken city gasha spot", "enter flooded house", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, False)],
-        ["enter flooded house", "sunken city", OoSEntranceType.OneWay, lambda state: oos_can_swim(state, player, False)],
+        ["sunken city gasha spot", "enter flooded house", OoSEntranceType.OneWay, lambda state: any([
+            oos_can_swim(state, player, False),
+            oos_can_jump_3_wide_liquid(state, player)  # TODO : test that
+        ])],
+        ["enter flooded house", "sunken city gasha spot", OoSEntranceType.OneWay, None],
+        ["sunken city gasha spot", "sunken city", OoSEntranceType.OneWay, lambda state: any([
+            oos_season_in_sunken_city(state, player, SEASON_WINTER),
+            oos_can_swim(state, player, True)
+        ])],
         ["enter flooded house", "inside flooded house", OoSEntranceType.DoorTwoWay, None],
         ["sunken city", "enter treasure hunter", OoSEntranceType.TwoWay, None],
         ["enter treasure hunter", "inside treasure hunter", OoSEntranceType.DoorTwoWay, None],
@@ -769,6 +784,10 @@ def make_holodrum_logic(player: int):
         # MT. CUCCO / GORON MOUNTAINS ##############################################################################
 
         ["mount cucco", "mt. cucco portal", OoSEntranceType.TwoWay, None],
+
+        ["mount cucco", "enter mountain fairy cave", OoSEntranceType.TwoWay, None],
+        ["enter mountain fairy cave", "inside mountain fairy cave", OoSEntranceType.DoorTwoWay, lambda state: \
+            oos_season_in_mt_cucco(state, player, SEASON_WINTER)],
 
         ["mount cucco", "rightmost rooster ledge", OoSEntranceType.OneWay, lambda state: all([
             any([  # to reach the rooster
@@ -830,11 +849,19 @@ def make_holodrum_logic(player: int):
         ["goron blocked cave entrance", "mount cucco", OoSEntranceType.OneWay, lambda state: \
             oos_can_remove_snow(state, player, False)],
 
-        ["goron blocked cave entrance", "goron mountain", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
+        ["goron blocked cave entrance", "enter goron mountain middle", OoSEntranceType.TwoWay, None],
+        ["enter goron mountain middle", "inside goron mountain middle", OoSEntranceType.DoorTwoWay, None],
+        ["inside goron mountain middle", "goron mountain", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
 
-        ["goron blocked cave entrance", "goron's gift", OoSEntranceType.OneWay, lambda state: oos_has_bombs(state, player)],
+        ["goron blocked cave entrance", "enter goron mountain bomb cave", OoSEntranceType.TwoWay, None],
+        ["enter goron mountain bomb cave", "inside goron mountain bomb cave", OoSEntranceType.DoorTwoWay, lambda state: oos_has_bombs(state, player)],
+        ["inside goron mountain bomb cave", "inside goron outside stairs", OoSEntranceType.TwoWay, None],
+        ["inside goron outside stairs", "enter goron outside stairs", OoSEntranceType.DoorTwoWay, None],
+        ["enter goron outside stairs", "goron's gift", OoSEntranceType.OneWay, None],
 
-        ["goron mountain", "biggoron trade", OoSEntranceType.OneWay, lambda state: all([
+        ["goron mountain", "inside goron mountain top", OoSEntranceType.TwoWay, None],
+        ["inside goron mountain top", "enter goron mountain top", OoSEntranceType.DoorTwoWay, None],
+        ["enter goron mountain top", "biggoron trade", OoSEntranceType.OneWay, lambda state: all([
             oos_can_jump_1_wide_liquid(state, player, False),
             any([
                 state.has("Lava Soup", player),
@@ -846,10 +873,14 @@ def make_holodrum_logic(player: int):
             oos_has_bombs(state, player),
             oos_can_jump_3_wide_liquid(state, player)
         ])],
-        ["goron mountain", "old man in goron mountain", OoSEntranceType.OneWay, lambda state: \
+        ["enter goron mountain middle", "enter goron old man", OoSEntranceType.TwoWay, None],
+        ["enter goron old man", "inside goron old man", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
+        ["inside goron old man", "old man in goron mountain", OoSEntranceType.OneWay, None],
 
-        ["goron mountain entrance", "goron mountain", OoSEntranceType.TwoWay, lambda state: any([
+        ["goron mountain entrance", "enter goron mountain bottom", OoSEntranceType.TwoWay, None],
+        ["enter goron mountain bottom", "inside goron mountain bottom", OoSEntranceType.DoorTwoWay, None],
+        ["inside goron mountain bottom", "goron mountain", OoSEntranceType.TwoWay, lambda state: any([
             oos_has_flippers(state, player),
             oos_can_jump_4_wide_liquid(state, player),
         ])],
@@ -912,6 +943,11 @@ def make_holodrum_logic(player: int):
         ["suburbs", "samasa desert", OoSEntranceType.OneWay, lambda state: state.has("_met_pirates", player)],
         ["samasa desert", "samasa desert pit", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],
         ["samasa desert", "samasa desert chest", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
+        ["samasa desert", "enter desert fairy cave", OoSEntranceType.TwoWay, lambda state: any([
+            oos_can_swim(state, player, False),
+            oos_can_jump_2_wide_pit(state, player)  # It's a liquid but the jump distance is 1.5
+        ])],
+        ["enter desert fairy cave", "inside desert fairy cave", OoSEntranceType.DoorTwoWay, lambda state: oos_has_bombs(state, player)],
 
         # TEMPLE REMAINS ####################################################################################
 

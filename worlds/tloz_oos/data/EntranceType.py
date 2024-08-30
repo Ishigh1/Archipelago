@@ -8,4 +8,4 @@ class OoSEntranceType(IntFlag):
     DoorTwoWayFlag = 0b100  # Flags that the entrance is two-way for ER purpose
     DoorOneWay = DoorTransition | OneWay
     DoorTwoWay = DoorTwoWayFlag | DoorTransition | TwoWay
-    DoorComplexTwoWay = DoorTwoWayFlag | DoorTransition | OneWay  # The entrance is both way but the logic is one-way
+    DoorComplexTwoWay = DoorTwoWayFlag | DoorTransition | OneWay  # The entrance is both way but the logic of each isn't None

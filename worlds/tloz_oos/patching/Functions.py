@@ -30,6 +30,7 @@ def get_asm_files(patch_data):
     if get_settings()["tloz_oos_options"]["remove_music"]:
         asm_files.append("asm/conditional/mute_music.yaml")
     asm_files.append("asm/conditional/instant_rosa.yaml")
+    asm_files.append("asm/conditional/reset_season_transition.yaml")
     return asm_files
 
 
@@ -719,9 +720,9 @@ def set_misc_warps(rom: RomData, patch_data):
         trans_type = trans_values[from_name][1] & 0x0F  # This one needs to not change
         rom.write_byte(entrance_addr + 1, group | trans_type)
 
+        group >>= 4
+        warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
         if from_name == "inside dance hall":
-            group >>= 4
-            warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
             room = rom.read_byte(warp_dest_data_addr)
             position = rom.read_byte(warp_dest_data_addr + 1)
             rom.write_bytes(0x25DCA, [
@@ -730,3 +731,17 @@ def set_misc_warps(rom: RomData, patch_data):
                 0x00,
                 position
             ])
+
+        if to_name in SOFTLOCK_WARPS:
+            warp_dest_data_pos_addr = warp_dest_data_addr + 1
+            rom.write_byte(warp_dest_data_pos_addr, rom.read_byte(warp_dest_data_pos_addr) + SOFTLOCK_WARPS[to_name])
+
+    for name in SEASON_WARP:
+        destination_data_name = NORMAL_EXITS[name][1]
+        destination_values = trans_values[destination_data_name]
+        group = destination_values[1] & 0xF0
+        group >>= 4
+        warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
+        warp_dest_data_flags_addr = warp_dest_data_addr + 2
+        assert (rom.read_byte(warp_dest_data_flags_addr) == 0x01)  # If this is false, then 0x02 doesn't handle it well
+        rom.write_byte(warp_dest_data_flags_addr, 0x02)

@@ -160,6 +160,7 @@ REGIONS = [
     "subrosia hide and seek sector",
     "house of pirates portal",
     "subrosia pirates sector",
+    "pirate captain",
     "great furnace portal",
     "subrosia furnace sector",
     "volcanoes west portal",
@@ -418,6 +419,8 @@ REGIONS = [
 
     # Western Coast
     "enter old man near western coast house",
+    "enter pirate ship",
+    "enter beach fairy cave",
 
     # Eyeglass Lake
     "enter lon lon",
@@ -428,8 +431,10 @@ REGIONS = [
     "top of guru guru",
     "enter suburb spring cave",
 
+    # Samasa Desert
+    "enter desert fairy cave",
+
     # Woods of Winter
-    # "enter woods of winter, 1st cave" # Bomb wall
     "enter peek cave near d2",
     "enter magnet cave near d2",
 
@@ -453,6 +458,17 @@ REGIONS = [
     "enter master diver house",
     "enter sunken city, summer cave",
 
+    # Cucco Mountain
+    "enter mountain fairy cave",
+
+    # Goron Mountain
+    "enter goron mountain bottom",
+    "enter goron mountain middle",
+    "enter goron mountain top",
+    "enter goron old man",
+    "enter goron mountain bomb cave",
+    "enter goron outside stairs",
+
     # Lost Woods
     "enter lost woods deku",
     "enter phonograph deku",
@@ -463,15 +479,13 @@ REGIONS = [
     # Temple Ruins
     "enter d8 fairy room",
 
-    # Group 1
+    # Subrosia
+    # Temple area
     "enter open cave",
     "enter boomerang cave",
-    "enter subrosian market",
-    "enter house above hide and seek",
     "enter temple of seasons",
     "enter winter temple",
     "enter Rosa corridor left",
-    "enter Rosa corridor right",
     "enter Summer tower",
     "enter Autumn tower",
     "enter Closed cave",
@@ -479,6 +493,20 @@ REGIONS = [
     "enter subrosian cook",
     "enter volcano cave",
     "enter dance hall",
+    "enter tower of spring",
+    "enter tower of spring staircase",
+
+    # Market area
+    "enter subrosian market",
+    "enter Rosa corridor right",
+
+    # Pirate area
+    "enter house above hide and seek",
+    "enter staircase to tower of spring",
+    "enter strange brothers left",
+    "enter strange brothers right",
+    "enter pirate house",
+    "enter pirate staircase",
 
     # Group 3, 4, 5 ################################################################
     # Horon Village
@@ -495,12 +523,17 @@ REGIONS = [
 
     # Western Coast
     "inside old man near western coast house",
+    "inside pirate ship",
+    "inside beach fairy cave",
 
     # Eastern Suburbs
     "top guru guru staircase",
     "inside guru guru",
     "inside winter guru guru",
     "inside suburb spring cave",
+
+    # Samasa Desert
+    "inside desert fairy cave",
 
     # Woods of Winter
     "inside peek cave near d2",
@@ -529,6 +562,17 @@ REGIONS = [
     "inside master diver",
     "inside sunken city, summer cave",
 
+    # Cucco Mountain
+    "inside mountain fairy cave",
+
+    # Goron Mountain
+    "inside goron mountain bottom",
+    "inside goron mountain middle",
+    "inside goron mountain top",
+    "inside goron old man",
+    "inside goron mountain bomb cave",
+    "inside goron outside stairs",
+
     # Lost Woods
     "inside lost woods deku",
     "inside phonograph deku",
@@ -540,14 +584,12 @@ REGIONS = [
     "inside d8 fairy room",
 
     # Subrosia
+    # Temple area
     "inside open cave",
     "inside boomerang cave",
-    "inside subrosian market",
-    "inside house above hide and seek",
     "inside temple of seasons",
     "inside winter temple",
     "inside Rosa corridor left",
-    "inside Rosa corridor right",
     "inside Summer tower",
     "inside Autumn tower",
     "inside Closed cave",
@@ -555,4 +597,18 @@ REGIONS = [
     "inside subrosian cook",
     "inside volcano cave",
     "inside dance hall",
+    "inside tower of spring",
+    "inside tower of spring staircase",
+
+    # Market area
+    "inside subrosian market",
+    "inside Rosa corridor right",
+
+    # Pirate area
+    "inside house above hide and seek",
+    "inside staircase to tower of spring",
+    "inside strange brothers left",
+    "inside strange brothers right",
+    "inside pirate house",
+    "inside pirate staircase",
 ]

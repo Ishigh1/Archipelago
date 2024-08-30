@@ -47,7 +47,7 @@ def create_connections(multiworld: MultiWorld, player: int):
                     entrance.randomization_type = EntranceType.TWO_WAY
 
                 if OoSEntranceType.TwoWay in entrance_type:
-                    entrance = region_2.connect(region_1, entrance_desc[1], rule)
+                    entrance = region_2.connect(region_1, entrance_desc[1], None)
                     entrance.randomization_type = EntranceType.TWO_WAY
                     oos_world.entrances_to_randomize.append(entrance)
 

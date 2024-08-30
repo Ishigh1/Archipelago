@@ -500,6 +500,8 @@ NORMAL_EXITS = {
     "enter dr left old man": (0x1362D, "inside dr left old man"),
 
     # Western Coast
+    "enter beach fairy cave": (0x1359D, "inside beach fairy cave"),
+    "enter pirate ship": (0x135A1, "inside pirate ship"),
     "enter old man near western coast house": (0x13641, "inside old man near western coast house"),
 
     # Eyeglass Lake
@@ -511,8 +513,10 @@ NORMAL_EXITS = {
     "enter winter guru guru": (0x13679, "inside winter guru guru"),
     "enter suburb spring cave": (0x13585, "inside suburb spring cave"),
 
+    # Samasa Desert
+    "enter desert fairy cave": (0x13619, "inside desert fairy cave"),
+
     # Woods of Winter
-    # "enter woods of winter, 1st cave": (0x1351D, "inside woods of winter, 1st cave"),
     "enter peek cave near d2": (0x13665, "inside peek cave near d2"),
     "enter magnet cave near d2": (0x13669, "inside magnet cave near d2"),
 
@@ -536,6 +540,17 @@ NORMAL_EXITS = {
     "enter master diver house": (0x134F1, "inside master diver house"),
     "enter sunken city, summer cave": (0x1352D, "inside sunken city, summer cave"),
 
+    # Cucco Mountain
+    "enter mountain fairy cave": (0x135FD, "inside mountain fairy cave"),
+
+    # Goron Mountain
+    "enter goron mountain bottom": (0x13561, "inside goron mountain bottom"),
+    "enter goron mountain middle": (0x135F5, "inside goron mountain middle"),
+    "enter goron mountain top": (0x13559, "inside goron mountain top"),
+    "enter goron old man": (0x135F9, "inside goron old man"),
+    "enter goron mountain bomb cave": (0x1356D, "inside goron mountain bomb cave"),
+    "enter goron outside stairs": (0x13699, "inside goron outside stairs"),
+
     # Lost Woods
     "enter lost woods deku": (0x134F5, "inside lost woods deku"),
 
@@ -546,21 +561,33 @@ NORMAL_EXITS = {
     "enter d8 fairy room": (0x134DD, "inside d8 fairy room"),
 
     # Group 1 / Subrosia ################################################################
+    # Temple area
     "enter open cave": (0x13711, "inside open cave"),
     "enter boomerang cave": (0x1370D, "inside boomerang cave"),
-    "enter subrosian market": (0x136ED, "inside subrosian market"),
-    "enter house above hide and seek": (0x136F1, "inside house above hide and seek"),
+    "enter Closed cave": (0x136CD, "inside Closed cave"),
     "enter temple of seasons": (0x136A1, "inside temple of seasons"),
     "enter winter temple": (0x136B1, "inside winter temple"),
-    "enter Rosa corridor left": (0x1373D, "inside Rosa corridor left"),
-    "enter Rosa corridor right": (0x13741, "inside Rosa corridor right"),
     "enter Summer tower": (0x136A9, "inside Summer tower"),
     "enter Autumn tower": (0x136AD, "inside Autumn tower"),
-    "enter Closed cave": (0x136CD, "inside Closed cave"),
-    "enter Useless subrosian house": (0x136E1, "inside Useless subrosian house"),
+    "enter Rosa corridor left": (0x1373D, "inside Rosa corridor left"),
     "enter subrosian cook": (0x136D9, "inside subrosian cook"),
+    "enter Useless subrosian house": (0x136E1, "inside Useless subrosian house"),
+    "enter tower of spring staircase": (0x13739, "inside tower of spring staircase"),
     "enter volcano cave": (0x13709, "inside volcano cave"),
+    "enter tower of spring": (0x13735, "inside tower of spring"),
     "enter dance hall": (0x136DD, "inside dance hall"),
+
+    # Market area
+    "enter Rosa corridor right": (0x13741, "inside Rosa corridor right"),
+    "enter subrosian market": (0x136ED, "inside subrosian market"),
+
+    # Pirate area
+    "enter staircase to tower of spring": (0x13705, "inside staircase to tower of spring"),
+    "enter house above hide and seek": (0x136F1, "inside house above hide and seek"),
+    "enter strange brothers left": (0x136FD, "inside strange brothers left"),
+    "enter strange brothers right": (0x13701, "inside strange brothers right"),
+    "enter pirate house": (0x13731, "inside pirate house"),
+    "enter pirate staircase": (0x1372D, "inside pirate staircase"),
 
     # Group 3, 4, 5 / Caves ################################################################
     # Horon Village
@@ -577,12 +604,17 @@ NORMAL_EXITS = {
 
     # Western Coast
     "inside old man near western coast house": (0x13C21, "enter old man near western coast house"),
+    "inside pirate ship": (0x13BFD, "enter pirate ship"),
+    "inside beach fairy cave": (0x13A59, "enter beach fairy cave"),
 
     # Eastern Suburbs
     "inside guru guru": (0x13B61, "enter guru guru"),
     "top guru guru staircase": (0x13CB1, "top of guru guru"),
     "inside winter guru guru": (0x13B6D, "enter winter guru guru"),
     "inside suburb spring cave": (0x13A41, "enter suburb spring cave"),
+
+    # Samasa Desert
+    "inside desert fairy cave": (0x13A39, "enter desert fairy cave"),
 
     # Woods of Winter
     "inside peek cave near d2": (0x13B75, "enter peek cave near d2"),
@@ -611,6 +643,17 @@ NORMAL_EXITS = {
     "inside bomb house": (0x13895, "enter bomb house"),
     "inside master diver": (0x138B9, "enter master diver"),
 
+    # Cucco Mountain
+    "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),
+
+    # Goron Mountain
+    "inside goron mountain bottom": (0x13BD1, "enter goron mountain bottom"),
+    "inside goron mountain middle": (0x13BCD, "enter goron mountain middle"),
+    "inside goron mountain top": (0x13BC9, "enter goron mountain top"),
+    "inside goron old man": (0x13C15, "enter goron old man"),
+    "inside goron mountain bomb cave": (0x13BED, "enter goron mountain bomb cave"),
+    "inside goron outside stairs": (0x13BF1, "enter goron outside stairs"),
+
     # Lost Woods
     "inside lost woods deku": (0x138C1, "enter lost woods deku"),
     "enter phonograph deku": (0x13589, "inside phonograph deku"),
@@ -623,21 +666,64 @@ NORMAL_EXITS = {
     "inside d8 fairy room": (0x13889, "enter d8 fairy room"),
 
     # Subrosia
+    # Temple area
     "inside boomerang cave": (0x13A19, "enter boomerang cave"),
-    "inside subrosian market": (0x13865, "enter subrosian market"),
-    "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
     "inside temple of seasons": (0x138E9, "enter temple of seasons"),
     "inside winter temple": (0x13C65, "enter winter temple"),
     "inside Rosa corridor left": (0x13A49, "enter Rosa corridor left"),
-    "inside Rosa corridor right": (0x13A4D, "enter Rosa corridor right"),
     "inside Summer tower": (0x13C5D, "enter Summer tower"),
     "inside Autumn tower": (0x13C61, "enter Autumn tower"),
     "inside open cave": (0x13A1D, "enter open cave"),
     "inside Closed cave": (0x13BC1, "enter Closed cave"),
     "inside Useless subrosian house": (0x1383D, "enter Useless subrosian house"),
     "inside subrosian cook": (0x13825, "enter subrosian cook"),
-    "inside volcano cave": (0x13709, "enter volcano cave"),
+    "inside volcano cave": (0x13A15, "enter volcano cave"),
     "inside dance hall": (0x13839, "enter dance hall"),
+    "inside tower of spring": (0x13C59, "enter tower of spring"),
+    "inside tower of spring staircase": (0x13DED, "enter tower of spring staircase"),
+
+    # Market area
+    "inside subrosian market": (0x13865, "enter subrosian market"),
+    "inside Rosa corridor right": (0x13A4D, "enter Rosa corridor right"),
+
+    # Pirate area
+    "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
+    "inside staircase to tower of spring": (0x13DE9, "enter staircase to tower of spring"),
+    "inside strange brothers left": (0x138A5, "enter strange brothers left"),
+    "inside strange brothers right": (0x138A9, "enter strange brothers right"),
+    "inside pirate house": (0x13819, "enter pirate house"),
+    "inside pirate staircase": (0x138FD, "enter pirate staircase"),
+}
+
+SOFTLOCK_WARPS = {
+    "enter dr left old man": -0x10,
+    "enter pirate ship": -0x20,
+    "enter old man near western coast house": 0x10,
+    "enter desert fairy cave": 0x10,
+    "enter peek cave near d2": 0x20,
+    "enter old man near blaino": 0x10,
+    "enter floodgate right": 0x20,
+    "enter flooded house": -0x02,
+    "enter goron old man": -0x10,
+    "enter goron mountain bomb cave": 0x10,
+    "enter tarm ruins, under tree": 0x01,
+    "enter Closed cave": 0x10,
+    "enter Summer tower": 0x10,
+    "enter Autumn tower": 0x30,
+    "enter Rosa corridor left": 0x10,
+    "enter Rosa corridor right": 0x10,
+    "inside Rosa corridor left": -0x60,
+}
+
+SEASON_WARP = {
+    "enter goron mountain bottom",
+    "enter goron mountain middle",
+    "enter goron mountain top",
+    "enter goron old man",
+    "enter goron mountain bomb cave",
+    "enter goron outside stairs",
+
+    "enter desert fairy cave",
 }
 
 PORTAL_WARPS = {
