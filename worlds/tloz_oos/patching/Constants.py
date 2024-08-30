@@ -553,6 +553,7 @@ NORMAL_EXITS = {
 
     # Lost Woods
     "enter lost woods deku": (0x134F5, "inside lost woods deku"),
+    "enter phonograph deku": (0x13589, "inside phonograph deku"),
 
     # Tarm Ruins
     "enter tarm ruins, under tree": (0x134BD, "inside tarm ruins, under tree"),
@@ -614,7 +615,7 @@ NORMAL_EXITS = {
     "inside suburb spring cave": (0x13A41, "enter suburb spring cave"),
 
     # Samasa Desert
-    "inside desert fairy cave": (0x13A39, "enter desert fairy cave"),
+    "inside desert fairy cave": (0x13A3D, "enter desert fairy cave"),
 
     # Woods of Winter
     "inside peek cave near d2": (0x13B75, "enter peek cave near d2"),
@@ -656,7 +657,6 @@ NORMAL_EXITS = {
 
     # Lost Woods
     "inside lost woods deku": (0x138C1, "enter lost woods deku"),
-    "enter phonograph deku": (0x13589, "inside phonograph deku"),
 
     # Tarm Ruins
     "inside tarm ruins, under tree": (0x13851, "enter tarm ruins, under tree"),

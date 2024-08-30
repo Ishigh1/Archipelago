@@ -736,12 +736,7 @@ def set_misc_warps(rom: RomData, patch_data):
             warp_dest_data_pos_addr = warp_dest_data_addr + 1
             rom.write_byte(warp_dest_data_pos_addr, rom.read_byte(warp_dest_data_pos_addr) + SOFTLOCK_WARPS[to_name])
 
-    for name in SEASON_WARP:
-        destination_data_name = NORMAL_EXITS[name][1]
-        destination_values = trans_values[destination_data_name]
-        group = destination_values[1] & 0xF0
-        group >>= 4
-        warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
-        warp_dest_data_flags_addr = warp_dest_data_addr + 2
-        assert (rom.read_byte(warp_dest_data_flags_addr) == 0x01)  # If this is false, then 0x02 doesn't handle it well
-        rom.write_byte(warp_dest_data_flags_addr, 0x02)
+        if to_name in SEASON_WARP:
+            warp_dest_data_flags_addr = warp_dest_data_addr + 2
+            assert (rom.read_byte(warp_dest_data_flags_addr) == 0x01)  # If this is false, then 0x02 doesn't handle it well
+            rom.write_byte(warp_dest_data_flags_addr, 0x02)
