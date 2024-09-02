@@ -165,7 +165,7 @@ class StardewValleyWorld(World):
             player_name = self.multiworld.player_name[self.player]
             logger.warning(
                 f"Walnutsanity requires Ginger Island. Ginger Island was excluded from {self.player} ({player_name})'s world, so walnutsanity was force disabled")
-        if self.options.tilesanity > Tilesanity.option_nope and not settings.get_settings().stardew_valley_options.allow_tilesanity:
+        if self.options.tilesanity > Tilesanity.option_nope and not self.settings.allow_tilesanity:
             player_name = self.multiworld.player_name[self.player]
             raise Exception(f"Tilesanity is not allowed by the host.yaml. The yaml of player {self.player} ({player_name}) contains tilesanity")
 
