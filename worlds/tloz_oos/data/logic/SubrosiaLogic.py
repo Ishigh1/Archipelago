@@ -14,8 +14,6 @@ def make_subrosia_logic(player: int):
         ["volcanoes west portal", "subrosia volcano sector", OoSEntranceType.TwoWay, None],
         ["d8 entrance portal", "d8 entrance", OoSEntranceType.TwoWay, None],
 
-        ["pirate captain", "western coast after ship", OoSEntranceType.OneWay, lambda state: state.has("Pirate's Bell", player)],
-
         # Regions ###############################################################
 
         ["subrosia temple sector", "subrosia market sector", OoSEntranceType.OneWay, lambda state: \

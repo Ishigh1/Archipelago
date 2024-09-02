@@ -208,7 +208,7 @@ LOCATIONS_DATA = {
         "collect": COLLECT_CHEST,
     },
     "Western Coast: Chest in House": {
-        "region_id": "western coast after ship",
+        "region_id": "enter coast house",
         "vanilla_item": "Bombs (10)",
         "flag_byte": 0xc888,
         "room": 0x0388,
@@ -317,7 +317,7 @@ LOCATIONS_DATA = {
         "map_tile": 0x49,
     },
     "Mt. Cucco: Chest Behind Talon": {
-        "region_id": "mt. cucco, talon's cave",
+        "region_id": "talon trade",
         "vanilla_item": "Subrosian Ring",
         "flag_byte": 0xcab6,
         "bit_mask": 0x60,  # 0x60 is needed here to ensure we're not sending Talon's wakeup item as a false positive

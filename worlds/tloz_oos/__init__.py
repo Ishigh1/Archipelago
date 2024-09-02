@@ -15,7 +15,7 @@ from .PatchWriter import oos_create_ap_procedure_patch
 from .data import LOCATIONS_DATA
 from .data.Constants import *
 from .data.Items import ITEMS_DATA
-from .data.Regions import REGIONS
+from .data.Regions import REGIONS, SeasonRegion
 
 from .Client import OracleOfSeasonsClient  # Unused, but required to register with BizHawkClient
 
@@ -335,9 +335,10 @@ class OracleOfSeasonsWorld(World):
 
     def create_regions(self):
         # Create regions
-        for region_name in REGIONS:
-            region = Region(region_name, self.player, self.multiworld)
-            self.multiworld.regions.append(region)
+        for super_region_name in REGIONS:
+            for region_name in REGIONS[super_region_name]:
+                region = SeasonRegion(region_name, self.player, self.multiworld, super_region_name)
+                self.multiworld.regions.append(region)
 
         # Create locations
         for location_name, location_data in LOCATIONS_DATA.items():
@@ -381,11 +382,15 @@ class OracleOfSeasonsWorld(World):
         self.create_event("subrosia market sector", "_reached_rosa")
         self.create_event("floodgate keeper's house", "_flipped_floodgate_lever")
         self.create_event("subrosian dance hall", "_reached_subrosian_dance_hall")
-        self.create_event("pirate captain", "_met_pirates")
+        self.create_event("floodgate keyhole", "_opened_floodgate")
+        self.create_event("dragon keyhole", "_opened_d4")
         self.create_event("tower of autumn", "_opened_tower_of_autumn")
         self.create_event("inside strange brothers right", "_met_strange_brothers")
+        self.create_event("lost woods statue", "_pushed_lost_woods_statue")
         self.create_event("lost woods deku", "_learned_main_sequence")
         self.create_event("phonograph deku", "_learned_pedestal_sequence")
+        self.create_event("tarm ruins top", "_pushed_tarm_statue")
+        self.create_event("pirate captain", "_met_pirates"),
         self.create_event("d2 moblin chest", "_reached_d2_bracelet_room")
         self.create_event("d5 drop ball", "_dropped_d5_magnet_ball")
         self.create_event("d8 SE crystal", "_dropped_d8_SE_crystal")
@@ -554,7 +559,8 @@ class OracleOfSeasonsWorld(World):
     def pre_fill(self) -> None:
         self.pre_fill_seeds()
         self.pre_fill_dungeon_items()
-        self.shuffle_entrances()
+        if self.options.randomize_entrances:
+            self.shuffle_entrances()
 
     def filter_confined_dungeon_items_from_pool(self):
         my_items = [item for item in self.multiworld.itempool if item.player == self.player]

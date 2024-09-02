@@ -498,11 +498,17 @@ NORMAL_EXITS = {
     "enter bipin right": (0x13629, "inside bipin right"),
     "enter advance shop": (0x13609, "inside advance shop"),
     "enter dr left old man": (0x1362D, "inside dr left old man"),
+    "enter dr left": (0x13631, "inside dr left"),
+    "enter dr left side": (0x13635, "inside dr left side"),
 
     # Western Coast
     "enter beach fairy cave": (0x1359D, "inside beach fairy cave"),
     "enter pirate ship": (0x135A1, "inside pirate ship"),
     "enter old man near western coast house": (0x13641, "inside old man near western coast house"),
+    "enter coast house": (0x13645, "inside coast house"),
+    "enter coast house side": (0x13649, "inside coast house side"),
+    "enter graveyard cave": (0x13575, "inside graveyard cave"),
+    "outside graveyard chimney": (None, "inside graveyard chimney"),
 
     # Eyeglass Lake
     "enter lon lon": (0x13495, "inside lon lon"),
@@ -519,10 +525,15 @@ NORMAL_EXITS = {
     # Woods of Winter
     "enter peek cave near d2": (0x13665, "inside peek cave near d2"),
     "enter magnet cave near d2": (0x13669, "inside magnet cave near d2"),
+    "enter first woods of winter cave": (0x1351D, "inside first woods of winter cave"),
+    "enter second woods of winter cave": (0x135DD, "inside second woods of winter cave"),
+    "enter holly house": (0x1363D, "inside holly house"),
+    "enter holly chimney": (0x13639, None),
 
     # Holodrum Plain
     "enter treehouse": (0x134B5, "inside treehouse"),
     "enter Mrs Ruul": (0x134E5, "inside Mrs Ruul"),
+    "enter ruul old man": (0x135BD, "inside ruul old man"),
     "enter Blaino": (0x134E9, "inside Blaino"),
     "enter old man near blaino": (0x135AD, "inside old man near blaino"),
 
@@ -542,6 +553,9 @@ NORMAL_EXITS = {
 
     # Cucco Mountain
     "enter mountain fairy cave": (0x135FD, "inside mountain fairy cave"),
+    "enter talon cave": (0x13531, "inside talon cave"),
+    "enter winter cave in cucco mountain": (0x13539, "inside winter cave in cucco mountain"),
+    "enter top of cucco mountain": (0x13535, "inside top of cucco mountain"),
 
     # Goron Mountain
     "enter goron mountain bottom": (0x13561, "inside goron mountain bottom"),
@@ -602,11 +616,17 @@ NORMAL_EXITS = {
     "inside bipin right": (0x13831, "enter bipin right"),
     "inside advance shop": (0x1389D, "enter advance shop"),
     "inside dr left old man": (0x13C25, "enter dr left old man"),
+    "inside dr left": (0x13875, "enter dr left"),
+    "inside dr left side": (0x13879, "enter dr left side"),
 
     # Western Coast
     "inside old man near western coast house": (0x13C21, "enter old man near western coast house"),
     "inside pirate ship": (0x13BFD, "enter pirate ship"),
     "inside beach fairy cave": (0x13A59, "enter beach fairy cave"),
+    "inside coast house": (0x13811, "enter coast house"),
+    "inside coast house side": (0x13815, "enter coast house side"),
+    "inside graveyard cave": (0x13A29, "enter graveyard cave"),
+    "inside graveyard chimney": (0x13A2D, None),
 
     # Eastern Suburbs
     "inside guru guru": (0x13B61, "enter guru guru"),
@@ -620,15 +640,20 @@ NORMAL_EXITS = {
     # Woods of Winter
     "inside peek cave near d2": (0x13B75, "enter peek cave near d2"),
     "inside magnet cave near d2": (0x13B79, "enter magnet cave near d2"),
+    "inside first woods of winter cave": (0x13B7D, "enter first woods of winter cave"),
+    "inside second woods of winter cave": (0x13C55, "enter second woods of winter cave"),
+    "inside holly house": (0x13871, "enter holly house"),
+    "inside holly chimney": (None, "enter holly chimney"),
 
     # Eyeglass Lake
     "inside lon lon": (0x137F9, "enter lon lon"),
 
     # Holodrum Plain
     "inside treehouse": (0x13835, "enter treehouse"),
-    "inside Mrs Ruul": (0x138AD, "enter Mrs Ruul"),
     "inside Blaino": (0x138B1, "enter Blaino"),
     "inside old man near blaino": (0x13C19, "enter old man near blaino"),
+    "inside Mrs Ruul": (0x138AD, "enter Mrs Ruul"),
+    "inside ruul old man": (0x13C31, "enter ruul old man"),
 
     # Spool Swamp
     "inside floodgate left": (0x13A79, "enter floodgate left"),
@@ -646,6 +671,9 @@ NORMAL_EXITS = {
 
     # Cucco Mountain
     "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),
+    "inside talon cave": (0x13B85, "enter talon cave"),
+    "inside winter cave in cucco mountain": (0x13B91, "enter winter cave in cucco mountain"),
+    "inside top of cucco mountain": (0x13D71, "enter top of cucco mountain"),
 
     # Goron Mountain
     "inside goron mountain bottom": (0x13BD1, "enter goron mountain bottom"),
@@ -697,16 +725,28 @@ NORMAL_EXITS = {
 
 SOFTLOCK_WARPS = {
     "enter dr left old man": -0x10,
+
     "enter pirate ship": -0x20,
     "enter old man near western coast house": 0x10,
+
     "enter desert fairy cave": 0x10,
+
     "enter peek cave near d2": 0x20,
+    "enter first woods of winter cave": 0x30,
+    "enter holly house": 0x10,
+
     "enter old man near blaino": 0x10,
+    "enter ruul old man": -0x01,
+
     "enter floodgate right": 0x20,
+
     "enter flooded house": -0x02,
+
     "enter goron old man": -0x10,
     "enter goron mountain bomb cave": 0x10,
+
     "enter tarm ruins, under tree": 0x01,
+
     "enter Closed cave": 0x10,
     "enter Summer tower": 0x10,
     "enter Autumn tower": 0x30,

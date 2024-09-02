@@ -52,9 +52,9 @@ def create_connections(multiworld: MultiWorld, player: int):
                     oos_world.entrances_to_randomize.append(entrance)
 
                 continue
-            region_1.connect(region_2, None, rule)
+            region_1.connect(region_2, rule=rule)
             if OoSEntranceType.TwoWay in entrance_type:
-                region_2.connect(region_1, None, rule)
+                region_2.connect(region_1, rule=rule)
 
 
 def apply_self_locking_rules(multiworld: MultiWorld, player: int):

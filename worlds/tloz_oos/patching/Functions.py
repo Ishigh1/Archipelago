@@ -707,7 +707,7 @@ def define_dungeon_items_text_constants(assembler: Z80Assembler, patch_data):
 
 def set_misc_warps(rom: RomData, patch_data):
     warp_matchings = patch_data["misc_entrances"]
-    trans_values = {name: rom.read_bytes(info[0], 2) for name, info in NORMAL_EXITS.items()}
+    trans_values = {name: rom.read_bytes(info[0], 2) for name, info in NORMAL_EXITS.items() if info[0] is not None}
 
     # Apply warp matchings expressed in the patch
     for from_name, to_name in warp_matchings:
