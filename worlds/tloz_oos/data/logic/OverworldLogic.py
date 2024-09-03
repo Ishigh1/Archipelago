@@ -707,6 +707,10 @@ def make_holodrum_logic(player: int):
 
         ["sunken city dimitri", "sunken city entrance", OoSEntranceType.OneWay, None],
 
+        # This allows to reset the season
+        ["sunken city", "warp to sunken city", OoSEntranceType.OneWay, lambda state: oos_can_warp_using_gale_seeds(state, player)],
+        ["warp to sunken city", "sunken city", OoSEntranceType.OneWay, None],
+
         ["sunken city", "sunken city tree", OoSEntranceType.OneWay, lambda state: \
             oos_can_harvest_tree(state, player, True)],
 
@@ -946,6 +950,9 @@ def make_holodrum_logic(player: int):
             season == SEASON_AUTUMN,
             oos_can_break_mushroom(state, player, False),
         ])],
+        ["enter tarm ruins, under tree", "warp to d6 sector", OoSEntranceType.OneWay, lambda state: \
+            oos_can_warp_using_gale_seeds(state, player)],
+        ["warp to d6 sector", "d6 sector", OoSEntranceType.OneWay, None],
         ["enter tarm ruins, under tree", "inside tarm ruins, under tree", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
         ["inside tarm ruins, under tree", "tarm ruins, under tree", OoSEntranceType.OneWay, None],

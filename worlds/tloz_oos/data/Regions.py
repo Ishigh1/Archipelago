@@ -472,8 +472,7 @@ REGIONS = {
         "inside pirate house",
         "inside pirate staircase",
     ],
-    "DUNGEONS": [
-        # These behave the same as dungeons (no season and switch overworld seasons)
+    "SPECIAL": [  # Seasons don't exist here
         "Menu",
         "maku tree",
         "maku tree, 3 essences",
@@ -484,6 +483,8 @@ REGIONS = {
         "ganon beaten",
         "onox gasha spot",
         "lost woods",
+        "warp to sunken city",
+        "warp to d6 sector",
 
         "gasha tree 1",
         "gasha tree 2",
@@ -501,7 +502,8 @@ REGIONS = {
         "gasha tree 14",
         "gasha tree 15",
         "gasha tree 16",
-
+    ],
+    "DUNGEONS": [
         "enter d0",
         "d0 key chest",
         "d0 rupee chest",

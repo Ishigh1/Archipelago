@@ -527,8 +527,8 @@ NORMAL_EXITS = {
     "enter magnet cave near d2": (0x13669, "inside magnet cave near d2"),
     "enter first woods of winter cave": (0x1351D, "inside first woods of winter cave"),
     "enter second woods of winter cave": (0x135DD, "inside second woods of winter cave"),
-    "enter holly house": (0x1363D, "inside holly house"),
-    "enter holly chimney": (0x13639, None),
+    "enter holly house": (0x13639, "inside holly house"),
+    "enter holly chimney": (0x1363D, None),
 
     # Holodrum Plain
     "enter treehouse": (0x134B5, "inside treehouse"),
