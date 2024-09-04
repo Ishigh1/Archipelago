@@ -463,11 +463,14 @@ class OracleOfSeasonsRemoveItemsFromPool(ItemDict):
     verify_item_name = False
 
 
-class OracleOfSeasonsRandomizeEntrances(Toggle):
+class OracleOfSeasonsRandomizeEntrances(Choice):
     """
     If enabled, the entrances are randomized.
     """
     display_name = "Randomize Entrances"
+    option_disabled = 0
+    option_enabled = 1
+    option_decoupled = 2
 
 
 @dataclass

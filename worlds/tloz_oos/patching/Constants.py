@@ -500,6 +500,7 @@ NORMAL_EXITS = {
     "enter dr left old man": (0x1362D, "inside dr left old man"),
     "enter dr left": (0x13631, "inside dr left"),
     "enter dr left side": (0x13635, "inside dr left side"),
+    "enter hidden stairs behind clock shop": (0x135E9, "inside hidden stairs behind clock shop"),
 
     # Western Coast
     "enter beach fairy cave": (0x1359D, "inside beach fairy cave"),
@@ -509,15 +510,21 @@ NORMAL_EXITS = {
     "enter coast house side": (0x13649, "inside coast house side"),
     "enter graveyard cave": (0x13575, "inside graveyard cave"),
     "outside graveyard chimney": (None, "inside graveyard chimney"),
+    "enter hidden graveyard stairs": (0x135D9, "inside hidden graveyard stairs"),
 
     # Eyeglass Lake
     "enter lon lon": (0x13495, "inside lon lon"),
+    "enter d1 old man": (0x135B1, "inside d1 old man"),
+    "enter red ring old man": (0x135D5, "inside red ring old man"),
+    "enter lake bomb cave": (0x13591, "inside lake bomb cave"),
+    "enter lake boulder": (0x13545, "inside lake boulder"),
 
     # Easter Suburbs
     "enter guru guru": (0x13675, "inside guru guru"),
     "top of guru guru": (0x13525, "top guru guru staircase"),
     "enter winter guru guru": (0x13679, "inside winter guru guru"),
     "enter suburb spring cave": (0x13585, "inside suburb spring cave"),
+    "enter suburbs old man": (0x135B9, "inside suburbs old man"),
 
     # Samasa Desert
     "enter desert fairy cave": (0x13619, "inside desert fairy cave"),
@@ -536,11 +543,17 @@ NORMAL_EXITS = {
     "enter ruul old man": (0x135BD, "inside ruul old man"),
     "enter Blaino": (0x134E9, "inside Blaino"),
     "enter old man near blaino": (0x135AD, "inside old man near blaino"),
+    "enter ruul water cave": (0x13595, "inside ruul water cave"),
+    "enter autumn water cave": (0x13599, "inside autumn water cave"),
 
     # Spool Swamp
     "enter floodgate left": (0x1366D, "inside floodgate left"),
     "enter floodgate right": (0x1361D, "inside floodgate right"),
     "enter floodgate house": (0x13621, "inside floodgate house"),
+    "enter swamp bomb cave": (0x1358D, "inside swamp bomb cave"),
+
+    # Natzu
+    "enter natzu north stairs": (0x135D1, "inside natzu north stairs"),
 
     # Sunken City
     "enter ingo": (0x134B9, "inside ingo"),
@@ -618,6 +631,7 @@ NORMAL_EXITS = {
     "inside dr left old man": (0x13C25, "enter dr left old man"),
     "inside dr left": (0x13875, "enter dr left"),
     "inside dr left side": (0x13879, "enter dr left side"),
+    "inside hidden stairs behind clock shop": (0x13C49, "enter hidden stairs behind clock shop"),
 
     # Western Coast
     "inside old man near western coast house": (0x13C21, "enter old man near western coast house"),
@@ -627,12 +641,14 @@ NORMAL_EXITS = {
     "inside coast house side": (0x13815, "enter coast house side"),
     "inside graveyard cave": (0x13A29, "enter graveyard cave"),
     "inside graveyard chimney": (0x13A2D, None),
+    "inside hidden graveyard stairs": (0x138D5, "enter hidden graveyard stairs"),
 
     # Eastern Suburbs
     "inside guru guru": (0x13B61, "enter guru guru"),
     "top guru guru staircase": (0x13CB1, "top of guru guru"),
     "inside winter guru guru": (0x13B6D, "enter winter guru guru"),
     "inside suburb spring cave": (0x13A41, "enter suburb spring cave"),
+    "inside suburbs old man": (0x13C2D, "enter suburbs old man"),
 
     # Samasa Desert
     "inside desert fairy cave": (0x13A3D, "enter desert fairy cave"),
@@ -647,6 +663,10 @@ NORMAL_EXITS = {
 
     # Eyeglass Lake
     "inside lon lon": (0x137F9, "enter lon lon"),
+    "inside d1 old man": (0x13C1D, "enter d1 old man"),
+    "inside red ring old man": (0x13C51, "enter red ring old man"),
+    "inside lake bomb cave": (0x13A55, "enter lake bomb cave"),
+    "inside lake boulder": (0x13D79, "enter lake boulder"),
 
     # Holodrum Plain
     "inside treehouse": (0x13835, "enter treehouse"),
@@ -654,11 +674,17 @@ NORMAL_EXITS = {
     "inside old man near blaino": (0x13C19, "enter old man near blaino"),
     "inside Mrs Ruul": (0x138AD, "enter Mrs Ruul"),
     "inside ruul old man": (0x13C31, "enter ruul old man"),
+    "inside ruul water cave": (0x139DD, "enter ruul water cave"),
+    "inside autumn water cave": (0x139E1, "enter autumn water cave"),
 
     # Spool Swamp
     "inside floodgate left": (0x13A79, "enter floodgate left"),
     "inside floodgate right": (0x139F1, "enter floodgate right"),
     "inside floodgate house": (0x138B5, "enter floodgate house"),
+    "inside swamp bomb cave": (0x13A51, "enter swamp bomb cave"),
+
+    # Natzu
+    "inside natzu north stairs": (0x13C45, "enter natzu north stairs"),
 
     # Sunken City
     "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
@@ -724,6 +750,11 @@ NORMAL_EXITS = {
 }
 
 SOFTLOCK_WARPS = {
+    "enter d1 old man": 0x11,
+    "enter red ring old man": -0x14,
+    "enter lake bomb cave": 0x10,
+    "enter lake boulder": -0x06,
+
     "enter dr left old man": -0x10,
 
     "enter pirate ship": -0x20,
@@ -731,14 +762,19 @@ SOFTLOCK_WARPS = {
 
     "enter desert fairy cave": 0x10,
 
+    "enter suburbs old man": 0x10,
+
     "enter peek cave near d2": 0x20,
     "enter first woods of winter cave": 0x30,
     "enter holly house": 0x10,
 
     "enter old man near blaino": 0x10,
     "enter ruul old man": -0x01,
+    "inside autumn water cave": -0x50,
+    "inside ruul water cave": -0x58,
 
     "enter floodgate right": 0x20,
+    "enter swamp bomb cave": 0x10,
 
     "enter flooded house": -0x02,
 
@@ -746,6 +782,8 @@ SOFTLOCK_WARPS = {
     "enter goron mountain bomb cave": 0x10,
 
     "enter tarm ruins, under tree": 0x01,
+
+    "enter phonograph deku": -0x10,
 
     "enter Closed cave": 0x10,
     "enter Summer tower": 0x10,

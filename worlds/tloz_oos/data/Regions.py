@@ -18,6 +18,10 @@ REGIONS = {
         "eyeglass lake gasha spot",
 
         "enter lon lon",
+        "enter d1 old man",
+        "enter red ring old man",
+        "enter lake bomb cave",
+        "enter lake boulder",
     ],
     "HOLODRUM_PLAIN": [
         "ghastly stump",
@@ -26,12 +30,15 @@ REGIONS = {
         "north horon tree",
         "holodrum plain gasha spot",
         "holodrum plain island gasha spot",
+        "holodrum plain waters",
 
         "enter treehouse",
         "enter Mrs Ruul",
         "enter ruul old man",
         "enter Blaino",
         "enter old man near blaino",
+        "enter ruul water cave",
+        "enter autumn water cave",
     ],
     "EASTERN_SUBURBS": [
         "suburbs",
@@ -46,6 +53,7 @@ REGIONS = {
         "enter winter guru guru",
         "top of guru guru",
         "enter suburb spring cave",
+        "enter suburbs old man",
     ],
     "WOODS_OF_WINTER": [
         "moblin road",
@@ -113,6 +121,7 @@ REGIONS = {
         "enter coast house side",
         "enter graveyard cave",
         "outside graveyard chimney",
+        "enter hidden graveyard stairs",
     ],
     "SPOOL_SWAMP": [
         "spool swamp north",
@@ -130,10 +139,12 @@ REGIONS = {
         "golden octorok",
         "spool swamp north gasha spot",
         "spool swamp south gasha spot",
+        "open swamp bomb cave",
 
         "enter floodgate left",
         "enter floodgate right",
         "enter floodgate house",
+        "enter swamp bomb cave",
     ],
     "TEMPLE_REMAINS": [
         "temple remains lower stump",
@@ -184,6 +195,7 @@ REGIONS = {
         "enter dr left old man",
         "enter dr left",
         "enter dr left side",
+        "enter hidden stairs behind clock shop",
     ],
     "NATZU": [
         "natzu west",
@@ -197,6 +209,8 @@ REGIONS = {
         "moblin keep bridge",
         "moblin keep",
         "natzu region, across water",
+
+        "enter natzu north stairs",
     ],
     "SAMASA_DESERT": [
         "samasa desert",
@@ -368,6 +382,7 @@ REGIONS = {
         "inside dr left old man",
         "inside dr left",
         "inside dr left side",
+        "inside hidden stairs behind clock shop",
 
         # Western Coast
         "inside old man near western coast house",
@@ -377,12 +392,14 @@ REGIONS = {
         "inside coast house side",
         "inside graveyard cave",
         "inside graveyard chimney",
+        "inside hidden graveyard stairs",
 
         # Eastern Suburbs
         "top guru guru staircase",
         "inside guru guru",
         "inside winter guru guru",
         "inside suburb spring cave",
+        "inside suburbs old man",
 
         # Samasa Desert
         "inside desert fairy cave",
@@ -397,6 +414,10 @@ REGIONS = {
 
         # Eyeglass Lake
         "inside lon lon",
+        "inside d1 old man",
+        "inside red ring old man",
+        "inside lake bomb cave",
+        "inside lake boulder",
 
         # Holodrum Plain
         "inside treehouse",
@@ -404,11 +425,17 @@ REGIONS = {
         "inside Blaino",
         "inside old man near blaino",
         "inside ruul old man",
+        "inside ruul water cave",
+        "inside autumn water cave",
 
         # Spool Swamp
         "inside floodgate left",
         "inside floodgate right",
         "inside floodgate house",
+        "inside swamp bomb cave",
+
+        # Natzu
+        "inside natzu north stairs",
 
         # Sunken City
         "inside ingo",
@@ -673,7 +700,7 @@ STUMP_REGIONS = {
     "suburbs",
     "suburbs fairy fountain",
     "moblin road",
-    # eastest suburb stump
+    "enter suburbs old man",
     "d2 stump",
     "ghastly stump",
     "spool stump",

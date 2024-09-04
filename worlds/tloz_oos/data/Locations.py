@@ -208,7 +208,7 @@ LOCATIONS_DATA = {
         "collect": COLLECT_CHEST,
     },
     "Western Coast: Chest in House": {
-        "region_id": "enter coast house",
+        "region_id": "inside coast house",
         "vanilla_item": "Bombs (10)",
         "flag_byte": 0xc888,
         "room": 0x0388,

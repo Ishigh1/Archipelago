@@ -218,7 +218,11 @@ class OracleOfSeasonsWorld(World):
             return
         for entrance in self.entrances_to_randomize:
             disconnect_entrance_for_randomization(entrance)
-        randomized_entrances = randomize_entrances(self, True, {0: [0]})
+        if self.options.randomize_entrances == OracleOfSeasonsRandomizeEntrances.option_enabled:
+            coupled = True
+        else:
+            coupled = False
+        randomized_entrances = randomize_entrances(self, coupled, {0: [0]})
         self.randomized_entrances = randomized_entrances.pairings
 
     def shuffle_portals(self):
@@ -383,6 +387,7 @@ class OracleOfSeasonsWorld(World):
         self.create_event("floodgate keeper's house", "_flipped_floodgate_lever")
         self.create_event("subrosian dance hall", "_reached_subrosian_dance_hall")
         self.create_event("floodgate keyhole", "_opened_floodgate")
+        self.create_event("open swamp bomb cave", "_opened_swamp_bomb_cave")
         self.create_event("dragon keyhole", "_opened_d4")
         self.create_event("tower of autumn", "_opened_tower_of_autumn")
         self.create_event("inside strange brothers right", "_met_strange_brothers")
@@ -559,8 +564,7 @@ class OracleOfSeasonsWorld(World):
     def pre_fill(self) -> None:
         self.pre_fill_seeds()
         self.pre_fill_dungeon_items()
-        if self.options.randomize_entrances:
-            self.shuffle_entrances()
+        self.shuffle_entrances()
 
     def filter_confined_dungeon_items_from_pool(self):
         my_items = [item for item in self.multiworld.itempool if item.player == self.player]
