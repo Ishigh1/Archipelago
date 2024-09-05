@@ -528,6 +528,8 @@ NORMAL_EXITS = {
 
     # Samasa Desert
     "enter desert fairy cave": (0x13619, "inside desert fairy cave"),
+    "enter desert cave": (0x135A9, "inside desert cave"),
+    "enter stairs near desert chest": (0x1357D, "inside stairs near desert chest"),
 
     # Woods of Winter
     "enter peek cave near d2": (0x13665, "inside peek cave near d2"),
@@ -569,6 +571,9 @@ NORMAL_EXITS = {
     "enter talon cave": (0x13531, "inside talon cave"),
     "enter winter cave in cucco mountain": (0x13539, "inside winter cave in cucco mountain"),
     "enter top of cucco mountain": (0x13535, "inside top of cucco mountain"),
+    "enter banana stairs": (0x13685, "inside banana stairs"),
+    "enter banana cave": (0x13689, "inside banana cave"),
+    "enter fast platform cave": (0x13541, "inside fast platform cave"),
 
     # Goron Mountain
     "enter goron mountain bottom": (0x13561, "inside goron mountain bottom"),
@@ -577,16 +582,27 @@ NORMAL_EXITS = {
     "enter goron old man": (0x135F9, "inside goron old man"),
     "enter goron mountain bomb cave": (0x1356D, "inside goron mountain bomb cave"),
     "enter goron outside stairs": (0x13699, "inside goron outside stairs"),
+    "enter left cave to lynel in goron mountain": (0x1368D, "inside left cave to lynel in goron mountain"),
+    "enter right cave to lynel in goron mountain": (0x13691, "inside right cave to lynel in goron mountain"),
+    "enter lynel stairs in goron mountain": (0x13565, "inside lynel stairs in goron mountain"),
+    "enter goron ring cave": (0x13695, "inside goron ring cave"),
 
     # Lost Woods
     "enter lost woods deku": (0x134F5, "inside lost woods deku"),
     "enter phonograph deku": (0x13589, "inside phonograph deku"),
+    "enter lost woods bomb cave": (0x13571, "inside lost woods bomb cave"),
 
     # Tarm Ruins
     "enter tarm ruins, under tree": (0x134BD, "inside tarm ruins, under tree"),
+    "enter tarm old man": (0x135B5, "inside tarm old man"),
 
     # Temple Ruins
     "enter d8 fairy room": (0x134DD, "inside d8 fairy room"),
+    "enter temple remains cave": (0x13549, "inside temple remains cave"),
+    "enter right stairs in top of temple remains": (0x13551, "inside right stairs in top of temple remains"),
+    "enter middle stairs in top of temple remains": (0x13681, "inside middle stairs in top of temple remains"),
+    "enter left stairs in top of temple remains": (0x1367D, "inside left stairs in top of temple remains"),
+    "enter temple remains bomb cave": (0x13555, "inside temple remains bomb cave"),
 
     # Group 1 / Subrosia ################################################################
     # Temple area
@@ -604,10 +620,17 @@ NORMAL_EXITS = {
     "enter volcano cave": (0x13709, "inside volcano cave"),
     "enter tower of spring": (0x13735, "inside tower of spring"),
     "enter dance hall": (0x136DD, "inside dance hall"),
+    "enter smithy": (0x136E5, "inside smithy"),
 
     # Market area
     "enter Rosa corridor right": (0x13741, "inside Rosa corridor right"),
     "enter subrosian market": (0x136ED, "inside subrosian market"),
+
+    # Furnace area
+    "enter red ore cave": (0x13715, "inside red ore cave"),
+    "enter red ore stairs": (0x13711, "inside red ore stairs"),
+    "enter furnace": (0x136E9, "inside furnace"),
+    "enter sign guy": (0x136F9, "inside sign guy"),
 
     # Pirate area
     "enter staircase to tower of spring": (0x13705, "inside staircase to tower of spring"),
@@ -652,6 +675,8 @@ NORMAL_EXITS = {
 
     # Samasa Desert
     "inside desert fairy cave": (0x13A3D, "enter desert fairy cave"),
+    "inside desert cave": (0x13C11, "enter desert cave"),
+    "inside stairs near desert chest": (0x13A35, "enter stairs near desert chest"),
 
     # Woods of Winter
     "inside peek cave near d2": (0x13B75, "enter peek cave near d2"),
@@ -700,6 +725,9 @@ NORMAL_EXITS = {
     "inside talon cave": (0x13B85, "enter talon cave"),
     "inside winter cave in cucco mountain": (0x13B91, "enter winter cave in cucco mountain"),
     "inside top of cucco mountain": (0x13D71, "enter top of cucco mountain"),
+    "inside banana stairs": (0x13B95, "enter banana stairs"),
+    "inside banana cave": (0x13B99, "enter banana cave"),
+    "inside fast platform cave": (0x13B9D, "enter fast platform cave"),
 
     # Goron Mountain
     "inside goron mountain bottom": (0x13BD1, "enter goron mountain bottom"),
@@ -708,16 +736,27 @@ NORMAL_EXITS = {
     "inside goron old man": (0x13C15, "enter goron old man"),
     "inside goron mountain bomb cave": (0x13BED, "enter goron mountain bomb cave"),
     "inside goron outside stairs": (0x13BF1, "enter goron outside stairs"),
+    "inside left cave to lynel in goron mountain": (0x13BE1, "enter left cave to lynel in goron mountain"),
+    "inside right cave to lynel in goron mountain": (0x13BE5, "enter right cave to lynel in goron mountain"),
+    "inside lynel stairs in goron mountain": (0x13BE9, "enter lynel stairs in goron mountain"),
+    "inside goron ring cave": (0x13BF5, "enter goron ring cave"),
 
     # Lost Woods
     "inside lost woods deku": (0x138C1, "enter lost woods deku"),
+    "inside lost woods bomb cave": (0x13A0D, "enter lost woods bomb cave"),
+    "inside phonograph deku": (0x13A45, "enter phonograph deku"),
 
     # Tarm Ruins
     "inside tarm ruins, under tree": (0x13851, "enter tarm ruins, under tree"),
-    "inside phonograph deku": (0x13A45, "enter phonograph deku"),
+    "inside tarm old man": (0x13C29, "enter tarm old man"),
 
     # Temple Ruins
     "inside d8 fairy room": (0x13889, "enter d8 fairy room"),
+    "inside temple remains cave": (0x13BAD, "enter temple remains cave"),
+    "inside right stairs in top of temple remains": (0x13D85, "enter right stairs in top of temple remains"),
+    "inside middle stairs in top of temple remains": (0x13BB9, "enter middle stairs in top of temple remains"),
+    "inside left stairs in top of temple remains": (0x13BBD, "enter left stairs in top of temple remains"),
+    "inside temple remains bomb cave": (0x13BC5, "enter temple remains bomb cave"),
 
     # Subrosia
     # Temple area
@@ -735,10 +774,17 @@ NORMAL_EXITS = {
     "inside dance hall": (0x13839, "enter dance hall"),
     "inside tower of spring": (0x13C59, "enter tower of spring"),
     "inside tower of spring staircase": (0x13DED, "enter tower of spring staircase"),
+    "inside smithy": (0x13841, "enter smithy"),
 
     # Market area
     "inside subrosian market": (0x13865, "enter subrosian market"),
     "inside Rosa corridor right": (0x13A4D, "enter Rosa corridor right"),
+
+    # Furnace area
+    "inside red ore cave": (0x13A25, "enter red ore cave"),
+    "inside red ore stairs": (0x13A21, "enter red ore stairs"),
+    "inside furnace": (0x1385D, "enter furnace"),
+    "inside sign guy": (0x1388D, "enter sign guy"),
 
     # Pirate area
     "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
@@ -784,6 +830,8 @@ SOFTLOCK_WARPS = {
     "enter tarm ruins, under tree": 0x01,
 
     "enter phonograph deku": -0x10,
+
+    "enter temple remains bomb cave": 0x10,
 
     "enter Closed cave": 0x10,
     "enter Summer tower": 0x10,

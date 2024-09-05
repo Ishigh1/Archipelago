@@ -97,11 +97,15 @@ REGIONS = {
         "d4 entrance",
         "mt cucco gasha spot",
         "goron mountain right gasha spot",
+        "spring banana rooster",
 
         "enter mountain fairy cave",
         "enter talon cave",
         "enter winter cave in cucco mountain",
         "enter top of cucco mountain",
+        "enter banana stairs",
+        "enter banana cave",
+        "enter fast platform cave",
     ],
     "WESTERN_COAST": [
         "black beast's chest",
@@ -153,6 +157,11 @@ REGIONS = {
         "temple remains lower portal access",
 
         "enter d8 fairy room",
+        "enter temple remains cave",
+        "enter right stairs in top of temple remains",
+        "enter middle stairs in top of temple remains",
+        "enter left stairs in top of temple remains",
+        "enter temple remains bomb cave",
     ],
     "LOST_WOODS": [
         "tarm ruins",
@@ -165,6 +174,7 @@ REGIONS = {
 
         "enter lost woods deku",
         "enter phonograph deku",
+        "enter lost woods bomb cave",
     ],
     "TARM_RUINS": [
         "d6 sector",
@@ -174,6 +184,7 @@ REGIONS = {
         "tarm ruins gasha spot",
 
         "enter tarm ruins, under tree",
+        "enter tarm old man",
     ],
     "HORON_VILLAGE": [
         "horon village",
@@ -219,6 +230,8 @@ REGIONS = {
         "samasa desert gasha spot",
 
         "enter desert fairy cave",
+        "enter desert cave",
+        "enter stairs near desert chest",
     ],
     "GORON_MOUNTAIN": [
         "biggoron trade",
@@ -233,6 +246,10 @@ REGIONS = {
         "enter goron old man",
         "enter goron mountain bomb cave",
         "enter goron outside stairs",
+        "enter left cave to lynel in goron mountain",
+        "enter right cave to lynel in goron mountain",
+        "enter lynel stairs in goron mountain",
+        "enter goron ring cave",
     ],
     "SUBROSIA": [
         "volcanoes east portal",
@@ -279,10 +296,17 @@ REGIONS = {
         "enter dance hall",
         "enter tower of spring",
         "enter tower of spring staircase",
+        "enter smithy",
 
         # Market area
         "enter subrosian market",
         "enter Rosa corridor right",
+
+        # Furnace area
+        "enter red ore cave",
+        "enter red ore stairs",
+        "enter furnace",
+        "enter sign guy",
 
         # Pirate area
         "enter house above hide and seek",
@@ -403,6 +427,8 @@ REGIONS = {
 
         # Samasa Desert
         "inside desert fairy cave",
+        "inside desert cave",
+        "inside stairs near desert chest",
 
         # Woods of Winter
         "inside peek cave near d2",
@@ -451,6 +477,9 @@ REGIONS = {
         "inside talon cave",
         "inside winter cave in cucco mountain",
         "inside top of cucco mountain",
+        "inside banana stairs",
+        "inside banana cave",
+        "inside fast platform cave",
 
         # Goron Mountain
         "inside goron mountain bottom",
@@ -459,16 +488,27 @@ REGIONS = {
         "inside goron old man",
         "inside goron mountain bomb cave",
         "inside goron outside stairs",
+        "inside left cave to lynel in goron mountain",
+        "inside right cave to lynel in goron mountain",
+        "inside lynel stairs in goron mountain",
+        "inside goron ring cave",
 
         # Lost Woods
         "inside lost woods deku",
         "inside phonograph deku",
+        "inside lost woods bomb cave",
 
         # Tarm Ruins
         "inside tarm ruins, under tree",
+        "inside tarm old man",
 
         # Temple Ruins
         "inside d8 fairy room",
+        "inside temple remains cave",
+        "inside right stairs in top of temple remains",
+        "inside middle stairs in top of temple remains",
+        "inside left stairs in top of temple remains",
+        "inside temple remains bomb cave",
 
         # Subrosia
         # Temple area
@@ -486,10 +526,17 @@ REGIONS = {
         "inside dance hall",
         "inside tower of spring",
         "inside tower of spring staircase",
+        "inside smithy",
 
         # Market area
         "inside subrosian market",
         "inside Rosa corridor right",
+
+        # Furnace area
+        "inside red ore cave",
+        "inside red ore stairs",
+        "inside furnace",
+        "inside sign guy",
 
         # Pirate area
         "inside house above hide and seek",

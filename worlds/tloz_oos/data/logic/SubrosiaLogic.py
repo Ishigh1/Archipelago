@@ -77,11 +77,13 @@ def make_subrosia_logic(player: int):
         ["enter dance hall", "inside dance hall", OoSEntranceType.DoorTwoWay, None],
         ["inside dance hall", "subrosian dance hall", OoSEntranceType.OneWay, None],
 
-        ["subrosia temple sector", "subrosian smithy ore", OoSEntranceType.OneWay, lambda state: any([
+        ["subrosia temple sector", "enter smithy", OoSEntranceType.TwoWay, None],
+        ["enter smithy", "inside smithy", OoSEntranceType.DoorTwoWay, None],
+        ["inside smithy", "subrosian smithy ore", OoSEntranceType.OneWay, lambda state: any([
             state.has("Hard Ore", player),
             oos_self_locking_item(state, player, "subrosian smithy ore", "Hard Ore")
         ])],
-        ["subrosia temple sector", "subrosian smithy bell", OoSEntranceType.OneWay, lambda state: any([
+        ["inside smithy", "subrosian smithy bell", OoSEntranceType.OneWay, lambda state: any([
             state.has("Rusty Bell", player),
             oos_self_locking_item(state, player, "subrosian smithy bell", "Rusty Bell")
         ])],
@@ -180,12 +182,18 @@ def make_subrosia_logic(player: int):
             oos_self_locking_item(state, player, "subrosian chef trade", "Iron Pot")
         ])],
 
-        ["subrosia east junction", "subrosia village chest", OoSEntranceType.OneWay, lambda state: any([
+        ["subrosia east junction", "enter red ore cave", OoSEntranceType.TwoWay, lambda state: any([
             oos_has_magnet_gloves(state, player),
             oos_can_jump_4_wide_pit(state, player),
         ])],
+        ["enter red ore cave", "inside red ore cave", OoSEntranceType.DoorTwoWay, None],
+        ["inside red ore cave", "inside red ore stairs", OoSEntranceType.TwoWay, None],
+        ["inside red ore stairs", "enter red ore stairs", OoSEntranceType.DoorTwoWay, None],
+        ["enter red ore stairs", "subrosia village chest", OoSEntranceType.OneWay, None],
 
-        ["subrosia furnace sector", "great furnace", OoSEntranceType.OneWay, lambda state: all([
+        ["subrosia furnace sector", "enter furnace", OoSEntranceType.TwoWay, None],
+        ["enter furnace", "inside furnace", OoSEntranceType.DoorTwoWay, None],
+        ["inside furnace", "great furnace", OoSEntranceType.OneWay, lambda state: all([
             state.has("_opened_tower_of_autumn", player),
             any([
                 state.has("Red Ore", player),
@@ -196,7 +204,9 @@ def make_subrosia_logic(player: int):
                 oos_self_locking_item(state, player, "great furnace", "Blue Ore")
             ]),
         ])],
-        ["subrosia furnace sector", "subrosian sign guy", OoSEntranceType.OneWay, lambda state: oos_can_break_sign(state, player)],
+        ["subrosia furnace sector", "enter sign guy", OoSEntranceType.TwoWay, None],
+        ["enter sign guy", "inside sign guy", OoSEntranceType.DoorTwoWay, None],
+        ["inside sign guy", "subrosian sign guy", OoSEntranceType.OneWay, lambda state: oos_can_break_sign(state, player)],
         ["subrosia furnace sector", "subrosian buried bomb flower", OoSEntranceType.OneWay, lambda state: all([
             oos_has_feather(state, player),
             oos_has_bracelet(state, player)
