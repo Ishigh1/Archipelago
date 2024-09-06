@@ -510,13 +510,11 @@ def make_holodrum_logic(player: int):
         ])],
 
         ["spool swamp north", "ghastly stump", OoSEntranceType.OneWay, None],
-        ["ghastly stump", "spool swamp north", OoSEntranceType.OneWay, lambda state, season: all([
-            any([
-                season == SEASON_SUMMER,
-                oos_can_jump_4_wide_pit(state, player),
-                oos_can_summon_ricky(state, player),
-                oos_can_summon_moosh(state, player)
-            ])
+        ["ghastly stump", "spool swamp north", OoSEntranceType.OneWay, lambda state, season: any([
+            season == SEASON_SUMMER,
+            oos_can_jump_4_wide_pit(state, player),
+            oos_can_summon_ricky(state, player),
+            oos_can_summon_moosh(state, player)
         ])],
 
         ["ghastly stump", "spool swamp south", OoSEntranceType.TwoWay, lambda state: all([
@@ -525,17 +523,17 @@ def make_holodrum_logic(player: int):
         ])],
 
         # Goron Mountain <-> North Horon <-> D1 island <-> Spool swamp waterway
-        ["d1 island", "holodrum plain waters", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
-        ["spool swamp south", "holodrum plain waters", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
-        ["north horon", "holodrum plain waters", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
+        ["d1 island", "holodrum plain waters", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_swim(state, player, True)],
+        ["spool swamp south", "holodrum plain waters", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_swim(state, player, True)],
+        ["north horon", "holodrum plain waters", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_swim(state, player, True)],
         ["north horon", "goron mountain entrance", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
         ["goron mountain entrance", "enter natzu north stairs", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
-        ["ghastly stump", "holodrum plain waters", OoSEntranceType.TwoWay, lambda state: all([
+        ["ghastly stump", "holodrum plain waters", OoSEntranceType.TwoWayAsymmetric, lambda state: all([
             oos_can_break_bush(state, player, True),
             oos_can_swim(state, player, True)
         ])],
 
-        ["holodrum plain waters", "enter treehouse", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
+        ["enter treehouse", "holodrum plain waters", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_swim(state, player, True)],
         ["enter treehouse", "inside treehouse", OoSEntranceType.DoorTwoWay, None],
         ["inside treehouse", "old man in treehouse", OoSEntranceType.OneWay, lambda state: all([
             oos_can_swim(state, player, True),
@@ -616,7 +614,7 @@ def make_holodrum_logic(player: int):
             state.has("_opened_floodgate", player)
         ])],
 
-        ["spool swamp middle", "spool swamp south near gasha spot", OoSEntranceType.OneWay, lambda state: oos_can_summon_ricky(state, player)],
+        ["spool swamp middle", "spool swamp south near gasha spot", OoSEntranceType.OneWayRicky, lambda state: oos_can_summon_ricky(state, player)],
         ["spool swamp south near gasha spot", "spool swamp middle", OoSEntranceType.OneWay, lambda state: any([
             oos_has_feather(state, player),
             oos_can_break_bush(state, player, True)
@@ -676,33 +674,34 @@ def make_holodrum_logic(player: int):
             oos_can_swim(state, player, True)
         ])],
 
-        ["natzu west", "natzu west (ricky)", OoSEntranceType.TwoWay, lambda state: oos_is_companion_ricky(state, player)],
-        ["natzu west", "natzu west (moosh)", OoSEntranceType.TwoWay, lambda state: oos_is_companion_moosh(state, player)],
-        ["natzu west", "natzu west (dimitri)", OoSEntranceType.TwoWay, lambda state: oos_is_companion_dimitri(state, player)],
-
-        ["natzu east (ricky)", "sunken city", OoSEntranceType.TwoWay, lambda state: oos_is_companion_ricky(state, player)],
-        ["natzu east (moosh)", "sunken city", OoSEntranceType.TwoWay, lambda state: all([
-            oos_is_companion_moosh(state, player),
-            any([
-                oos_can_summon_moosh(state, player),
-                oos_can_jump_3_wide_liquid(state, player)  # Not a liquid, but it's a diagonal jump so that's the same
+        ["natzu west", "enter ricky fairy", OoSEntranceType.TwoWayRicky, None],
+        ["enter ricky fairy", "inside ricky fairy", OoSEntranceType.DoorTwoWayRicky, None],
+        ["natzu west", "enter moosh fairy", OoSEntranceType.TwoWayMoosh, lambda state: \
+            oos_can_break_bush(state, player, True)],
+        ["enter moosh fairy", "inside moosh fairy", OoSEntranceType.DoorTwoWayMoosh, None],
+        ["natzu west", "enter dimitri fairy", OoSEntranceType.TwoWayDimitri, lambda state: any([
+            oos_can_summon_dimitri(state, player),
+            all([
+                oos_option_hard_logic(state, player),
+                state.has("Swimmer's Ring", player)
             ])
         ])],
-        ["natzu east (dimitri)", "sunken city", OoSEntranceType.TwoWay, lambda state: all([
-            oos_is_companion_dimitri(state, player),
-            oos_can_jump_1_wide_pit(state, player, False)
+        ["enter dimitri fairy", "inside dimitri fairy", OoSEntranceType.DoorTwoWayDimitri, None],
+
+        ["natzu east", "sunken city", OoSEntranceType.TwoWayRicky, None],
+        ["natzu east", "sunken city", OoSEntranceType.TwoWayMoosh, lambda state: any([
+            oos_can_summon_moosh(state, player),
+            oos_can_jump_3_wide_liquid(state, player)  # Not a liquid, but it's a diagonal jump so that's the same
         ])],
-        ["natzu east (dimitri)", "enter natzu north stairs", OoSEntranceType.OneWay, lambda state: \
+        ["natzu east", "sunken city", OoSEntranceType.TwoWayDimitri, lambda state: \
+            oos_can_jump_1_wide_pit(state, player, False)],
+        ["natzu east", "enter natzu north stairs", OoSEntranceType.TwoWayDimitri, lambda state: \
             oos_can_jump_5_wide_liquid(state, player)],
-        ["enter natzu north stairs", "natzu east (dimitri)", OoSEntranceType.OneWay, lambda state: all([
-            oos_can_jump_5_wide_liquid(state, player),
-            oos_is_companion_dimitri(state, player)
-        ])],
         ["enter natzu north stairs", "inside natzu north stairs", OoSEntranceType.DoorTwoWay, None],
         ["inside natzu north stairs", "natzu region, across water", OoSEntranceType.OneWay, None],
 
-        ["natzu west (ricky)", "natzu east (ricky)", OoSEntranceType.TwoWay, lambda state: oos_can_summon_ricky(state, player)],
-        ["natzu west (moosh)", "natzu east (moosh)", OoSEntranceType.TwoWay, lambda state: any([
+        ["natzu west", "natzu east", OoSEntranceType.TwoWayRicky, lambda state: oos_can_summon_ricky(state, player)],
+        ["natzu west", "natzu east", OoSEntranceType.TwoWayMoosh, lambda state: any([
             oos_can_summon_moosh(state, player),
             all([
                 oos_option_medium_logic(state, player),
@@ -710,35 +709,61 @@ def make_holodrum_logic(player: int):
                 oos_can_jump_3_wide_pit(state, player)
             ])
         ])],
-        ["natzu west (dimitri)", "natzu east (dimitri)", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
+        ["natzu west", "natzu east", OoSEntranceType.TwoWayDimitri, lambda state: oos_can_swim(state, player, True)],
 
-        ["natzu east (ricky)", "moblin keep bridge", OoSEntranceType.OneWay, None],
-        ["natzu east (moosh)", "moblin keep bridge", OoSEntranceType.OneWay, lambda state: any([
+        ["natzu west", "enter ricky deku", OoSEntranceType.TwoWayRicky, lambda state: \
+            oos_can_break_bush(state, player)],
+        ["enter ricky deku", "inside ricky deku", OoSEntranceType.DoorTwoWayRicky, None],
+
+        ["natzu west", "enter moosh deku", OoSEntranceType.TwoWayMoosh, lambda state: any([
+            oos_can_jump_5_wide_pit(state, player),
+            oos_can_summon_moosh(state, player)
+        ])],
+        ["enter moosh deku", "inside moosh deku", OoSEntranceType.DoorTwoWay, None],
+
+        ["natzu east", "moblin keep bridge", OoSEntranceType.TwoWayRicky, None],
+        ["natzu east", "moblin keep bridge", OoSEntranceType.TwoWayMoosh, lambda state: any([
             oos_can_summon_moosh(state, player),
             all([
                 oos_can_break_bush(state, player),
                 oos_can_jump_3_wide_pit(state, player)
             ])
         ])],
-        ["natzu east (dimitri)", "moblin keep bridge", OoSEntranceType.OneWay, lambda state: any([
+        ["natzu east", "moblin keep bridge", OoSEntranceType.TwoWayDimitri, lambda state: any([
             oos_can_summon_dimitri(state, player),
             all([
                 oos_option_hard_logic(state, player),
                 state.has("Swimmer's Ring", player)
             ])
         ])],
-        ["moblin keep bridge", "moblin keep", OoSEntranceType.OneWay, lambda state: any([
+        ["moblin keep bridge", "moblin keep", OoSEntranceType.TwoWay, lambda state: any([
             oos_has_flippers(state, player),
             oos_can_jump_4_wide_liquid(state, player)
         ])],
-        ["moblin keep", "moblin keep chest", OoSEntranceType.OneWay, lambda state: any([
+        ["moblin keep", "enter moblin keep left", OoSEntranceType.TwoWay, None],
+        ["enter moblin keep left", "inside moblin keep left", OoSEntranceType.DoorTwoWay, None],
+        ["inside moblin keep left", "moblin keep chest", OoSEntranceType.OneWay, lambda state: any([
             oos_has_bracelet(state, player)
         ])],
+
+        ["moblin keep", "enter moblin keep right", OoSEntranceType.TwoWay, None],
+        ["enter moblin keep right", "inside moblin keep right", OoSEntranceType.DoorTwoWay, None],
+        ["inside moblin keep right", "inside moblin keep left", OoSEntranceType.TwoWay, None],
+
+        ["moblin keep chest", "moblin keep", OoSEntranceType.OneWay, None],
         ["moblin keep", "sunken city", OoSEntranceType.OneWay, lambda state: oos_can_warp(state, player)],
 
-        ["natzu east (ricky)", "natzu river bank", OoSEntranceType.TwoWay, lambda state: oos_can_summon_ricky(state, player)],
-        ["natzu east (moosh)", "natzu river bank", OoSEntranceType.TwoWay, lambda state: oos_is_companion_moosh(state, player)],
-        ["natzu east (dimitri)", "natzu river bank", OoSEntranceType.TwoWay, lambda state: oos_is_companion_dimitri(state, player)],
+        ["natzu east", "natzu river bank", OoSEntranceType.TwoWayRicky, lambda state: oos_can_summon_ricky(state, player)],
+        ["natzu east", "natzu river bank", OoSEntranceType.TwoWayMoosh, None],
+        ["natzu east", "natzu river bank", OoSEntranceType.TwoWayDimitri, None],
+
+        ["natzu west", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
+        ["natzu east", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
+        ["goron mountain entrance", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
+        ["moblin keep bridge", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
+        ["enter dimitri fairy", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
+        ["enter natzu waterfall", "inside natzu waterfall", OoSEntranceType.WaterfallDimitri, None],
+
         ["natzu river bank", "goron mountain entrance", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
 
         # SUNKEN CITY ############################################################################################
@@ -769,6 +794,7 @@ def make_holodrum_logic(player: int):
             oos_can_summon_dimitri(state, player),
             oos_has_bombs(state, player)
         ])],
+        ["sunken city dimitri", "sunken city", OoSEntranceType.OneWay, None],
 
         ["sunken city", "enter ingo", OoSEntranceType.TwoWay, None],
         ["enter ingo", "inside ingo", OoSEntranceType.DoorTwoWay, None],
@@ -787,7 +813,9 @@ def make_holodrum_logic(player: int):
             oos_can_use_seeds(state, player)
         ])],
 
-        ["sunken city dimitri", "master diver's challenge", OoSEntranceType.OneWay, lambda state: all([
+        ["sunken city dimitri", "enter sunken left waterfall", OoSEntranceType.TwoWay, None],
+        ["enter sunken left waterfall", "inside sunken left waterfall", OoSEntranceType.Waterfall, None],
+        ["inside sunken left waterfall", "master diver's challenge", OoSEntranceType.OneWay, lambda state: all([
             oos_has_sword(state, player, False),
             any([
                 oos_has_feather(state, player),
@@ -795,11 +823,13 @@ def make_holodrum_logic(player: int):
             ])
         ])],
 
-        ["sunken city dimitri", "master diver's reward", OoSEntranceType.OneWay, lambda state: any([
+        ["sunken city dimitri", "enter sunken right waterfall", OoSEntranceType.TwoWay, None],
+        ["enter sunken right waterfall", "inside sunken right waterfall", OoSEntranceType.Waterfall, None],
+        ["inside sunken right waterfall", "master diver's reward", OoSEntranceType.OneWay, lambda state: any([
             state.has("Master's Plaque", player),
             oos_self_locking_item(state, player, "master diver's reward", "Master's Plaque")
         ])],
-        ["sunken city dimitri", "chest in master diver's cave", OoSEntranceType.OneWay, None],
+        ["inside sunken right waterfall", "chest in master diver's cave", OoSEntranceType.OneWay, None],
 
         ["sunken city", "enter sunken city, summer cave", OoSEntranceType.OneWay, lambda state, season: all([
             season == SEASON_SUMMER,
@@ -1243,12 +1273,9 @@ def make_holodrum_logic(player: int):
             oos_can_break_bush(state, player, True),
             oos_has_shovel(state, player),
         ])],
-        ["d1 island", "holodrum plain island gasha spot", OoSEntranceType.OneWay, lambda state: all([
-            oos_can_swim(state, player, True),
-            any([
-                oos_can_break_bush(state, player, False),
-                oos_can_summon_dimitri(state, player),  # Only Dimitri can be brought here
-            ]),
+        ["holodrum plain waters", "holodrum plain island gasha spot", OoSEntranceType.OneWay, lambda state: any([
+            oos_can_break_bush(state, player, False),
+            oos_can_summon_dimitri(state, player),  # Only Dimitri can be brought here
         ])],
         ["floodgate keyhole", "spool swamp north gasha spot", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],
         ["spool swamp south near gasha spot", "spool swamp south gasha spot", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],

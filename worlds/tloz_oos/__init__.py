@@ -222,7 +222,7 @@ class OracleOfSeasonsWorld(World):
             coupled = True
         else:
             coupled = False
-        randomized_entrances = randomize_entrances(self, coupled, {0: [0]})
+        randomized_entrances = randomize_entrances(self, coupled, {0: [0], 1: [1]})
         self.randomized_entrances = randomized_entrances.pairings
 
     def shuffle_portals(self):

@@ -556,6 +556,13 @@ NORMAL_EXITS = {
 
     # Natzu
     "enter natzu north stairs": (0x135D1, "inside natzu north stairs"),
+    "enter moblin keep left": (0x1360D, "inside moblin keep left"),
+    "enter moblin keep right": (0x13611, "inside moblin keep right"),
+    "enter ricky fairy": (0x135ED, "inside ricky fairy"),
+    "enter moosh fairy": (0x135F1, "inside moosh fairy"),
+    "enter dimitri fairy": (0x135C5, "inside dimitri fairy"),
+    "enter ricky deku": (0x135C9, "inside ricky deku"),
+    "enter moosh deku": (0x135CD, "inside moosh deku"),
 
     # Sunken City
     "enter ingo": (0x134B9, "inside ingo"),
@@ -565,6 +572,9 @@ NORMAL_EXITS = {
     "enter bomb house": (0x134CD, "inside bomb house"),
     "enter master diver house": (0x134F1, "inside master diver house"),
     "enter sunken city, summer cave": (0x1352D, "inside sunken city, summer cave"),
+    "enter sunken left waterfall": (0x211E5, "inside sunken left waterfall"),
+    "enter sunken right waterfall": (0x211E9, "inside sunken right waterfall"),
+    "enter natzu waterfall": (0x211ED, "inside natzu waterfall"),
 
     # Cucco Mountain
     "enter mountain fairy cave": (0x135FD, "inside mountain fairy cave"),
@@ -710,6 +720,13 @@ NORMAL_EXITS = {
 
     # Natzu
     "inside natzu north stairs": (0x13C45, "enter natzu north stairs"),
+    "inside moblin keep left": (0x138C5, "enter moblin keep left"),
+    "inside moblin keep right": (0x138C9, "enter moblin keep right"),
+    "inside ricky fairy": (0x13C35, "enter ricky fairy"),
+    "inside moosh fairy": (0x13C4D, "enter moosh fairy"),
+    "inside dimitri fairy": (0x13C39, "enter dimitri fairy"),
+    "inside ricky deku": (0x13C3D, "enter ricky deku"),
+    "inside moosh deku": (0x13C41, "enter moosh deku"),
 
     # Sunken City
     "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
@@ -719,6 +736,9 @@ NORMAL_EXITS = {
     "inside treasure hunter": (0x13861, "enter treasure hunter"),
     "inside bomb house": (0x13895, "enter bomb house"),
     "inside master diver": (0x138B9, "enter master diver"),
+    "inside sunken left waterfall": (0x211F1, "enter sunken left waterfall"),
+    "inside sunken right waterfall": (0x211F5, "enter sunken right waterfall"),
+    "inside natzu waterfall": (0x211F9, "enter natzu waterfall"),
 
     # Cucco Mountain
     "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),
@@ -794,6 +814,16 @@ NORMAL_EXITS = {
     "inside pirate house": (0x13819, "enter pirate house"),
     "inside pirate staircase": (0x138FD, "enter pirate staircase"),
 }
+
+WATERFALL_WARPS = [
+    "enter sunken left waterfall",
+    "enter sunken right waterfall",
+    "enter natzu waterfall",
+
+    "inside sunken left waterfall",
+    "inside sunken right waterfall",
+    "inside natzu waterfall",
+]
 
 SOFTLOCK_WARPS = {
     "enter d1 old man": 0x11,

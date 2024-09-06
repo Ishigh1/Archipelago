@@ -8,6 +8,7 @@ REGIONS = {
         "impa",
         "d1 stump",
         "d1 island",
+        "eastern suburbs portal",
         "eyeglass lake portal",
         "d1 entrance",
         "d5 stump",
@@ -16,6 +17,10 @@ REGIONS = {
         "eyeglass lake",
         "impa gasha spot",
         "eyeglass lake gasha spot",
+
+        "dimitri in d1 entrance",
+        "dimitri in eyeglass lake",
+        "dimitri in d6 entrance",
 
         "enter lon lon",
         "enter d1 old man",
@@ -32,6 +37,9 @@ REGIONS = {
         "holodrum plain island gasha spot",
         "holodrum plain waters",
 
+        "dimitri in holodrum plain north",
+        "dimitri in holodrum plain south",
+
         "enter treehouse",
         "enter Mrs Ruul",
         "enter ruul old man",
@@ -42,12 +50,14 @@ REGIONS = {
     ],
     "EASTERN_SUBURBS": [
         "suburbs",
-        "eastern suburbs portal",
         "suburbs fairy fountain",
         "top of suburbs",
         "suburbs NE",
         "woods of winter heart piece",
         "suburbs gasha spot",
+
+        "dimitri in eastern suburbs",
+        "dimitri in moblin road eastern suburbs",
 
         "enter guru guru",
         "enter winter guru guru",
@@ -63,6 +73,9 @@ REGIONS = {
         "d2 stump",
         "d2 roof",
         "golden moblin",
+
+        "dimitri in moblin road",
+        "dimitri at d2 entrance",
 
         "enter peek cave near d2",
         "enter magnet cave near d2",
@@ -86,6 +99,9 @@ REGIONS = {
         "enter bomb house",
         "enter master diver house",
         "enter sunken city, summer cave",
+        "enter sunken left waterfall",
+        "enter sunken right waterfall",
+        "enter natzu waterfall",
 
         "mount cucco",
         "mt. cucco portal",
@@ -145,6 +161,9 @@ REGIONS = {
         "spool swamp south gasha spot",
         "open swamp bomb cave",
 
+        "dimitri in swamp south",
+        "dimitri in swamp north",
+
         "enter floodgate left",
         "enter floodgate right",
         "enter floodgate house",
@@ -194,6 +213,8 @@ REGIONS = {
         "horon heart piece",
         "horon gasha spot",
 
+        "dimitri in horon village",
+
         "enter shop",
         "enter tick tock",
         "enter mayor's house",
@@ -211,17 +232,19 @@ REGIONS = {
     "NATZU": [
         "natzu west",
         "natzu river bank",
-        "natzu west (ricky)",
-        "natzu west (dimitri)",
-        "natzu west (moosh)",
-        "natzu east (ricky)",
-        "natzu east (dimitri)",
-        "natzu east (moosh)",
+        "natzu east",
         "moblin keep bridge",
         "moblin keep",
         "natzu region, across water",
 
         "enter natzu north stairs",
+        "enter moblin keep left",
+        "enter moblin keep right",
+        "enter ricky fairy",
+        "enter moosh fairy",
+        "enter dimitri fairy",
+        "enter ricky deku",
+        "enter moosh deku",
     ],
     "SAMASA_DESERT": [
         "samasa desert",
@@ -462,6 +485,13 @@ REGIONS = {
 
         # Natzu
         "inside natzu north stairs",
+        "inside moblin keep left",
+        "inside moblin keep right",
+        "inside ricky fairy",
+        "inside moosh fairy",
+        "inside dimitri fairy",
+        "inside ricky deku",
+        "inside moosh deku",
 
         # Sunken City
         "inside ingo",
@@ -471,6 +501,9 @@ REGIONS = {
         "inside bomb house",
         "inside master diver",
         "inside sunken city, summer cave",
+        "inside sunken left waterfall",
+        "inside sunken right waterfall",
+        "inside natzu waterfall",
 
         # Cucco Mountain
         "inside mountain fairy cave",
@@ -763,6 +796,16 @@ STUMP_REGIONS = {
     "coast stump",
     "temple remains lower stump",
     "temple remains upper stump",
+
+    "dimitri in d1 entrance",
+    "dimitri in d6 entrance",
+    "dimitri in holodrum plain south",
+    "dimitri in eastern suburbs",
+    "dimitri in moblin road eastern suburbs",
+    "dimitri in moblin road",
+    "dimitri at d2 entrance",
+    "dimitri in swamp south",
+    "dimitri in horon village",
 }
 
 

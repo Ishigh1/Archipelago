@@ -38,22 +38,40 @@ def create_connections(multiworld: MultiWorld, player: int):
             region_1 = multiworld.get_region(entrance_desc[0], player)
             region_2 = multiworld.get_region(entrance_desc[1], player)
             entrance_type = entrance_desc[2]
+            if OoSEntranceType.CompanionEntrance & entrance_type != 0:
+                if OoSEntranceType.Ricky in entrance_type and oos_world.options.animal_companion != "ricky" \
+                        or OoSEntranceType.Moosh in entrance_type and oos_world.options.animal_companion != "moosh" \
+                        or OoSEntranceType.Dimitri in entrance_type and oos_world.options.animal_companion != "dimitri":
+                    continue
+
             rule = entrance_desc[3]
             if OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances:
                 entrance = region_1.connect(region_2, entrance_desc[0], rule)
-                oos_world.entrances_to_randomize.append(entrance)
+
+                if OoSEntranceType.Waterfall in entrance_type:
+                    entrance.randomization_group = 1
 
                 if OoSEntranceType.DoorTwoWayFlag in entrance_type:
                     entrance.randomization_type = EntranceType.TWO_WAY
 
+                oos_world.entrances_to_randomize.append(entrance)
+
                 if OoSEntranceType.TwoWay in entrance_type:
-                    entrance = region_2.connect(region_1, entrance_desc[1], None)
+                    if OoSEntranceType.Asymmetric in entrance_type:
+                        rule = None
+                    entrance = region_2.connect(region_1, entrance_desc[1], rule)
+
+                    if OoSEntranceType.Waterfall in entrance_type:
+                        entrance.randomization_group = 1
+
                     entrance.randomization_type = EntranceType.TWO_WAY
                     oos_world.entrances_to_randomize.append(entrance)
 
                 continue
             region_1.connect(region_2, rule=rule)
             if OoSEntranceType.TwoWay in entrance_type:
+                if OoSEntranceType.Asymmetric in entrance_type:
+                    rule = None
                 region_2.connect(region_1, rule=rule)
 
 

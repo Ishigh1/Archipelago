@@ -29,8 +29,10 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/essence_sanity.yaml")
     if get_settings()["tloz_oos_options"]["remove_music"]:
         asm_files.append("asm/conditional/mute_music.yaml")
-    asm_files.append("asm/conditional/instant_rosa.yaml")
-    asm_files.append("asm/conditional/reset_season_transition.yaml")
+    if len(patch_data["misc_entrances"]) > 0:
+        asm_files.append("asm/conditional/ER/instant_rosa.yaml")
+        asm_files.append("asm/conditional/ER/reset_season_transition.yaml")
+        asm_files.append("asm/conditional/ER/keep_stairs.yaml")
     return asm_files
 
 
@@ -707,13 +709,24 @@ def define_dungeon_items_text_constants(assembler: Z80Assembler, patch_data):
 
 def set_misc_warps(rom: RomData, patch_data):
     warp_matchings = patch_data["misc_entrances"]
-    trans_values = {name: rom.read_bytes(info[0], 2) for name, info in NORMAL_EXITS.items() if info[0] is not None}
+    trans_values = {}
+
+    for name, info in NORMAL_EXITS.items():
+        if info[0] is not None:
+            if name in WATERFALL_WARPS:
+                trans_values[name] = rom.read_bytes(info[0], 4)
+            else:
+                trans_values[name] = rom.read_bytes(info[0], 2)
 
     # Apply warp matchings expressed in the patch
     for from_name, to_name in warp_matchings:
         entrance_addr = NORMAL_EXITS[from_name][0]
         destination_data_name = NORMAL_EXITS[to_name][1]
         destination_values = trans_values[destination_data_name]
+
+        if from_name in WATERFALL_WARPS:
+            rom.write_bytes(entrance_addr, destination_values)
+            continue
 
         rom.write_byte(entrance_addr, destination_values[0])  # pointer to room destination
         group = destination_values[1] & 0xF0
