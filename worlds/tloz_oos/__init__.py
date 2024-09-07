@@ -396,6 +396,7 @@ class OracleOfSeasonsWorld(World):
         self.create_event("phonograph deku", "_learned_pedestal_sequence")
         self.create_event("tarm ruins top", "_pushed_tarm_statue")
         self.create_event("pirate captain", "_met_pirates"),
+        self.create_event("inside desert ship", "_met_pirate_head")
         self.create_event("d2 moblin chest", "_reached_d2_bracelet_room")
         self.create_event("d5 drop ball", "_dropped_d5_magnet_ball")
         self.create_event("d8 SE crystal", "_dropped_d8_SE_crystal")

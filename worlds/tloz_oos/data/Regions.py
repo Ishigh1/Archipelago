@@ -81,6 +81,8 @@ REGIONS = {
         "enter magnet cave near d2",
         "enter first woods of winter cave",
         "enter second woods of winter cave",
+        "enter d2 side entrance left",
+        "enter d2 side entrance right",
         "enter holly house",
         "enter holly chimney",
     ],
@@ -135,6 +137,7 @@ REGIONS = {
         "western coast gasha spot",
 
         "enter old man near western coast house",
+        "enter d0 chimney",
         "enter pirate ship",
         "enter beach fairy cave",
         "enter coast house",
@@ -255,6 +258,7 @@ REGIONS = {
         "enter desert fairy cave",
         "enter desert cave",
         "enter stairs near desert chest",
+        "enter desert ship",
     ],
     "GORON_MOUNTAIN": [
         "biggoron trade",
@@ -338,6 +342,7 @@ REGIONS = {
         "enter strange brothers right",
         "enter pirate house",
         "enter pirate staircase",
+        "enter subrosia ship",
     ],
     "CAVES": [
         "horon village portal",
@@ -452,6 +457,7 @@ REGIONS = {
         "inside desert fairy cave",
         "inside desert cave",
         "inside stairs near desert chest",
+        "inside desert ship",
 
         # Woods of Winter
         "inside peek cave near d2",
@@ -578,6 +584,7 @@ REGIONS = {
         "inside strange brothers right",
         "inside pirate house",
         "inside pirate staircase",
+        "inside subrosia ship",
     ],
     "SPECIAL": [  # Seasons don't exist here
         "Menu",
@@ -771,6 +778,10 @@ REGIONS = {
 
         "d4 miniboss room wild embers",
         "d7 entrance wild embers",
+
+        "inside d0 chimney",
+        "inside d2 side entrance left",
+        "inside d2 side entrance right",
     ]
 }
 

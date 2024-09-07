@@ -66,13 +66,13 @@
 # randomization.
 15//setPirateCutsceneFlags: |
     call setGlobalFlag
-    ; ???
+    ; make the ship become docked
     ld a,$17
     call setGlobalFlag
-    ; ???
-    ld a,$1b
-    call setGlobalFlag
-    ; Remove ship from desert
+    ; make the pirate skull appear
+    ; ld a,$1b
+    ; call setGlobalFlag
+    ; Remove ship from desert (??? That seems wrong - Ishigh)
     ld hl,$c7e2
     set 6,(hl)
     ; Set default season for Western Coast since the warp doesn't ensure it

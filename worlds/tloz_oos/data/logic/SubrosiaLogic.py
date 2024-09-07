@@ -166,6 +166,8 @@ def make_subrosia_logic(player: int):
         ["enter pirate staircase", "subrosia pirates sector", OoSEntranceType.OneWay, None],
         ["enter pirate staircase", "inside pirate staircase", OoSEntranceType.DoorTwoWay, None],
         ["inside pirate staircase", "pirate captain", OoSEntranceType.TwoWay, None],
+        ["subrosia pirates sector", "enter subrosia ship", OoSEntranceType.TwoWay, None],
+        ["enter subrosia ship", "inside subrosia ship", OoSEntranceType.DoorTwoWay, None],
 
         ["subrosia bridge sector", "enter open cave", OoSEntranceType.TwoWay, None],
         ["enter open cave", "inside open cave", OoSEntranceType.DoorTwoWay, None],

@@ -35,3 +35,8 @@ class OoSEntranceType(Flag):
     WaterfallFlag = auto()
     Waterfall = DoorTwoWay | WaterfallFlag
     WaterfallDimitri = Waterfall | Dimitri
+
+    D0Alt = auto()
+    D0Chimney = DoorOneWay | D0Alt
+    D2Alt = auto()
+    D2Stairs = DoorTwoWay | D2Alt

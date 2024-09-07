@@ -1095,7 +1095,10 @@ def make_holodrum_logic(player: int):
         ["samasa desert", "enter desert cave", OoSEntranceType.TwoWay, None],
         ["enter desert cave", "inside desert cave", OoSEntranceType.DoorTwoWay, None],
         ["samasa desert", "inside desert cave", OoSEntranceType.OneWay, None],
-        ["samasa desert", "samasa desert pit", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],
+        ["samasa desert", "samasa desert pit", OoSEntranceType.OneWay, lambda state: all([
+            oos_has_bracelet(state, player),
+            state.has("_met_pirate_head", player)
+        ])],
         ["samasa desert", "inside stairs near desert chest", OoSEntranceType.TwoWay, None],
         ["inside stairs near desert chest", "enter stairs near desert chest", OoSEntranceType.DoorTwoWay, None],
         ["enter stairs near desert chest", "samasa desert chest", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
@@ -1104,6 +1107,9 @@ def make_holodrum_logic(player: int):
             oos_can_jump_2_wide_pit(state, player)  # It's a liquid but the jump distance is 1.5
         ])],
         ["enter desert fairy cave", "inside desert fairy cave", OoSEntranceType.DoorTwoWay, lambda state: oos_has_bombs(state, player)],
+        ["samasa desert", "enter desert ship", OoSEntranceType.TwoWay, None],
+        ["enter desert ship", "inside desert ship", OoSEntranceType.DoorTwoWay, None],
+        ["inside desert ship", "inside subrosia ship", OoSEntranceType.OneWay, None],
 
         # TEMPLE REMAINS ####################################################################################
 

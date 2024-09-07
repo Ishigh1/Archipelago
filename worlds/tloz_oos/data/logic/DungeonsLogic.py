@@ -6,20 +6,21 @@ def make_d0_logic(player: int):
     return [
         # 0 keys
         ["enter d0", "d0 key chest", OoSEntranceType.OneWay, None],
-        ["enter d0", "d0 rupee chest", OoSEntranceType.OneWay, lambda state: any([
-            all([
-                oos_can_break_bush(state, player, True),
-                # If dungeons are shuffled, jumping down the hole is a dangerous action and requires
-                # a way of warping back to be in logic
-                any([
-                    not oos_option_shuffled_dungeons(state, player),
-                    oos_can_warp(state, player)
-                ])
-            ]),
-
+        ["enter d0", "d0 rupee chest", OoSEntranceType.OneWay, lambda state: \
             # If hole is removed, stairs are added inside dungeon to make the chest reachable
-            oos_option_no_d0_alt_entrance(state, player),
+        oos_option_no_d0_alt_entrance(state, player)
+         ],
+        ["d0 entrance", "enter d0 chimney", OoSEntranceType.TwoWay, None],
+        ["enter d0 chimney", "inside d0 chimney", OoSEntranceType.DoorOneWay, lambda state: all([
+            oos_can_break_bush(state, player, True),
+            # If dungeons are shuffled, jumping down the hole is a dangerous action and requires
+            # a way of warping back to be in logic
+            any([
+                not oos_option_shuffled_dungeons(state, player),
+                oos_can_warp(state, player)
+            ])
         ])],
+        ["inside d0 chimney", "d0 rupee chest", OoSEntranceType.OneWay, None],
         ["d0 rupee chest", "enter d0", OoSEntranceType.OneWay, None],
         ["enter d0", "d0 hidden 2d section", OoSEntranceType.OneWay, lambda state: any([
             oos_can_kill_normal_enemy(state, player),
@@ -122,12 +123,16 @@ def make_d2_logic(player: int):
         ["d2 arrow room", "d2 blade chest", OoSEntranceType.OneWay, lambda state: oos_can_kill_normal_enemy(state, player)],
 
         ["d2 blade chest", "d2 arrow room", OoSEntranceType.OneWay, None],  # Backwards path
-        ["d2 blade chest", "d2 alt entrances", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
+        ["d2 blade chest", "inside d2 side entrance left", OoSEntranceType.TwoWay, None],
+        ["inside d2 side entrance left", "enter d2 side entrance left", OoSEntranceType.D2Stairs, None],
+        ["enter d2 side entrance left", "d2 alt entrances", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
         ["d2 blade chest", "d2 roller chest", OoSEntranceType.OneWay, lambda state: all([
             oos_has_bombs(state, player),
             oos_has_bracelet(state, player),
         ])],
-        ["d2 alt entrances", "d2 spiral chest", OoSEntranceType.OneWay, lambda state: all([
+        ["d2 alt entrances", "enter d2 side entrance right", OoSEntranceType.TwoWay, None],
+        ["enter d2 side entrance right", "inside d2 side entrance right", OoSEntranceType.D2Stairs, None],
+        ["inside d2 side entrance right", "d2 spiral chest", OoSEntranceType.OneWay, lambda state: all([
             oos_can_break_bush(state, player, False),
             oos_has_bombs(state, player),
         ])],

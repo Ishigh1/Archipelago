@@ -355,6 +355,7 @@ ASM_FILES = [
     "asm/multi.yaml",
     "asm/new_game.yaml",
     "asm/new_treasures.yaml",
+    "asm/permanent_subrosia_pirate_ship.yaml"
     "asm/progressives.yaml",
     "asm/remove_items_on_use.yaml",
     "asm/rings.yaml",
@@ -504,6 +505,7 @@ NORMAL_EXITS = {
 
     # Western Coast
     "enter beach fairy cave": (0x1359D, "inside beach fairy cave"),
+    "enter d0 chimney": (0x1364D, "inside d0 chimney"),
     "enter pirate ship": (0x135A1, "inside pirate ship"),
     "enter old man near western coast house": (0x13641, "inside old man near western coast house"),
     "enter coast house": (0x13645, "inside coast house"),
@@ -530,12 +532,15 @@ NORMAL_EXITS = {
     "enter desert fairy cave": (0x13619, "inside desert fairy cave"),
     "enter desert cave": (0x135A9, "inside desert cave"),
     "enter stairs near desert chest": (0x1357D, "inside stairs near desert chest"),
+    "enter desert ship": (0x135A5, "inside desert ship"),
 
     # Woods of Winter
     "enter peek cave near d2": (0x13665, "inside peek cave near d2"),
     "enter magnet cave near d2": (0x13669, "inside magnet cave near d2"),
     "enter first woods of winter cave": (0x1351D, "inside first woods of winter cave"),
     "enter second woods of winter cave": (0x135DD, "inside second woods of winter cave"),
+    "enter d2 side entrance left": (0x1365D, "inside d2 side entrance left"),
+    "enter d2 side entrance right": (0x13661, "inside d2 side entrance right"),
     "enter holly house": (0x13639, "inside holly house"),
     "enter holly chimney": (0x1363D, None),
 
@@ -649,6 +654,7 @@ NORMAL_EXITS = {
     "enter strange brothers right": (0x13701, "inside strange brothers right"),
     "enter pirate house": (0x13731, "inside pirate house"),
     "enter pirate staircase": (0x1372D, "inside pirate staircase"),
+    "enter subrosia ship": (0x13719, "inside subrosia ship"),
 
     # Group 3, 4, 5 / Caves ################################################################
     # Horon Village
@@ -668,6 +674,7 @@ NORMAL_EXITS = {
 
     # Western Coast
     "inside old man near western coast house": (0x13C21, "enter old man near western coast house"),
+    "inside d0 chimney": (None, "enter d0 chimney"),
     "inside pirate ship": (0x13BFD, "enter pirate ship"),
     "inside beach fairy cave": (0x13A59, "enter beach fairy cave"),
     "inside coast house": (0x13811, "enter coast house"),
@@ -687,12 +694,15 @@ NORMAL_EXITS = {
     "inside desert fairy cave": (0x13A3D, "enter desert fairy cave"),
     "inside desert cave": (0x13C11, "enter desert cave"),
     "inside stairs near desert chest": (0x13A35, "enter stairs near desert chest"),
+    "inside desert ship": (0x13C9D, "enter desert ship"),
 
     # Woods of Winter
     "inside peek cave near d2": (0x13B75, "enter peek cave near d2"),
     "inside magnet cave near d2": (0x13B79, "enter magnet cave near d2"),
     "inside first woods of winter cave": (0x13B7D, "enter first woods of winter cave"),
     "inside second woods of winter cave": (0x13C55, "enter second woods of winter cave"),
+    "inside d2 side entrance left": (0x13935, "enter d2 side entrance left"),
+    "inside d2 side entrance right": (0x13939, "enter d2 side entrance right"),
     "inside holly house": (0x13871, "enter holly house"),
     "inside holly chimney": (None, "enter holly chimney"),
 
@@ -813,6 +823,7 @@ NORMAL_EXITS = {
     "inside strange brothers right": (0x138A9, "enter strange brothers right"),
     "inside pirate house": (0x13819, "enter pirate house"),
     "inside pirate staircase": (0x138FD, "enter pirate staircase"),
+    "inside subrosia ship": (0x13CA1, "enter subrosia ship"),
 }
 
 WATERFALL_WARPS = [
@@ -880,6 +891,9 @@ SEASON_WARP = {
     "enter goron outside stairs",
 
     "enter desert fairy cave",
+    "enter desert ship",
+    "enter desert cave",
+    "enter stairs near desert chest",
 }
 
 PORTAL_WARPS = {

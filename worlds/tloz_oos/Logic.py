@@ -43,9 +43,12 @@ def create_connections(multiworld: MultiWorld, player: int):
                         or OoSEntranceType.Moosh in entrance_type and oos_world.options.animal_companion != "moosh" \
                         or OoSEntranceType.Dimitri in entrance_type and oos_world.options.animal_companion != "dimitri":
                     continue
+            if OoSEntranceType.D0Alt in entrance_type and oos_world.options.remove_d2_alt_entrance:
+                continue
 
             rule = entrance_desc[3]
-            if OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances:
+            if OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances \
+                    and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance):
                 entrance = region_1.connect(region_2, entrance_desc[0], rule)
 
                 if OoSEntranceType.Waterfall in entrance_type:
