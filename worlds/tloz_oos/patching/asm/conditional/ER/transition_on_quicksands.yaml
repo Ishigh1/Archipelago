@@ -1,0 +1,26 @@
+09/4C67: |
+  add a
+  ld hl,@warpDestLocations
+  rst 10  ; rst_addAToHL
+  ld bc,wWarpDestGroup
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestRoom
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestPos
+  ld a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition2
+  ld a,$03 ; Fadeout
+  ld (bc),a
+  jp interactionDelete
+
+  @warpDestLocations:
+  .db $85 $d0 $03 $57
+  .db $85 $d1 $03 $57
+  .db $85 $d2 $03 $57
+  .db $84 $f4 $03 $27

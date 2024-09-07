@@ -33,6 +33,7 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/ER/instant_rosa.yaml")
         asm_files.append("asm/conditional/ER/reset_season_transition.yaml")
         asm_files.append("asm/conditional/ER/keep_stairs.yaml")
+        asm_files.append("asm/conditional/ER/transition_on_quicksands.yaml")
     return asm_files
 
 
