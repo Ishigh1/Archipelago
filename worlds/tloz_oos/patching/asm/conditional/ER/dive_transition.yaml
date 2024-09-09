@@ -1,0 +1,38 @@
+08/118A/: db 6B # Makes it so that subid D uses the same code as above
+
+08/1286/: |
+  add a,a
+  ld hl,@warpDestLocations
+  rst 18 ; rst_addDoubleIndex
+  ld bc,wWarpDestGroup
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestRoom
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestPos
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition2
+  ld a,$03 ; Fadeout
+  ld (bc),a
+  jp interactionDelete
+  
+  @warpDestLocations: ; group, room, transition, position - 08:52A0
+  db $87,$e0,$01,$02
+  db $87,$e1,$01,$0b
+  db $87,$e4,$01,$02
+  db $87,$e6,$01,$02
+  db $87,$e7,$01,$0d
+  db $85,$12,$05,$29
+
+# 8:52B8 to 8:52D3 is now free
+
+# Remove a useless warp to replace it by the warp to 512
+04/3451/: |
+  db $12,$29,$05
+# 04:7462 to 7466 are free
+

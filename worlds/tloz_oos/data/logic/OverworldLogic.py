@@ -208,7 +208,8 @@ def make_holodrum_logic(player: int):
         ["suburbs fairy fountain", "suburbs NE", OoSEntranceType.TwoWay, lambda state, season: season == SEASON_WINTER],
         ["suburbs NE", "moblin road", OoSEntranceType.TwoWay, None],
 
-        ["sunken city", "woods of winter, 2nd cave", OoSEntranceType.OneWay, lambda state, season: all([
+        ["sunken city", "enter south sunken city dive spot", OoSEntranceType.TwoWay, None],
+        ["enter south sunken city dive spot", "inside south sunken city dive spot", OoSEntranceType.DiveOneWay, lambda state, season: all([
             oos_has_flippers(state, player),
             season != SEASON_WINTER,
             any([
@@ -220,6 +221,7 @@ def make_holodrum_logic(player: int):
                 ])
             ])
         ])],
+        ["inside south sunken city dive spot", "woods of winter, 2nd cave", OoSEntranceType.OneWay, None],
 
         ["moblin road", "enter first woods of winter cave", OoSEntranceType.TwoWay, None],
         ["enter first woods of winter cave", "inside first woods of winter cave", OoSEntranceType.DoorTwoWay, lambda state, season: all([
@@ -846,11 +848,12 @@ def make_holodrum_logic(player: int):
             oos_can_break_bush(state, player, False)
         ])],
 
-        ["mount cucco", "sunken city", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
-        ["sunken city", "mount cucco", OoSEntranceType.OneWay, lambda state, season: all([
-            oos_has_flippers(state, player),
-            season == SEASON_SUMMER
-        ])],
+        ["sunken city", "enter north sunken city dive spot", OoSEntranceType.TwoWay, None],
+        ["enter north sunken city dive spot", "inside north sunken city dive spot", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
+        ["inside north sunken city dive spot", "inside mount cucco dive spot", OoSEntranceType.TwoWay, None],
+        ["inside mount cucco dive spot", "enter mount cucco dive spot", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
+
+        ["enter mount cucco dive spot", "mount cucco", OoSEntranceType.TwoWayAsymmetric, lambda state, season: season == SEASON_SUMMER],
         ["sunken city gasha spot", "enter flooded house", OoSEntranceType.OneWay, lambda state: any([
             oos_can_swim(state, player, False),
             oos_can_jump_3_wide_liquid(state, player)  # TODO : test that
@@ -921,7 +924,9 @@ def make_holodrum_logic(player: int):
         ["mt. cucco, talon's cave entrance", "mt. cucco heart piece", OoSEntranceType.OneWay, None],
         ["mt. cucco heart piece", "mount cucco", OoSEntranceType.OneWay, None],
 
-        ["mt. cucco, talon's cave entrance", "diving spot outside D4", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
+        ["mt. cucco, talon's cave entrance", "enter gem dive spot", OoSEntranceType.TwoWay, lambda state: oos_has_flippers(state, player)],
+        ["enter gem dive spot", "inside gem dive spot", OoSEntranceType.DiveTwoWay, None],
+        ["inside gem dive spot", "diving spot outside D4", OoSEntranceType.OneWay, None],
 
         ["mt. cucco, talon's cave entrance", "enter winter cave in cucco mountain", OoSEntranceType.TwoWay, None],
         ["enter winter cave in cucco mountain", "inside winter cave in cucco mountain", OoSEntranceType.DoorTwoWay,

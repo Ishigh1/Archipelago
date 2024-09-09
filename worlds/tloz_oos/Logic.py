@@ -66,6 +66,8 @@ def create_connections(multiworld: MultiWorld, player: int):
 
                     if OoSEntranceType.Waterfall in entrance_type:
                         entrance.randomization_group = 1
+                    elif OoSEntranceType.DiveFlag in entrance_type:
+                        entrance.randomization_type = 2
 
                     entrance.randomization_type = EntranceType.TWO_WAY
                     oos_world.entrances_to_randomize.append(entrance)

@@ -34,6 +34,7 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/ER/reset_season_transition.yaml")
         asm_files.append("asm/conditional/ER/keep_stairs.yaml")
         asm_files.append("asm/conditional/ER/transition_on_quicksands.yaml")
+        asm_files.append("asm/conditional/ER/dive_transition.yaml")
     return asm_files
 
 
@@ -721,26 +722,48 @@ def set_misc_warps(rom: RomData, patch_data):
 
     # Apply warp matchings expressed in the patch
     for from_name, to_name in warp_matchings:
-        entrance_addr = NORMAL_EXITS[from_name][0]
-        destination_data_name = NORMAL_EXITS[to_name][1]
-        destination_values = trans_values[destination_data_name]
-
         if from_name in WATERFALL_WARPS:
+            entrance_addr = NORMAL_EXITS[from_name][0]
+            destination_data_name = NORMAL_EXITS[to_name][1]
+            destination_values = trans_values[destination_data_name]
             rom.write_bytes(entrance_addr, destination_values)
             continue
 
-        rom.write_byte(entrance_addr, destination_values[0])  # pointer to room destination
-        group = destination_values[1] & 0xF0
-        trans_type = trans_values[from_name][1] & 0x0F  # This one needs to not change
-        rom.write_byte(entrance_addr + 1, group | trans_type)
+        if to_name in SPECIAL_WARPS:
+            destination_values = SPECIAL_WARPS[to_name]
+            group_low = destination_values[1]
+            group_high = group_low << 4
+        else:
+            if to_name in DIRECT_WARPS:
+                destination_data_name = DIRECT_WARPS[to_name][1]
+            else:
+                destination_data_name = NORMAL_EXITS[to_name][1]
+            destination_values = trans_values[destination_data_name]
+            group_high = destination_values[1] & 0xF0
+            group_low = group_high >> 4
 
-        group >>= 4
-        warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
+        dest_id = destination_values[0]
+        warp_dest_data_addr = WARP_DEST_ADDR[group_low] + destination_values[0] * 3
+        room = rom.read_byte(warp_dest_data_addr)
+        position = rom.read_byte(warp_dest_data_addr + 1)
+        dest_transition = rom.read_byte(warp_dest_data_addr + 2)
+
+        if from_name in DIRECT_WARPS:
+            rom.write_bytes(DIRECT_WARPS[from_name][0], [
+                group_low | 0x80,
+                room,
+                dest_transition,
+                position
+            ])
+        else:
+            entrance_addr = NORMAL_EXITS[from_name][0]
+            trans_type = trans_values[from_name][1] & 0x0F  # This one needs to not change
+            rom.write_byte(entrance_addr, dest_id)  # pointer to room destination
+            rom.write_byte(entrance_addr + 1, group_high | trans_type)
+
         if from_name == "inside dance hall":
-            room = rom.read_byte(warp_dest_data_addr)
-            position = rom.read_byte(warp_dest_data_addr + 1)
             rom.write_bytes(0x25DCA, [
-                group | 0x80,
+                group_low | 0x80,
                 room,
                 0x00,
                 position

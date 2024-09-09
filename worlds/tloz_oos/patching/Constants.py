@@ -355,7 +355,7 @@ ASM_FILES = [
     "asm/multi.yaml",
     "asm/new_game.yaml",
     "asm/new_treasures.yaml",
-    "asm/permanent_subrosia_pirate_ship.yaml"
+    "asm/permanent_subrosia_pirate_ship.yaml",
     "asm/progressives.yaml",
     "asm/remove_items_on_use.yaml",
     "asm/rings.yaml",
@@ -758,6 +758,9 @@ NORMAL_EXITS = {
     "inside banana stairs": (0x13B95, "enter banana stairs"),
     "inside banana cave": (0x13B99, "enter banana cave"),
     "inside fast platform cave": (0x13B9D, "enter fast platform cave"),
+    "inside gem dive spot": (0x13DF1, "enter gem dive spot"),
+    "inside mount cucco dive spot": (0x13DE1, "enter mount cucco dive spot"),
+    "inside north sunken city dive spot": (0x13DE5, "enter north sunken city dive spot"),
 
     # Goron Mountain
     "inside goron mountain bottom": (0x13BD1, "enter goron mountain bottom"),
@@ -835,6 +838,30 @@ WATERFALL_WARPS = [
     "inside sunken right waterfall",
     "inside natzu waterfall",
 ]
+
+DIRECT_WARPS = {
+    "enter like like quicksand": (0x24C85, "inside like like quicksand"),
+    "enter deku quicksand": (0x24C88, "inside deku quicksand"),
+    "enter bell quicksand": (0x24C8B, "inside bell quicksand"),
+    "enter treasure quicksand": (0x24C8E, "inside treasure quicksand"),
+
+    "enter gem dive spot": (0x212A0, "inside gem dive spot"),
+    "enter mount cucco dive spot": (0x212A4, "inside mount cucco dive spot"),
+    "enter north sunken city dive spot": (0x212A8, "inside north sunken city dive spot"),
+    "enter south sunken city dive spot": (0x212AC, "inside south sunken city dive spot"),
+}
+
+SPECIAL_WARPS = {
+    "inside like like quicksand": (0xE3, 0x5, "enter like like quicksand"),
+    "inside deku quicksand": (0xE4, 0x5, "enter deku quicksand"),
+    "inside bell quicksand": (0xE5, 0x5, "enter bell quicksand"),
+    "inside treasure quicksand": (0xF2, 0x4, "enter treasure quicksand"),
+
+    "inside gem dive spot": (0x08, 0x7, "enter gem dive spot"),
+    "inside mount cucco dive spot": (0x04, 0x7, "enter mount cucco dive spot"),
+    "inside north sunken city dive spot": (0x05, 0x7, "enter north sunken city dive spot"),
+    "inside south sunken city dive spot": (0xCB, 0x5, "enter south sunken city dive spot"),
+}
 
 SOFTLOCK_WARPS = {
     "enter d1 old man": 0x11,

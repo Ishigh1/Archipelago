@@ -104,6 +104,8 @@ REGIONS = {
         "enter sunken left waterfall",
         "enter sunken right waterfall",
         "enter natzu waterfall",
+        "enter north sunken city dive spot",
+        "enter south sunken city dive spot",
 
         "mount cucco",
         "mt. cucco portal",
@@ -124,6 +126,8 @@ REGIONS = {
         "enter banana stairs",
         "enter banana cave",
         "enter fast platform cave",
+        "enter gem dive spot",
+        "enter mount cucco dive spot",
     ],
     "WESTERN_COAST": [
         "black beast's chest",
@@ -510,6 +514,8 @@ REGIONS = {
         "inside sunken left waterfall",
         "inside sunken right waterfall",
         "inside natzu waterfall",
+        "inside north sunken city dive spot",
+        "inside south sunken city dive spot",
 
         # Cucco Mountain
         "inside mountain fairy cave",
@@ -519,6 +525,8 @@ REGIONS = {
         "inside banana stairs",
         "inside banana cave",
         "inside fast platform cave",
+        "inside gem dive spot",
+        "inside mount cucco dive spot",
 
         # Goron Mountain
         "inside goron mountain bottom",

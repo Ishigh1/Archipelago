@@ -1,5 +1,5 @@
-09/4C67: |
-  add a
+09/0C67/: |
+  add a,a
   ld hl,@warpDestLocations
   rst 10  ; rst_addAToHL
   ld bc,wWarpDestGroup
@@ -19,8 +19,8 @@
   ld (bc),a
   jp interactionDelete
 
-  @warpDestLocations:
-  .db $85 $d0 $03 $57
-  .db $85 $d1 $03 $57
-  .db $85 $d2 $03 $57
-  .db $84 $f4 $03 $27
+  @warpDestLocations: ; group, room, transition, position
+  db $85,$d0,$03,$57
+  db $85,$d1,$03,$57
+  db $85,$d2,$03,$57
+  db $84,$f4,$03,$27
