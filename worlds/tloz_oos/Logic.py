@@ -52,7 +52,12 @@ def create_connections(multiworld: MultiWorld, player: int):
                 entrance = region_1.connect(region_2, entrance_desc[0], rule)
 
                 if OoSEntranceType.Waterfall in entrance_type:
-                    entrance.randomization_group = 1
+                    randomization_group = 1
+                elif OoSEntranceType.DiveFlag in entrance_type:
+                    randomization_group = 2
+                else:
+                    randomization_group = 0
+                entrance.randomization_group = randomization_group
 
                 if OoSEntranceType.DoorTwoWayFlag in entrance_type:
                     entrance.randomization_type = EntranceType.TWO_WAY
@@ -64,11 +69,7 @@ def create_connections(multiworld: MultiWorld, player: int):
                         rule = None
                     entrance = region_2.connect(region_1, entrance_desc[1], rule)
 
-                    if OoSEntranceType.Waterfall in entrance_type:
-                        entrance.randomization_group = 1
-                    elif OoSEntranceType.DiveFlag in entrance_type:
-                        entrance.randomization_type = 2
-
+                    entrance.randomization_group = randomization_group
                     entrance.randomization_type = EntranceType.TWO_WAY
                     oos_world.entrances_to_randomize.append(entrance)
 
