@@ -263,6 +263,10 @@ REGIONS = {
         "enter desert cave",
         "enter stairs near desert chest",
         "enter desert ship",
+        "enter like like quicksand",
+        "enter deku quicksand",
+        "enter bell quicksand",
+        "enter treasure quicksand",
     ],
     "GORON_MOUNTAIN": [
         "biggoron trade",
@@ -462,6 +466,10 @@ REGIONS = {
         "inside desert cave",
         "inside stairs near desert chest",
         "inside desert ship",
+        "inside like like quicksand",
+        "inside deku quicksand",
+        "inside bell quicksand",
+        "inside treasure quicksand",
 
         # Woods of Winter
         "inside peek cave near d2",

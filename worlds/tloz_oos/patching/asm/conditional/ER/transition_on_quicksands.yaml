@@ -20,7 +20,7 @@
   jp interactionDelete
 
   @warpDestLocations: ; group, room, transition, position
-  db $85,$d0,$03,$57
-  db $85,$d1,$03,$57
-  db $85,$d2,$03,$57
-  db $84,$f4,$03,$27
+  db $85,$d0,$05,$57
+  db $85,$d1,$05,$57
+  db $85,$d2,$05,$57
+  db $84,$f4,$05,$27

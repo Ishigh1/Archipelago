@@ -642,8 +642,8 @@ NORMAL_EXITS = {
     "enter subrosian market": (0x136ED, "inside subrosian market"),
 
     # Furnace area
-    "enter red ore cave": (0x13715, "inside red ore cave"),
-    "enter red ore stairs": (0x13711, "inside red ore stairs"),
+    "enter red ore cave": (0x13725, "inside red ore cave"),
+    "enter red ore stairs": (0x13721, "inside red ore stairs"),
     "enter furnace": (0x136E9, "inside furnace"),
     "enter sign guy": (0x136F9, "inside sign guy"),
 
@@ -787,8 +787,8 @@ NORMAL_EXITS = {
     "inside d8 fairy room": (0x13889, "enter d8 fairy room"),
     "inside temple remains cave": (0x13BAD, "enter temple remains cave"),
     "inside right stairs in top of temple remains": (0x13D85, "enter right stairs in top of temple remains"),
-    "inside middle stairs in top of temple remains": (0x13BB9, "enter middle stairs in top of temple remains"),
-    "inside left stairs in top of temple remains": (0x13BBD, "enter left stairs in top of temple remains"),
+    "inside middle stairs in top of temple remains": (0x13BBD, "enter middle stairs in top of temple remains"),
+    "inside left stairs in top of temple remains": (0x13BB9, "enter left stairs in top of temple remains"),
     "inside temple remains bomb cave": (0x13BC5, "enter temple remains bomb cave"),
 
     # Subrosia
@@ -840,10 +840,10 @@ WATERFALL_WARPS = [
 ]
 
 DIRECT_WARPS = {
-    "enter like like quicksand": (0x24C85, "inside like like quicksand"),
-    "enter deku quicksand": (0x24C88, "inside deku quicksand"),
-    "enter bell quicksand": (0x24C8B, "inside bell quicksand"),
-    "enter treasure quicksand": (0x24C8E, "inside treasure quicksand"),
+    "enter like like quicksand": (0x24C81, "inside like like quicksand"),
+    "enter deku quicksand": (0x24C85, "inside deku quicksand"),
+    "enter bell quicksand": (0x24C89, "inside bell quicksand"),
+    "enter treasure quicksand": (0x24C8D, "inside treasure quicksand"),
 
     "enter gem dive spot": (0x212A0, "inside gem dive spot"),
     "enter mount cucco dive spot": (0x212A4, "inside mount cucco dive spot"),

@@ -1099,14 +1099,26 @@ def make_holodrum_logic(player: int):
         ["suburbs", "samasa desert", OoSEntranceType.OneWay, lambda state: state.has("_met_pirates", player)],
         ["samasa desert", "enter desert cave", OoSEntranceType.TwoWay, None],
         ["enter desert cave", "inside desert cave", OoSEntranceType.DoorTwoWay, None],
-        ["samasa desert", "inside desert cave", OoSEntranceType.OneWay, None],
-        ["samasa desert", "samasa desert pit", OoSEntranceType.OneWay, lambda state: all([
+        ["samasa desert", "enter like like quicksand", OoSEntranceType.TwoWay, None],
+        ["enter like like quicksand", "inside like like quicksand", OoSEntranceType.DoorOneWay, None],
+        # ["inside like like quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["samasa desert", "enter deku quicksand", OoSEntranceType.TwoWay, None],
+        ["enter deku quicksand", "inside deku quicksand", OoSEntranceType.DoorOneWay, None],
+        # ["inside deku quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["samasa desert", "enter bell quicksand", OoSEntranceType.TwoWay, None],
+        ["enter bell quicksand", "inside bell quicksand", OoSEntranceType.DoorOneWay, lambda state: all([
             oos_has_bracelet(state, player),
             state.has("_met_pirate_head", player)
         ])],
-        ["samasa desert", "inside stairs near desert chest", OoSEntranceType.TwoWay, None],
+        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.OneWay, None],
+        # ["samasa desert pit", "inside desert cave", OoSEntranceType.OneWay, None],
+
+        ["samasa desert", "enter treasure quicksand", OoSEntranceType.TwoWay, None],
+        ["enter treasure quicksand", "inside treasure quicksand", OoSEntranceType.DoorOneWay, None],
+        ["inside treasure quicksand", "inside stairs near desert chest", OoSEntranceType.TwoWay, lambda state: oos_has_flippers(state, player)],
         ["inside stairs near desert chest", "enter stairs near desert chest", OoSEntranceType.DoorTwoWay, None],
-        ["enter stairs near desert chest", "samasa desert chest", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
+        ["enter stairs near desert chest", "samasa desert chest", OoSEntranceType.OneWay, None],
+        ["samasa desert chest", "samasa desert", OoSEntranceType.OneWay, None],
         ["samasa desert", "enter desert fairy cave", OoSEntranceType.TwoWay, lambda state: any([
             oos_can_swim(state, player, False),
             oos_can_jump_2_wide_pit(state, player)  # It's a liquid but the jump distance is 1.5
