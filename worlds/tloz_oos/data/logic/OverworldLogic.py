@@ -870,7 +870,10 @@ def make_holodrum_logic(player: int):
 
         ["mount cucco", "mt. cucco portal", OoSEntranceType.TwoWay, None],
 
-        ["mount cucco", "enter mountain fairy cave", OoSEntranceType.TwoWay, None],
+        ["mount cucco", "enter mountain fairy cave", OoSEntranceType.TwoWayAsymmetric, lambda state: any([
+            state.has("Spring Banana", player),
+            oos_can_jump_1_wide_pit(state, player, False)
+        ])],
         ["enter mountain fairy cave", "inside mountain fairy cave", OoSEntranceType.DoorTwoWay, lambda state, season: \
             season == SEASON_WINTER],
 

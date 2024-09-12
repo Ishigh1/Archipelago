@@ -817,7 +817,7 @@ NORMAL_EXITS = {
     "inside red ore cave": (0x13A25, "enter red ore cave"),
     "inside red ore stairs": (0x13A21, "enter red ore stairs"),
     "inside furnace": (0x1385D, "enter furnace"),
-    "inside sign guy": (0x1388D, "enter sign guy"),
+    "inside sign guy": (0x13891, "enter sign guy"),
 
     # Pirate area
     "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
@@ -845,17 +845,17 @@ DIRECT_WARPS = {
     "enter bell quicksand": (0x24C89, "inside bell quicksand"),
     "enter treasure quicksand": (0x24C8D, "inside treasure quicksand"),
 
-    "enter gem dive spot": (0x212A0, "inside gem dive spot"),
-    "enter mount cucco dive spot": (0x212A4, "inside mount cucco dive spot"),
-    "enter north sunken city dive spot": (0x212A8, "inside north sunken city dive spot"),
-    "enter south sunken city dive spot": (0x212AC, "inside south sunken city dive spot"),
+    "enter gem dive spot": (0x212A8, "inside gem dive spot"),
+    "enter mount cucco dive spot": (0x212A0, "inside mount cucco dive spot"),
+    "enter north sunken city dive spot": (0x212A4, "inside north sunken city dive spot"),
+    "enter south sunken city dive spot": (0x212B4, "inside south sunken city dive spot"),
 }
 
 SPECIAL_WARPS = {
-    "inside like like quicksand": (0xE3, 0x5, "enter like like quicksand"),
-    "inside deku quicksand": (0xE4, 0x5, "enter deku quicksand"),
-    "inside bell quicksand": (0xE5, 0x5, "enter bell quicksand"),
-    "inside treasure quicksand": (0xF2, 0x4, "enter treasure quicksand"),
+    "inside like like quicksand": (0x85, 0x5, "enter like like quicksand"),
+    "inside deku quicksand": (0x86, 0x5, "enter deku quicksand"),
+    "inside bell quicksand": (0x87, 0x5, "enter bell quicksand"),
+    "inside treasure quicksand": (0x50, 0x4, "enter treasure quicksand"),
 
     "inside gem dive spot": (0x08, 0x7, "enter gem dive spot"),
     "inside mount cucco dive spot": (0x04, 0x7, "enter mount cucco dive spot"),

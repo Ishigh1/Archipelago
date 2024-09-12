@@ -34,5 +34,4 @@
 # Remove a useless warp to replace it by the warp to 512
 04/3451/: |
   db $12,$29,$05
-# 04:7462 to 7466 are free
 
