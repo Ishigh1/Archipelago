@@ -860,7 +860,7 @@ SPECIAL_WARPS = {
     "inside gem dive spot": (0x08, 0x7, "enter gem dive spot"),
     "inside mount cucco dive spot": (0x04, 0x7, "enter mount cucco dive spot"),
     "inside north sunken city dive spot": (0x05, 0x7, "enter north sunken city dive spot"),
-    "inside south sunken city dive spot": (0xCB, 0x5, "enter south sunken city dive spot"),
+    "inside south sunken city dive spot": (0xC9, 0x5, "enter south sunken city dive spot"),
 }
 
 SOFTLOCK_WARPS = {
