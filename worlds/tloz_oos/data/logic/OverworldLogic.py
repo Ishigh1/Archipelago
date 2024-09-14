@@ -721,7 +721,7 @@ def make_holodrum_logic(player: int):
             oos_can_jump_5_wide_pit(state, player),
             oos_can_summon_moosh(state, player)
         ])],
-        ["enter moosh deku", "inside moosh deku", OoSEntranceType.DoorTwoWay, None],
+        ["enter moosh deku", "inside moosh deku", OoSEntranceType.DoorTwoWayMoosh, None],
 
         ["natzu east", "moblin keep bridge", OoSEntranceType.TwoWayRicky, None],
         ["natzu east", "moblin keep bridge", OoSEntranceType.TwoWayMoosh, lambda state: any([
