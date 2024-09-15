@@ -764,7 +764,7 @@ def make_holodrum_logic(player: int):
         ["goron mountain entrance", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
         ["moblin keep bridge", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
         ["enter dimitri fairy", "enter natzu waterfall", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_summon_dimitri(state, player)],
-        ["enter natzu waterfall", "inside natzu waterfall", OoSEntranceType.WaterfallDimitri, None],
+        ["enter natzu waterfall", "inside natzu waterfall", OoSEntranceType.TwoWayDimitri, None],  # TODO: Not randomized currently because of the season
 
         ["natzu river bank", "goron mountain entrance", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
 
@@ -804,8 +804,10 @@ def make_holodrum_logic(player: int):
             state.has("Goron Vase", player),
             oos_self_locking_item(state, player, "ingo trade", "Goron Vase")
         ])],
+
         ["sunken city", "enter syrup", OoSEntranceType.TwoWay, lambda state, season: season == SEASON_WINTER],
         ["enter syrup", "inside syrup", OoSEntranceType.DoorTwoWay, None],
+
         ["inside syrup", "syrup trade", OoSEntranceType.OneWay, lambda state: state.has("Mushroom", player)],
         ["syrup trade", "syrup shop", OoSEntranceType.OneWay, lambda state: oos_has_rupees(state, player, 600)],
 
@@ -854,17 +856,22 @@ def make_holodrum_logic(player: int):
         ["inside mount cucco dive spot", "enter mount cucco dive spot", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
 
         ["enter mount cucco dive spot", "mount cucco", OoSEntranceType.TwoWayAsymmetric, lambda state, season: season == SEASON_SUMMER],
+        ["sunken city gasha spot", "sunken city stump", OoSEntranceType.OneWay, None],
         ["sunken city gasha spot", "enter flooded house", OoSEntranceType.OneWay, lambda state: any([
             oos_can_swim(state, player, False),
             oos_can_jump_3_wide_liquid(state, player)  # TODO : test that
         ])],
         ["enter flooded house", "sunken city gasha spot", OoSEntranceType.OneWay, None],
-        ["sunken city gasha spot", "sunken city stump", OoSEntranceType.OneWay, None],
         ["enter flooded house", "inside flooded house", OoSEntranceType.DoorTwoWay, None],
+
         ["sunken city", "enter treasure hunter", OoSEntranceType.TwoWay, None],
         ["enter treasure hunter", "inside treasure hunter", OoSEntranceType.DoorTwoWay, None],
+
         ["sunken city", "enter bomb house", OoSEntranceType.TwoWay, None],
         ["enter bomb house", "inside bomb house", OoSEntranceType.DoorTwoWay, None],
+
+        ["sunken city", "enter master diver house", OoSEntranceType.TwoWay, None],
+        ["enter master diver house", "inside master diver house", OoSEntranceType.DoorTwoWay, None],
 
         # MT. CUCCO / GORON MOUNTAINS ##############################################################################
 

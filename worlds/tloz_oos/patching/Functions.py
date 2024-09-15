@@ -715,24 +715,29 @@ def set_misc_warps(rom: RomData, patch_data):
 
     for name, info in NORMAL_EXITS.items():
         if info[0] is not None:
-            if name in WATERFALL_WARPS:
-                trans_values[name] = rom.read_bytes(info[0], 4)
-            else:
-                trans_values[name] = rom.read_bytes(info[0], 2)
+            trans_values[name] = rom.read_bytes(info[0], 2)
 
     # Apply warp matchings expressed in the patch
     for from_name, to_name in warp_matchings:
-        if from_name in WATERFALL_WARPS:
-            entrance_addr = NORMAL_EXITS[from_name][0]
-            destination_data_name = NORMAL_EXITS[to_name][1]
-            destination_values = trans_values[destination_data_name]
-            rom.write_bytes(entrance_addr, destination_values)
-            continue
-
-        if to_name in SPECIAL_WARPS:
+        if to_name in WATERFALL_WARPS:
+            destination_values = rom.read_bytes(WATERFALL_WARPS[to_name][0], 4)
+            group_low = destination_values[0]
+            group_high = group_low << 4
+            room = destination_values[1]
+            position = destination_values[2]
+            dest_transition = -1
+            warp_dest_data_addr = -1
+            dest_id = -1
+        elif to_name in SPECIAL_WARPS:
             destination_values = SPECIAL_WARPS[to_name]
             group_low = destination_values[1]
             group_high = group_low << 4
+            dest_id = destination_values[0]
+            warp_dest_data_addr = WARP_DEST_ADDR[group_low] + dest_id * 3
+
+            room = rom.read_byte(warp_dest_data_addr + 1)
+            position = rom.read_byte(warp_dest_data_addr + 2)
+            dest_transition = rom.read_byte(warp_dest_data_addr + 3)
         else:
             if to_name in DIRECT_WARPS:
                 destination_data_name = DIRECT_WARPS[to_name][1]
@@ -741,14 +746,30 @@ def set_misc_warps(rom: RomData, patch_data):
             destination_values = trans_values[destination_data_name]
             group_high = destination_values[1] & 0xF0
             group_low = group_high >> 4
+            dest_id = destination_values[0]
+            warp_dest_data_addr = WARP_DEST_ADDR[group_low] + dest_id * 3
+            room = rom.read_byte(warp_dest_data_addr)
+            position = rom.read_byte(warp_dest_data_addr + 1)
+            dest_transition = rom.read_byte(warp_dest_data_addr + 2)
 
-        dest_id = destination_values[0]
-        warp_dest_data_addr = WARP_DEST_ADDR[group_low] + destination_values[0] * 3
-        room = rom.read_byte(warp_dest_data_addr)
-        position = rom.read_byte(warp_dest_data_addr + 1)
-        dest_transition = rom.read_byte(warp_dest_data_addr + 2)
+        if to_name in SOFTLOCK_WARPS:
+            position += SOFTLOCK_WARPS[to_name]
+            if warp_dest_data_addr >= 0:
+                rom.write_byte(warp_dest_data_addr + 1, position)
 
-        if from_name in DIRECT_WARPS:
+        if to_name in SEASON_WARP:
+            assert (dest_transition == 0x01)  # If this is false, then 0x02 doesn't handle it well
+            dest_transition = 0x02
+            if warp_dest_data_addr >= 0:
+                rom.write_byte(warp_dest_data_addr + 2, 0x02)
+
+        if from_name in WATERFALL_WARPS:
+            rom.write_bytes(WATERFALL_WARPS[from_name][0], [
+                group_low,
+                room,
+                position
+            ])
+        elif from_name in DIRECT_WARPS:
             rom.write_bytes(DIRECT_WARPS[from_name][0], [
                 group_low | 0x80,
                 room,
@@ -768,12 +789,3 @@ def set_misc_warps(rom: RomData, patch_data):
                 0x00,
                 position
             ])
-
-        if to_name in SOFTLOCK_WARPS:
-            warp_dest_data_pos_addr = warp_dest_data_addr + 1
-            rom.write_byte(warp_dest_data_pos_addr, rom.read_byte(warp_dest_data_pos_addr) + SOFTLOCK_WARPS[to_name])
-
-        if to_name in SEASON_WARP:
-            warp_dest_data_flags_addr = warp_dest_data_addr + 2
-            assert (rom.read_byte(warp_dest_data_flags_addr) == 0x01)  # If this is false, then 0x02 doesn't handle it well
-            rom.write_byte(warp_dest_data_flags_addr, 0x02)

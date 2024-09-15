@@ -577,9 +577,6 @@ NORMAL_EXITS = {
     "enter bomb house": (0x134CD, "inside bomb house"),
     "enter master diver house": (0x134F1, "inside master diver house"),
     "enter sunken city, summer cave": (0x1352D, "inside sunken city, summer cave"),
-    "enter sunken left waterfall": (0x211E5, "inside sunken left waterfall"),
-    "enter sunken right waterfall": (0x211E9, "inside sunken right waterfall"),
-    "enter natzu waterfall": (0x211ED, "inside natzu waterfall"),
 
     # Cucco Mountain
     "enter mountain fairy cave": (0x135FD, "inside mountain fairy cave"),
@@ -746,9 +743,6 @@ NORMAL_EXITS = {
     "inside treasure hunter": (0x13861, "enter treasure hunter"),
     "inside bomb house": (0x13895, "enter bomb house"),
     "inside master diver": (0x138B9, "enter master diver"),
-    "inside sunken left waterfall": (0x211F1, "enter sunken left waterfall"),
-    "inside sunken right waterfall": (0x211F5, "enter sunken right waterfall"),
-    "inside natzu waterfall": (0x211F9, "enter natzu waterfall"),
 
     # Cucco Mountain
     "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),
@@ -829,15 +823,15 @@ NORMAL_EXITS = {
     "inside subrosia ship": (0x13CA1, "enter subrosia ship"),
 }
 
-WATERFALL_WARPS = [
-    "enter sunken left waterfall",
-    "enter sunken right waterfall",
-    "enter natzu waterfall",
+WATERFALL_WARPS = {
+    "enter sunken left waterfall": (0x211E5, "inside sunken left waterfall"),
+    "enter sunken right waterfall": (0x211E9, "inside sunken right waterfall"),
+    "enter natzu waterfall": (0x211ED, "inside natzu waterfall"),
 
-    "inside sunken left waterfall",
-    "inside sunken right waterfall",
-    "inside natzu waterfall",
-]
+    "inside sunken left waterfall": (0x211F1, "enter sunken left waterfall"),
+    "inside sunken right waterfall": (0x211F5, "enter sunken right waterfall"),
+    "inside natzu waterfall": (0x211F9, "enter natzu waterfall"),
+}
 
 DIRECT_WARPS = {
     "enter like like quicksand": (0x24C81, "inside like like quicksand"),
@@ -895,9 +889,10 @@ SOFTLOCK_WARPS = {
     "enter goron old man": -0x10,
     "enter goron mountain bomb cave": 0x10,
 
-    "enter tarm ruins, under tree": 0x01,
-
+    "enter lost woods bomb cave": 0x10,
     "enter phonograph deku": -0x10,
+
+    "enter tarm ruins, under tree": 0x01,
 
     "enter temple remains bomb cave": 0x10,
 
@@ -916,6 +911,19 @@ SEASON_WARP = {
     "enter goron old man",
     "enter goron mountain bomb cave",
     "enter goron outside stairs",
+    "enter left cave to lynel in goron mountain",
+    "enter right cave to lynel in goron mountain",
+    "enter lynel stairs in goron mountain",
+    "enter goron ring cave",
+
+    "enter natzu north stairs",
+    "enter moblin keep left",
+    "enter moblin keep right",
+    "enter ricky fairy",
+    "enter moosh fairy",
+    "enter dimitri fairy",
+    "enter ricky deku",
+    "enter moosh deku",
 
     "enter desert fairy cave",
     "enter desert ship",
