@@ -72,6 +72,7 @@ class OoSPatchExtensions(APPatchExtension):
         set_character_sprite_from_settings(rom_data)
         inject_slot_name(rom_data, caller.player_name)
 
+        rom_data.update_header_checksum()
         rom_data.update_checksum(0x14e)
         return rom_data.output()
 

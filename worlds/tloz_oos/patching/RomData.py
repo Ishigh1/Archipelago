@@ -42,6 +42,16 @@ class RomData:
     def add_bank(self, fill: int) -> None:
         self.file.extend([fill] * 0x4000)
 
+    def update_header_checksum(self) -> None:
+        """
+        Updates the 8-bit checksum for ROM data located in the rom header.
+        """
+        result = -0x19
+        for b in self.read_bytes(0x134, 0x19):
+            result -= int(b)
+            print(hex(result), hex(b))
+        self.write_byte(0x14D, result & 0xFF)
+
     def update_checksum(self, address):
         """
         Updates the 16-bit checksum for ROM data located in the rom header.

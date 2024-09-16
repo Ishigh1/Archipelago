@@ -1,12 +1,12 @@
 40//warpDestTable: |
   dw $4000
   dw $4180
-  dw $41F0
-  dw $42B0
-  dw $43A0
-  dw $44C0
-  dw $46D0
-  dw $4700
+  dw $4200
+  dw $42C0
+  dw $43B0
+  dw $44D0
+  dw $46F0
+  dw $4720
 
 40//applyWarpDest: |
   ld a,(wWarpDestGroup)
@@ -15,20 +15,19 @@
   jr nz,label_04_032
   
   ld hl,warpDestTable
-  rst_addDoubleIndex
+  rst 18      ; rst_addDoubleIndex
   ldi a,(hl)
   ld h,(hl)
   ld l,a
   ld a,(wWarpDestRoom)
   ld b,a
-  ld a,(wc6e5)
-  add b
+  ld a,($c6e5)
+  add a,b
   jr label_04_033
-  .endif
 
   label_04_032:
   ld hl,warpDestTable
-  rst_addDoubleIndex
+  rst 18      ; rst_addDoubleIndex
   ldi a,(hl)
   ld h,(hl)
   ld l,a
@@ -52,7 +51,7 @@
   ld hl,$460C
   jp interBankCall
 
-04/05D7: |
+04/05D7/: |
   ld e,$40
   ld hl,applyWarpDest
   jp interBankCall

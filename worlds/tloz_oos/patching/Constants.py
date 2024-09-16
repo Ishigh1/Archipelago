@@ -355,6 +355,7 @@ ASM_FILES = [
     "asm/map_menu.yaml",
     "asm/maku_tree.yaml",
     "asm/misc.yaml",
+    "asm/move_dest_warp_data.yaml",
     "asm/multi.yaml",
     "asm/new_game.yaml",
     "asm/new_treasures.yaml",
