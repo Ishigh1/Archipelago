@@ -1,0 +1,60 @@
+40//warpDestTable: |
+  dw $4000
+  dw $4180
+  dw $41F0
+  dw $42B0
+  dw $43A0
+  dw $44C0
+  dw $46D0
+  dw $4700
+
+40//applyWarpDest: |
+  ld a,(wWarpDestGroup)
+  and $0f
+  cp $02
+  jr nz,label_04_032
+  
+  ld hl,warpDestTable
+  rst_addDoubleIndex
+  ldi a,(hl)
+  ld h,(hl)
+  ld l,a
+  ld a,(wWarpDestRoom)
+  ld b,a
+  ld a,(wc6e5)
+  add b
+  jr label_04_033
+  .endif
+
+  label_04_032:
+  ld hl,warpDestTable
+  rst_addDoubleIndex
+  ldi a,(hl)
+  ld h,(hl)
+  ld l,a
+  ld a,(wWarpDestRoom)
+  
+  label_04_033:
+  ld c,a
+  ld b,$00
+  add hl,bc
+  add hl,bc
+  add hl,bc
+  ldi a,(hl)
+  ld (wWarpDestRoom),a
+  ldi a,(hl)
+  ld (wWarpDestPos),a
+  ldi a,(hl)
+  or $80
+  ld (wWarpTransition),a
+  
+  ld e,$04
+  ld hl,$460C
+  jp interBankCall
+
+04/05D7: |
+  ld e,$40
+  ld hl,applyWarpDest
+  jp interBankCall
+
+# 04:45E0 to 04:460B is free

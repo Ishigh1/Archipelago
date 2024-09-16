@@ -31,7 +31,7 @@
 
 # 8:52B8 to 8:52D3 is now free
 
-# Remove a useless warp to replace it by the warp to 512
-04/3451/: |
+# Add a warp to 512
+40/06E0/: |
   db $12,$29,$05
 

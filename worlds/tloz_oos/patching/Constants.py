@@ -64,7 +64,10 @@ EOB_ADDR = [
     0x4000,  # 3c
     0x4000,  # 3d
     0x4000,  # 3e
-    0x314b  # 3f - also here
+    0x314b,  # 3f - also here
+
+    # New banks
+    0x0750,  # 40 - rounded up to leave room for more warps, subject to change
 ]
 
 DEFINES = {
@@ -475,14 +478,14 @@ DUNGEON_EXITS = {
 }
 
 WARP_DEST_ADDR = [
-    0x12D5E,
-    0x12ED2,
-    0x12F47,
-    0x12FFB,
-    0x130DF,
-    0x131F6,
-    0x13406,
-    0x13436
+    0x100000,
+    0x100180,
+    0x100200,
+    0x1002C0,
+    0x1003B0,
+    0x1004D0,
+    0x1006F0,
+    0x100720
 ]
 
 # Format = name: (transition_address, opposite entrance name)
@@ -846,15 +849,15 @@ DIRECT_WARPS = {
 }
 
 SPECIAL_WARPS = {
-    "inside like like quicksand": (0x85, 0x5, "enter like like quicksand"),
-    "inside deku quicksand": (0x86, 0x5, "enter deku quicksand"),
-    "inside bell quicksand": (0x87, 0x5, "enter bell quicksand"),
-    "inside treasure quicksand": (0x50, 0x4, "enter treasure quicksand"),
+    "inside like like quicksand": (0xB1, 0x5, "enter like like quicksand"),
+    "inside deku quicksand": (0xB2, 0x5, "enter deku quicksand"),
+    "inside bell quicksand": (0xB3, 0x5, "enter bell quicksand"),
+    "inside treasure quicksand": (0x5D, 0x4, "enter treasure quicksand"),
 
     "inside gem dive spot": (0x08, 0x7, "enter gem dive spot"),
     "inside mount cucco dive spot": (0x04, 0x7, "enter mount cucco dive spot"),
     "inside north sunken city dive spot": (0x05, 0x7, "enter north sunken city dive spot"),
-    "inside south sunken city dive spot": (0xC9, 0x5, "enter south sunken city dive spot"),
+    "inside south sunken city dive spot": (0xB0, 0x5, "enter south sunken city dive spot"),
 }
 
 SOFTLOCK_WARPS = {

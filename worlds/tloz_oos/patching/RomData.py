@@ -39,6 +39,9 @@ class RomData:
         value = value & 0xFFFF
         self.write_bytes(address, [(value >> 8) & 0xFF, value & 0xFF])
 
+    def add_bank(self, fill: int) -> None:
+        self.file.extend([fill] * 0x4000)
+
     def update_checksum(self, address):
         """
         Updates the 16-bit checksum for ROM data located in the rom header.
@@ -52,6 +55,18 @@ class RomData:
             result += b
         result &= 0xffff
         self.write_word_be(address, result & 0xffff)
+
+    def update_rom_size(self) -> None:
+        """
+         Updates the ROM size for ROM data located in the rom header.
+        """
+        if len(self.file) == 0x100000:
+            self.write_byte(0x148, 0x05)
+        elif len(self.file) == 0x200000:
+            self.write_byte(0x148, 0x06)
+        else:
+            raise ValueError(f"Invalid ROM size: {hex(len(self.file))}")
+
 
     def get_chest_addr(self, group_and_room: int):
         """

@@ -13,6 +13,25 @@ from .. import LOCATIONS_DATA, OracleOfSeasonsOldMenShuffle, OracleOfSeasonsGoal
 from pathlib import Path
 
 
+def copy_warp_dest_table(rom: RomData) -> None:
+    # group 0 warps : next id is 7B at 100174
+    rom.write_bytes(WARP_DEST_ADDR[0], rom.read_bytes(0x12D5E, 0x174))
+    # group 1 warps : next id is 27 at 1001F5
+    rom.write_bytes(WARP_DEST_ADDR[1], rom.read_bytes(0x12ED2, 0x075))
+    # group 2 warps : next id is 3C at 1002B4
+    rom.write_bytes(WARP_DEST_ADDR[2], rom.read_bytes(0x12F47, 0x0B4))
+    # group 3 warps : next id is 4C at 1003A4
+    rom.write_bytes(WARP_DEST_ADDR[3], rom.read_bytes(0x12FFB, 0x0E4))
+    # group 4 warps : next id is 5E at 1004CA (+1)
+    rom.write_bytes(WARP_DEST_ADDR[4], rom.read_bytes(0x130DF, 0x117))
+    # group 5 warps : next id is B4 at 1006EC (+4)
+    rom.write_bytes(WARP_DEST_ADDR[5], rom.read_bytes(0x131F6, 0x210))
+    # group 6 warps : next id is 10 at 100720
+    rom.write_bytes(WARP_DEST_ADDR[6], rom.read_bytes(0x13406, 0x030))
+    # group 7 warps : next id is 0B at 100741
+    rom.write_bytes(WARP_DEST_ADDR[7], rom.read_bytes(0x13436, 0x021))
+
+
 def get_asm_files(patch_data):
     asm_files = ASM_FILES.copy()
     if patch_data["options"]["quick_flute"]:
