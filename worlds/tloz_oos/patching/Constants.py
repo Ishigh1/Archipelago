@@ -745,7 +745,7 @@ NORMAL_EXITS = {
     "inside flooded house": (0x13859, "enter flooded house"),
     "inside treasure hunter": (0x13861, "enter treasure hunter"),
     "inside bomb house": (0x13895, "enter bomb house"),
-    "inside master diver": (0x138B9, "enter master diver"),
+    "inside master diver house": (0x138B9, "enter master diver house"),
 
     # Cucco Mountain
     "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),

@@ -517,7 +517,7 @@ REGIONS = {
         "inside flooded house",
         "inside treasure hunter",
         "inside bomb house",
-        "inside master diver",
+        "inside master diver house",
         "inside sunken city, summer cave",
         "inside sunken left waterfall",
         "inside sunken right waterfall",
