@@ -1,0 +1,13 @@
+# Make bombchus like bombs
+3f/2C53/: db $0D,SND_GETSEED
+
+# Move wSeedSatchelLevel to leave space for wMaxBombchus (which isn't vanilla)
+# giveTreasure_body@modef
+3f/060A/: ld a,(wSeedSatchelLevel)
+
+# treasure collection behavior
+3f/2C76/: db <wSeedSatchelLevel
+3f/2D51/: db <wSeedSatchelLevel
+
+# d4 scrub ember refill / interactionCodece@giveEmberSeeds
+0f/354c/: ld a,(wSeedSatchelLevel)

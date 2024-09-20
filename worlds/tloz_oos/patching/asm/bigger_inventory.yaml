@@ -1,0 +1,119 @@
+# Move inventory from c680-c691 to c6e9-c6ff towInventoryStorage get 5 extra spaces
+
+# addTreasureToInventory
+3f/06CC/: ld a,<wInventoryB
+3f/06E3/: |
+  ld hl,wInventoryB
+  ld b,$16 ; INVENTORY_CAPACITY+2
+3f/06F0/: ld l,<wInventoryB
+3f/06F9/: sub <wInventoryStorage
+
+# loadEquippedItemGfx
+02/12AC/: ld a,(wInventoryB)
+02/12BA/: ld a,(wInventoryA)
+
+# drawItemTilesOnStatusBar
+02/1334/: ld a,(wInventoryB)
+02/133D/: ld a,(wInventoryA)
+
+# loadStatusBarMap
+02/14AC/: ld a,(wInventoryB)
+
+# inventoryMenuState1
+02/15DB/: ld a,<wInventoryB
+02/15EC/: ld hl,wInventoryStorage
+02/1604/: ld hl,wInventoryStorage
+# 02/163D/: ld d,>wInventoryStorage
+02/1647/: add a,<wInventoryStorage
+02/1655/: ld l,<wInventoryB
+02/1668/: ld a,(wInventoryB)
+02/166E/: ld a,(wInventoryA)
+02/1674/: ld l,<wInventoryB
+02/167D/: ld l,<wInventoryStorage
+
+# inventorySubscreen0_drawStoredItems
+02/1AE3/: ld a,INVENTORY_CAPACITY
+02/1AE7/: ld hl,wInventoryStorage-1
+02/1AF7/: |
+  ld bc,$5B15
+  call addAToBc
+  ld a,(bc)
+  ld e,a
+  call $5B0B
+02/1B0B/: |
+  ld d,$d0
+  ld a,($ff8d)
+  sub $0D
+  ret c
+  inc d
+  ret
+# 3 free bytes here
+
+02/1B16/: |
+  db $63,$67,$6B,$6F
+  db $A3,$A7,$AB,$AF
+  db $E3,$E7,$EB,$EF
+  db $23,$27,$2B,$2F
+  db $63,$67,$6B,$6F
+
+# inventorySubscreen0CheckDirectionButtons
+02/1849/: call inventorySubscreen0CheckDirectionButtons_wrap
+
+02//inventorySubscreen0CheckDirectionButtons_wrap: |
+  add a,(hl)
+  add a,$14
+  @loop:
+  cp $14
+  ret c
+  sub $14
+  jr @loop
+
+# inventorySubscreen0_drawCursor
+02/191C/: |
+  ld a,$FF
+  ld b,a
+  ld a,(wInventorySubmenu0CursorPos)
+  @loop:
+  inc b
+  sub $04
+  jr nc,@loop
+  add a,$04
+  swap a
+  rlca
+  ld c,a
+  ld a,b
+  call inventorySubscreen0_drawCursor_end
+
+02//inventorySubscreen0_drawCursor_end: |
+  add a,b
+  swap a
+  rrca
+  ld b,a
+  ret
+
+
+# updateParentItemButtonAssignment_body
+06/084A/: ld a,(wInventoryB)
+06/0852/: ld a,(wInventoryA)
+
+# checkUseItems@checkAB
+06/08b5/: ld de,$0100 + <wInventoryA
+06/08bb/: ld de,$0200 + <wInventoryB
+
+# checkItemUsed@punch
+06/090a/: ld l,<wInventoryB
+
+# func_4553@standingAnimation // Draw shield
+06/05E2/: ld a,(wInventoryA)
+06/05E9/: ld a,(wInventoryB)
+
+# putAwayLinksItems
+15/1CB7/: ld hl,wInventoryB
+15/1CC6/: ld l,<wInventoryA
+15/1CE2/: ld l,<wInventoryStorage
+
+# interactionCode5a@checkFightDone
+08/3EEF/: ld hl,wInventoryB
+
+# interactionCode7a@movingTowardRoller
+09/05BB/: ld hl,wInventoryB

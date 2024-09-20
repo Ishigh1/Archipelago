@@ -341,6 +341,10 @@ def oos_has_bombs(state: CollectionState, player: int, amount: int = 1):
     ])
 
 
+def oos_has_bombchus(state: CollectionState, player: int, amount: int = 1):
+    return state.has("Bombchus (10)", player, amount)
+
+
 def oos_has_flute(state: CollectionState, player: int):
     return any([
         oos_can_summon_ricky(state, player),
@@ -571,7 +575,7 @@ def oos_can_use_mystery_seeds(state: CollectionState, player: int):
 
 # Break / kill predicates ###########################################
 
-def oos_can_break_bush(state: CollectionState, player: int, can_summon_companion: bool = False):
+def oos_can_break_bush(state: CollectionState, player: int, can_summon_companion: bool = False, allow_bombchus: bool = False):
     return any([
         oos_has_sword(state, player),
         oos_has_magic_boomerang(state, player),
@@ -585,6 +589,7 @@ def oos_can_break_bush(state: CollectionState, player: int, can_summon_companion
                 oos_has_bombs(state, player, 2),
                 oos_can_use_ember_seeds(state, player, False),
                 (oos_has_slingshot(state, player) and oos_has_gale_seeds(state, player)),
+                allow_bombchus and oos_has_bombchus(state, player, 5)
             ])
         ]),
     ])
@@ -632,6 +637,7 @@ def oos_can_break_flowers(state: CollectionState, player: int, can_summon_compan
                 oos_has_bombs(state, player, 2),
                 oos_can_use_ember_seeds(state, player, False),
                 (oos_has_slingshot(state, player) and oos_has_gale_seeds(state, player)),
+                oos_has_bombchus(state, player, 5),
             ])
         ]),
     ])
@@ -645,7 +651,7 @@ def oos_can_break_crystal(state: CollectionState, player: int):
         all([
             oos_option_hard_logic(state, player),
             state.has("Expert's Ring", player)
-        ])
+        ]),
     ])
 
 
@@ -705,6 +711,7 @@ def oos_can_kill_normal_enemy(state: CollectionState, player: int, pit_available
         oos_can_kill_normal_using_satchel(state, player),
         oos_can_kill_normal_using_slingshot(state, player),
         (oos_option_medium_logic(state, player) and oos_has_bombs(state, player, 4)),
+        oos_has_bombchus(state, player, 2),
         oos_can_punch(state, player)
     ])
 
@@ -909,7 +916,14 @@ def oos_can_swim(state: CollectionState, player: int, can_summon_companion: bool
 
 
 def oos_can_remove_rockslide(state: CollectionState, player: int, can_summon_companion: bool):
-    return oos_has_bombs(state, player) or (can_summon_companion and oos_can_summon_ricky(state, player))
+    return any([
+        oos_has_bombs(state, player),
+        all([
+            oos_option_medium_logic(state, player),
+            oos_has_bombchus(state, player)
+        ]),
+        can_summon_companion and oos_can_summon_ricky(state, player)
+    ])
 
 
 def oos_can_meet_maple(state: CollectionState, player: int):

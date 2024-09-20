@@ -348,6 +348,7 @@ def alter_treasure_types(rom: RomData):
     # Make bombs increase max carriable quantity when obtained from treasures,
     # not drops (see asm/seasons/bomb_bag_behavior)
     set_treasure_data(rom, "Bombs (10)", None, None, 0x90)
+    set_treasure_data(rom, "Bombchus (10)", None, None, 0x90)
 
     # Colored Rod of Seasons to make them recognizable
     set_treasure_data(rom, "Rod of Seasons (Spring)", None, 0x4f)

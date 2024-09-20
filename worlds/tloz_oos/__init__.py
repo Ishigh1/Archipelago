@@ -517,6 +517,15 @@ class OracleOfSeasonsWorld(World):
             item_pool_dict[original_name] -= 1
             item_pool_dict[replacement_name] = item_pool_dict.get(replacement_name, 0) + 1
 
+        bombchus = 10
+        for rupee_item in ["Rupees (5)", "Rupees (10)", "Rupees (20)", "Rupees (30)", "Rupees (1)", "Rupees (50)"]:
+            quantity = min(bombchus, item_pool_dict[rupee_item])
+            item_pool_dict[rupee_item] -= quantity
+            bombchus -= quantity
+            if bombchus == 0:
+                break
+        item_pool_dict["Bombchus (10)"] = 10 - bombchus
+
         if "Random Ring" in item_pool_dict:
             quantity = item_pool_dict["Random Ring"]
             for _ in range(quantity):
