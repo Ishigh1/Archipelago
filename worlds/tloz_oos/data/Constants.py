@@ -1,4 +1,4 @@
-VERSION = "7.2"
+VERSION = "Beta - 1.0"
 ROM_HASH = "f2dc6c4e093e4f8c6cbea80e8dbd62cb"
 
 DIRECTION_UP = 0
