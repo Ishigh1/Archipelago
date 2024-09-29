@@ -1111,17 +1111,17 @@ def make_holodrum_logic(player: int):
         ["enter desert cave", "inside desert cave", OoSEntranceType.DoorTwoWay, None],
         ["samasa desert", "enter like like quicksand", OoSEntranceType.TwoWay, None],
         ["enter like like quicksand", "inside like like quicksand", OoSEntranceType.DoorOneWay, None],
-        # ["inside like like quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["inside like like quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
         ["samasa desert", "enter deku quicksand", OoSEntranceType.TwoWay, None],
         ["enter deku quicksand", "inside deku quicksand", OoSEntranceType.DoorOneWay, None],
-        # ["inside deku quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["inside deku quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
         ["samasa desert", "enter bell quicksand", OoSEntranceType.TwoWay, None],
         ["enter bell quicksand", "inside bell quicksand", OoSEntranceType.DoorOneWay, lambda state: all([
             oos_has_bracelet(state, player),
             state.has("_met_pirate_head", player)
         ])],
         ["inside bell quicksand", "samasa desert pit", OoSEntranceType.OneWay, None],
-        # ["samasa desert pit", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["samasa desert pit", "inside desert cave", OoSEntranceType.OneWay, None],
 
         ["samasa desert", "enter treasure quicksand", OoSEntranceType.TwoWay, None],
         ["enter treasure quicksand", "inside treasure quicksand", OoSEntranceType.DoorOneWay, None],
