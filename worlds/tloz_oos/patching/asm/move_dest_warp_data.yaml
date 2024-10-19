@@ -9,6 +9,8 @@
   dw $4720
 
 40//applyWarpDest: |
+  bit 7,a
+  jr nz,reset_season_transition
   ld a,(wWarpDestGroup)
   and $0f
   cp $02
@@ -47,13 +49,36 @@
   or $80
   ld (wWarpTransition),a
   
+  reset_season_transition:
+  ld a,(wWarpTransition)
+  cp $82
+  jr nz,@natzu_transition
+  
+  @set_data:
+  sub a
+  ld (wWarpTransition),a
+  ld (wActiveRoomPack),a ; non-existent room pack to invalidate it
+  jr @reset_flags
+  
+  @natzu_transition:
+  ld b,a
+  ld a,(wActiveRoomPack)
+  cp $ff ; Natzu
+  jr nz,@end
+  
+  @reset_flags:
+  xor a ; same as ld a,$00
+  ld (wActiveGroup),a ; it needs to be < 3 to load the season
+  ld (wRoomStateModifier),a ; Natzu spring
+  
+  @end:
   ld e,$04
   ld hl,$460C
   jp interBankCall
 
-04/05D7/: |
+04/05D3/: |
   ld e,$40
   ld hl,applyWarpDest
   jp interBankCall
 
-# 04:45E0 to 04:460B is free
+# 04:45DC to 04:460B is free

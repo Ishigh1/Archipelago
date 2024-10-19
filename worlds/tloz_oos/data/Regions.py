@@ -1,6 +1,9 @@
 from typing import Optional, Callable, Tuple, Any, Union
 
 from BaseClasses import Region, CollectionState, MultiWorld, Entrance, EntranceType
+from Options import Accessibility
+from entrance_rando import ERPlacementState
+from worlds.stardew_valley.early_items import seasons
 from worlds.tloz_oos.data.Constants import SEASON_NAMES, SEASON_SPRING, SEASON_SUMMER, SEASON_WINTER, SEASON_CHAOTIC, SEASON_ITEMS
 
 REGIONS = {
@@ -18,10 +21,6 @@ REGIONS = {
         "impa gasha spot",
         "eyeglass lake gasha spot",
 
-        "dimitri in d1 entrance",
-        "dimitri in eyeglass lake",
-        "dimitri in d6 entrance",
-
         "enter lon lon",
         "enter d1 old man",
         "enter red ring old man",
@@ -36,9 +35,6 @@ REGIONS = {
         "holodrum plain gasha spot",
         "holodrum plain island gasha spot",
         "holodrum plain waters",
-
-        "dimitri in holodrum plain north",
-        "dimitri in holodrum plain south",
 
         "enter treehouse",
         "enter Mrs Ruul",
@@ -56,9 +52,6 @@ REGIONS = {
         "woods of winter heart piece",
         "suburbs gasha spot",
 
-        "dimitri in eastern suburbs",
-        "dimitri in moblin road eastern suburbs",
-
         "enter guru guru",
         "enter winter guru guru",
         "top of guru guru",
@@ -73,9 +66,6 @@ REGIONS = {
         "d2 stump",
         "d2 roof",
         "golden moblin",
-
-        "dimitri in moblin road",
-        "dimitri at d2 entrance",
 
         "enter peek cave near d2",
         "enter magnet cave near d2",
@@ -161,15 +151,11 @@ REGIONS = {
         "spool swamp tree",
         "floodgate keyhole",
         "spool stump",
-        "dry swamp",
         "d3 entrance",
         "golden octorok",
         "spool swamp north gasha spot",
         "spool swamp south gasha spot",
         "open swamp bomb cave",
-
-        "dimitri in swamp south",
-        "dimitri in swamp north",
 
         "enter floodgate left",
         "enter floodgate right",
@@ -219,8 +205,6 @@ REGIONS = {
         "horon village SW chest",
         "horon heart piece",
         "horon gasha spot",
-
-        "dimitri in horon village",
 
         "enter shop",
         "enter tick tock",
@@ -632,14 +616,11 @@ REGIONS = {
         "gasha tree 14",
         "gasha tree 15",
         "gasha tree 16",
-    ],
-    "DUNGEONS": [
-        "enter d0",
+
         "d0 key chest",
-        "d0 rupee chest",
         "d0 hidden 2d section",
         "d0 sword chest",
-        "enter d1",
+
         "d1 stalfos drop",
         "d1 floormaster room",
         "d1 boss",
@@ -650,25 +631,7 @@ REGIONS = {
         "d1 railway chest",
         "d1 button chest",
         "d1 basement",
-        "enter d2",
-        "d2 torch room",
-        "d2 left from entrance",
-        "d2 rope drop",
-        "d2 arrow room",
-        "d2 rupee room",
-        "d2 rope chest",
-        "d2 blade chest",
-        "d2 alt entrances",
-        "d2 roller chest",
-        "d2 spiral chest",
-        "d2 spinner",
-        "dodongo owl",
-        "d2 boss",
-        "d2 hardhat room",
-        "d2 pot chest",
-        "d2 moblin chest",
-        "d2 terrace chest",
-        "enter d3",
+
         "spiked beetles owl",
         "d3 center",
         "d3 water room",
@@ -685,7 +648,7 @@ REGIONS = {
         "d3 omuai stairs",
         "d3 giant blade room",
         "d3 boss",
-        "enter d4",
+
         "d4 north of entrance",
         "d4 pot puzzle",
         "d4 maze chest",
@@ -705,7 +668,7 @@ REGIONS = {
         "gohma owl",
         "enter gohma",
         "d4 boss",
-        "enter d5",
+
         "d5 left chest",
         "d5 spiral chest",
         "d5 terrace chest",
@@ -723,7 +686,7 @@ REGIONS = {
         "d5 post syger",
         "d5 basement",
         "d5 boss",
-        "enter d6",
+
         "d6 1F east",
         "d6 rupee room",
         "d6 1F terrace",
@@ -741,7 +704,7 @@ REGIONS = {
         "enter vire",
         "d6 pre-boss room",
         "d6 boss",
-        "enter d7",
+
         "poe curse owl",
         "d7 wizzrobe chest",
         "d7 bombed wall chest",
@@ -762,7 +725,7 @@ REGIONS = {
         "shining blue owl",
         "d7 right of entrance",
         "d7 boss",
-        "enter d8",
+
         "d8 eye drop",
         "d8 three eyes chest",
         "d8 hardhat room",
@@ -794,6 +757,35 @@ REGIONS = {
 
         "d4 miniboss room wild embers",
         "d7 entrance wild embers",
+    ],
+    "DUNGEONS": [
+        "enter d0",
+        "d0 rupee chest",
+        "enter d1",
+        "enter d2",
+        "d2 torch room",
+        "d2 left from entrance",
+        "d2 rope drop",
+        "d2 arrow room",
+        "d2 rupee room",
+        "d2 rope chest",
+        "d2 blade chest",
+        "d2 alt entrances",
+        "d2 roller chest",
+        "d2 spiral chest",
+        "d2 spinner",
+        "dodongo owl",
+        "d2 boss",
+        "d2 hardhat room",
+        "d2 pot chest",
+        "d2 moblin chest",
+        "d2 terrace chest",
+        "enter d3",
+        "enter d4",
+        "enter d5",
+        "enter d6",
+        "enter d7",
+        "enter d8",
 
         "inside d0 chimney",
         "inside d2 side entrance left",
@@ -823,16 +815,6 @@ STUMP_REGIONS = {
     "coast stump",
     "temple remains lower stump",
     "temple remains upper stump",
-
-    "dimitri in d1 entrance",
-    "dimitri in d6 entrance",
-    "dimitri in holodrum plain south",
-    "dimitri in eastern suburbs",
-    "dimitri in moblin road eastern suburbs",
-    "dimitri in moblin road",
-    "dimitri at d2 entrance",
-    "dimitri in swamp south",
-    "dimitri in horon village",
 }
 
 
@@ -845,13 +827,13 @@ class SeasonEntrance(Entrance):
     def can_reach(self, state: CollectionState) -> bool:
         if self.parent_region.can_reach(state):
             if self.internal_entrance:
-                access, entrance, season = self.test_access_rule(state)
+                access, season, entrance = self.test_access_rule(state)
             else:
                 access, season = self.test_access_rule(state)
                 entrance = self
             if access:
                 if not self.hide_path and self not in state.path:
-                    if season == -1:
+                    if season == -1 or not entrance.parent_region.children_regions:
                         state.path[self] = (self.name, state.path.get(self.parent_region, (self.parent_region.name, None)))
                     else:
                         assert isinstance(entrance.parent_region, SeasonRegion)
@@ -860,7 +842,7 @@ class SeasonEntrance(Entrance):
                 return True
         return False
 
-    def test_access_rule(self, state: CollectionState, season: int = -1) -> Union[Tuple[bool, int], Tuple[bool, Entrance, int]]:
+    def test_access_rule(self, state: CollectionState, season: int = -1) -> Union[Tuple[bool, int], Tuple[bool, int, Entrance]]:
         if self.internal_entrance:
             return self.access_rule(state)
         else:
@@ -881,11 +863,50 @@ class SeasonEntrance(Entrance):
         super().connect(region, addresses, target)
         parent: SeasonRegion = self.parent_region
         if parent is not None:
-            if isinstance(region, SeasonRegion):
-                for season in range(4):
-                    parent.multiworld.register_indirect_condition(parent.children_regions[season], region)
-                    for season2 in range(4):
-                        parent.multiworld.register_indirect_condition(parent.children_regions[season], region.children_regions[season2])
+            parent.register_indirect_conditions(self, region)
+
+    def can_connect_to(self, other: Entrance, dead_end: bool, er_state: ERPlacementState) -> bool:
+        if not super().can_connect_to(other, dead_end, er_state):
+            return False
+        parent_region: SeasonRegion = self.parent_region
+        target_region: SeasonRegion = other.connected_region
+        if not parent_region:
+            parent_region: SeasonRegion = self.connected_region
+            target_region: SeasonRegion = other.parent_region
+
+        if target_region.name == "d3 entrance":
+            return parent_region.name != "enter d0" and parent_region.name != "enter d2"
+
+        if parent_region.name == "d3 entrance":
+            return target_region.name != "enter d0" and target_region.name != "enter d2"
+
+        if parent_region.multiworld.worlds[parent_region.player].options.accessibility == Accessibility.option_minimal:
+            return True
+
+        if er_state.coupled and other.randomization_type == EntranceType.TWO_WAY:
+            er_state.coupled = False
+            if not other.can_connect_to(self, dead_end, er_state):
+                er_state.coupled = True
+                return False
+            er_state.coupled = True
+
+        if (target_region.name == parent_region.multiworld.worlds[parent_region.player].spring_western_coast
+                and not er_state.collection_state.can_reach(target_region.children_regions[0])):
+            if not ((parent_region.super_region_name == "CAVES" or parent_region.super_region_name == "WESTERN_COAST")
+                    and er_state.collection_state.can_reach(parent_region.children_regions[0])
+                    and self.test_access_rule(er_state.collection_state, 0)[0]):
+                return False
+        if target_region.name == parent_region.multiworld.worlds[parent_region.player].autumn_graveyard:
+            if not ((parent_region.super_region_name == "CAVES" or parent_region.super_region_name == "WESTERN_COAST")
+                    and er_state.collection_state.can_reach(parent_region.children_regions[3])
+                    and self.test_access_rule(er_state.collection_state, 3)[0]):
+                return False
+        if target_region.name == "enter banana stairs":
+            if not ((parent_region.super_region_name == "CAVES" or parent_region.super_region_name == "SUNKEN_CITY")
+                    and er_state.collection_state.can_reach(parent_region.children_regions[0])
+                    and self.test_access_rule(er_state.collection_state, 0)[0]):
+                return False
+        return True
 
 
 class SeasonRegion(Region):
@@ -894,67 +915,82 @@ class SeasonRegion(Region):
     def __init__(self, name: str, player: int, multiworld: MultiWorld, super_region_name: str, hint: Optional[str] = None):
         super().__init__(name, player, multiworld, hint)
         self.super_region_name = super_region_name
-        self.children_regions = []
         world: "OracleOfSeasonsWorld" = multiworld.worlds[player]
         if super_region_name in world.default_seasons:
-            default_season = world.default_seasons[super_region_name]
-            force_season = False
+            self.default_season = world.default_seasons[super_region_name]
+            self.force_season = False
         elif super_region_name == "NATZU":
-            default_season = SEASON_SPRING
-            force_season = True
+            self.default_season = SEASON_SPRING
+            self.force_season = True
         elif super_region_name == "SAMASA_DESERT":
-            default_season = SEASON_SUMMER
-            force_season = True
+            self.default_season = SEASON_SUMMER
+            self.force_season = True
         elif super_region_name == "GORON_MOUNTAIN":
-            default_season = SEASON_WINTER
-            force_season = True
+            self.default_season = SEASON_WINTER
+            self.force_season = True
+        elif super_region_name == "SPECIAL":
+            self.default_season = -2
+            self.force_season = False
+            self.children_regions = None
+            self.children_entrances = None
+            return
         else:
-            default_season = -1
-            force_season = False
+            self.default_season = -1
+            self.force_season = False
+        self.children_regions = {}
+        self.children_entrances = {}
         stump = self.name in STUMP_REGIONS
         for i in range(4):
             season = SEASON_NAMES[i]
             region = Region(f"{name} ({season})", player, multiworld)
-            self.children_regions.append(region)
+            self.children_regions[i] = region
             multiworld.regions.append(region)
 
-            if force_season:
-                if default_season == i:
+            if self.force_season:
+                if self.default_season == i:
                     def rule(state: CollectionState) -> Tuple[bool, Entrance, int]:
-                        return True, None, -1
+                        return True, -1, None
                 else:
                     def rule(state: CollectionState) -> Tuple[bool, Entrance, int]:
-                        return False, None, -1
-            elif default_season == -1:
+                        return False, -1, None
+            elif self.default_season == -1:
                 def rule(state: CollectionState, season: int = i) -> Tuple[bool, Entrance, int]:
                     for entrance in self.entrances:
                         assert isinstance(entrance, SeasonEntrance)
                         if isinstance(entrance.parent_region, SeasonRegion):
-                            if entrance.parent_region.children_regions[season].can_reach(state):
+                            if not entrance.parent_region.children_regions \
+                                    or entrance.parent_region.children_regions[season].can_reach(state):
                                 if entrance.test_access_rule(state, season)[0]:
-                                    return True, entrance, season
-                    return False, None, -1
-            elif default_season == i or default_season == SEASON_CHAOTIC:
+                                    return True, season, entrance
+                    return False, -1, None
+            elif self.default_season == i or self.default_season == SEASON_CHAOTIC:
                 def rule(state: CollectionState, season: int = i) -> Tuple[bool, Entrance, int]:
                     if stump and state.has(SEASON_ITEMS[season], player):
-                        return True, None, -1
+                        return True, -1, None
                     for entrance in self.entrances:
                         assert isinstance(entrance, SeasonEntrance)
                         if isinstance(entrance.parent_region, SeasonRegion):
                             parent_super_region_name = entrance.parent_region.super_region_name
                             if parent_super_region_name == self.super_region_name or parent_super_region_name == "CAVES":
-                                if entrance.parent_region.children_regions[season].can_reach(state):
+                                access, season = entrance.test_access_rule(state, season)
+                                if access:
+                                    return True, season, entrance
+                                if season == -1:
                                     if entrance.test_access_rule(state, season)[0]:
-                                        return True, entrance, season
+                                        return True, season, entrance
+                                else:
+                                    if entrance.parent_region.children_regions[season].can_reach(state):
+                                        if entrance.test_access_rule(state, season)[0]:
+                                            return True, season, entrance
                             else:
                                 access, season = entrance.test_access_rule(state, -1)
                                 if access:
-                                    return True, entrance, season
-                    return False, None, -1
+                                    return True, season, entrance
+                    return False, -1, None
             else:
                 def rule(state: CollectionState, season: int = i) -> Tuple[bool, Entrance, int]:
                     if stump and state.has(SEASON_ITEMS[season], player):
-                        return True, None, -1
+                        return True, -1, None
                     for entrance in self.entrances:
                         assert isinstance(entrance, SeasonEntrance)
                         if isinstance(entrance.parent_region, SeasonRegion):
@@ -962,17 +998,35 @@ class SeasonRegion(Region):
                             if parent_super_region_name == self.super_region_name or parent_super_region_name == "CAVES":
                                 if entrance.parent_region.children_regions[season].can_reach(state):
                                     if entrance.test_access_rule(state, season)[0]:
-                                        return True, entrance, season
-                    return False, None, -1
+                                        return True, season, entrance
+                    return False, -1, None
 
             entrance: SeasonEntrance = self.connect(region, rule=rule)
             entrance.internal_entrance = True
+            self.children_entrances[i] = entrance
+
+    def register_indirect_conditions(self, entrance: SeasonEntrance, region: Region):
+        if isinstance(region, SeasonRegion):
+            for season in range(5):
+                if season != 4:
+                    if self.children_regions and entrance.access_rule.__code__.co_argcount == 2:
+                        self.multiworld.register_indirect_condition(self.children_regions[season], entrance)
+                if region.default_season == -2 or region.force_season:
+                    continue
+                elif (self.super_region_name == "CAVES" or self.super_region_name == region.super_region_name
+                      or region.default_season == -1):
+                    if season == 4:
+                        continue
+                    season_2 = season
+                else:
+                    season_2 = region.default_season
+                child_entrance = region.children_entrances[season_2]
+                if season == 4:
+                    self.multiworld.register_indirect_condition(self, child_entrance)
+                elif self.children_regions:
+                    self.multiworld.register_indirect_condition(self.children_regions[season], child_entrance)
 
     def connect(self, connecting_region: Region, name: Optional[str] = None, rule: Optional[Callable[[CollectionState], bool]] = None) -> entrance_type:
         entrance = super().connect(connecting_region, name, rule)
-        if isinstance(connecting_region, SeasonRegion):
-            for season in range(4):
-                self.multiworld.register_indirect_condition(self.children_regions[season], connecting_region)
-                for season2 in range(4):
-                    self.multiworld.register_indirect_condition(self.children_regions[season], connecting_region.children_regions[season2])
+        self.register_indirect_conditions(entrance, connecting_region)
         return entrance

@@ -1,5 +1,6 @@
 from BaseClasses import MultiWorld, EntranceType
 from worlds.tloz_oos import LOCATIONS_DATA
+from worlds.tloz_oos.data.EntranceType import OoSRandomizationGroup
 from worlds.tloz_oos.data.logic.DungeonsLogic import *
 from worlds.tloz_oos.data.logic.OverworldLogic import make_holodrum_logic
 from worlds.tloz_oos.data.logic.SubrosiaLogic import make_subrosia_logic
@@ -7,14 +8,6 @@ from worlds.tloz_oos.data.logic.SubrosiaLogic import make_subrosia_logic
 
 def create_connections(multiworld: MultiWorld, player: int):
     oos_world = multiworld.worlds[player]
-
-    dungeon_entrances = []
-    for reg1, reg2 in oos_world.dungeon_entrances.items():
-        dungeon_entrances.append([reg1, reg2, OoSEntranceType.TwoWay, None])
-
-    portal_connections = []
-    for reg1, reg2 in oos_world.portal_connections.items():
-        portal_connections.append([reg1, reg2, OoSEntranceType.TwoWay, None])
 
     all_logic = [
         make_holodrum_logic(player),
@@ -28,8 +21,6 @@ def create_connections(multiworld: MultiWorld, player: int):
         make_d6_logic(player),
         make_d7_logic(player),
         make_d8_logic(player),
-        dungeon_entrances,
-        portal_connections,
     ]
 
     # Create connections
@@ -52,11 +43,15 @@ def create_connections(multiworld: MultiWorld, player: int):
                 entrance = region_1.connect(region_2, entrance_desc[0], rule)
 
                 if OoSEntranceType.Waterfall in entrance_type:
-                    randomization_group = 1
+                    randomization_group = OoSRandomizationGroup.Waterfall
                 elif OoSEntranceType.DiveFlag in entrance_type:
-                    randomization_group = 2
+                    randomization_group = OoSRandomizationGroup.Dive
+                elif OoSEntranceType.DungeonEntrance in entrance_type:
+                    randomization_group = OoSRandomizationGroup.DungeonOutside
+                elif OoSEntranceType.Portal in entrance_type:
+                    randomization_group = OoSRandomizationGroup.PortalOverworld
                 else:
-                    randomization_group = 0
+                    randomization_group = OoSRandomizationGroup.Normal
                 entrance.randomization_group = randomization_group
 
                 if OoSEntranceType.DoorTwoWayFlag in entrance_type:
@@ -69,6 +64,9 @@ def create_connections(multiworld: MultiWorld, player: int):
                         rule = None
                     entrance = region_2.connect(region_1, entrance_desc[1], rule)
 
+                    if (randomization_group == OoSRandomizationGroup.DungeonOutside
+                            or randomization_group == OoSRandomizationGroup.PortalOverworld):
+                        randomization_group += 1
                     entrance.randomization_group = randomization_group
                     entrance.randomization_type = EntranceType.TWO_WAY
                     oos_world.entrances_to_randomize.append(entrance)

@@ -5,6 +5,7 @@ from worlds.tloz_oos.data.logic.LogicPredicates import *
 def make_d0_logic(player: int):
     return [
         # 0 keys
+        ["d0 entrance", "enter d0", OoSEntranceType.DungeonEntrance, None],
         ["enter d0", "d0 key chest", OoSEntranceType.OneWay, None],
         ["enter d0", "d0 rupee chest", OoSEntranceType.OneWay, lambda state: \
             # If hole is removed, stairs are added inside dungeon to make the chest reachable
@@ -41,6 +42,7 @@ def make_d0_logic(player: int):
 
 def make_d1_logic(player: int):
     return [
+        ["d1 entrance", "enter d1", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d1", "d1 stalfos drop", OoSEntranceType.OneWay, lambda state: any([
             oos_can_kill_stalfos(state, player),
@@ -103,6 +105,7 @@ def make_d1_logic(player: int):
 
 def make_d2_logic(player: int):
     return [
+        ["d2 entrance", "enter d2", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d2", "d2 torch room", OoSEntranceType.OneWay, None],
         ["d2 torch room", "d2 left from entrance", OoSEntranceType.OneWay, None],
@@ -123,16 +126,16 @@ def make_d2_logic(player: int):
         ["d2 arrow room", "d2 blade chest", OoSEntranceType.OneWay, lambda state: oos_can_kill_normal_enemy(state, player)],
 
         ["d2 blade chest", "d2 arrow room", OoSEntranceType.OneWay, None],  # Backwards path
-        ["d2 blade chest", "inside d2 side entrance left", OoSEntranceType.TwoWay, None],
-        ["inside d2 side entrance left", "enter d2 side entrance left", OoSEntranceType.D2Stairs, None],
-        ["enter d2 side entrance left", "d2 alt entrances", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
+        ["d2 blade chest", "inside d2 side entrance right", OoSEntranceType.TwoWay, None],
+        ["inside d2 side entrance right", "enter d2 side entrance right", OoSEntranceType.D2Stairs, None],
+        ["enter d2 side entrance right", "d2 alt entrances", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
         ["d2 blade chest", "d2 roller chest", OoSEntranceType.OneWay, lambda state: all([
             oos_has_bombs(state, player),
             oos_has_bracelet(state, player),
         ])],
-        ["d2 alt entrances", "enter d2 side entrance right", OoSEntranceType.TwoWay, None],
-        ["enter d2 side entrance right", "inside d2 side entrance right", OoSEntranceType.D2Stairs, None],
-        ["inside d2 side entrance right", "d2 spiral chest", OoSEntranceType.OneWay, lambda state: all([
+        ["d2 alt entrances", "enter d2 side entrance left", OoSEntranceType.TwoWay, None],
+        ["enter d2 side entrance left", "inside d2 side entrance left", OoSEntranceType.D2Stairs, None],
+        ["inside d2 side entrance left", "d2 spiral chest", OoSEntranceType.OneWay, lambda state: all([
             oos_can_break_bush(state, player, False),
             oos_has_bombs(state, player),
         ])],
@@ -164,6 +167,7 @@ def make_d2_logic(player: int):
 
 def make_d3_logic(player: int):
     return [
+        ["d3 entrance", "enter d3", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d3", "spiked beetles owl", OoSEntranceType.OneWay, lambda state: oos_can_use_mystery_seeds(state, player)],
         ["enter d3", "d3 center", OoSEntranceType.OneWay, lambda state: any([
@@ -215,6 +219,7 @@ def make_d3_logic(player: int):
 
 def make_d4_logic(player: int):
     return [
+        ["d4 entrance", "enter d4", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d4", "d4 north of entrance", OoSEntranceType.OneWay, lambda state: any([
             oos_has_flippers(state, player),
@@ -406,6 +411,7 @@ def make_d4_logic(player: int):
 
 def make_d5_logic(player: int):
     return [
+        ["d5 entrance", "enter d5", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d5", "d5 left chest", OoSEntranceType.OneWay, lambda state: any([
             oos_has_magnet_gloves(state, player),
@@ -529,6 +535,7 @@ def make_d5_logic(player: int):
 
 def make_d6_logic(player: int):
     return [
+        ["d6 entrance", "enter d6", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d6", "d6 1F east", OoSEntranceType.OneWay, lambda state: any([
             oos_has_feather(state, player),
@@ -632,6 +639,7 @@ def make_d6_logic(player: int):
 
 def make_d7_logic(player: int):
     return [
+        ["d7 entrance", "enter d7", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d7", "poe curse owl", OoSEntranceType.OneWay, lambda state: oos_can_use_mystery_seeds(state, player)],
         ["enter d7", "d7 wizzrobe chest", OoSEntranceType.OneWay, lambda state: oos_can_kill_normal_enemy(state, player)],
@@ -808,6 +816,7 @@ def make_d7_logic(player: int):
 
 def make_d8_logic(player: int):
     return [
+        ["d8 entrance", "enter d8", OoSEntranceType.DungeonEntrance, None],
         # 0 keys
         ["enter d8", "d8 eye drop", OoSEntranceType.OneWay, lambda state: all([
             oos_can_break_pot(state, player),

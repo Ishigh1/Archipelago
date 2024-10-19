@@ -1,4 +1,4 @@
-from enum import auto, Flag
+from enum import auto, Flag, IntEnum
 
 
 class OoSEntranceType(Flag):
@@ -44,3 +44,19 @@ class OoSEntranceType(Flag):
     D0Chimney = DoorOneWay | D0Alt
     D2Alt = auto()
     D2Stairs = DoorTwoWay | D2Alt
+
+    DungeonFlag = auto()
+    DungeonEntrance = DoorTwoWay | DungeonFlag
+
+    PortalFlag = auto()
+    Portal = DoorTwoWay | PortalFlag
+
+
+class OoSRandomizationGroup(IntEnum):
+    Normal = auto()
+    Waterfall = auto()
+    Dive = auto()
+    DungeonOutside = auto()
+    DungeonInside = auto()
+    PortalOverworld = auto()
+    PortalSubrosia = auto()

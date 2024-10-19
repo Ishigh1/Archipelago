@@ -4,6 +4,15 @@ from worlds.tloz_oos.data.logic.LogicPredicates import *
 
 def make_subrosia_logic(player: int):
     return [
+        # Vanilla connections ###################################################
+        ["eastern suburbs portal", "volcanoes east portal", OoSEntranceType.Portal, None],
+        ["spool swamp portal", "subrosia market portal", OoSEntranceType.Portal, None],
+        ["mt. cucco portal", "strange brothers portal", OoSEntranceType.Portal, None],
+        ["horon village portal", "house of pirates portal", OoSEntranceType.Portal, None],
+        ["eyeglass lake portal", "great furnace portal", OoSEntranceType.Portal, None],
+        ["temple remains lower portal", "volcanoes west portal", OoSEntranceType.Portal, None],
+        ["temple remains upper portal", "d8 entrance portal", OoSEntranceType.Portal, None],
+
         # Portals ###############################################################
 
         ["volcanoes east portal", "subrosia temple sector", OoSEntranceType.TwoWay, None],

@@ -50,7 +50,6 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/mute_music.yaml")
     if len(patch_data["misc_entrances"]) > 0:
         asm_files.append("asm/conditional/ER/instant_rosa.yaml")
-        asm_files.append("asm/conditional/ER/reset_season_transition.yaml")
         asm_files.append("asm/conditional/ER/keep_stairs.yaml")
         asm_files.append("asm/conditional/ER/transition_on_quicksands.yaml")
         asm_files.append("asm/conditional/ER/dive_transition.yaml")
