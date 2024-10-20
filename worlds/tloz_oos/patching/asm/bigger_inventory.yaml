@@ -16,6 +16,11 @@
 02/1334/: ld a,(wInventoryB)
 02/133D/: ld a,(wInventoryA)
 
+# drawTreasureExtraTiles@val02 : fix summer, autumn and winter not being drawn on the middle row because of h not being decreased
+02/13DF/: |
+  rst 10  ; rst_addAToHL
+  dec h
+
 # loadStatusBarMap
 02/14AC/: ld a,(wInventoryB)
 
