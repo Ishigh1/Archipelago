@@ -64,7 +64,10 @@ EOB_ADDR = [
     0x4000,  # 3c
     0x4000,  # 3d
     0x4000,  # 3e
-    0x314b  # 3f - also here
+    0x314b,  # 3f - also here
+
+    # New banks
+    0x0000,  # 40
 ]
 
 DEFINES = {
