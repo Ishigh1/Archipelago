@@ -1,7 +1,7 @@
 # Move inventory from c680-c691 to c6e9-c6ff towInventoryStorage get 5 extra spaces
 
 # addTreasureToInventory
-3f/06CC/: ld a,<wInventoryB
+3f/06CC/: add a,<wInventoryB
 3f/06E3/: |
   ld hl,wInventoryB
   ld b,$16 ; INVENTORY_CAPACITY+2
