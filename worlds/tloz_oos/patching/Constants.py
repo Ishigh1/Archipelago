@@ -242,6 +242,7 @@ DEFINES = {
     "TREASURE_SHIELD": "$01",
     "TREASURE_PUNCH": "$02",
     "TREASURE_BOMBS": "$03",
+    "TREASURE_CANE_OF_SOMARIA": "$04",
     "TREASURE_SWORD": "$05",
     "TREASURE_BOOMERANG": "$06",
     "TREASURE_ROD_OF_SEASONS": "$07",
@@ -352,8 +353,6 @@ DEFINES = {
 
 ASM_FILES = [
     "asm/animals.yaml",
-    "asm/bigger_inventory.yaml",
-    "asm/bombchus.yaml",
     "asm/boss_items.yaml",
     "asm/collect.yaml",
     "asm/combat_difficulty.yaml",
@@ -387,6 +386,10 @@ ASM_FILES = [
     "asm/util.yaml",
     "asm/vars.yaml",
     "asm/warp_to_start.yaml",
+    "asm/cross_items/bank_47_redirects.yaml",
+    "asm/cross_items/bigger_inventory.yaml",
+    "asm/cross_items/bombchus.yaml",
+    "asm/cross_items/cane_of_somaria.yaml",
 ]
 
 RUPEE_VALUES = {

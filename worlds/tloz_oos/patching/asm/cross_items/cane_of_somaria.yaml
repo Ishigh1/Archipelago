@@ -1,0 +1,129 @@
+06//parentItemCode_caneOfSomaria: |
+  ld e,$04 ; Item.state
+  ld a,(de)
+  rst 00 ; rst_jumpTable
+  dw @state0
+  dw @state1
+
+  @state0:
+  call $2aab ; updateLinkDirectionFromAngle
+  call $52e2 ; parentItemLoadAnimationAndIncState
+  jp $532f ; itemCreateChild
+
+  @state1:
+  ; Delete self when animation is finished
+  ld e,$21 ; Item.animParameter
+  ld a,(de)
+  rlca
+  jp nc,$4414 ; specialObjectAnimate_optimized
+  jp $49e7 ; clearParentItem
+
+# Update parentItemUpdate table
+06/09af/: dw parentItemCode_caneOfSomaria
+
+# Update item usage table
+06/1510/: db $03
+
+# itemCode04 at ages 07:5c49
+47/1c49/itemCode04_47: /copy a,$07,$1c49,$63
+# itemCode18 at ages 07:5c49
+47/1cac/itemCode18_47: /copy a,$07,$1cac,$1ae
+
+# itemCode04 adjustments
+47/1c58/: call $165b ; loadWeaponGfx
+47/1c60/: call $0c74 ; playSound
+47/1c67/: jp $1e27 ; objectSetVisible82
+47/1c70/: call $23a5 ; itemIncState
+47/1c75/: call $2274 ; findItemWithID
+47/1c90/: call $2c40 ; getFreeItemSlot
+
+# itemCode18 adjustments
+47/1cc7/: call $23a5 ; itemIncState
+47/1ccc/: call $0c74 ; playSound
+47/1ccf/: jp $1e30 ; objectSetVisible83
+47/1d19/: call $23aa ; itemIncSubState
+47/1d1c/: call $2c37 ; itemUpdateAngle
+# 47/5D22/: ld a,(wBraceletLevel)
+47/5D22/: |
+  ld a,$01
+  nop
+47/1d34/: call $0c74 ; playSound
+47/1d44/: call $1fdb ; objectApplySpeed
+47/1d4a/: call $2391 ; itemDecCounter1
+47/1d5e/: call $24ad ; objectCreatePuff
+47/1d61/: jp $2c29 ; itemDelete
+47/1d70/: call $23aa ; itemIncSubState
+47/1d76/: call $1dfa ; objectSetVisiblec1
+47/1d82/: call $2b8a ; dropLinkHeldItem
+47/1d87/: call $215d ; objectCheckWithinRoomBoundary
+47/1dae/: ld a,($ccb3) ; (wActiveTilePos)
+47/1db6/: ld a,($cc50) ; (wTilesetFlags)
+47/1dcc/: jp z,$2b75 ; objectAddToGrabbableObjectBuffer
+47/1dd1/: jp $29c5 ; itemSetState
+47/1de2/: jp $1c3d ; preventObjectHFromPassingObjectD
+47/1dfc/: call $15c5 ; getTileIndexFromRoomLayoutBuffer
+47/1dff/: jp $3a52 ; setTile
+# skip somaria prevention in patch's
+47/1e02/: jr $0b
+47/1e18/: call $149b ; objectGetTileCollisions
+47/1e1c/: ld a,($cc50) ; (wTilesetFlags)
+47/1e32/: call $1432 ; objectGetTileAtPosition
+47/1e36/: |
+  ld hl,$23c3 ; hazardCollisionTable
+  call $1ddd ; lookupCollisionTable
+47/1e4b/: call $1414 ; setTileInRoomLayoutBuffer
+47/1e52/: call $2099 ; objectCenterOnTile
+
+07//itemCode04: |
+  ld e,$47
+  ld hl,itemCode04_47
+  jp interBankCall
+
+07//itemCode18: |
+  ld e,$47
+  ld hl,itemCode18_47
+  jp interBankCall
+
+07/08b2/: dw itemCode04
+07/08da/: dw itemCode18
+
+# nextToPushableBlock with somaria block
+06/013b/: |
+  ld e,$46
+  ld hl,nextToPushableBlock_checkSomaria
+  jp interBankCall
+  nop
+  nop
+  ld h,$d1
+
+46/0141/nextToPushableBlock_checkSomaria: |
+  /copy a,$06,$0141,$12
+  ld e,$06
+  ld hl,$4145
+  jp interBankCall
+
+46/0172/: |
+  @end_call:
+  ld e,$06
+  ld hl,$415e
+  jp interBankCall
+  @end:
+  jr @end_call
+
+46/017e/@somariaBlock: |
+  /copy a,$06,$017e,$13
+46/0180/: call $2274
+46/0189/: ld a,($cc80) ; (wLinkPushingDirection)
+
+# edit somaria block interactableTilesTable
+06/03a5/: |
+  dw interactableTilesTable@subrosia
+  dw $43c3
+  dw $43c7
+  dw $43c7
+  dw $43c1
+06/03c1/: db $da,$80,$00,$00,$00,$00,$da,$80
+06//interactableTilesTable@subrosia: |
+  /copy s,$06,$03c2,$06
+  db $da,$80,$00
+
