@@ -43,8 +43,8 @@
 47/1ccf/: jp $1e30 ; objectSetVisible83
 47/1d19/: call $23aa ; itemIncSubState
 47/1d1c/: call $2c37 ; itemUpdateAngle
-# 47/5D22/: ld a,(wBraceletLevel)
-47/5D22/: |
+# 47/1D22/: ld a,(wBraceletLevel) TODO : when bracelet 2 is implemented, change that
+47/1D22/: |
   ld a,$01
   nop
 47/1d34/: call $0c74 ; playSound
