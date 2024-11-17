@@ -60,7 +60,7 @@
 47/1db6/: ld a,($cc50) ; (wTilesetFlags)
 47/1dcc/: jp z,$2b75 ; objectAddToGrabbableObjectBuffer
 47/1dd1/: jp $29c5 ; itemSetState
-47/1de2/: jp $1c3d ; preventObjectHFromPassingObjectD
+47/1de2/: jp $1d3d ; preventObjectHFromPassingObjectD
 47/1dfc/: call $15c5 ; getTileIndexFromRoomLayoutBuffer
 47/1dff/: jp $3a52 ; setTile
 # skip somaria prevention in patch's
@@ -127,3 +127,58 @@
   /copy s,$06,$03c2,$06
   db $da,$80,$00
 
+# edit somaria block objectCollisionTable
+07/2b63/: /copy a,$07,$2ddf,$01
+07/2b83/: /copy a,$07,$2dff,$01
+07/2ba3/: /copy a,$07,$2e1f,$01
+07/2be3/: /copy a,$07,$2e5f,$01
+07/2c03/: /copy a,$07,$2e7f,$01
+07/2c63/: /copy a,$07,$371f,$01
+07/2c83/: /copy a,$07,$2eff,$01
+07/2ca3/: /copy a,$07,$2f1f,$01
+07/2cc3/: /copy a,$07,$2f3f,$01
+07/2ce3/: /copy a,$07,$2f5f,$01
+07/2d03/: /copy a,$07,$2f7f,$01
+07/2d43/: /copy a,$07,$2fdf,$01
+07/2d63/: /copy a,$07,$2fff,$01
+07/2d83/: /copy a,$07,$301f,$01
+07/2da3/: /copy a,$07,$303f,$01
+07/2dc3/: /copy a,$07,$305f,$01
+07/2de3/: /copy a,$07,$307f,$01
+07/2e03/: /copy a,$07,$309f,$01
+07/2e23/: /copy a,$07,$30bf,$01
+07/2e43/: /copy a,$07,$30df,$01
+07/2e83/: /copy a,$07,$311f,$01
+07/2ec3/: /copy a,$07,$313f,$01
+07/2ee3/: /copy a,$07,$315f,$01
+07/2f03/: /copy a,$07,$317f,$01
+07/2f23/: /copy a,$07,$31bf,$01
+07/2f43/: /copy a,$07,$31df,$01
+07/2f63/: /copy a,$07,$31ff,$01
+07/2f83/: /copy a,$07,$321f,$01
+07/2fc3/: /copy a,$07,$30ff,$01
+07/2fe3/: /copy a,$07,$323f,$01
+07/3003/: /copy a,$07,$325f,$01
+07/3023/: /copy a,$07,$327f,$01
+07/3043/: /copy a,$07,$329f,$01
+07/3063/: /copy a,$07,$32df,$01
+07/30a3/: /copy a,$07,$333f,$01
+07/30c3/: /copy a,$07,$337f,$01
+07/30e3/: /copy a,$07,$339f,$01
+07/3103/: /copy a,$07,$33bf,$01
+07/3123/: /copy a,$07,$33df,$01
+07/3143/: /copy a,$07,$33ff,$01
+07/3163/: /copy a,$07,$341f,$01
+07/3183/: /copy a,$07,$343f,$01
+07/31a3/: /copy a,$07,$345f,$01
+07/31c3/: /copy a,$07,$347f,$01
+07/3283/: /copy a,$07,$353f,$01
+07/3343/: /copy a,$07,$35df,$01
+07/3463/: /copy a,$07,$373f,$01
+07/34a3/: /copy a,$07,$377f,$01
+07/34c3/: /copy a,$07,$379f,$01
+07/34e3/: /copy a,$07,$37bf,$01
+07/3503/: /copy a,$07,$37df,$01
+07/3523/: /copy a,$07,$37ff,$01
+07/3803/: /copy a,$07,$3b9f,$01
+07/38a3/: /copy a,$07,$3c7f,$01
