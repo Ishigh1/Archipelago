@@ -1,0 +1,12 @@
+01//uncmpGfxHeader01: /copy s,$01,$27c4,$06
+01//uncmpGfxHeader38: | # Somaria cane
+  db $5a
+  /copy a,$01,$28df,$05
+01/26d0/: |
+  dw uncmpGfxHeader01
+  dw uncmpGfxHeader01
+01/2740/: |
+  dw uncmpGfxHeader38
+  ; 2 spaces left
+
+5a/3000/spr_cane_of_somaria: /copy a,$1a,$3000,$a0

@@ -26,10 +26,11 @@
 
 # itemCode04 at ages 07:5c49
 47/1c49/itemCode04_47: /copy a,$07,$1c49,$63
-# itemCode18 at ages 07:5c49
+# itemCode18 at ages 07:5cac
 47/1cac/itemCode18_47: /copy a,$07,$1cac,$1ae
 
 # itemCode04 adjustments
+47/1c56/: ld a,$38; UNCMP_GFXH_AGES_1c > $38
 47/1c58/: call $165b ; loadWeaponGfx
 47/1c60/: call $0c74 ; playSound
 47/1c67/: jp $1e27 ; objectSetVisible82
@@ -272,3 +273,6 @@
 07/29ea/: db $78
 07/2a7e/: db $f8
 07/2a82/: db $08
+
+# Change sndMysterySeed priority
+39/15cc/sndMysterySeed: db $32

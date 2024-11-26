@@ -390,6 +390,7 @@ ASM_FILES = [
     "asm/cross_items/bigger_inventory.yaml",
     "asm/cross_items/bombchus.yaml",
     "asm/cross_items/cane_of_somaria.yaml",
+    "asm/cross_items/uncmp_gfx.yaml",
 ]
 
 RUPEE_VALUES = {
