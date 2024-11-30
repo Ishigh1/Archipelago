@@ -12,7 +12,7 @@
 
 47/09e2/itemSetAnimation: |
   ld e,$07
-  ld hl,$49e2
+  ld hl,$49ca
   jp interBankCall
 
 47/0a4f/itemMergeZPositionIfSidescrollingArea: |

@@ -501,8 +501,9 @@ class OracleOfSeasonsWorld(World):
             ["Treasure Map", "Ore Chunks (50)"],  # Treasure Map would be non-functional in most cases, just remove it
             ["Gasha Seed", "Seed Satchel"],  # Add a 3rd satchel that is usually obtained in linked games (99 seeds)
             ["Gasha Seed", "Rupees (200)"],  # Too many Gasha Seeds in vanilla pool, add more rupees and ore instead
+            ["Gasha Seed", "Cane of Somaria"],  # Too many Gasha Seeds in vanilla pool, add more rupees and ore instead
         ]
-        for _ in range(4):
+        for _ in range(3):
             # Replace a few Gasha Seeds by random filler items
             item_pool_adjustements.append(["Gasha Seed", self.get_filler_item_name()])
 

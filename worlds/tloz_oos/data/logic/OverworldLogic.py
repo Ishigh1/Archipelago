@@ -446,7 +446,8 @@ def make_holodrum_logic(player: int):
             any([
                 oos_can_use_pegasus_seeds(state, player),
                 oos_has_flippers(state, player),
-                oos_has_feather(state, player)
+                oos_has_feather(state, player),
+                oos_has_cane(state, player)
             ]),
             oos_has_bracelet(state, player)
         ])],

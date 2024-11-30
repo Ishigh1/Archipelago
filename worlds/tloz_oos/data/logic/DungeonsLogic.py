@@ -185,7 +185,13 @@ def make_d3_logic(player: int):
         ])],
 
         ["d3 center", "d3 water room", False, lambda state: oos_has_feather(state, player)],
-        ["d3 center", "d3 mimic stairs", False, lambda state: oos_has_bracelet(state, player)],
+        ["d3 center", "d3 mimic stairs", False, lambda state: any([
+            oos_has_bracelet(state, player),
+            all([
+                oos_can_break_pot(state, player),
+                oos_has_cane(state, player)
+            ])
+        ])],
         ["d3 center", "trampoline owl", False, lambda state: all([
             oos_has_feather(state, player),
             oos_can_use_mystery_seeds(state, player)
@@ -528,6 +534,11 @@ def make_d5_logic(player: int):
                 all([
                     oos_option_medium_logic(state, player),
                     oos_has_feather(state, player)
+                ]),
+                all([
+                    oos_has_cane(state, player),
+                    oos_can_use_pegasus_seeds(state, player),
+                    oos_has_feather(state, player)
                 ])
             ])
         ])],
@@ -559,7 +570,10 @@ def make_d6_logic(player: int):
         ["d6 1F east", "d6 1F terrace", False, None],
         ["enter d6", "d6 1F terrace", False, lambda state: all([
             oos_has_small_keys(state, player, 6, 2),
-            oos_has_magnet_gloves(state, player)
+            any([
+                oos_has_magnet_gloves(state, player),
+                oos_has_cane(state, player)
+            ])
         ])],
 
         ["d6 1F terrace", "d6 magnet ball drop", False, lambda state: any([
@@ -568,6 +582,11 @@ def make_d6_logic(player: int):
                 oos_has_magnet_gloves(state, player)
             ]),
             oos_can_jump_4_wide_pit(state, player),
+            all([
+                # Cane through the block
+                oos_option_medium_logic(state, player),
+                oos_has_cane(state, player)
+            ])
         ])],
         ["d6 1F terrace", "d6 crystal trap room", False, None],
         ["d6 1F terrace", "d6 U-room", False, lambda state: all([
@@ -663,7 +682,7 @@ def make_d7_logic(player: int):
     return [
         # 0 keys
         ["enter d7", "poe curse owl", False, lambda state: oos_can_use_mystery_seeds(state, player)],
-        ["enter d7", "d7 wizzrobe chest", False, lambda state: oos_can_kill_normal_enemy(state, player)],
+        ["enter d7", "d7 wizzrobe chest", False, lambda state: oos_can_kill_normal_enemy_no_cane(state, player)],
         ["enter d7", "d7 bombed wall chest", False, lambda state: oos_has_bombs(state, player)],
         ["enter d7", "d7 entrance wild embers", False, lambda state: oos_can_harvest_regrowing_bush(state, player)],
 
@@ -697,6 +716,7 @@ def make_d7_logic(player: int):
             oos_can_jump_3_wide_pit(state, player),
             oos_has_magnet_gloves(state, player)
         ])],
+        ["d7 pot room", "d7 magunesu chest", False, lambda state: oos_has_cane(state, player)],
 
         ["d7 armos puzzle", "d7 magunesu chest", False, lambda state: all([
             oos_can_jump_3_wide_pit(state, player),
