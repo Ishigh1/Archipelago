@@ -1,5 +1,5 @@
 import logging
-from typing import TextIO, Optional
+from typing import TextIO, Optional, Any
 
 from BaseClasses import ItemClassification, Region, Entrance, MultiWorld, CollectionState
 from worlds.AutoWorld import World
@@ -10,7 +10,7 @@ from .Locations import ItbLocation, get_locations_names
 from .Logic import core_function, can_get_5_cores
 from .Options import IntoTheBreachOptions
 from .achievement.Achievements import achievements_by_squad, achievement_table
-from .squad import Squad
+from .squad import Squad, unit_table
 from .squad.SquadInfo import squad_names
 from .squad.SquadRando import shuffle_teams
 from .squad.VanillaSquads import vanilla_squads
@@ -48,6 +48,20 @@ class IntoTheBreachWorld(World):
         self.achievements: list[ItbLocation] = []
 
     def generate_early(self) -> None:
+        # get squad from slodata for UT
+        if hasattr(self.multiworld, "re_gen_passthrough"):
+            slot_data = self.multiworld.re_gen_passthrough[self.game]
+            squads = slot_data["squads"]
+            self.squads = {}
+            for squad_name in squads:
+                squad = Squad(squad_name)
+                for unit_name in squads[squad_name]:
+                    squad.add_unit(unit_table[unit_name])
+                self.squads[squad_name] = squad
+
+            self.options.custom_squad = slot_data["custom"]
+            return
+
         squad_names_copy = squad_names.copy()
         filtered_squad_names = []
         additional_squads = self.options.squad_number.value
@@ -282,3 +296,7 @@ class IntoTheBreachWorld(World):
                 state.prog_items[self.player]["squads"] -= 1
             state.prog_items[self.player]["start_power"] -= item.start_power
         return change
+
+    # UT stuff
+    def interpret_slot_data(self, slot_data: dict[str, Any]) -> Any:
+        return slot_data
