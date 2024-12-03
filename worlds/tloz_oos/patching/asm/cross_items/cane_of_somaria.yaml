@@ -116,6 +116,28 @@
 46/0180/: call $2274
 46/0189/: ld a,($cc80) ; (wLinkPushingDirection)
 
+# tryToBreakTile_body, close to @doneSettingTile
+06/0777/: |
+  ld e,$46
+  ld hl,$47a2
+  call interBankCall
+  jp (hl)
+  nop
+
+46/07a2/: |
+  /copy a,$06,$07a2,$0e
+  ld hl,$4781
+  ret
+46/07e6/tryToBreakTile_body@done: |
+  ld hl,$47b8
+  ret
+  /copy a,$06,$07ea,$1f
+46/07ec/: call $2274 ; findItemWithID
+46/07ef/: jr nz,$f5 ; move @done backwards to fit a ld hl
+46/07f4/: call $227b ; findItemWithID_startingAfterH
+46/07f7/: jr nz,$ed ; move @done backwards to fit a ld hl
+46/07fc/: jr $e8 ; move @done backwards to fit a ld hl
+
 # edit somaria block interactableTilesTable
 06/03a5/: |
   dw interactableTilesTable@subrosia
