@@ -150,6 +150,33 @@
   /copy s,$06,$03c2,$06
   db $da,$80,$00
 
+# edit breakableTileCollisionTable
+06/35c2/: |
+  dw $7643
+  dw $75cc
+  dw $76b4
+  dw $76b4
+  dw $76e5
+
+06/3643/: |
+  ; subrosia
+  db $da,$0f
+  /copy s,$06,$3643,$6f
+  ; indoors / dungeons
+  db $da,$0f
+  /copy s,$06,$36b2,$2f
+  ; sidescrolling
+  db $da,$0f
+  /copy s,$06,$36e1,$03
+
+  ; breakableTileModes
+  /copy s,$06,$36e4,$4b
+  /copy a,$06,$39d7,$05 ; change 0f collision (sorry snow blocks in 0c3)
+  /copy s,$06,$3734,$a0
+
+# move breakableTileModes reference
+06/0734/: db $ea
+
 ## edit somaria block objectCollisionTable
 # copy ENEMYCOLLISION_PROJECTILE 0x06 (seasons) from ENEMYCOLLISION_PROJECTILE 0x06 (ages)
 07/2b63/: /copy a,$07,$2ddf,$01
@@ -369,3 +396,9 @@
 
 00/1995/:
   call clearSomariaBlock
+
+# Make somaria cane not cut grass
+# To do that, only cut grass when it's a sword instead of not cutting it when it's the rod
+07/1d50/: |
+  cp $05
+  db $20 ; replace jr z by jr nz
