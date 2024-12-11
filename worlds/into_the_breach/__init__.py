@@ -48,18 +48,22 @@ class IntoTheBreachWorld(World):
         self.achievements: list[ItbLocation] = []
 
     def generate_early(self) -> None:
-        # get squad from slodata for UT
+        # get squad from slotdata for UT
         if hasattr(self.multiworld, "re_gen_passthrough"):
             slot_data = self.multiworld.re_gen_passthrough[self.game]
-            squads = slot_data["squads"]
-            self.squads = {}
-            for squad_name in squads:
-                squad = Squad(squad_name)
-                for unit_name in squads[squad_name]:
-                    squad.add_unit(unit_table[unit_name])
-                self.squads[squad_name] = squad
 
-            self.options.custom_squad = slot_data["custom"]
+            if "squad" in slot_data:
+                self.squads = {}
+                squads = slot_data["squads"]
+                for squad_name in squads:
+                    squad = Squad(squad_name)
+                    for unit_name in squads[squad_name]:
+                        squad.add_unit(unit_table[unit_name])
+                    self.squads[squad_name] = squad
+            else:
+                self.squads = vanilla_squads(squad_names)
+
+            self.options.custom_squad = "custom" in slot_data
             return
 
         squad_names_copy = squad_names.copy()
