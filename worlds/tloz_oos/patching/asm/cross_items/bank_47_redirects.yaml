@@ -13,7 +13,7 @@
 47/09e2/itemSetAnimation: |
   ld e,$07
   ld hl,$49ca
-  jp safe_interBankCall
+  jp safeInterBankCall
 
 47/0a4f/itemMergeZPositionIfSidescrollingArea: |
   ld e,$07
@@ -28,7 +28,7 @@
 47/09c8/itemUpdateDamageToApply: |
   ld e,$07
   ld hl,$49b0
-  jp safe_interBankCall
+  jp safeInterBankCall
 
 47/239c/bombUpdateThrowingLaterally: |
   ld e,$07
@@ -38,4 +38,4 @@
 47/0b3c/itemUpdateThrowingVerticallyAndCheckHazards: |
   ld e,$07
   ld hl,$4b24
-  jp safe_interBankCall
+  jp safeInterBankCall

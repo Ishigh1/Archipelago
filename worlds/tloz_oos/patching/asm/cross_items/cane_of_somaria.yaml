@@ -29,7 +29,37 @@
 # itemCode04 at ages 07:5c49
 47/1c49/itemCode04_47: /copy a,$07,$1c49,$63
 # itemCode18 at ages 07:5cac
-47/1cac/itemCode18_47: /copy a,$07,$1cac,$1ae
+47/1cac/itemCode18_47: |
+  /copy a,$07,$1cac,$13f
+  
+  push hl
+  ld e,$46
+  ld hl,getSomariaBlockIndex
+  call interBankCall
+  pop hl
+  ld a,(hl)
+  cp b
+  
+  /copy a,$07,$1dee,$0e
+  
+  call $15c5 ; getTileIndexFromRoomLayoutBuffer
+  jp $3a52 ; setTile
+  ; skip patch's room handling
+  db $00,$00,$00,$00,$00
+  
+  /copy a,$07,$1e10,$2d
+  jr c,$0d
+  
+  push hl
+  ld e,$46
+  ld hl,getSomariaBlockIndex
+  call interBankCall
+  pop hl
+  ld a,(hl)
+  ld (hl),b
+  ld b,a
+  
+  /copy a,$07,$1e42,$18
 
 # itemCode04 adjustments
 47/1c56/: ld a,$38; UNCMP_GFXH_AGES_1c > $38
@@ -41,21 +71,27 @@
 47/1c90/: call $2c40 ; getFreeItemSlot
 
 # itemCode18 adjustments
+47/1cbd/: call $5e5c ; @alignOnTile
 47/1cc7/: call $23a5 ; itemIncState
 47/1ccc/: call $0c74 ; playSound
 47/1ccf/: jp $1e30 ; objectSetVisible83
+47/1cd2/: call $5e10 ; @checkBlockCanAppear
+47/1ced/: call $5e10 ; @checkBlockCanAppear
 47/1d19/: call $23aa ; itemIncSubState
 47/1d1c/: call $2c37 ; itemUpdateAngle
-# 47/1D22/: ld a,(wBraceletLevel) TODO : when bracelet 2 is implemented, change that
-47/1D22/: |
+# 47/1d22/: ld a,(wBraceletLevel) TODO : when bracelet 2 is implemented, change that
+47/1d22/: |
   ld a,$01
   nop
 47/1d34/: call $0c74 ; playSound
+47/1d37/: call $5dfe ; @removeBlock
 47/1d44/: call $1fdb ; objectApplySpeed
 47/1d4a/: call $2391 ; itemDecCounter1
+47/1d56/: call $5dfe ; @removeBlock
 47/1d5e/: call $24ad ; objectCreatePuff
 47/1d61/: jp $2c29 ; itemDelete
 47/1d70/: call $23aa ; itemIncSubState
+47/1d73/: call $5dfe ; @removeBlock
 47/1d76/: call $1dfa ; objectSetVisiblec1
 47/1d82/: call $2b8a ; dropLinkHeldItem
 47/1d87/: call $215d ; objectCheckWithinRoomBoundary
@@ -64,18 +100,18 @@
 47/1dcc/: jp z,$2b75 ; objectAddToGrabbableObjectBuffer
 47/1dd1/: jp $29c5 ; itemSetState
 47/1de2/: jp $1d3d ; preventObjectHFromPassingObjectD
-47/1dfc/: call $15c5 ; getTileIndexFromRoomLayoutBuffer
-47/1dff/: jp $3a52 ; setTile
-# skip somaria prevention in patch's
-47/1e02/: jr $0b
+
 47/1e18/: call $149b ; objectGetTileCollisions
 47/1e1c/: ld a,($cc50) ; (wTilesetFlags)
-47/1e32/: call $1432 ; objectGetTileAtPosition
+47/1e2f/: |
+  call $5e5c ; @alignOnTile
+  call $1432 ; objectGetTileAtPosition
 47/1e36/: |
   ld hl,$23c3 ; hazardCollisionTable
   call $1ddd ; lookupCollisionTable
-47/1e4b/: call $1414 ; setTileInRoomLayoutBuffer
-47/1e52/: call $2099 ; objectCenterOnTile
+
+47/1e55/: call $1414 ; setTileInRoomLayoutBuffer
+47/1e5c/: call $2099 ; objectCenterOnTile
 
 07//itemCode04: |
   ld e,$47
@@ -100,12 +136,15 @@
   ld h,$d1
 
 46/0141/nextToPushableBlock_checkSomaria: |
-  /copy a,$06,$0141,$12
+  call getSomariaBlockIndex
+  ldh a,($8b)
+  cp b
+  /copy a,$06,$0145,$0e
   ld e,$06
   ld hl,$4145
   jp interBankCall
 
-46/0172/: |
+46/0174/: |
   @end_call:
   ld e,$06
   ld hl,$415e
@@ -113,27 +152,47 @@
   @end:
   jr @end_call
 
-46/017e/@somariaBlock: |
+46/0180/@somariaBlock: |
   /copy a,$06,$017e,$13
-46/0180/: call $2274
-46/0189/: ld a,($cc80) ; (wLinkPushingDirection)
+46/0182/: call $2274
+46/018b/: ld a,($cc80) ; (wLinkPushingDirection)
 
 # tryToBreakTile_body, close to @doneSettingTile
 06/0777/: |
   ld e,$46
-  ld hl,$47a2
+  ld hl,tryToBreakTile_body@doneSettingTile
   call interBankCall
   jp (hl)
   nop
 
-46/07a2/: |
-  /copy a,$06,$07a2,$0e
+46/07a0/tryToBreakTile_body@doneSettingTile: |
+  call getSomariaBlockIndex
+  ldh a,($92)
+  cp b
+  /copy a,$06,$07a6,$0a
   ld hl,$4781
   ret
+
+46/07b3/getSomariaBlockIndex: |
+  ld a,($cc4f) ; wActiveCollisions
+  ld b,$3f ; Overworld
+  or a
+  ret z
+  dec a ; Subrosia
+  ld b,$ba
+  ret z
+  dec a ; Maku Tree (2)
+  ld b,$3f
+  ret z
+  ; Indoors (3), Dungeon (4), Sidescrolling (5)
+  ld b,$f9
+  ret
+
 46/07e6/tryToBreakTile_body@done: |
   ld hl,$47b8
   ret
   /copy a,$06,$07ea,$1f
+
 46/07ec/: call $2274 ; findItemWithID
 46/07ef/: jr nz,$f5 ; move @done backwards to fit a ld hl
 46/07f4/: call $227b ; findItemWithID_startingAfterH
@@ -143,41 +202,46 @@
 # edit somaria block interactableTilesTable
 06/03a5/: |
   dw interactableTilesTable@subrosia
-  dw $43c3
+  dw $43c1
   dw $43c7
   dw $43c7
   dw $43c1
-06/03c1/: db $da,$80,$00,$00,$00,$00,$da,$80
+06/03c1/: db $3f,$80,$00,$00,$00,$00,$f9,$80
 06//interactableTilesTable@subrosia: |
   /copy s,$06,$03c2,$06
-  db $da,$80,$00
+  db $ba,$80,$00
 
 # edit breakableTileCollisionTable
 06/35c2/: |
-  dw $7643
-  dw $75cc
-  dw $76b4
-  dw $76b4
-  dw $76e5
+  dw $7645
+  dw $75ce
+  dw $76b6
+  dw $76b6
+  dw $76e7
 
-06/3643/: |
+06/3642/: |
+  ; overworld / maku
+  db $3f,$30
+  db $0
+  
   ; subrosia
-  db $da,$0f
+  db $ba,$30
   /copy s,$06,$3643,$6f
+  
   ; indoors / dungeons
-  db $da,$0f
+  db $f9,$30
   /copy s,$06,$36b2,$2f
+  
   ; sidescrolling
-  db $da,$0f
+  db $f9,$30
   /copy s,$06,$36e1,$03
 
   ; breakableTileModes
-  /copy s,$06,$36e4,$4b
-  /copy a,$06,$39d7,$05 ; change 0f collision (sorry snow blocks in 0c3)
-  /copy s,$06,$3734,$a0
+  /copy s,$06,$36e4,$f0
+  /copy a,$06,$39d7,$05 ; add collision $30
 
 # move breakableTileModes reference
-06/0734/: db $ea
+06/0734/: db $ec
 
 ## edit somaria block objectCollisionTable
 # copy ENEMYCOLLISION_PROJECTILE 0x06 (seasons) from ENEMYCOLLISION_PROJECTILE 0x06 (ages)
@@ -403,4 +467,39 @@
 # To do that, only cut grass when it's a sword instead of not cutting it when it's the rod
 07/1d50/: |
   cp $05
-  db $20 ; replace jr z by jr nz
+  db $20 ; replaces jr z by jr nz
+
+# gfx
+1b/3ac0/: /copy a,$19,$02e0,$20
+# Apply the sprite to the inventory item by changing the treasureDisplayData
+3f/2dbe/: db $a5
+# Add the gfx entry to the interactionData
+3f/27d8/: db $7d,$a5,$50 ; GFX_54
+# Replace the L-1 and L-2 ring box inventory text
+1d/32b0/TX_091e: |
+  db $43,$61,$6e,$65,$03,$e3,$53,$6f
+  db $6d,$61,$72,$69,$61,$01,$55,$73
+  db $65,$64,$03,$b0,$63,$04,$09,$65
+  db $01,$62,$05,$a6,$73,$2e,$00
+# TreasureDisplayData
+3f/2dc3/: db $1d
+# Chest data
+15/113b/: db $b0,$54
+
+# Remove the grass effect on the somaria block indoors
+00/0f39/: |
+  call checkSomariaGrass
+  jr z,$10
+00//checkSomariaGrass: |
+  cp $f9
+  jp nz,@end
+  ld a,(wActiveGroup)
+  or a
+  ccf
+  ret nz
+  
+  @end:
+  and a ; sets c to 0
+  bit 2,h
+  ld a,($cc52) ; wGrassAnimationModifier
+  ret
