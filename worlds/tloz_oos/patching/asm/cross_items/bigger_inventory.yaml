@@ -47,7 +47,7 @@
   call $5B0B
 02/1B0B/: |
   ld d,$d0
-  ld a,($ff8d)
+  ldh a,($8d)
   sub $0D
   ret c
   inc d

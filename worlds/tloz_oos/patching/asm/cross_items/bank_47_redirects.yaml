@@ -1,0 +1,41 @@
+47/0a22/itemTransferKnockbackToLink: |
+  ld e,$07
+  ld hl,$4a0a
+  jp interBankCall
+
+47/098c/loadAttributesAndGraphicsAndIncState: /copy s,$07,$0974,$07
+
+47/0993/itemLoadAttributesAndGraphics: |
+  ld e,$07
+  ld hl,$497b
+  jp interBankCall
+
+47/09e2/itemSetAnimation: |
+  ld e,$07
+  ld hl,$49ca
+  jp safeInterBankCall
+
+47/0a4f/itemMergeZPositionIfSidescrollingArea: |
+  ld e,$07
+  ld hl,$4a37
+  jp interBankCall
+
+47/09d9/itemAnimate: |
+  ld e,$07
+  ld hl,$49c1
+  jp interBankCall
+
+47/09c8/itemUpdateDamageToApply: |
+  ld e,$07
+  ld hl,$49b0
+  jp safeInterBankCall
+
+47/239c/bombUpdateThrowingLaterally: |
+  ld e,$07
+  ld hl,$613a
+  jp interBankCall
+
+47/0b3c/itemUpdateThrowingVerticallyAndCheckHazards: |
+  ld e,$07
+  ld hl,$4b24
+  jp safeInterBankCall

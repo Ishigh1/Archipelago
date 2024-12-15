@@ -1,0 +1,505 @@
+# TODO : change the somaria tile ID
+
+06//parentItemCode_caneOfSomaria: |
+  ld e,$04 ; Item.state
+  ld a,(de)
+  rst 00 ; rst_jumpTable
+  dw @state0
+  dw @state1
+
+  @state0:
+  call $2aab ; updateLinkDirectionFromAngle
+  call $52e2 ; parentItemLoadAnimationAndIncState
+  jp $532f ; itemCreateChild
+
+  @state1:
+  ; Delete self when animation is finished
+  ld e,$21 ; Item.animParameter
+  ld a,(de)
+  rlca
+  jp nc,$4414 ; specialObjectAnimate_optimized
+  jp $49e7 ; clearParentItem
+
+# Update parentItemUpdate table
+06/09af/: dw parentItemCode_caneOfSomaria
+
+# Update item usage table
+06/1510/: db $03
+
+# itemCode04 at ages 07:5c49
+47/1c49/itemCode04_47: /copy a,$07,$1c49,$63
+# itemCode18 at ages 07:5cac
+47/1cac/itemCode18_47: |
+  /copy a,$07,$1cac,$13f
+  
+  push hl
+  ld e,$46
+  ld hl,getSomariaBlockIndex
+  call interBankCall
+  pop hl
+  ld a,(hl)
+  cp b
+  
+  /copy a,$07,$1dee,$0e
+  
+  call $15c5 ; getTileIndexFromRoomLayoutBuffer
+  jp $3a52 ; setTile
+  ; skip patch's room handling
+  db $00,$00,$00,$00,$00
+  
+  /copy a,$07,$1e10,$2d
+  jr c,$0d
+  
+  push hl
+  ld e,$46
+  ld hl,getSomariaBlockIndex
+  call interBankCall
+  pop hl
+  ld a,(hl)
+  ld (hl),b
+  ld b,a
+  
+  /copy a,$07,$1e42,$18
+
+# itemCode04 adjustments
+47/1c56/: ld a,$38; UNCMP_GFXH_AGES_1c > $38
+47/1c58/: call $165b ; loadWeaponGfx
+47/1c60/: call $0c74 ; playSound
+47/1c67/: jp $1e27 ; objectSetVisible82
+47/1c70/: call $23a5 ; itemIncState
+47/1c75/: call $2274 ; findItemWithID
+47/1c90/: call $2c40 ; getFreeItemSlot
+
+# itemCode18 adjustments
+47/1cbd/: call $5e5c ; @alignOnTile
+47/1cc7/: call $23a5 ; itemIncState
+47/1ccc/: call $0c74 ; playSound
+47/1ccf/: jp $1e30 ; objectSetVisible83
+47/1cd2/: call $5e10 ; @checkBlockCanAppear
+47/1ced/: call $5e10 ; @checkBlockCanAppear
+47/1d19/: call $23aa ; itemIncSubState
+47/1d1c/: call $2c37 ; itemUpdateAngle
+# 47/1d22/: ld a,(wBraceletLevel) TODO : when bracelet 2 is implemented, change that
+47/1d22/: |
+  ld a,$01
+  nop
+47/1d34/: call $0c74 ; playSound
+47/1d37/: call $5dfe ; @removeBlock
+47/1d44/: call $1fdb ; objectApplySpeed
+47/1d4a/: call $2391 ; itemDecCounter1
+47/1d56/: call $5dfe ; @removeBlock
+47/1d5e/: call $24ad ; objectCreatePuff
+47/1d61/: jp $2c29 ; itemDelete
+47/1d70/: call $23aa ; itemIncSubState
+47/1d73/: call $5dfe ; @removeBlock
+47/1d76/: call $1dfa ; objectSetVisiblec1
+47/1d82/: call $2b8a ; dropLinkHeldItem
+47/1d87/: call $215d ; objectCheckWithinRoomBoundary
+47/1dae/: ld a,($ccb3) ; (wActiveTilePos)
+47/1db6/: ld a,($cc50) ; (wTilesetFlags)
+47/1dcc/: jp z,$2b75 ; objectAddToGrabbableObjectBuffer
+47/1dd1/: jp $29c5 ; itemSetState
+47/1de2/: jp $1d3d ; preventObjectHFromPassingObjectD
+
+47/1e18/: call $149b ; objectGetTileCollisions
+47/1e1c/: ld a,($cc50) ; (wTilesetFlags)
+47/1e2f/: |
+  call $5e5c ; @alignOnTile
+  call $1432 ; objectGetTileAtPosition
+47/1e36/: |
+  ld hl,$23c3 ; hazardCollisionTable
+  call $1ddd ; lookupCollisionTable
+
+47/1e55/: call $1414 ; setTileInRoomLayoutBuffer
+47/1e5c/: call $2099 ; objectCenterOnTile
+
+07//itemCode04: |
+  ld e,$47
+  ld hl,itemCode04_47
+  jp interBankCall
+
+07//itemCode18: |
+  ld e,$47
+  ld hl,itemCode18_47
+  jp interBankCall
+
+07/08b2/: dw itemCode04
+07/08da/: dw itemCode18
+
+# nextToPushableBlock with somaria block
+06/013b/: |
+  ld e,$46
+  ld hl,nextToPushableBlock_checkSomaria
+  jp interBankCall
+  nop
+  nop
+  ld h,$d1
+
+46/0141/nextToPushableBlock_checkSomaria: |
+  call getSomariaBlockIndex
+  ldh a,($8b)
+  cp b
+  /copy a,$06,$0145,$0e
+  ld e,$06
+  ld hl,$4145
+  jp interBankCall
+
+46/0174/: |
+  @end_call:
+  ld e,$06
+  ld hl,$415e
+  jp interBankCall
+  @end:
+  jr @end_call
+
+46/0180/@somariaBlock: |
+  /copy a,$06,$017e,$13
+46/0182/: call $2274
+46/018b/: ld a,($cc80) ; (wLinkPushingDirection)
+
+# tryToBreakTile_body, close to @doneSettingTile
+06/0777/: |
+  ld e,$46
+  ld hl,tryToBreakTile_body@doneSettingTile
+  call interBankCall
+  jp (hl)
+  nop
+
+46/07a0/tryToBreakTile_body@doneSettingTile: |
+  call getSomariaBlockIndex
+  ldh a,($92)
+  cp b
+  /copy a,$06,$07a6,$0a
+  ld hl,$4781
+  ret
+
+46/07b3/getSomariaBlockIndex: |
+  ld a,($cc4f) ; wActiveCollisions
+  ld b,$3f ; Overworld
+  or a
+  ret z
+  dec a ; Subrosia
+  ld b,$ba
+  ret z
+  dec a ; Maku Tree (2)
+  ld b,$3f
+  ret z
+  ; Indoors (3), Dungeon (4), Sidescrolling (5)
+  ld b,$f9
+  ret
+
+46/07e6/tryToBreakTile_body@done: |
+  ld hl,$47b8
+  ret
+  /copy a,$06,$07ea,$1f
+
+46/07ec/: call $2274 ; findItemWithID
+46/07ef/: jr nz,$f5 ; move @done backwards to fit a ld hl
+46/07f4/: call $227b ; findItemWithID_startingAfterH
+46/07f7/: jr nz,$ed ; move @done backwards to fit a ld hl
+46/07fc/: jr $e8 ; move @done backwards to fit a ld hl
+
+# edit somaria block interactableTilesTable
+06/03a5/: |
+  dw interactableTilesTable@subrosia
+  dw $43c1
+  dw $43c7
+  dw $43c7
+  dw $43c1
+06/03c1/: db $3f,$80,$00,$00,$00,$00,$f9,$80
+06//interactableTilesTable@subrosia: |
+  /copy s,$06,$03c2,$06
+  db $ba,$80,$00
+
+# edit breakableTileCollisionTable
+06/35c2/: |
+  dw $7645
+  dw $75ce
+  dw $76b6
+  dw $76b6
+  dw $76e7
+
+06/3642/: |
+  ; overworld / maku
+  db $3f,$30
+  db $0
+  
+  ; subrosia
+  db $ba,$30
+  /copy s,$06,$3643,$6f
+  
+  ; indoors / dungeons
+  db $f9,$30
+  /copy s,$06,$36b2,$2f
+  
+  ; sidescrolling
+  db $f9,$30
+  /copy s,$06,$36e1,$03
+
+  ; breakableTileModes
+  /copy s,$06,$36e4,$f0
+  /copy a,$06,$39d7,$05 ; add collision $30
+
+# move breakableTileModes reference
+06/0734/: db $ec
+
+## edit somaria block objectCollisionTable
+# copy ENEMYCOLLISION_PROJECTILE 0x06 (seasons) from ENEMYCOLLISION_PROJECTILE 0x06 (ages)
+07/2b63/: /copy a,$07,$2ddf,$01
+# copy ENEMYCOLLISION_PROJECTILE_WITH_RING_MOD 0x07 (seasons) from ENEMYCOLLISION_PROJECTILE_WITH_RING_MOD 0x07 (ages)
+07/2b83/: /copy a,$07,$2dff,$01
+# copy ENEMYCOLLISION_MERGED_TWINROVA 0x08 (seasons) from ENEMYCOLLISION_MERGED_TWINROVA 0x08 (ages)
+07/2ba3/: /copy a,$07,$2e1f,$01
+# copy ENEMYCOLLISION_TWINROVA 0x0a (seasons) from ENEMYCOLLISION_TWINROVA 0x0a (ages)
+07/2be3/: /copy a,$07,$2e5f,$01
+# copy ENEMYCOLLISION_GANON 0x0b (seasons) from ENEMYCOLLISION_GANON 0x0b (ages)
+07/2c03/: /copy a,$07,$2e7f,$01
+# copy ENEMYCOLLISION_KING_MOBLIN 0x0e (seasons) from ENEMYCOLLISION_KING_MOBLIN 0x50 (ages)
+07/2c63/: /copy a,$07,$371f,$01
+# copy ENEMYCOLLISION_MOTIONLESS_ENEMY 0x0f (seasons) from ENEMYCOLLISION_MOTIONLESS_ENEMY 0x0f (ages)
+07/2c83/: /copy a,$07,$2eff,$01
+# copy ENEMYCOLLISION_STANDARD_ENEMY 0x10 (seasons) from ENEMYCOLLISION_STANDARD_ENEMY 0x10 (ages)
+07/2ca3/: /copy a,$07,$2f1f,$01
+# copy ENEMYCOLLISION_BURNABLE_ENEMY 0x11 (seasons) from ENEMYCOLLISION_BURNABLE_ENEMY 0x11 (ages)
+07/2cc3/: /copy a,$07,$2f3f,$01
+# copy ENEMYCOLLISION_LYNEL 0x12 (seasons) from ENEMYCOLLISION_LYNEL 0x12 (ages)
+07/2ce3/: /copy a,$07,$2f5f,$01
+# copy ENEMYCOLLISION_BLADE_TRAP 0x13 (seasons) from ENEMYCOLLISION_BLADE_TRAP 0x13 (ages)
+07/2d03/: /copy a,$07,$2f7f,$01
+# copy ENEMYCOLLISION_GIBDO 0x15 (seasons) from ENEMYCOLLISION_GIBDO 0x16 (ages)
+07/2d43/: /copy a,$07,$2fdf,$01
+# copy ENEMYCOLLISION_SPARK 0x16 (seasons) from ENEMYCOLLISION_SPARK 0x17 (ages)
+07/2d63/: /copy a,$07,$2fff,$01
+# copy ENEMYCOLLISION_SPIKED_BEETLE 0x17 (seasons) from ENEMYCOLLISION_SPIKED_BEETLE 0x18 (ages)
+07/2d83/: /copy a,$07,$301f,$01
+# copy ENEMYCOLLISION_BUBBLE 0x18 (seasons) from ENEMYCOLLISION_BUBBLE 0x19 (ages)
+07/2da3/: /copy a,$07,$303f,$01
+# copy ENEMYCOLLISION_GHINI 0x19 (seasons) from ENEMYCOLLISION_GHINI 0x1a (ages)
+07/2dc3/: /copy a,$07,$305f,$01
+# copy ENEMYCOLLISION_BUZZBLOB 0x1a (seasons) from ENEMYCOLLISION_BUZZBLOB 0x1b (ages)
+07/2de3/: /copy a,$07,$307f,$01
+# copy ENEMYCOLLISION_WHISP 0x1b (seasons) from ENEMYCOLLISION_WHISP 0x1c (ages)
+07/2e03/: /copy a,$07,$309f,$01
+# copy ENEMYCOLLISION_IRON_MASK 0x1c (seasons) from ENEMYCOLLISION_IRON_MASK 0x1d (ages)
+07/2e23/: /copy a,$07,$30bf,$01
+# copy ENEMYCOLLISION_ACTIVE_RED_ARMOS 0x1d (seasons) from ENEMYCOLLISION_ACTIVE_RED_ARMOS 0x1e (ages)
+07/2e43/: /copy a,$07,$30df,$01
+# copy ENEMYCOLLISION_DARKNUT 0x1f (seasons) from ENEMYCOLLISION_DARKNUT 0x20 (ages)
+07/2e83/: /copy a,$07,$311f,$01
+# copy ENEMYCOLLISION_BURNABLE_UNDEAD 0x20 (seasons) from ENEMYCOLLISION_BURNABLE_ENEMY 0x11 (ages)
+07/2ea3/: /copy a,$07,$2f3f,$01
+# copy ENEMYCOLLISION_POLS_VOICE 0x21 (seasons) from ENEMYCOLLISION_POLS_VOICE 0x21 (ages)
+07/2ec3/: /copy a,$07,$313f,$01
+# copy ENEMYCOLLISION_LIKE_LIKE 0x22 (seasons) from ENEMYCOLLISION_LIKE_LIKE 0x22 (ages)
+07/2ee3/: /copy a,$07,$315f,$01
+# copy ENEMYCOLLISION_GOPONGA_FLOWER 0x23 (seasons) from ENEMYCOLLISION_GOPONGA_FLOWER 0x23 (ages)
+07/2f03/: /copy a,$07,$317f,$01
+# copy ENEMYCOLLISION_WALLMASTER 0x24 (seasons) from ENEMYCOLLISION_WALLMASTER 0x25 (ages)
+07/2f23/: /copy a,$07,$31bf,$01
+# copy ENEMYCOLLISION_GIANT_BLADE_TRAP 0x25 (seasons) from ENEMYCOLLISION_GIANT_BLADE_TRAP 0x26 (ages)
+07/2f43/: /copy a,$07,$31df,$01
+# copy ENEMYCOLLISION_THWIMP 0x26 (seasons) from ENEMYCOLLISION_THWIMP 0x27 (ages)
+07/2f63/: /copy a,$07,$31ff,$01
+# copy ENEMYCOLLISION_THWOMP 0x27 (seasons) from ENEMYCOLLISION_THWOMP 0x28 (ages)
+07/2f83/: /copy a,$07,$321f,$01
+# copy ENEMYCOLLISION_UNDEAD 0x28 (seasons) from ENEMYCOLLISION_STANDARD_ENEMY 0x10 (ages)
+07/2fa3/: /copy a,$07,$2f1f,$01
+# copy ENEMYCOLLISION_KEESE 0x29 (seasons) from ENEMYCOLLISION_KEESE 0x1f (ages)
+07/2fc3/: /copy a,$07,$30ff,$01
+# copy ENEMYCOLLISION_ZOL 0x2a (seasons) from ENEMYCOLLISION_ZOL 0x29 (ages)
+07/2fe3/: /copy a,$07,$323f,$01
+# copy ENEMYCOLLISION_CUCCO 0x2b (seasons) from ENEMYCOLLISION_CUCCO 0x2a (ages)
+07/3003/: /copy a,$07,$325f,$01
+# copy ENEMYCOLLISION_FIRE_KEESE 0x2c (seasons) from ENEMYCOLLISION_FIRE_KEESE 0x2b (ages)
+07/3023/: /copy a,$07,$327f,$01
+# copy ENEMYCOLLISION_GIANT_CUCCO 0x2d (seasons) from ENEMYCOLLISION_GIANT_CUCCO 0x2c (ages)
+07/3043/: /copy a,$07,$329f,$01
+# copy ENEMYCOLLISION_PEAHAT_VULNERABLE 0x2e (seasons) from ENEMYCOLLISION_PEAHAT_VULNERABLE 0x2e (ages)
+07/3063/: /copy a,$07,$32df,$01
+# copy ENEMYCOLLISION_CROW 0x30 (seasons) from ENEMYCOLLISION_CROW 0x31 (ages)
+07/30a3/: /copy a,$07,$333f,$01
+# copy ENEMYCOLLISION_GEL 0x31 (seasons) from ENEMYCOLLISION_GEL 0x33 (ages)
+07/30c3/: /copy a,$07,$337f,$01
+# copy ENEMYCOLLISION_PINCER 0x32 (seasons) from ENEMYCOLLISION_PINCER 0x34 (ages)
+07/30e3/: /copy a,$07,$339f,$01
+# copy ENEMYCOLLISION_GOHMA_GEL 0x33 (seasons) from ENEMYCOLLISION_GOHMA_GEL 0x35 (ages)
+07/3103/: /copy a,$07,$33bf,$01
+# copy ENEMYCOLLISION_SWORD_MASKED_MOBLIN 0x34 (seasons) from ENEMYCOLLISION_SWORD_MASKED_MOBLIN 0x36 (ages)
+07/3123/: /copy a,$07,$33df,$01
+# copy ENEMYCOLLISION_BALL_AND_CHAIN_SOLDIER 0x35 (seasons) from ENEMYCOLLISION_BALL_AND_CHAIN_SOLDIER 0x37 (ages)
+07/3143/: /copy a,$07,$33ff,$01
+# copy ENEMYCOLLISION_HARDHAT_BEETLE 0x36 (seasons) from ENEMYCOLLISION_HARDHAT_BEETLE 0x38 (ages)
+07/3163/: /copy a,$07,$341f,$01
+# copy ENEMYCOLLISION_ARM_MIMIC 0x37 (seasons) from ENEMYCOLLISION_ARM_MIMIC 0x39 (ages)
+07/3183/: /copy a,$07,$343f,$01
+# copy ENEMYCOLLISION_MOLDORM 0x38 (seasons) from ENEMYCOLLISION_MOLDORM 0x3a (ages)
+07/31a3/: /copy a,$07,$345f,$01
+# copy ENEMYCOLLISION_BEETLE 0x39 (seasons) from ENEMYCOLLISION_BEETLE 0x3b (ages)
+07/31c3/: /copy a,$07,$347f,$01
+# copy ENEMYCOLLISION_TWINROVA_BAT 0x3f (seasons) from ENEMYCOLLISION_TWINROVA_BAT 0x41 (ages)
+07/3283/: /copy a,$07,$353f,$01
+# copy ENEMYCOLLISION_VIRE 0x45 (seasons) from ENEMYCOLLISION_VIRE 0x46 (ages)
+07/3343/: /copy a,$07,$35df,$01
+# copy ENEMYCOLLISION_SPIKED_BEETLE_FLIPPED 0x4e (seasons) from ENEMYCOLLISION_SPIKED_BEETLE_FLIPPED 0x51 (ages)
+07/3463/: /copy a,$07,$373f,$01
+# copy ENEMYCOLLISION_UNMASKED_IRON_MASK 0x50 (seasons) from ENEMYCOLLISION_UNMASKED_IRON_MASK 0x53 (ages)
+07/34a3/: /copy a,$07,$377f,$01
+# copy ENEMYCOLLISION_ACTIVE_BLUE_ARMOS 0x51 (seasons) from ENEMYCOLLISION_ACTIVE_BLUE_ARMOS 0x54 (ages)
+07/34c3/: /copy a,$07,$379f,$01
+# copy ENEMYCOLLISION_STALFOS_BLOCKED_WITH_SWORD 0x52 (seasons) from ENEMYCOLLISION_STALFOS_BLOCKED_WITH_SWORD 0x55 (ages)
+07/34e3/: /copy a,$07,$37bf,$01
+# copy ENEMYCOLLISION_DARKNUT_BLOCKED_WITH_SWORD 0x53 (seasons) from ENEMYCOLLISION_DARKNUT_BLOCKED_WITH_SWORD 0x56 (ages)
+07/3503/: /copy a,$07,$37df,$01
+# copy ENEMYCOLLISION_BIG_GOPONGA_FLOWER 0x54 (seasons) from ENEMYCOLLISION_BIG_GOPONGA_FLOWER 0x57 (ages)
+07/3523/: /copy a,$07,$37ff,$01
+# copy ENEMYCOLLISION_SPIKED_BALL 0x6b (seasons) from ENEMYCOLLISION_SPIKED_BALL 0x74 (ages)
+07/3803/: /copy a,$07,$3b9f,$01
+# copy ENEMYCOLLISION_GANON_TRIDENT 0x70 (seasons) from ENEMYCOLLISION_GANON_TRIDENT 0x7b (ages)
+07/38a3/: /copy a,$07,$3c7f,$01
+
+# edit enemyActiveCollisions (using Stewmat's enemy active collision table)
+07/2746/: db $f8
+07/274a/: db $78
+07/274e/: db $78
+07/2752/: db $78
+07/2756/: db $78
+07/275a/: db $f8
+07/2762/: db $f8
+07/2766/: db $f8
+07/276a/: db $f8
+07/276e/: db $f8
+07/2772/: db $f8
+07/2776/: db $f8
+07/277a/: db $78
+07/277e/: db $78
+07/2782/: db $f8
+07/278a/: db $f8
+07/278e/: db $78
+07/2792/: db $f8
+07/2796/: db $78
+07/279e/: db $f8
+07/27a2/: db $f8
+07/27a6/: db $78
+07/27aa/: db $f8
+07/27ae/: db $f8
+07/27b2/: db $f8
+07/27b6/: db $f8
+07/27ba/: db $f8
+07/27c2/: db $f8
+07/27c6/: db $f8
+07/27ca/: db $f8
+07/27ce/: db $f8
+07/27d2/: db $f8
+07/27d6/: db $f8
+07/27e2/: db $f8
+07/27ea/: db $78
+07/27f2/: db $f8
+07/27fa/: db $78
+07/27fe/: db $78
+07/2802/: db $f8
+07/2806/: db $f8
+07/280a/: db $f8
+07/2812/: db $f8
+07/2816/: db $f8
+07/281a/: db $f8
+07/2826/: db $f8
+07/282a/: db $f8
+07/282e/: db $f8
+07/2832/: db $78
+07/2836/: db $f8
+07/283a/: db $f8
+07/2846/: db $f8
+07/284e/: db $f8
+07/2856/: db $f8
+07/285a/: db $f8
+07/285e/: db $f8
+07/2862/: db $f8
+07/2866/: db $f8
+07/286a/: db $f8
+07/286e/: db $f8
+07/2872/: db $f8
+07/2876/: db $f8
+07/287a/: db $f8
+07/287e/: db $f8
+07/2886/: db $f8
+07/288a/: db $f8
+07/2896/: db $78
+07/289a/: db $f8
+07/28ba/: db $f8
+07/2902/: db $f8
+07/290a/: db $f8
+07/290e/: db $f8
+07/2912/: db $f8
+07/2916/: db $f8
+07/291a/: db $f8
+07/291e/: db $78
+07/2922/: db $f8
+07/2926/: db $78
+07/292a/: db $f8
+07/292e/: db $78
+07/2932/: db $78
+07/2936/: db $f8
+07/293a/: db $f8
+07/293e/: db $78
+
+# edit partActiveCollisions (using Stewmat's part active collision table)
+07/29ea/: db $78
+07/2a7e/: db $f8
+07/2a82/: db $08
+
+# Change sndMysterySeed priority
+39/15cc/sndMysterySeed: db $32
+
+# clearAllItemsAndPutLinkOnGround
+00//clearSomariaBlock: |
+  /copy a,$00,$19bc,$05
+  jr nz,@notSomariaBlock
+  /copy a,$00,$19c3,$0a
+  jp $199b
+  @notSomariaBlock:
+  /copy a,$00,$19cf,$03
+  ret
+
+00/1995/:
+  call clearSomariaBlock
+
+# Make somaria cane not cut grass
+# To do that, only cut grass when it's a sword instead of not cutting it when it's the rod
+07/1d50/: |
+  cp $05
+  db $20 ; replaces jr z by jr nz
+
+# gfx
+1b/3ac0/: /copy a,$19,$02e0,$20
+# Apply the sprite to the inventory item by changing the treasureDisplayData
+3f/2dbe/: db $a5
+# Add the gfx entry to the interactionData
+3f/27d8/: db $7d,$a5,$50 ; GFX_54
+# Replace the L-1 and L-2 ring box inventory text
+1d/32b0/TX_091e: |
+  db $43,$61,$6e,$65,$03,$e3,$53,$6f
+  db $6d,$61,$72,$69,$61,$01,$55,$73
+  db $65,$64,$03,$b0,$63,$04,$09,$65
+  db $01,$62,$05,$a6,$73,$2e,$00
+# TreasureDisplayData
+3f/2dc3/: db $1d
+# Chest data
+15/113b/: db $b0,$54
+
+# Remove the grass effect on the somaria block indoors
+00/0f39/: |
+  call checkSomariaGrass
+  jr z,$10
+00//checkSomariaGrass: |
+  cp $f9
+  jp nz,@end
+  ld a,(wActiveGroup)
+  or a
+  ccf
+  ret nz
+  
+  @end:
+  and a ; sets c to 0
+  bit 2,h
+  ld a,($cc52) ; wGrassAnimationModifier
+  ret

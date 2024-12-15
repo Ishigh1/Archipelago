@@ -265,6 +265,14 @@
 3f//TX_562e: /include text.compassD7
 3f//TX_562f: /include text.compassD8
 
+# Got a cane of somaria
+3f//TX_5630: |
+    db $02,$03,$09,$01,$43,$61,$6e,$65
+    db $03,$e3,$53,$6f,$6d,$61,$72,$69
+    db $61,$03,$e4,$55,$73,$65,$03,$53
+    db $20,$63,$04,$09,$65,$01,$62,$05
+    db $a6,$73,$2e,$00
+
 3f//customTextTable: |
     dw TX_5600, TX_5601, TX_5602, TX_5603
     dw TX_5604, TX_5605, TX_5606, TX_5607
@@ -278,6 +286,7 @@
     dw TX_5624, TX_5625, TX_5626, TX_5627
     dw TX_5628, TX_5629, TX_562a, TX_562b
     dw TX_562c, TX_562d, TX_562e, TX_562f
+    dw TX_5630
 
 # Override getTextAddress to have a specific custom bank_id point to text somewhere else
 3f//checkCustomTextOverride: |

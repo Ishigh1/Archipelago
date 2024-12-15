@@ -52,6 +52,10 @@ def oos_has_magic_boomerang(state: CollectionState, player: int):
     return state.has("Progressive Boomerang", player, 2)
 
 
+def oos_has_cane(state: CollectionState, player: int):
+    return state.has("Cane of Somaria", player)
+
+
 def oos_has_bracelet(state: CollectionState, player: int):
     return state.has("Power Bracelet", player)
 
@@ -700,6 +704,13 @@ def oos_can_push_enemy(state: CollectionState, player: int):
 
 
 def oos_can_kill_normal_enemy(state: CollectionState, player: int, pit_available: bool = False):
+    return any([
+        oos_can_kill_normal_enemy_no_cane(state, player, pit_available),
+        (oos_option_medium_logic(state, player) and oos_has_cane(state, player))
+    ])
+
+
+def oos_can_kill_normal_enemy_no_cane(state: CollectionState, player: int, pit_available: bool = False):
     # If a pit is avaiable nearby, it can be used to put the enemies inside using
     # items that are usually non-lethal
     if pit_available and oos_can_push_enemy(state, player):
@@ -712,7 +723,7 @@ def oos_can_kill_normal_enemy(state: CollectionState, player: int, pit_available
         oos_can_kill_normal_using_slingshot(state, player),
         (oos_option_medium_logic(state, player) and oos_has_bombs(state, player, 4)),
         oos_has_bombchus(state, player, 2),
-        oos_can_punch(state, player)
+        oos_can_punch(state, player),
     ])
 
 
@@ -777,6 +788,7 @@ def oos_can_kill_armored_enemy(state: CollectionState, player: int):
                 oos_option_medium_logic(state, player)
             ])
         ]),
+        (oos_option_medium_logic(state, player) and oos_has_cane(state, player)),
         oos_can_punch(state, player)
     ])
 

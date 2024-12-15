@@ -1,0 +1,17 @@
+# interBankCall, but doesn't use af. Slower though.
+00//safeInterBankCall: |
+  ld ($c018),a ; use a sound buffer to keep the value
+  ldh a,(hRomBank)
+  push af
+  ld a,e
+  ldh (hRomBank),a
+  ld ($2222),a
+  ld a,($c018)
+  call $00a0
+  ld ($c018),a ; use a sound buffer to keep the value
+  pop hl
+  ld a,h
+  ldh (hRomBank),a
+  ld ($2222),a
+  ld a,($c018)
+  ret

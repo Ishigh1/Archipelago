@@ -64,7 +64,10 @@ EOB_ADDR = [
     0x4000,  # 3c
     0x4000,  # 3d
     0x4000,  # 3e
-    0x314b  # 3f - also here
+    0x314b,  # 3f - also here
+
+    # New banks
+    0x0000,  # 40
 ]
 
 DEFINES = {
@@ -239,6 +242,7 @@ DEFINES = {
     "TREASURE_SHIELD": "$01",
     "TREASURE_PUNCH": "$02",
     "TREASURE_BOMBS": "$03",
+    "TREASURE_CANE_OF_SOMARIA": "$04",
     "TREASURE_SWORD": "$05",
     "TREASURE_BOOMERANG": "$06",
     "TREASURE_ROD_OF_SEASONS": "$07",
@@ -349,8 +353,6 @@ DEFINES = {
 
 ASM_FILES = [
     "asm/animals.yaml",
-    "asm/bigger_inventory.yaml",
-    "asm/bombchus.yaml",
     "asm/boss_items.yaml",
     "asm/collect.yaml",
     "asm/combat_difficulty.yaml",
@@ -384,6 +386,12 @@ ASM_FILES = [
     "asm/util.yaml",
     "asm/vars.yaml",
     "asm/warp_to_start.yaml",
+    "asm/cross_items/safeInterBankCall.yaml",
+    "asm/cross_items/bank_47_redirects.yaml",
+    "asm/cross_items/bigger_inventory.yaml",
+    "asm/cross_items/bombchus.yaml",
+    "asm/cross_items/cane_of_somaria.yaml",
+    "asm/cross_items/uncmp_gfx.yaml",
 ]
 
 RUPEE_VALUES = {

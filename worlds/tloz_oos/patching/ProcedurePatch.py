@@ -16,13 +16,22 @@ class OoSPatchExtensions(APPatchExtension):
     @staticmethod
     def apply_patches(caller: APProcedurePatch, rom: bytes, patch_file: str) -> bytes:
         rom_data = RomData(rom)
+        for bank in range(0x40, 0x80):
+            rom_data.add_bank(bank)
+        rom_data.update_rom_size()
+
         patch_data = yaml.load(caller.get_file(patch_file).decode("utf-8"), yaml.Loader)
 
         if patch_data["version"] != VERSION:
             raise Exception(f"Invalid version: this patch was generated on v{patch_data['version']}, "
                             f"you are currently using v{VERSION}")
 
-        assembler = Z80Assembler(EOB_ADDR, DEFINES)
+        file_name = get_settings()["tloz_ooa_options"]["rom_file"]
+        if not os.path.exists(file_name):
+            file_name = Utils.user_path(file_name)
+        ages_rom = bytes(open(file_name, "rb").read())
+
+        assembler = Z80Assembler(EOB_ADDR, DEFINES, rom, ages_rom)
 
         # Define assembly constants & floating chunks
         define_location_constants(assembler, patch_data)
@@ -64,6 +73,7 @@ class OoSPatchExtensions(APPatchExtension):
         set_character_sprite_from_settings(rom_data)
         inject_slot_name(rom_data, caller.player_name)
 
+        rom_data.update_header_checksum()
         rom_data.update_checksum(0x14e)
         return rom_data.output()
 

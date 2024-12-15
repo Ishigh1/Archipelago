@@ -17,6 +17,10 @@ ITEMS_DATA = {
         'classification': ItemClassification.progression,
         'id': 0x03
     },
+    "Cane of Somaria": {
+        'classification': ItemClassification.progression,
+        'id': 0x04
+    },
     "Progressive Sword": {
         'classification': ItemClassification.progression,
         'id': 0x05
