@@ -239,7 +239,7 @@ class OracleOfSeasonsWorld(World):
             self.portal_connections[guaranteed_portal_holodrum] = guaranteed_portal_subrosia
 
         # If accessibility is not locations, don't perform any check on what was randomly picked
-        if self.options.accessibility != Accessibility.option_locations:
+        if self.options.accessibility != Accessibility.option_full:
             return
 
         # If accessibility IS locations, we need to ensure that Temple Remains upper portal doesn't lead to the volcano
