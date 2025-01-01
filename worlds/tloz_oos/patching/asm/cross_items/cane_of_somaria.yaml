@@ -474,7 +474,7 @@
 # Apply the sprite to the inventory item by changing the treasureDisplayData
 3f/2dbe/: db $a5
 # Add the gfx entry to the interactionData
-3f/27d8/: db $7d,$a5,$50 ; GFX_54
+3f/27f6/: db $61,$0a,$20 ; GFX_5e
 # Replace the L-1 and L-2 ring box inventory text
 1d/32b0/TX_091e: |
   db $43,$61,$6e,$65,$03,$e3,$53,$6f
@@ -483,8 +483,8 @@
   db $01,$62,$05,$a6,$73,$2e,$00
 # TreasureDisplayData
 3f/2dc3/: db $1d
-# Chest data
-15/113b/: db $b0,$54
+# treasureObjectData
+15/113b/: db $b0,$5e
 
 # Remove the grass effect on the somaria block indoors
 00/0f39/: |
