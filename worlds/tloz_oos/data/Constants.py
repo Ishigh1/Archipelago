@@ -1,4 +1,4 @@
-VERSION = "BETA - 1.2"
+VERSION = "BETA - 1.3"
 ROM_HASH = "f2dc6c4e093e4f8c6cbea80e8dbd62cb"
 
 DIRECTION_UP = 0

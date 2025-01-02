@@ -399,4 +399,7 @@ REGIONS = [
     "gasha tree 14",
     "gasha tree 15",
     "gasha tree 16",
+
+    "clock shop secret",
+    "graveyard secret",
 ]

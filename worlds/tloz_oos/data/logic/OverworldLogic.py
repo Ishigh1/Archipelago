@@ -58,6 +58,20 @@ def make_holodrum_logic(player: int):
             state.has("Member's Card", player),
             oos_has_rupees(state, player, 450)
         ])],
+        ["horon village", "clock shop secret", False, lambda state: all([
+            oos_has_shovel(state, player),
+            any([
+                oos_has_noble_sword(state, player),
+                oos_has_fools_ore(state, player),
+                all([
+                    oos_option_medium_logic(state, player),
+                    any([
+                        oos_has_sword(state, player),
+                        oos_has_bombchus(state, player, 3)
+                    ])
+                ])
+            ])
+        ])],
 
         # WESTERN COAST ##############################################################################################
 
@@ -113,6 +127,8 @@ def make_holodrum_logic(player: int):
             oos_get_default_season(state, player, "WESTERN_COAST") in [SEASON_SUMMER, SEASON_SPRING]],
 
         ["graveyard (autumn)", "graveyard heart piece", False, lambda state: oos_can_break_mushroom(state, player, False)],
+
+        ["d7 entrance", "graveyard secret", False, lambda state: oos_has_shovel(state, player)],
 
         # EASTERN SUBURBS #############################################################################################
 

@@ -1,0 +1,34 @@
+# GLOBALFLAG_DONE_CLOCK_SHOP_SECRET
+
+# Replace game finished check by setting the flag saying the code has been inputted, for now
+0f/394f/: |
+  ld a,$50
+  call setGlobalFlag
+  nop
+  nop
+  nop
+
+0b/3bb6/: |
+  dwbe locations.clockSecret
+  db retscript
+
+0b/3bbd/: |
+  dwbe locations.clockSecret
+  db retscript
+
+0b/3b94/: db $f8 ; wait 60, replacing the sword's wait 90
+
+0b/3b9e/: dwbe $7ba7 ; skip the password generation (jump to understood)
+
+# GLOBALFLAG_DONE_GRAVEYARD_SECRET
+# Replace game finished check by setting the flag saying the code has been inputted, for now
+0f/3ad5/: |
+  ld a,$51
+  call setGlobalFlag
+  nop
+  nop
+  nop
+
+0b/3c89/: dwbe locations.graveyardSecret
+
+0b/3bad/: dwbe $7ca4 ; skip the password generation (jump to understood)

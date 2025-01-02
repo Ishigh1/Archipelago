@@ -31,6 +31,7 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/mute_music.yaml")
     if get_settings()["tloz_oos_options"]["rosa_quick_unlock"]:
         asm_files.append("asm/conditional/instant_rosa.yaml")
+    asm_files.append("asm/conditional/linked_locations.yaml")
     return asm_files
 
 

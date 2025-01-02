@@ -2191,4 +2191,26 @@ LOCATIONS_DATA = {
         "conditional": True,
         "room": [],
     },
+
+    # Linked locations
+    "Clock Shop Secret": {
+        "region_id": "clock shop secret",
+        "vanilla_item": "Filler Item",
+        "conditional": False,
+        "flag_byte": 0xca0f,
+        "room": 0x050f,
+        "collect": COLLECT_TOUCH,
+        "map_tile": 0xd7,
+        "symbolic_name": "clockSecret",
+    },
+    "Graveyard Secret": {
+        "region_id": "graveyard secret",
+        "vanilla_item": "Filler Item",
+        "conditional": False,
+        "flag_byte": 0xc8ba,
+        "room": 0x03ba,
+        "collect": COLLECT_TOUCH,
+        "map_tile": 0xe0,
+        "symbolic_name": "graveyardSecret",
+    }
 }
