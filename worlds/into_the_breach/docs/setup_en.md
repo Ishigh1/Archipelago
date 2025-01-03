@@ -14,7 +14,7 @@ To do the full setup, extract everything found in the libs archive that can be d
 ## Mod setup
 - You will need a new profile for that, think of a name for it and check if there is no profile folder of that name in your ITB data folder (in Documents/My Games/into the breach). If there is one, delete it
 - Launch the game
-- Enable the randomizer mod, Mod Loader Extensions > modApiExt and Mod Loader Extensions > memedit
+- Enable the randomizer mod, Mod Loader Extensions > modApiExt and Mod Loader Extensions > memedit by going in mod content>configure mods
 - Create your new profile
 - Open the console with ` (if you don't have it on your keyboard, switch to the english one)
 - Type the command "makeitso". This command is linked to your current profile, so if you change it afterward, you will need to do the command again.
