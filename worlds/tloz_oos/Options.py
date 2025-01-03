@@ -462,6 +462,18 @@ class OracleOfSeasonsRemoveItemsFromPool(ItemDict):
     display_name = "Remove Items from Pool"
     verify_item_name = False
 
+class OracleOfSeasonsIncludeCrossItems(DefaultOnToggle):
+    """
+    When enabled, add the cane of somaria to the item pool (requires the OoA rom)
+    """
+    display_name = "Cross Items"
+
+class OracleOfSeasonsIncludeSecretLocations(DefaultOnToggle):
+    """
+    When enabled, add the clock and graveyard secrets to the list of locations
+    """
+    display_name = "Secret Locations"
+
 
 @dataclass
 class OracleOfSeasonsOptions(PerGameCommonOptions):
@@ -505,3 +517,5 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     starting_maps_compasses: OracleOfSeasonsStartingMapsCompasses
     remove_items_from_pool: OracleOfSeasonsRemoveItemsFromPool
     death_link: DeathLink
+    cross_items: OracleOfSeasonsIncludeCrossItems
+    secret_locations: OracleOfSeasonsIncludeSecretLocations
