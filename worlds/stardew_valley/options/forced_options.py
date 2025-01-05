@@ -2,6 +2,7 @@ import logging
 
 import Options as ap_options
 from . import options
+from .options import Tilesanity
 
 logger = logging.getLogger(__name__)
 
@@ -11,6 +12,8 @@ def force_change_options_if_incompatible(world_options: options.StardewValleyOpt
     force_walnutsanity_deactivation_when_ginger_island_is_excluded(world_options, player, player_name)
     force_qi_special_orders_deactivation_when_ginger_island_is_excluded(world_options, player, player_name)
     force_accessibility_to_full_when_goal_requires_all_locations(player, player_name, world_options)
+    if world_options.tilesanity > Tilesanity.option_nope and not world_options.settings.allow_tilesanity:
+        raise Exception(f"Tilesanity is not allowed by the host.yaml. The yaml of player {player} ({player_name}) contains tilesanity")
 
 
 def force_ginger_island_inclusion_when_goal_is_ginger_island_related(world_options: options.StardewValleyOptions, player: int, player_name: str) -> None:
