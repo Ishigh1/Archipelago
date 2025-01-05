@@ -556,6 +556,7 @@ class FriendsanityHeartSize(Range):
     default = 4
     # step = 1
 
+
 class Tilesanity(Choice):
     """Enables tilesanity. You need the permission of the host to enable it.
     Locations means every tile will hold an item with no consequence on the game
@@ -566,6 +567,7 @@ class Tilesanity(Choice):
     option_locations = 1
     option_full = 2
     default = option_nope
+
 
 # Conditional Setting - Tilesanity is not nope
 class TilesanitySize(Range):
