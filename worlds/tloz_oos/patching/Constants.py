@@ -386,12 +386,6 @@ ASM_FILES = [
     "asm/util.yaml",
     "asm/vars.yaml",
     "asm/warp_to_start.yaml",
-    "asm/cross_items/safeInterBankCall.yaml",
-    "asm/cross_items/bank_47_redirects.yaml",
-    "asm/cross_items/bigger_inventory.yaml",
-    "asm/cross_items/bombchus.yaml",
-    "asm/cross_items/cane_of_somaria.yaml",
-    "asm/cross_items/uncmp_gfx.yaml",
 ]
 
 RUPEE_VALUES = {

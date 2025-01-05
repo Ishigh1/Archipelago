@@ -16,26 +16,27 @@ class OoSPatchExtensions(APPatchExtension):
     @staticmethod
     def apply_patches(caller: APProcedurePatch, rom: bytes, patch_file: str) -> bytes:
         rom_data = RomData(rom)
-        for bank in range(0x40, 0x80):
-            rom_data.add_bank(bank)
-        rom_data.update_rom_size()
-
         patch_data = yaml.load(caller.get_file(patch_file).decode("utf-8"), yaml.Loader)
 
         if patch_data["version"] != VERSION:
             raise Exception(f"Invalid version: this patch was generated on v{patch_data['version']}, "
                             f"you are currently using v{VERSION}")
 
-        file_name = get_settings()["tloz_ooa_options"]["rom_file"]
-        if not os.path.exists(file_name):
-            file_name = Utils.user_path(file_name)
-        ages_rom = bytes(open(file_name, "rb").read())
-        ages_hash = "c4639cc61c049e5a085526bb6cac03bb"
-        basemd5 = hashlib.md5()
-        basemd5.update(ages_rom)
-        if ages_hash != basemd5.hexdigest():
-            raise Exception("Supplied ROM does not match known MD5 for Oracle of Ages US version."
-                            "Get the correct game and version, then dump it.")
+        if patch_data["options"]["cross_items"]:
+            for bank in range(0x40, 0x80):
+                rom_data.add_bank(bank)
+            rom_data.update_rom_size()
+
+            file_name = get_settings()["tloz_ooa_options"]["rom_file"]
+            if not os.path.exists(file_name):
+                file_name = Utils.user_path(file_name)
+            ages_rom = bytes(open(file_name, "rb").read())
+            ages_hash = "c4639cc61c049e5a085526bb6cac03bb"
+            basemd5 = hashlib.md5()
+            basemd5.update(ages_rom)
+            if ages_hash != basemd5.hexdigest():
+                raise Exception("Supplied ROM does not match known MD5 for Oracle of Ages US version."
+                                "Get the correct game and version, then dump it.")
 
         assembler = Z80Assembler(EOB_ADDR, DEFINES, rom, ages_rom)
 

@@ -31,7 +31,16 @@ def get_asm_files(patch_data):
         asm_files.append("asm/conditional/mute_music.yaml")
     if get_settings()["tloz_oos_options"]["rosa_quick_unlock"]:
         asm_files.append("asm/conditional/instant_rosa.yaml")
-    asm_files.append("asm/conditional/linked_locations.yaml")
+    if patch_data["options"]["cross_items"]:
+        asm_files.extend([
+            "asm/cross_items/safeInterBankCall.yaml",
+            "asm/cross_items/bank_47_redirects.yaml",
+            "asm/cross_items/bigger_inventory.yaml",
+            "asm/cross_items/bombchus.yaml",
+            "asm/cross_items/cane_of_somaria.yaml",
+            "asm/cross_items/uncmp_gfx.yaml"])
+    if patch_data["options"]["secret_locations"]:
+        asm_files.append("asm/conditional/linked_locations.yaml")
     return asm_files
 
 
@@ -171,7 +180,7 @@ def define_additional_tile_replacements(assembler: Z80Assembler, patch_data):
             0x01, 0x3a, 0x00, 0x46, 0x2f,  # Temple of Seasons digging spot
             0x01, 0x07, 0x00, 0x13, 0x2f,  # Northern volcanoes digging spot
             0x01, 0x20, 0x00, 0x68, 0x2f,  # D8 portal digging spot
-            0x01, 0x42, 0x00, 0x14, 0x2f   # Western volcanoes digging spot
+            0x01, 0x42, 0x00, 0x14, 0x2f  # Western volcanoes digging spot
         ])
     # If D0 alternate entrance is removed, put stairs inside D0 to make chest reachable without the alternate entrance
     if patch_data["options"]["remove_d0_alt_entrance"] > 0:
@@ -233,7 +242,7 @@ def define_location_constants(assembler: Z80Assembler, patch_data):
     # Process deterministic Gasha Nut locations to define a table
     deterministic_gasha_table = []
     for i in range(int(patch_data["options"]["deterministic_gasha_locations"])):
-        item = patch_data["locations"][f"Gasha Nut #{i+1}"]
+        item = patch_data["locations"][f"Gasha Nut #{i + 1}"]
         item_id, item_subid = get_item_id_and_subid(item)
         deterministic_gasha_table.extend([item_id, item_subid])
     assembler.add_floating_chunk("deterministicGashaLootTable", deterministic_gasha_table)

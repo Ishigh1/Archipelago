@@ -1,4 +1,4 @@
-VERSION = "BETA - 1.3"
+VERSION = "BETA - 1.4"
 ROM_HASH = "f2dc6c4e093e4f8c6cbea80e8dbd62cb"
 
 DIRECTION_UP = 0
@@ -162,6 +162,11 @@ SUBROSIA_HIDDEN_DIGGING_SPOTS_LOCATIONS = [
     "Subrosia: Northern Volcanoes Digging Spot",
     "Subrosia: D8 Portal Digging Spot",
     "Subrosia: Western Volcanoes Digging Spot"
+]
+
+SECRETS = [
+    "clock shop secret",
+    "graveyard secret"
 ]
 
 SAMASA_GATE_CODE = [2, 2, 1, 0, 0, 3, 3, 3]

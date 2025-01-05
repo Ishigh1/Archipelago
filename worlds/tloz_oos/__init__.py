@@ -318,6 +318,8 @@ class OracleOfSeasonsWorld(World):
             return not self.options.enforce_potion_in_shop
         if location_name.startswith("Gasha Nut #"):
             return int(location_name[11:]) <= self.options.deterministic_gasha_locations
+        if location_name in SECRETS:
+            return self.options.secret_locations
         return False
 
     def create_location(self, region_name: str, location_name: str, local: bool):
@@ -507,7 +509,6 @@ class OracleOfSeasonsWorld(World):
             ["Treasure Map", "Ore Chunks (50)"],  # Treasure Map would be non-functional in most cases, just remove it
             ["Gasha Seed", "Seed Satchel"],  # Add a 3rd satchel that is usually obtained in linked games (99 seeds)
             ["Gasha Seed", "Rupees (200)"],  # Too many Gasha Seeds in vanilla pool, add more rupees and ore instead
-            ["Gasha Seed", "Cane of Somaria"],  # Too many Gasha Seeds in vanilla pool, add more rupees and ore instead
         ]
         for _ in range(3):
             # Replace a few Gasha Seeds by random filler items
@@ -524,14 +525,16 @@ class OracleOfSeasonsWorld(World):
             item_pool_dict[original_name] -= 1
             item_pool_dict[replacement_name] = item_pool_dict.get(replacement_name, 0) + 1
 
-        bombchus = 10
-        for rupee_item in ["Rupees (5)", "Rupees (10)", "Rupees (20)", "Rupees (30)", "Rupees (1)", "Rupees (50)"]:
-            quantity = min(bombchus, item_pool_dict[rupee_item])
-            item_pool_dict[rupee_item] -= quantity
-            bombchus -= quantity
-            if bombchus == 0:
-                break
-        item_pool_dict["Bombchus (10)"] = 10 - bombchus
+        if self.options.cross_items:
+            item_pool_adjustements.append(["Gasha Seed", "Cane of Somaria"])
+            bombchus = 10
+            for rupee_item in ["Rupees (5)", "Rupees (10)", "Rupees (20)", "Rupees (30)", "Rupees (1)", "Rupees (50)"]:
+                quantity = min(bombchus, item_pool_dict[rupee_item])
+                item_pool_dict[rupee_item] -= quantity
+                bombchus -= quantity
+                if bombchus == 0:
+                    break
+            item_pool_dict["Bombchus (10)"] = 10 - bombchus
 
         if "Random Ring" in item_pool_dict:
             quantity = item_pool_dict["Random Ring"]
