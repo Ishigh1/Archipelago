@@ -2193,20 +2193,20 @@ LOCATIONS_DATA = {
     },
 
     # Linked locations
-    "Clock Shop Secret": {
+    "Horon Village: Clock Shop Secret": {
         "region_id": "clock shop secret",
         "vanilla_item": "Filler Item",
-        "conditional": False,
+        "conditional": True,
         "flag_byte": 0xca0f,
         "room": 0x050f,
         "collect": COLLECT_TOUCH,
         "map_tile": 0xd7,
         "symbolic_name": "clockSecret",
     },
-    "Graveyard Secret": {
+    "Western Coast: Graveyard Secret": {
         "region_id": "graveyard secret",
         "vanilla_item": "Filler Item",
-        "conditional": False,
+        "conditional": True,
         "flag_byte": 0xc8ba,
         "room": 0x03ba,
         "collect": COLLECT_TOUCH,
