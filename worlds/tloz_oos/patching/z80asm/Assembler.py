@@ -1,10 +1,9 @@
 from copy import copy
 from typing import Dict, Optional
 
-from worlds.alttp.EntranceShuffle import address
-from .Util import *
 from .Errors import *
 from .MnemonicsTree import MNEMONICS
+from .Util import *
 from ..Util import hex_str
 
 
