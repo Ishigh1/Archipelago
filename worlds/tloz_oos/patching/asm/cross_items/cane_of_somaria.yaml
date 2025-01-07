@@ -1,5 +1,3 @@
-# TODO : change the somaria tile ID
-
 06//parentItemCode_caneOfSomaria: |
   ld e,$04 ; Item.state
   ld a,(de)
