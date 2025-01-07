@@ -17,10 +17,6 @@ ITEMS_DATA = {
         'classification': ItemClassification.progression,
         'id': 0x03
     },
-    "Cane of Somaria": {
-        'classification': ItemClassification.progression,
-        'id': 0x04
-    },
     "Progressive Sword": {
         'classification': ItemClassification.progression,
         'id': 0x05
@@ -56,10 +52,6 @@ ITEMS_DATA = {
     "Biggoron's Sword": {
         'classification': ItemClassification.progression,
         'id': 0x0c
-    },
-    "Bombchus (10)": {
-        'classification': ItemClassification.progression,
-        'id': 0x0d
     },
     "Ricky's Flute": {
         'classification': ItemClassification.progression,
@@ -994,5 +986,13 @@ ITEMS_DATA = {
         'classification': ItemClassification.progression,
         'id': 0x40,
         'subid': 0x07
+    },
+    "Cane of Somaria": {
+        'classification': ItemClassification.progression,
+        'id': 0x04
+    },
+    "Bombchus (10)": {
+        'classification': ItemClassification.progression,
+        'id': 0x0d
     },
 }
