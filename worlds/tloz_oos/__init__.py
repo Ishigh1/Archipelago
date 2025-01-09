@@ -526,7 +526,8 @@ class OracleOfSeasonsWorld(World):
             item_pool_dict[replacement_name] = item_pool_dict.get(replacement_name, 0) + 1
 
         if self.options.cross_items:
-            item_pool_adjustements.append(["Gasha Seed", "Cane of Somaria"])
+            item_pool_dict["Gasha Seed"] -= 1
+            item_pool_dict["Cane of Somaria"] = 1
             bombchus = 10
             for rupee_item in ["Rupees (5)", "Rupees (10)", "Rupees (20)", "Rupees (30)", "Rupees (1)", "Rupees (50)"]:
                 quantity = min(bombchus, item_pool_dict[rupee_item])
