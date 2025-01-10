@@ -2212,5 +2212,15 @@ LOCATIONS_DATA = {
         "collect": COLLECT_TOUCH,
         "map_tile": 0xe0,
         "symbolic_name": "graveyardSecret",
+    },
+    "Subrosia: Subrosian Secret": {
+        "region_id": "subrosian secret",
+        "vanilla_item": "Filler Item",
+        "conditional": True,
+        "flag_byte": 0xc9f0,
+        "room": 0x04f0,
+        "collect": COLLECT_TOUCH,
+        "map_tile": 0xe0,
+        "symbolic_name": "subrosianSecret",
     }
 }

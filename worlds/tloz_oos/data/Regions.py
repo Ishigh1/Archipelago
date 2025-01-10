@@ -402,4 +402,5 @@ REGIONS = [
 
     "clock shop secret",
     "graveyard secret",
+    "subrosian secret",
 ]
