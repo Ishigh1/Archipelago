@@ -87,7 +87,7 @@ def make_subrosia_logic(player: int):
         ["subrosia temple sector", "subrosian secret", False, lambda state: all([
             oos_can_jump_1_wide_pit(state, player, False),
             oos_has_magic_boomerang(state, player)
-        ])]
+        ])],
 
         ["subrosia market sector", "subrosia seaside", False, lambda state: oos_has_shovel(state, player)],
         ["subrosia market sector", "subrosia market star ore", False, lambda state: any([
