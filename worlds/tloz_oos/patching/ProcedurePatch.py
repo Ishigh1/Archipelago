@@ -37,6 +37,8 @@ class OoSPatchExtensions(APPatchExtension):
             if ages_hash != basemd5.hexdigest():
                 raise Exception("Supplied ROM does not match known MD5 for Oracle of Ages US version."
                                 "Get the correct game and version, then dump it.")
+        else:
+            ages_rom = bytes()
 
         assembler = Z80Assembler(EOB_ADDR, DEFINES, rom, ages_rom)
 
