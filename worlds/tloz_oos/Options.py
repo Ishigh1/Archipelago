@@ -472,7 +472,7 @@ class OracleOfSeasonsIncludeCrossItems(Toggle):
 
 class OracleOfSeasonsIncludeSecretLocations(Toggle):
     """
-    When enabled, add the clock and graveyard secrets to the list of locations
+    When enabled, add the some secrets to the list of locations
     """
     display_name = "Secret Locations"
 

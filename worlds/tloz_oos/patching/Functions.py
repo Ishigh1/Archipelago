@@ -38,9 +38,10 @@ def get_asm_files(patch_data):
             "asm/cross_items/bigger_inventory.yaml",
             "asm/cross_items/bombchus.yaml",
             "asm/cross_items/cane_of_somaria.yaml",
-            "asm/cross_items/uncmp_gfx.yaml"])
+            "asm/cross_items/uncmp_gfx.yaml"
+        ])
     if patch_data["options"]["secret_locations"]:
-        asm_files.append("asm/conditional/linked_locations.yaml")
+        asm_files.append("asm/conditional/secret_locations.yaml")
     return asm_files
 
 

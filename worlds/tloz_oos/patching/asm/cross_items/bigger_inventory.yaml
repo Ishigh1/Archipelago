@@ -122,3 +122,7 @@
 
 # interactionCode7a@movingTowardRoller
 09/05BB/: ld hl,wInventoryB
+
+# seasonsFunc_15_5cf7 (put items back in inventory from subrosian secret)
+15/1D03/: db <wInventoryB
+15/1D0a/: db <wInventoryA

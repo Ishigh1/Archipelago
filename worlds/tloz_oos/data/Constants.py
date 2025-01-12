@@ -166,7 +166,8 @@ SUBROSIA_HIDDEN_DIGGING_SPOTS_LOCATIONS = [
 
 SECRETS = [
     "Horon Village: Clock Shop Secret",
-    "Western Coast: Graveyard Secret"
+    "Western Coast: Graveyard Secret",
+    "Subrosia: Subrosian Secret"
 ]
 
 SAMASA_GATE_CODE = [2, 2, 1, 0, 0, 3, 3, 3]

@@ -656,6 +656,10 @@ def oos_can_break_crystal(state: CollectionState, player: int):
             oos_option_hard_logic(state, player),
             state.has("Expert's Ring", player)
         ]),
+        all([
+            oos_option_medium_logic(state, player),
+            oos_has_bombchus(state, player, 5)
+        ]),
     ])
 
 
@@ -932,7 +936,7 @@ def oos_can_remove_rockslide(state: CollectionState, player: int, can_summon_com
         oos_has_bombs(state, player),
         all([
             oos_option_medium_logic(state, player),
-            oos_has_bombchus(state, player)
+            oos_has_bombchus(state, player, 5)
         ]),
         can_summon_companion and oos_can_summon_ricky(state, player)
     ])

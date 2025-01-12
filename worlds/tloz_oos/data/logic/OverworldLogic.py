@@ -760,10 +760,7 @@ def make_holodrum_logic(player: int):
         ])],
 
         ["goron mountain", "chest in goron mountain", False, lambda state: all([
-            any([
-                oos_has_bombs(state, player),
-                oos_has_bombchus(state, player)
-            ]),
+            oos_can_remove_rockslide(state, player, False),
             oos_can_jump_3_wide_liquid(state, player)
         ])],
         ["goron mountain", "old man in goron mountain", False, lambda state: \
