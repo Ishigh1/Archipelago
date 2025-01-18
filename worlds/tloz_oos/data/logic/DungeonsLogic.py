@@ -948,7 +948,11 @@ def make_d8_logic(player: int):
 
         ["d8 ice puzzle room", "d8 pols voice chest", False, lambda state: any([
             oos_has_magic_boomerang(state, player),
-            oos_can_jump_6_wide_pit(state, player)
+            oos_can_jump_6_wide_pit(state, player),
+            all([
+                oos_option_medium_logic(state, player),
+                oos_has_bombchus(state, player, 2)
+            ])
         ])],
 
         # 4 keys

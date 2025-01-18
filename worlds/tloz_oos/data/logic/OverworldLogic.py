@@ -63,6 +63,7 @@ def make_holodrum_logic(player: int):
             any([
                 oos_has_noble_sword(state, player),
                 oos_has_fools_ore(state, player),
+                state.has("Biggoron's Sword", player),
                 all([
                     oos_option_medium_logic(state, player),
                     any([
@@ -760,8 +761,15 @@ def make_holodrum_logic(player: int):
         ])],
 
         ["goron mountain", "chest in goron mountain", False, lambda state: all([
-            oos_can_remove_rockslide(state, player, False),
-            oos_can_jump_3_wide_liquid(state, player)
+            oos_can_jump_3_wide_liquid(state, player),
+            any([
+                oos_has_bombs(state, player),
+                all([  # Bombchu can only destroy the second block, so we need to use cape to jump around the first
+                    oos_option_medium_logic(state, player),
+                    oos_has_bombchus(state, player, 5),
+                    oos_can_use_pegasus_seeds(state, player)
+                ]),
+            ])
         ])],
         ["goron mountain", "old man in goron mountain", False, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
