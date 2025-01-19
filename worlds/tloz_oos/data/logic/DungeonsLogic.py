@@ -513,14 +513,22 @@ def make_d5_logic(player: int):
         ])],
 
         ["d5 post syger", "d5 basement", False, lambda state: all([
-            any([
+            any([  # Unlock the first door
                 oos_has_small_keys(state, player, 5, 5),
                 oos_self_locking_small_key(state, player, "d5 basement", 5)
             ]),
-            state.has("_dropped_d5_magnet_ball", player),
-            oos_has_magnet_gloves(state, player),
-            any([
-                oos_can_kill_magunesu(state, player),
+            any([  # Unlock the second door
+                all([
+                    state.has("_dropped_d5_magnet_ball", player),
+                    oos_has_magnet_gloves(state, player),
+                ]),
+                oos_has_cane(state, player),
+            ]),
+            any([  # Pass the wall of flames
+                all([
+                    oos_can_kill_magunesu(state, player),
+                    oos_has_magnet_gloves(state, player)
+                ]),
                 all([
                     oos_option_medium_logic(state, player),
                     oos_has_feather(state, player)
@@ -529,6 +537,13 @@ def make_d5_logic(player: int):
                     oos_has_cane(state, player),
                     oos_can_use_pegasus_seeds(state, player),
                     oos_has_feather(state, player)
+                ])
+            ]),
+            any([  # Get the item in the basement
+                oos_has_magnet_gloves(state, player),
+                all([
+                    oos_has_feather(state, player),
+                    oos_has_cane(state, player)
                 ])
             ])
         ])],
