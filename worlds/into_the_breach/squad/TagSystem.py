@@ -33,7 +33,7 @@ tag_implications = {
     "Triple Kill": ("Triple Push",),
     "Triple Fire": ("Fire", "Triple Push",),
     "Summon": ("Many Summons",),
-    "Many Summon": ("Hoard Summons",),
+    "Many Summons": ("Hoard Summons",),
     "Boost": ("Fire Boost", "Fire",),
     "Heal": (("Smoke Heal", "Boost"), ("Smoke", "Boost"),),
 }
