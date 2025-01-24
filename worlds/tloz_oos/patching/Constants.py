@@ -321,6 +321,7 @@ DEFINES = {
     "checkcfc0_bit0": "$a0",
     "jumpifroomflagset": "$b0",
     "orroomflag": "$b1",
+    "script_nop": "$b2",
     "jumpifc6xxset": "$b3",
     "writec6xx": "$b4",
     "setglobalflag": "$b6",
