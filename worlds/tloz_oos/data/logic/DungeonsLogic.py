@@ -517,8 +517,11 @@ def make_d5_logic(player: int):
                 oos_has_small_keys(state, player, 5, 5),
                 oos_self_locking_small_key(state, player, "d5 basement", 5)
             ]),
+
             state.has("_dropped_d5_magnet_ball", player),
             oos_has_magnet_gloves(state, player),
+            # Would be nice to have an alternative to press that button with Somaria, but dropping the magnet block would lead to a softlock
+
             any([
                 oos_can_kill_magunesu(state, player),
                 all([
@@ -604,7 +607,13 @@ def make_d6_logic(player: int):
 
         ["enter d6", "d6 spinner north", False, lambda state: all([
             oos_can_break_crystal(state, player),
-            oos_has_magnet_gloves(state, player),
+            any([
+                oos_has_magnet_gloves(state, player),
+                all([  # Clip into the blocks to place the somaria block on the button
+                    oos_option_hard_logic(state, player),
+                    oos_has_cane(state, player)
+                ])
+            ]),
             any([
                 oos_has_small_keys(state, player, 6, 3),
                 all([
