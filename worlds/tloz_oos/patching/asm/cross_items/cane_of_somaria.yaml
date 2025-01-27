@@ -482,7 +482,7 @@
 # TreasureDisplayData
 3f/2dc3/: db $1d
 # treasureObjectData
-15/113b/: db $b0,$5e
+15/113b/: db $b2,$5e
 
 # Remove the grass effect on the somaria block indoors
 00/0f39/: |
