@@ -153,9 +153,7 @@ class IntoTheBreachWorld(World):
         self.multiworld.regions.append(menu)
         if self.options.custom_squad:
             squad_region = Region("Custom Squad", self.player, self.multiworld)
-            entrance = Entrance(self.player, "Use custom squad", menu)
-            menu.exits.append(entrance)
-            entrance.connect(squad_region)
+            menu.connect(squad_region, "Use custom squad")
 
             self.multiworld.regions.append(squad_region)
             for squad_name in self.squads:
@@ -177,10 +175,7 @@ class IntoTheBreachWorld(World):
                     if rule is not None:
                         location.access_rule = rule
 
-                entrance = Entrance(self.player, f"Use squad {squad_name}", menu)
-                set_rule(entrance, lambda state, squad=squad_name: state.has(squad, self.player))
-                menu.exits.append(entrance)
-                entrance.connect(squad_region)
+                menu.connect(squad_region, f"Use squad {squad_name}", lambda state, squad=squad_name: state.has(squad, self.player))
 
                 self.multiworld.regions.append(squad_region)
 
@@ -188,13 +183,11 @@ class IntoTheBreachWorld(World):
         for i in range(1, 5):
             new_island = Region(f"Clear island {i}", self.player, self.multiworld)
             new_island.locations.append(self.create_location(f"Island {i} cleared", new_island))
-            entrance = Entrance(self.player, f"Clear island {i}", previous_island)
             if i > 1:
                 rule = core_function[i]
-                set_rule(entrance, lambda state, island_rule=rule: island_rule(state, self.player))
-            menu.exits.append(entrance)
-            entrance.connect(new_island)
-            self.multiworld.regions.append(new_island)
+                previous_island.connect(new_island, f"Clear island {i}", lambda state, island_rule=rule: island_rule(state, self.player))
+            else:
+                previous_island.connect(new_island, f"Clear island 1")
             previous_island = new_island
 
     def create_items(self) -> None:
