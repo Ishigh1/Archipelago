@@ -407,4 +407,8 @@ REGIONS = [
     "clock shop secret",
     "graveyard secret",
     "subrosian secret",
+    "diver secret",
+    "smith secret",
+    "natzu deku",
+    "deku secret"
 ]

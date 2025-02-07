@@ -535,11 +535,6 @@ def make_d5_logic(player: int):
                 all([
                     oos_option_medium_logic(state, player),
                     oos_has_feather(state, player)
-                ]),
-                all([
-                    oos_has_cane(state, player),
-                    oos_can_use_pegasus_seeds(state, player),
-                    oos_has_feather(state, player)
                 ])
             ])
         ])],
@@ -913,7 +908,15 @@ def make_d8_logic(player: int):
         ["d8 spike room", "d8 spinner", False, lambda state: oos_has_small_keys(state, player, 8, 2)],
         ["d8 spinner", "silent watch owl", False, lambda state: oos_can_use_mystery_seeds(state, player)],
         ["d8 spinner", "d8 magnet ball room", False, None],
-        ["d8 spinner", "d8 armos chest", False, lambda state: oos_has_magnet_gloves(state, player)],
+        ["d8 spinner", "d8 armos chest", False, lambda state: any([
+            oos_has_magnet_gloves(state, player),
+            all([   
+                # Clip into the block right of staircase with pegasus seeds and use the cane of somaria to activate the bridge, save&exit and redo the whole dungeon to get to the other side
+                oos_option_hard_logic(state, player),
+                oos_can_use_pegasus_seeds(state, player),
+                oos_has_cane(state, player)
+            ])
+        ])],
         ["d8 armos chest", "d8 spinner chest", False, None],
         ["d8 spinner chest", "frypolar entrance", False, lambda state: oos_has_magnet_gloves(state, player)],
         ["frypolar entrance", "frypolar owl", False, lambda state: oos_can_use_mystery_seeds(state, player)],

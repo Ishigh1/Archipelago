@@ -63,7 +63,7 @@
     jp $432d
 # new script command address and id
 0b/006d/: dw d1EntranceScriptCmd
-0b/0dea/: db $b2
+0b/0dea/: db script_d1Entrance
 
 # make all seeds grow in all seasons.
 0d/28b5/: cp a

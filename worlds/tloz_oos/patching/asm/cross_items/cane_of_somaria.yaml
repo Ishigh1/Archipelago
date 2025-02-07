@@ -487,14 +487,14 @@
 # Remove the grass effect on the somaria block indoors
 00/0f39/: |
   call checkSomariaGrass
-  jr z,$10
+  jr c,$10 ; @end
 00//checkSomariaGrass: |
   cp $f9
-  jp nz,@end
+  jr nz,@end
   ld a,(wActiveGroup)
-  or a
+  cp $02
   ccf
-  ret nz
+  ret c
   
   @end:
   and a ; sets c to 0

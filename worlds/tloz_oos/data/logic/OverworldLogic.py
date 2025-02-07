@@ -613,6 +613,25 @@ def make_holodrum_logic(player: int):
         ["natzu east (dimitri)", "natzu river bank", True, lambda state: oos_is_companion_dimitri(state, player)],
         ["natzu river bank", "goron mountain entrance", True, lambda state: oos_can_swim(state, player, True)],
 
+        ["natzu east (ricky)", "natzu deku", False, lambda state: oos_can_break_bush(state, player)],
+        ["natzu west (moosh)", "natzu deku", False, lambda state: any([
+            oos_can_summon_moosh(state, player),
+            oos_can_jump_4_wide_liquid(state, player),
+            all([
+                oos_can_jump_4_wide_pit(state, player),
+                oos_can_break_bush(state, player)
+            ])
+        ])],
+        ["natzu west (dimitri)", "natzu deku", False, lambda state: oos_can_summon_dimitri(state, player)],
+        ["natzu deku", "deku secret", False, lambda state: all([
+            oos_can_use_seeds(state, player),
+            oos_has_ember_seeds(state, player),
+            oos_has_scent_seeds(state, player),
+            oos_has_pegasus_seeds(state, player),
+            oos_has_gale_seeds(state, player),
+            oos_has_mystery_seeds(state, player)
+        ])],
+
         # SUNKEN CITY ############################################################################################
 
         ["sunken city", "sunken city tree", False, lambda state: all([
@@ -690,6 +709,15 @@ def make_holodrum_logic(player: int):
             oos_season_in_sunken_city(state, player, SEASON_SUMMER),
             oos_has_flippers(state, player),
             oos_can_break_bush(state, player, False, True)
+        ])],
+
+        ["sunken city", "diver secret", False, lambda state: all([
+            oos_has_flippers(state, player),
+            any([
+                oos_option_medium_logic(state, player),
+                oos_has_sword(state, player),
+                oos_has_fools_ore(state, player),
+            ])
         ])],
 
         ["mount cucco", "sunken city", False, lambda state: oos_has_flippers(state, player)],

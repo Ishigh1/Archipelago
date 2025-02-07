@@ -549,6 +549,7 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     shuffle_golden_ore_spots: OracleOfSeasonsGoldenOreSpotsShuffle
     deterministic_gasha_locations: OracleOfSeasonsGashaLocations
     advance_shop: OracleOfSeasonsAdvanceShop
+    secret_locations: OracleOfSeasonsIncludeSecretLocations
 
     # Dungeon items
     master_keys: OracleOfSeasonsMasterKeys
@@ -573,6 +574,7 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     enforce_potion_in_shop: OracleOfSeasonsEnforcePotionInShop
     remove_useless_rings: OracleOfSeasonsRingQuality
     fools_ore: OracleOfSeasonsFoolsOre
+    cross_items: OracleOfSeasonsIncludeCrossItems
     warp_to_start: OracleOfSeasonsWarpToStart
     combat_difficulty: OracleOfSeasonsCombatDifficulty
     quick_flute: OracleOfSeasonsQuickFlute
@@ -580,5 +582,3 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
 
     remove_items_from_pool: OracleOfSeasonsRemoveItemsFromPool
     death_link: DeathLink
-    cross_items: OracleOfSeasonsIncludeCrossItems
-    secret_locations: OracleOfSeasonsIncludeSecretLocations

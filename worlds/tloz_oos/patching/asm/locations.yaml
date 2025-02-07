@@ -188,9 +188,7 @@
     db loseitem,TREASURE_RUSTY_BELL
     db giveitem,locations.subrosianSmithyBell.id,locations.subrosianSmithyBell.subid
     dwbe $75b6
-# (2f61a to 2f622 remains)
 0b/35b3/: dwbe reforgeRustyBell
-
 
 
 ##### TEMPLE OF SEASONS ##############################################

@@ -65,12 +65,20 @@ def make_subrosia_logic(player: int):
         ["subrosia temple sector", "subrosian dance hall", False, None],
         ["subrosia temple sector", "subrosian smithy ore", False, lambda state: any([
             state.has("Hard Ore", player),
-            oos_self_locking_item(state, player, "subrosian smithy ore", "Hard Ore")
+            all([
+                not state.multiworld.worlds[player].options.secret_locations,
+                oos_self_locking_item(state, player, "subrosian smithy ore", "Hard Ore")
+            ])
         ])],
         ["subrosia temple sector", "subrosian smithy bell", False, lambda state: any([
             state.has("Rusty Bell", player),
-            oos_self_locking_item(state, player, "subrosian smithy bell", "Rusty Bell")
+            all([
+                not state.multiworld.worlds[player].options.secret_locations,
+                oos_self_locking_item(state, player, "subrosian smithy bell", "Rusty Bell")
+            ])
         ])],
+        ["subrosian temple sector", "smith secret", False, lambda state: oos_has_shield(state, player)],
+
         ["subrosia temple sector", "temple of seasons", False, None],
         ["subrosia temple sector", "tower of winter", False, lambda state: any([
             oos_has_feather(state, player),

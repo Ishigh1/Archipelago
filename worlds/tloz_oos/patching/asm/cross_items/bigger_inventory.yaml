@@ -1,5 +1,8 @@
 # Move inventory from c680-c691 to c6e9-c6ff towInventoryStorage get 5 extra spaces
 
+# removeTreasureFromInventory
+3f/04b3/: ld hl,wInventoryB
+
 # addTreasureToInventory
 3f/06CC/: add a,<wInventoryB
 3f/06E3/: |
@@ -126,3 +129,8 @@
 # seasonsFunc_15_5cf7 (put items back in inventory from subrosian secret)
 15/1D03/: db <wInventoryB
 15/1D0a/: db <wInventoryA
+
+# Remove the use of setting wSecretXorCipherIndex, making the secrets fake and depending on what's in A and B
+03/0866/: |
+  inc hl
+  nop

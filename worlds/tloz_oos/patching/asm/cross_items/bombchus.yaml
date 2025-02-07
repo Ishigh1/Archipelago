@@ -8,6 +8,3 @@
 # treasure collection behavior
 3f/2C76/: db <wSeedSatchelLevel
 3f/2D51/: db <wSeedSatchelLevel
-
-# d4 scrub ember refill / interactionCodece@giveEmberSeeds
-0f/354c/: ld a,(wSeedSatchelLevel)
