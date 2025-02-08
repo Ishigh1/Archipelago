@@ -77,7 +77,7 @@ def make_subrosia_logic(player: int):
                 oos_self_locking_item(state, player, "subrosian smithy bell", "Rusty Bell")
             ])
         ])],
-        ["subrosian temple sector", "smith secret", False, lambda state: oos_has_shield(state, player)],
+        ["subrosia temple sector", "smith secret", False, lambda state: oos_has_shield(state, player)],
 
         ["subrosia temple sector", "temple of seasons", False, None],
         ["subrosia temple sector", "tower of winter", False, lambda state: any([
