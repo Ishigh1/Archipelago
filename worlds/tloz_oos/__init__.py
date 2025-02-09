@@ -591,6 +591,21 @@ class OracleOfSeasonsWorld(World):
 
             item_pool_dict[item_name] = item_pool_dict.get(item_name, 0) + 1
 
+        if self.options.cross_items:
+            item_pool_dict["Gasha Seed"] -= 1
+            item_pool_dict["Cane of Somaria"] = 1
+
+            bombchus = 10
+            quantity = min(bombchus, filler_item_count)
+            filler_item_count -= quantity
+            bombchus -= quantity
+
+            quantity2 = min(bombchus, rupee_item_count)
+            rupee_item_count -= quantity2
+            bombchus -= quantity2
+            item_pool_dict["Bombchus (10)"] = 10
+            assert (quantity + quantity2 == 10)  # If not enough, we might have to remove something else
+
         # If Master Keys are enabled, put one for every dungeon
         if self.options.master_keys != OracleOfSeasonsMasterKeys.option_disabled:
             for small_key_name in ITEM_GROUPS["Master Keys"]:
@@ -626,18 +641,6 @@ class OracleOfSeasonsWorld(World):
             replacement_name = pair[1]
             item_pool_dict[original_name] -= 1
             item_pool_dict[replacement_name] = item_pool_dict.get(replacement_name, 0) + 1
-
-        if self.options.cross_items:
-            item_pool_dict["Gasha Seed"] -= 1
-            item_pool_dict["Cane of Somaria"] = 1
-            bombchus = 10
-            for rupee_item in ["Rupees (5)", "Rupees (10)", "Rupees (20)", "Rupees (30)", "Rupees (1)", "Rupees (50)"]:
-                quantity = min(bombchus, item_pool_dict[rupee_item])
-                item_pool_dict[rupee_item] -= quantity
-                bombchus -= quantity
-                if bombchus == 0:
-                    break
-            item_pool_dict["Bombchus (10)"] = 10 - bombchus
 
         if "Random Ring" in item_pool_dict:
             quantity = item_pool_dict["Random Ring"]
