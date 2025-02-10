@@ -111,3 +111,6 @@
 # $14 $0e $0e $1e $20
 05/2988/: db $00,$00,$10,$20,$3e    # @rareItems
 05/2996/: db $00,$00,$04,$08,$0c    # @standardItems
+
+# Move the D5 dropping magnet ball up to not block the path when using the somaria block
+15/0f28/: db $28

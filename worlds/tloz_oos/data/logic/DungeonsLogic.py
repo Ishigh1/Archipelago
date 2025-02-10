@@ -526,15 +526,33 @@ def make_d5_logic(player: int):
                 oos_self_locking_small_key(state, player, "d5 basement", 5)
             ]),
 
-            state.has("_dropped_d5_magnet_ball", player),
-            oos_has_magnet_gloves(state, player),
-            # Would be nice to have an alternative to press that button with Somaria, but dropping the magnet block would lead to a softlock
-
+            # Magnet ball button
             any([
-                oos_can_kill_magunesu(state, player),
+                all([
+                    state.has("_dropped_d5_magnet_ball", player),
+                    oos_has_magnet_gloves(state, player),
+                ]),
+                oos_has_cane(state, player)
+            ]),
+
+            # Flamme wall
+            any([
+                all([
+                    oos_has_magnet_gloves(state, player),
+                    oos_can_kill_magunesu(state, player),
+                ]),
                 all([
                     oos_option_medium_logic(state, player),
                     oos_has_feather(state, player)
+                ])
+            ]),
+
+            # Basement
+            any([
+                oos_has_magnet_gloves(state, player),
+                all([
+                    oos_has_cane(state, player),
+                    oos_can_jump_3_wide_pit(state, player)
                 ])
             ])
         ])],
@@ -910,7 +928,7 @@ def make_d8_logic(player: int):
         ["d8 spinner", "d8 magnet ball room", False, None],
         ["d8 spinner", "d8 armos chest", False, lambda state: any([
             oos_has_magnet_gloves(state, player),
-            all([   
+            all([
                 # Clip into the block right of staircase with pegasus seeds and use the cane of somaria to activate the bridge, save&exit and redo the whole dungeon to get to the other side
                 oos_option_hard_logic(state, player),
                 oos_can_use_pegasus_seeds(state, player),
