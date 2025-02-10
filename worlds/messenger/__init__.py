@@ -1,6 +1,5 @@
 import logging
-from datetime import date
-from typing import Any, ClassVar, Dict, List, Optional, TextIO
+from typing import Any, ClassVar, TextIO
 
 from BaseClasses import CollectionState, Entrance, Item, ItemClassification, MultiWorld, Tutorial
 from Options import Accessibility
@@ -20,7 +19,7 @@ from .shop import FIGURINES, PROG_SHOP_ITEMS, SHOP_ITEMS, USEFUL_SHOP_ITEMS, shu
 from .subclasses import MessengerEntrance, MessengerItem, MessengerRegion, MessengerShopLocation
 
 components.append(
-    Component("The Messenger", component_type=Type.CLIENT, func=launch_game)#, game_name="The Messenger", supports_uri=True)
+    Component("The Messenger", component_type=Type.CLIENT, func=launch_game, game_name="The Messenger", supports_uri=True)
 )
 
 
@@ -28,6 +27,7 @@ class MessengerSettings(Group):
     class GamePath(FilePath):
         description = "The Messenger game executable"
         is_exe = True
+        md5s = ["1b53534569060bc06179356cd968ed1d"]
 
     game_path: GamePath = GamePath("TheMessenger.exe")
 
@@ -120,16 +120,16 @@ class MessengerWorld(World):
     required_seals: int = 0
     created_seals: int = 0
     total_shards: int = 0
-    shop_prices: Dict[str, int]
-    figurine_prices: Dict[str, int]
-    _filler_items: List[str]
-    starting_portals: List[str]
-    plando_portals: List[str]
-    spoiler_portal_mapping: Dict[str, str]
-    portal_mapping: List[int]
-    transitions: List[Entrance]
+    shop_prices: dict[str, int]
+    figurine_prices: dict[str, int]
+    _filler_items: list[str]
+    starting_portals: list[str]
+    plando_portals: list[str]
+    spoiler_portal_mapping: dict[str, str]
+    portal_mapping: list[int]
+    transitions: list[Entrance]
     reachable_locs: int = 0
-    filler: Dict[str, int]
+    filler: dict[str, int]
 
     def generate_early(self) -> None:
         if self.options.goal == Goal.option_power_seal_hunt:
@@ -154,13 +154,13 @@ class MessengerWorld(World):
         # TODO add a check for transition shuffle when that gets added back in
         if not self.options.shuffle_portals and "Searing Crags Portal" not in self.starting_portals:
             self.starting_portals.append("Searing Crags Portal")
-            if len(self.starting_portals) > 4:
-                portals_to_strip = [portal for portal in ["Riviere Turquoise Portal", "Sunken Shrine Portal"]
-                                    if portal in self.starting_portals]
+            portals_to_strip = [portal for portal in ["Riviere Turquoise Portal", "Sunken Shrine Portal"]
+                                if portal in self.starting_portals]
+            if portals_to_strip:
                 self.starting_portals.remove(self.random.choice(portals_to_strip))
 
         self.filler = FILLER.copy()
-        if (not hasattr(self.options, "traps") and date.today() < date(2024, 4, 2)) or self.options.traps:
+        if self.options.traps:
             self.filler.update(TRAPS)
 
         self.plando_portals = []
@@ -178,7 +178,7 @@ class MessengerWorld(World):
                            for reg_name in sub_region]
 
         for region in complex_regions:
-            region_name = region.name.replace(f"{region.parent} - ", "")
+            region_name = region.name.removeprefix(f"{region.parent} - ")
             connection_data = CONNECTIONS[region.parent][region_name]
             for exit_region in connection_data:
                 region.connect(self.multiworld.get_region(exit_region, self.player))
@@ -191,7 +191,7 @@ class MessengerWorld(World):
         # create items that are always in the item pool
         main_movement_items = ["Rope Dart", "Wingsuit"]
         precollected_names = [item.name for item in self.multiworld.precollected_items[self.player]]
-        itempool: List[MessengerItem] = [
+        itempool: list[MessengerItem] = [
             self.create_item(item)
             for item in self.item_name_to_id
             if item not in {
@@ -290,7 +290,7 @@ class MessengerWorld(World):
             for portal, output in portal_info:
                 spoiler.set_entrance(f"{portal} Portal", output, "I can write anything I want here lmao", self.player)
 
-    def fill_slot_data(self) -> Dict[str, Any]:
+    def fill_slot_data(self) -> dict[str, Any]:
         slot_data = {
             "shop": {SHOP_ITEMS[item].internal_name: price for item, price in self.shop_prices.items()},
             "figures": {FIGURINES[item].internal_name: price for item, price in self.figurine_prices.items()},
@@ -316,7 +316,7 @@ class MessengerWorld(World):
         return self._filler_items.pop(0)
 
     def create_item(self, name: str) -> MessengerItem:
-        item_id: Optional[int] = self.item_name_to_id.get(name, None)
+        item_id: int | None = self.item_name_to_id.get(name, None)
         return MessengerItem(
             name,
             ItemClassification.progression if item_id is None else self.get_item_classification(name),
@@ -349,6 +349,17 @@ class MessengerWorld(World):
             return ItemClassification.trap
 
         return ItemClassification.filler
+
+    @classmethod
+    def create_group(cls, multiworld: "MultiWorld", new_player_id: int, players: set[int]) -> World:
+        group = super().create_group(multiworld, new_player_id, players)
+        assert isinstance(group, MessengerWorld)
+        
+        group.filler = FILLER.copy()
+        group.options.traps.value = all(multiworld.worlds[player].options.traps for player in players)
+        if group.options.traps:
+            group.filler.update(TRAPS)
+        return group
 
     def collect(self, state: "CollectionState", item: "Item") -> bool:
         change = super().collect(state, item)
