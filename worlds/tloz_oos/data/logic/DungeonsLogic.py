@@ -48,10 +48,10 @@ def make_d1_logic(player: int):
                 oos_has_bracelet(state, player)
             ]),
             all([
-                # refill ember seeds with the boomerang
+                # refill ember seeds with the L2 boomerang
                 oos_option_insane_logic(state, player),
                 oos_can_use_ember_seeds(state, player, False),
-                oos_can_break_bush(state, player)
+                oos_has_magic_boomerang(state, player)
             ])
         ])],
 
@@ -70,10 +70,11 @@ def make_d1_logic(player: int):
                 all([
                     oos_option_insane_logic(state, player),
                     all([
-                        # refill ember seeds with the boomerang
+                        # refill ember seeds with the L2 boomerang
                         oos_can_use_ember_seeds(state, player, False),
-                        oos_can_break_bush(state, player)
-                    ])
+                        oos_has_magic_boomerang(state, player)
+                    ]),
+                    oos_has_bracelet(state, player)
                 ])
             ])
         ])],
