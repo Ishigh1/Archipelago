@@ -10,7 +10,7 @@ def make_holodrum_logic(player: int):
         ["horon village", "enter mayor's house", OoSEntranceType.TwoWay, None],
         ["enter mayor's house", "inside mayor's house", OoSEntranceType.DoorTwoWay, None],
         ["inside mayor's house", "mayor's gift", OoSEntranceType.OneWay, None],
-        ["inside mayor's house", "mayor's house secret room", OoSEntranceType.OneWay, lambda state: oos_can_remove_rockslide(state, player)],
+        ["inside mayor's house", "mayor's house secret room", OoSEntranceType.OneWay, lambda state: oos_can_remove_rockslide(state, player, False)],
 
         ["horon village", "enter vasu", OoSEntranceType.TwoWay, None],
         ["enter vasu", "inside vasu", OoSEntranceType.DoorTwoWay, None],
@@ -20,7 +20,7 @@ def make_holodrum_logic(player: int):
         ["horon village", "enter dr left", OoSEntranceType.TwoWay, None],
         ["enter dr left", "inside dr left", OoSEntranceType.DoorTwoWay, None],
         ["inside dr left", "dr. left reward", OoSEntranceType.OneWay, lambda state: oos_can_use_ember_seeds(state, player, True)],
-        ["inside dr left", "inside dr left side", OoSEntranceType.TwoWay, lambda state: oos_can_remove_rockslide(state, player)],
+        ["inside dr left", "inside dr left side", OoSEntranceType.TwoWay, lambda state: oos_can_remove_rockslide(state, player, False)],
         ["inside dr left side", "enter dr left side", OoSEntranceType.DoorTwoWay, None],
         ["enter dr left side", "horon village SE chest", OoSEntranceType.OneWay, lambda state, season: any([
             oos_can_swim(state, player, False),
@@ -42,18 +42,15 @@ def make_holodrum_logic(player: int):
         ["horon village", "enter hidden stairs behind clock shop", OoSEntranceType.TwoWay, None],
         ["enter hidden stairs behind clock shop", "inside hidden stairs behind clock shop", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_has_shovel(state, player)],
-        ["inside hidden stairs behind clock shop", "clock shop secret", False, lambda state: all([
-            oos_has_shovel(state, player),
-            any([
-                oos_has_noble_sword(state, player),
-                oos_has_fools_ore(state, player),
-                state.has("Biggoron's Sword", player),
-                all([
-                    oos_option_medium_logic(state, player),
-                    any([
-                        oos_has_sword(state, player),
-                        oos_has_bombchus(state, player, 3)
-                    ])
+        ["inside hidden stairs behind clock shop", "clock shop secret", OoSEntranceType.OneWay, lambda state: any([
+            oos_has_noble_sword(state, player),
+            oos_has_fools_ore(state, player),
+            state.has("Biggoron's Sword", player),
+            all([
+                oos_option_medium_logic(state, player),
+                any([
+                    oos_has_sword(state, player),
+                    oos_has_bombchus(state, player, 3)
                 ])
             ])
         ])],
@@ -135,7 +132,7 @@ def make_holodrum_logic(player: int):
         ["western coast after ship", "enter coast house", OoSEntranceType.TwoWay, None],
         ["enter coast house", "inside coast house", OoSEntranceType.DoorTwoWay, None],
         ["inside coast house", "inside coast house side", OoSEntranceType.TwoWay, lambda state: all([
-            oos_can_remove_rockslide(state, player),
+            oos_can_remove_rockslide(state, player, False),
             any([
                 oos_has_feather(state, player),
                 oos_option_hard_logic(state, player)
@@ -225,18 +222,11 @@ def make_holodrum_logic(player: int):
         ["suburbs fairy fountain", "suburbs NE", OoSEntranceType.TwoWay, lambda state, season: season == SEASON_WINTER],
         ["suburbs NE", "moblin road", OoSEntranceType.TwoWay, None],
 
-        ["sunken city", "woods of winter, 2nd cave", OoSEntranceType.OneWay, lambda state, season: all([
-            oos_has_flippers(state, player),
-            season != SEASON_WINTER,
-            any([
-                oos_can_warp(state, player),
-                all([
-                    # We need both seasons to be able to climb back up
-                    oos_season_in_eastern_suburbs(state, player, SEASON_WINTER),
-                    oos_has_spring(state, player)
-                ])
-            ])
-        ])],
+        ["sunken city", "enter south sunken city dive spot", OoSEntranceType.OneWay, None],
+        ["enter south sunken city dive spot", "inside south sunken city dive spot", OoSEntranceType.DiveOneWay,
+         lambda state: oos_has_flippers(state, player)],
+
+        ["inside south sunken city dive spot", "woods of winter, 2nd cave", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
 
         ["moblin road", "enter first woods of winter cave", OoSEntranceType.TwoWay, None],
         ["enter first woods of winter cave", "inside first woods of winter cave", OoSEntranceType.DoorTwoWay, lambda state, season: all([
@@ -289,7 +279,6 @@ def make_holodrum_logic(player: int):
             oos_can_swim(state, player, False),
             season == SEASON_WINTER
         ])],
-        ["enter peek cave near d2", "inside peek cave near d2", OoSEntranceType.DoorTwoWay, None],
 
         ["central woods of winter", "enter magnet cave near d2", OoSEntranceType.OneWay, lambda state, season: all([
             season == SEASON_AUTUMN,
@@ -602,8 +591,8 @@ def make_holodrum_logic(player: int):
             ]),
         ])],
         ["inside floodgate left", "enter floodgate left", OoSEntranceType.DoorTwoWay, None],
-        ["enter floodgate left", "spool swamp scrub", False, lambda state:
-            oos_has_rupees_for_shop(state, player, "spoolSwampScrub")],
+        ["enter floodgate left", "spool swamp scrub", OoSEntranceType.OneWay, lambda state:
+        oos_has_rupees_for_shop(state, player, "spoolSwampScrub")],
         ["enter floodgate left", "floodgate keyhole", OoSEntranceType.OneWay, lambda state: state.has("Floodgate Key", player)],
         ["enter floodgate left", "spool swamp north", OoSEntranceType.OneWay, lambda state: oos_can_swim(state, player, True)],
         ["enter floodgate left", "spool stump", OoSEntranceType.OneWay, lambda state: state.has("_opened_floodgate", player)],
@@ -670,12 +659,18 @@ def make_holodrum_logic(player: int):
             season == SEASON_WINTER,
             oos_can_remove_snow(state, player, False)
         ])],
-        ["spool swamp south", "open swamp bomb cave", OoSEntranceType.OneWay, lambda state, season: all([
-            season == SEASON_WINTER,
-            oos_can_summon_ricky(state, player)
+        ["spool swamp south", "open swamp bomb cave", OoSEntranceType.OneWay, lambda state, season: any([
+            all([
+                season == SEASON_WINTER,
+                oos_can_summon_ricky(state, player)
+            ]),
+            all([
+                oos_option_medium_logic(state, player),
+                oos_has_bombchus(state, player, 5)
+            ]),
         ])],
         ["enter swamp bomb cave", "open swamp bomb cave", OoSEntranceType.OneWay, lambda state: \
-            oos_can_remove_rockslide(state, player, False)],
+            oos_has_bombs(state, player)],
         ["enter swamp bomb cave", "inside swamp bomb cave", OoSEntranceType.DoorTwoWay, lambda state: \
             state.has("_opened_swamp_bomb_cave", player)],
         ["inside swamp bomb cave", "spool swamp cave", OoSEntranceType.OneWay, None],
@@ -729,13 +724,17 @@ def make_holodrum_logic(player: int):
         ])],
         ["natzu west", "natzu east", OoSEntranceType.TwoWayDimitri, lambda state: oos_can_swim(state, player, True)],
 
-        ["natzu west", "enter ricky deku", OoSEntranceType.TwoWayRicky, lambda state: \
+        ["natzu east", "enter ricky deku", OoSEntranceType.TwoWayRicky, lambda state: \
             oos_can_break_bush(state, player)],
         ["enter ricky deku", "inside ricky deku", OoSEntranceType.DoorTwoWayRicky, None],
 
         ["natzu west", "enter moosh deku", OoSEntranceType.TwoWayMoosh, lambda state: any([
-            oos_can_jump_5_wide_pit(state, player),
-            oos_can_summon_moosh(state, player)
+            oos_can_summon_moosh(state, player),
+            oos_can_jump_4_wide_liquid(state, player),
+            all([
+                oos_can_jump_4_wide_pit(state, player),
+                oos_can_break_bush(state, player)
+            ])
         ])],
         ["enter moosh deku", "inside moosh deku", OoSEntranceType.DoorTwoWayMoosh, None],
 
@@ -784,17 +783,10 @@ def make_holodrum_logic(player: int):
 
         ["natzu river bank", "goron mountain entrance", OoSEntranceType.TwoWay, lambda state: oos_can_swim(state, player, True)],
 
-        ["natzu east (ricky)", "natzu deku", False, lambda state: oos_can_break_bush(state, player)],
-        ["natzu west (moosh)", "natzu deku", False, lambda state: any([
-            oos_can_summon_moosh(state, player),
-            oos_can_jump_4_wide_liquid(state, player),
-            all([
-                oos_can_jump_4_wide_pit(state, player),
-                oos_can_break_bush(state, player)
-            ])
-        ])],
-        ["natzu west (dimitri)", "natzu deku", False, lambda state: oos_can_summon_dimitri(state, player)],
-        ["natzu deku", "deku secret", False, lambda state: all([
+        ["inside ricky deku", "natzu deku", OoSEntranceType.OneWay, None],
+        ["inside moosh deku", "natzu deku", OoSEntranceType.OneWay, None],
+        ["inside natzu waterfall", "natzu deku", OoSEntranceType.OneWay, None],
+        ["natzu deku", "deku secret", OoSEntranceType.OneWay, lambda state: all([
             oos_can_use_seeds(state, player),
             oos_has_ember_seeds(state, player),
             oos_has_scent_seeds(state, player),
@@ -884,7 +876,8 @@ def make_holodrum_logic(player: int):
         ])],
 
         ["sunken city", "enter north sunken city dive spot", OoSEntranceType.TwoWay, None],
-        ["enter north sunken city dive spot", "inside north sunken city dive spot", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
+        ["enter north sunken city dive spot", "inside north sunken city dive spot", OoSEntranceType.DiveTwoWay,
+         lambda state: oos_has_flippers(state, player)],
         ["inside north sunken city dive spot", "inside mount cucco dive spot", OoSEntranceType.TwoWay, None],
         ["inside mount cucco dive spot", "enter mount cucco dive spot", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
 
@@ -976,7 +969,9 @@ def make_holodrum_logic(player: int):
         ["mt. cucco, talon's cave entrance", "mt. cucco heart piece", OoSEntranceType.OneWay, None],
         ["mt. cucco heart piece", "mount cucco", OoSEntranceType.OneWay, None],
 
-        ["mt. cucco, talon's cave entrance", "diving spot outside D4", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
+        ["mt. cucco, talon's cave entrance", "enter diving spot outside D4", OoSEntranceType.OneWay, None],
+        ["enter diving spot outside D4", "inside diving spot outside D4", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
+        ["inside diving spot outside D4", "diving spot outside D4", OoSEntranceType.OneWay, None],
 
         ["mt. cucco, talon's cave entrance", "enter winter cave in cucco mountain", OoSEntranceType.TwoWay, None],
         ["enter winter cave in cucco mountain", "inside winter cave in cucco mountain", OoSEntranceType.DoorTwoWay,
@@ -1156,7 +1151,7 @@ def make_holodrum_logic(player: int):
         ["samasa desert", "enter deku quicksand", OoSEntranceType.TwoWay, None],
         ["enter deku quicksand", "inside deku quicksand", OoSEntranceType.DoorOneWay, None],
         ["inside deku quicksand", "samasa desert scrub", OoSEntranceType.OneWay, lambda state:
-            oos_has_rupees_for_shop(state, player, "samasaCaveScrub")],
+        oos_has_rupees_for_shop(state, player, "samasaCaveScrub")],
         ["inside deku quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
 
         ["samasa desert", "enter bell quicksand", OoSEntranceType.TwoWay, None],

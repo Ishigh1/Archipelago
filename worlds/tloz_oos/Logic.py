@@ -38,8 +38,10 @@ def create_connections(multiworld: MultiWorld, player: int):
                 continue
 
             rule = entrance_desc[3]
-            if OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances \
-                    and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance):
+            if (OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances \
+                    and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance))\
+                    or OoSEntranceType.DungeonFlag in entrance_type and oos_world.options.shuffle_dungeons\
+                    or OoSEntranceType.PortalFlag in entrance_type and oos_world.options.shuffle_portals:
                 entrance = region_1.connect(region_2, entrance_desc[0], rule)
 
                 if OoSEntranceType.Waterfall in entrance_type:

@@ -93,7 +93,9 @@ REGIONS = {
         "enter sunken city, summer cave",
         "enter sunken left waterfall",
         "enter sunken right waterfall",
-        "enter natzu waterfall",
+
+        "enter south sunken city dive spot",
+        "enter north sunken city dive spot",
 
         "mount cucco",
         "mt. cucco portal",
@@ -114,6 +116,8 @@ REGIONS = {
         "enter banana stairs",
         "enter banana cave",
         "enter fast platform cave",
+        "enter mount cucco dive spot",
+        "enter diving spot outside D4"
     ],
     "WESTERN_COAST": [
         "black beast's chest",
@@ -146,6 +150,7 @@ REGIONS = {
         "spool swamp heart piece",
         "spool swamp tree",
         "floodgate keyhole",
+        "spool swamp scrub",
         "spool stump",
         "d3 entrance",
         "golden octorok",
@@ -232,11 +237,13 @@ REGIONS = {
         "enter dimitri fairy",
         "enter ricky deku",
         "enter moosh deku",
+        "enter natzu waterfall",
     ],
     "SAMASA_DESERT": [
         "samasa desert",
         "samasa desert pit",
         "samasa desert chest",
+        "samasa desert scrub",
         "samasa desert gasha spot",
 
         "enter desert fairy cave",
@@ -490,6 +497,7 @@ REGIONS = {
         "inside dimitri fairy",
         "inside ricky deku",
         "inside moosh deku",
+        "inside natzu waterfall",
 
         # Sunken City
         "inside ingo",
@@ -501,7 +509,8 @@ REGIONS = {
         "inside sunken city, summer cave",
         "inside sunken left waterfall",
         "inside sunken right waterfall",
-        "inside natzu waterfall",
+        "inside south sunken city dive spot",
+        "inside north sunken city dive spot",
 
         # Cucco Mountain
         "inside mountain fairy cave",
@@ -511,6 +520,8 @@ REGIONS = {
         "inside banana stairs",
         "inside banana cave",
         "inside fast platform cave",
+        "inside mount cucco dive spot",
+        "inside diving spot outside D4",
 
         # Goron Mountain
         "inside goron mountain bottom",
@@ -651,6 +662,7 @@ REGIONS = {
         "greater distance owl",
         "d4 stalfos stairs",
         "d4 terrace",
+        "d4 scrub",
         "d4 miniboss room",
         "d4 final minecart",
         "d4 torch chest",
@@ -749,6 +761,14 @@ REGIONS = {
 
         "d4 miniboss room wild embers",
         "d7 entrance wild embers",
+
+        "clock shop secret",
+        "graveyard secret",
+        "subrosian secret",
+        "diver secret",
+        "smith secret",
+        "natzu deku",
+        "deku secret"
     ],
     "DUNGEONS": [
         "enter d0",
@@ -764,6 +784,7 @@ REGIONS = {
         "d2 blade chest",
         "d2 alt entrances",
         "d2 roller chest",
+        "d2 scrub",
         "d2 spiral chest",
         "d2 spinner",
         "dodongo owl",

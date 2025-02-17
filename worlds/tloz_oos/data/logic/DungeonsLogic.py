@@ -147,7 +147,7 @@ def make_d2_logic(player: int):
                 ])
             ])
         ])],
-        ["d2 alt entrances", "d2 scrub", False, lambda state: oos_has_rupees_for_shop(state, player, "d2Scrub")],
+        ["inside d2 side entrance left", "d2 scrub", OoSEntranceType.OneWay, lambda state: oos_has_rupees_for_shop(state, player, "d2Scrub")],
 
         # 2 keys
         ["d2 roller chest", "d2 spinner", OoSEntranceType.OneWay, lambda state: oos_has_small_keys(state, player, 2, 2)],
@@ -738,7 +738,7 @@ def make_d7_logic(player: int):
             oos_can_jump_3_wide_pit(state, player),
             oos_has_magnet_gloves(state, player)
         ])],
-        ["d7 pot room", "d7 magunesu chest", False, lambda state: oos_has_cane(state, player)],
+        ["d7 pot room", "d7 magunesu chest", OoSEntranceType.OneWay, lambda state: oos_has_cane(state, player)],
 
         ["d7 armos puzzle", "d7 magunesu chest", OoSEntranceType.OneWay, lambda state: all([
             oos_can_jump_3_wide_pit(state, player),

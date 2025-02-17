@@ -863,7 +863,7 @@ DIRECT_WARPS = {
     "enter bell quicksand": (0x24C89, "inside bell quicksand"),
     "enter treasure quicksand": (0x24C8D, "inside treasure quicksand"),
 
-    "enter gem dive spot": (0x212A8, "inside gem dive spot"),
+    "enter diving spot outside D4": (0x212A8, "inside diving spot outside D4"),
     "enter mount cucco dive spot": (0x212A0, "inside mount cucco dive spot"),
     "enter north sunken city dive spot": (0x212A4, "inside north sunken city dive spot"),
     "enter south sunken city dive spot": (0x212B4, "inside south sunken city dive spot"),
@@ -875,7 +875,7 @@ SPECIAL_WARPS = {
     "inside bell quicksand": (0xB3, 0x5, "enter bell quicksand"),
     "inside treasure quicksand": (0x5D, 0x4, "enter treasure quicksand"),
 
-    "inside gem dive spot": (0x08, 0x7, "enter gem dive spot"),
+    "inside diving spot outside D4": (0x08, 0x7, "enter diving spot outside D4"),
     "inside mount cucco dive spot": (0x04, 0x7, "enter mount cucco dive spot"),
     "inside north sunken city dive spot": (0x05, 0x7, "enter north sunken city dive spot"),
     "inside south sunken city dive spot": (0xB0, 0x5, "enter south sunken city dive spot"),

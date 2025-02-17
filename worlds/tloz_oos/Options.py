@@ -550,6 +550,7 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     shuffle_dungeons: OracleOfSeasonsDungeonShuffle
     remove_d0_alt_entrance: OracleOfSeasonsD0AltEntrance
     remove_d2_alt_entrance: OracleOfSeasonsD2AltEntrance
+    randomize_entrances: OracleOfSeasonsRandomizeEntrances
     default_seed: OracleOfSeasonsDefaultSeedType
     duplicate_seed_tree: OracleOfSeasonsDuplicateSeedTree
 
@@ -589,6 +590,5 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     combat_difficulty: OracleOfSeasonsCombatDifficulty
     quick_flute: OracleOfSeasonsQuickFlute
     starting_maps_compasses: OracleOfSeasonsStartingMapsCompasses
-    randomize_entrances: OracleOfSeasonsRandomizeEntrances
     remove_items_from_pool: OracleOfSeasonsRemoveItemsFromPool
     death_link: DeathLink

@@ -42,10 +42,14 @@ class OoSEntranceType(Flag):
     D2Stairs = DoorTwoWay | D2Alt
 
     DungeonFlag = auto()
-    DungeonEntrance = DoorTwoWay | DungeonFlag
+    DungeonEntrance = TwoWay | DoorTwoWayFlag | DungeonFlag
 
     PortalFlag = auto()
-    Portal = DoorTwoWay | PortalFlag
+    Portal = TwoWay | DoorTwoWayFlag | PortalFlag
+
+    DiveFlag = auto()
+    DiveOneWay = DoorOneWay | DiveFlag
+    DiveTwoWay = DoorTwoWay | DiveFlag
 
 
 class OoSRandomizationGroup(IntEnum):
