@@ -221,13 +221,13 @@ class OracleOfSeasonsWorld(World):
                 continue
             self.default_seasons[region] = self.random.choice(seasons_pool)
 
-    def shuffle_entrances(self):
-        if self.options.randomize_entrances == OracleOfSeasonsRandomizeEntrances.option_decoupled:
+    def shuffle_entrances(self, randomize_entrances_option):
+        if randomize_entrances_option == OracleOfSeasonsRandomizeEntrances.option_decoupled:
             decoupled = True
         else:
             decoupled = False
         for entrance in self.entrances_to_randomize:
-            if ((self.options.randomize_entrances.option_disabled and entrance.randomization_group <= OoSRandomizationGroup.Dive)
+            if ((randomize_entrances_option > OracleOfSeasonsRandomizeEntrances.option_disabled and entrance.randomization_group <= OoSRandomizationGroup.Dive)
                     or ((self.options.shuffle_dungeons == OracleOfSeasonsDungeonShuffle.option_false or decoupled)
                         and entrance.randomization_group == OoSRandomizationGroup.DungeonOutside
                         and entrance.randomization_group == OoSRandomizationGroup.DungeonInside)
@@ -300,14 +300,12 @@ class OracleOfSeasonsWorld(World):
                     new_portal_connections[target] = portal
             self.portal_connections = new_portal_connections
 
-        if self.options.randomize_entrances != OracleOfSeasonsRandomizeEntrances.option_decoupled:
+        if randomize_entrances_option != OracleOfSeasonsRandomizeEntrances.option_decoupled:
             self.randomized_entrances = [pairing for pairing in randomized_entrances.pairings if
                                          self.get_entrance(pairing[0]).randomization_group <= OoSRandomizationGroup.Dive]
 
         if decoupled:
-            self.options.randomize_entrances = OracleOfSeasonsRandomizeEntrances.option_disabled
-            self.shuffle_entrances()
-            self.options.randomize_entrances = OracleOfSeasonsRandomizeEntrances.option_decoupled
+            self.shuffle_entrances(OracleOfSeasonsRandomizeEntrances.option_disabled)
 
     def are_portals_connected(self, portal_1, portal_2):
         if portal_1 in self.portal_connections:
@@ -487,6 +485,7 @@ class OracleOfSeasonsWorld(World):
         # Various events to help with logic
         self.create_event("subrosia market sector", "_reached_rosa")
         self.create_event("subrosian dance hall", "_reached_subrosian_dance_hall")
+        self.create_event("floodgate keeper's house", "_flipped_floodgate_lever")
         self.create_event("floodgate keyhole", "_opened_floodgate")
         self.create_event("open swamp bomb cave", "_opened_swamp_bomb_cave")
         self.create_event("dragon keyhole", "_opened_d4")
@@ -716,7 +715,7 @@ class OracleOfSeasonsWorld(World):
     def pre_fill(self) -> None:
         self.pre_fill_seeds()
         self.pre_fill_dungeon_items()
-        self.shuffle_entrances()
+        self.shuffle_entrances(self.options.randomize_entrances)
 
     def filter_confined_dungeon_items_from_pool(self):
         my_items = [item for item in self.multiworld.itempool if item.player == self.player]
@@ -742,7 +741,6 @@ class OracleOfSeasonsWorld(World):
         # This usually ends up with generator not having anywhere to place a few small keys, making the seed unbeatable.
         # To circumvent this, we perform a restricted pre-fill here, placing only those dungeon items
         # before anything else.
-        collection_state = self.multiworld.get_all_state(False)
         # Build a list of all dungeon items that will need to be placed in their own dungeon.
         all_confined_dungeon_items = self.filter_confined_dungeon_items_from_pool()
         for i in range(0, 9):
