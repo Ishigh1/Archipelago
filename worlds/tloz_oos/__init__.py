@@ -758,8 +758,9 @@ class OracleOfSeasonsWorld(World):
                 continue  # This list might be empty with some keysanity options
             for item in confined_dungeon_items:
                 self.multiworld.itempool.remove(item)
-                collection_state.remove(item)
 
+            # Create a new collection state each time so that previous fill don't contaminate new ones
+            collection_state = self.multiworld.get_all_state(False)
             # Perform a prefill to place confined items inside locations of this dungeon
             self.random.shuffle(dungeon_locations)
             fill_restrictive(self.multiworld, collection_state, dungeon_locations, confined_dungeon_items,
