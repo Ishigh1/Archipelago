@@ -1027,7 +1027,7 @@ class SeasonRegion(Region):
                 if region.default_season == -2 or region.force_season:
                     continue
                 elif (self.super_region_name == "CAVES" or self.super_region_name == region.super_region_name
-                      or region.default_season == -1):
+                      or region.default_season == -1 or region.default_season == 255):
                     if season == 4:
                         continue
                     season_2 = season

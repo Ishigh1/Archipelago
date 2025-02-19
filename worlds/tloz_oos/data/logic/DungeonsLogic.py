@@ -234,7 +234,10 @@ def make_d3_logic(player: int):
 
 def make_d4_logic(player: int):
     return [
-        ["d4 entrance", "enter d4", OoSEntranceType.DungeonEntrance, None],
+        ["d4 entrance", "enter d4", OoSEntranceType.DungeonEntrance, lambda state, season: all([
+            state.has("_opened_d4", player),
+            season == SEASON_SUMMER
+        ])],
         # 0 keys
         ["enter d4", "d4 north of entrance", OoSEntranceType.OneWay, lambda state: any([
             oos_has_flippers(state, player),

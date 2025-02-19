@@ -990,11 +990,7 @@ def make_holodrum_logic(player: int):
         ])],
         ["enter top of cucco mountain", "mt. cucco, talon's cave entrance", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],
 
-        ["mt. cucco, talon's cave entrance", "d4 entrance", OoSEntranceType.OneWay, lambda state, season: all([
-            state.has("_opened_d4", player),
-            season == SEASON_SUMMER
-        ])],
-        ["d4 entrance", "mt. cucco, talon's cave entrance", OoSEntranceType.OneWay, lambda state: oos_can_warp(state, player)],
+        ["mt. cucco, talon's cave entrance", "d4 entrance", OoSEntranceType.TwoWay, None],
 
         ["mount cucco", "goron mountain, across pits", OoSEntranceType.OneWay, lambda state: any([
             state.has("Spring Banana", player),

@@ -504,15 +504,17 @@ class OracleOfSeasonsRemoveItemsFromPool(ItemDict):
     display_name = "Remove Items from Pool"
     verify_item_name = False
 
+
 class OracleOfSeasonsIncludeCrossItems(DefaultOnToggle):
     """
-    When enabled, add the cane of somaria to the item pool (requires the OoA rom)
+    When enabled, add the cane of somaria and bombchus to the item pool (requires the OoA rom)
     """
     display_name = "Cross Items"
 
+
 class OracleOfSeasonsIncludeSecretLocations(DefaultOnToggle):
     """
-    When enabled, add the some secrets to the list of locations
+    When enabled, add the secrets to the list of locations
     """
     display_name = "Secret Locations"
 
@@ -522,9 +524,12 @@ class OracleOfSeasonsRandomizeEntrances(Choice):
     If enabled, the entrances are randomized.
     """
     display_name = "Randomize Entrances"
+
     option_disabled = 0
     option_enabled = 1
     option_decoupled = 2
+
+    default = 0
 
 
 @dataclass
