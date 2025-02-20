@@ -273,16 +273,6 @@ class OracleOfSeasonsWorld(World):
             target_group_lookup[OoSRandomizationGroup.PortalOverworld] = target_group_lookup[OoSRandomizationGroup.PortalSubrosia] = \
                 [OoSRandomizationGroup.PortalOverworld, OoSRandomizationGroup.PortalSubrosia]
 
-        # If essences are placed in dungeons and D8 dungeon portal is unreachable, this makes the seed unbeatable.
-        # To avoid this, we re-shuffle portals recursively until we end up with a satisfying shuffle.
-        if self.options.required_essences == 8 and not self.options.shuffle_essences and not self.is_d8_portal_reachable():
-            self.shuffle_entrances()
-
-        # If accessibility option expects all locations or all progression items to be reachable, portals need to be
-        # set in a way that is valid regarding this condition. If that is not the case, re-shuffle portals recursively
-        # until we end up with a satisfying shuffle.
-        if self.options.accessibility != Accessibility.option_minimal and not self.is_volcanoes_west_portal_reachable():
-            self.shuffle_entrances()
         randomized_entrances = randomize_entrances(self, not decoupled, target_group_lookup)
 
         if not decoupled and self.options.shuffle_dungeons == OracleOfSeasonsDungeonShuffle.option_true:
@@ -452,8 +442,6 @@ class OracleOfSeasonsWorld(World):
 
         self.create_events()
         self.exclude_locations_automatically()
-
-        self.origin_region_name
 
     def create_event(self, region_name, event_item_name):
         region = self.multiworld.get_region(region_name, self.player)

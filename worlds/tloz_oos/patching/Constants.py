@@ -645,12 +645,9 @@ NORMAL_EXITS = {
     # Group 1 / Subrosia ################################################################
     "enter open cave": (0x13711, "inside open cave"),
     "enter boomerang cave": (0x1370D, "inside boomerang cave"),
-    "enter subrosian market": (0x136ED, "inside subrosian market"),
-    "enter house above hide and seek": (0x136F1, "inside house above hide and seek"),
     "enter temple of seasons": (0x136A1, "inside temple of seasons"),
     "enter winter temple": (0x136B1, "inside winter temple"),
     "enter Rosa corridor left": (0x1373D, "inside Rosa corridor left"),
-    "enter Rosa corridor right": (0x13741, "inside Rosa corridor right"),
     "enter Summer tower": (0x136A9, "inside Summer tower"),
     "enter Autumn tower": (0x136AD, "inside Autumn tower"),
     "enter Closed cave": (0x136CD, "inside Closed cave"),
@@ -809,12 +806,9 @@ NORMAL_EXITS = {
 
     # Subrosia
     "inside boomerang cave": (0x13A19, "enter boomerang cave"),
-    "inside subrosian market": (0x13865, "enter subrosian market"),
-    "inside house above hide and seek": (0x13869, "enter house above hide and seek"),
     "inside temple of seasons": (0x138E9, "enter temple of seasons"),
     "inside winter temple": (0x13C65, "enter winter temple"),
     "inside Rosa corridor left": (0x13A49, "enter Rosa corridor left"),
-    "inside Rosa corridor right": (0x13A4D, "enter Rosa corridor right"),
     "inside Summer tower": (0x13C5D, "enter Summer tower"),
     "inside Autumn tower": (0x13C61, "enter Autumn tower"),
     "inside open cave": (0x13A1D, "enter open cave"),
