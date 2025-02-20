@@ -141,7 +141,14 @@ def make_subrosia_logic(player: int):
         ["inside subrosian market", "subrosia market ore chunks", OoSEntranceType.OneWay, lambda state: \
             oos_can_buy_market(state, player)],
 
-        ["subrosia hide and seek sector", "subrosia hide and seek", OoSEntranceType.OneWay, lambda state: oos_has_shovel(state, player)],
+        ["subrosia hide and seek sector", "enter strange brothers right", OoSEntranceType.TwoWay, None],
+        ["enter strange brothers right", "inside strange brothers right", OoSEntranceType.DoorTwoWay, None],
+        ["inside strange brothers right", "inside strange brothers left", OoSEntranceType.TwoWay, None],
+        ["inside strange brothers left", "enter strange brothers left", OoSEntranceType.DoorTwoWay, None],
+        ["enter strange brothers left", "subrosia hide and seek", OoSEntranceType.OneWay, lambda state: all([
+            state.has("_met_strange_brothers", player),
+            oos_has_shovel(state, player)
+        ])],
         ["subrosia hide and seek sector", "tower of spring", OoSEntranceType.OneWay, lambda state: oos_has_feather(state, player)],
         ["subrosia hide and seek sector", "subrosian wilds chest", OoSEntranceType.OneWay, lambda state: all([
             oos_has_feather(state, player),
@@ -240,4 +247,3 @@ def make_subrosia_logic(player: int):
 
         ["subrosia bridge sector", "subrosia bridge digging spot", OoSEntranceType.OneWay, lambda state: oos_has_shovel(state, player)],
     ]
-
