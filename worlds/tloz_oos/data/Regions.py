@@ -1,10 +1,10 @@
+from random import Random
 from typing import Optional, Callable, Tuple, Any, Union
 
 from BaseClasses import Region, CollectionState, MultiWorld, Entrance, EntranceType
 from Options import Accessibility
 from entrance_rando import ERPlacementState
-from worlds.stardew_valley.early_items import seasons
-from worlds.tloz_oos.data.Constants import SEASON_NAMES, SEASON_SPRING, SEASON_SUMMER, SEASON_WINTER, SEASON_CHAOTIC, SEASON_ITEMS
+from worlds.tloz_oos.data.Constants import SEASON_NAMES, SEASON_SPRING, SEASON_SUMMER, SEASON_AUTUMN, SEASON_WINTER, SEASON_CHAOTIC, SEASON_ITEMS
 
 REGIONS = {
     "EYEGLASS_LAKE": [
@@ -903,22 +903,28 @@ class SeasonEntrance(Entrance):
                 return False
             er_state.coupled = True
 
-        if (target_region.name == parent_region.multiworld.worlds[parent_region.player].spring_western_coast
-                and not er_state.collection_state.can_reach(target_region.children_regions[0])):
-            if not ((parent_region.super_region_name == "CAVES" or parent_region.super_region_name == "WESTERN_COAST")
-                    and er_state.collection_state.can_reach(parent_region.children_regions[0])
-                    and self.test_access_rule(er_state.collection_state, 0)[0]):
-                return False
-        if target_region.name == parent_region.multiworld.worlds[parent_region.player].autumn_graveyard:
-            if not ((parent_region.super_region_name == "CAVES" or parent_region.super_region_name == "WESTERN_COAST")
-                    and er_state.collection_state.can_reach(parent_region.children_regions[3])
-                    and self.test_access_rule(er_state.collection_state, 3)[0]):
-                return False
-        if target_region.name == "enter banana stairs":
-            if not ((parent_region.super_region_name == "CAVES" or parent_region.super_region_name == "SUNKEN_CITY")
-                    and er_state.collection_state.can_reach(parent_region.children_regions[0])
-                    and self.test_access_rule(er_state.collection_state, 0)[0]):
-                return False
+        if target_region.name == er_state.world.spring_western_coast:
+            if not er_state.collection_state.can_reach_location("_beat_golden_darknut", er_state.world.player):  # Not spring already
+                result = can_bring_season(er_state.collection_state, self, parent_region, target_region, SEASON_SPRING, set(), er_state.world.random)
+                if result[0]:
+                    er_state.world.spring_western_coast = result[1].name
+                else:
+                    return False
+        if target_region.name == er_state.world.autumn_graveyard:
+            if not er_state.collection_state.can_reach_location("Western Coast: Item in Graveyard", er_state.world.player):  # Not autumn already
+                result = can_bring_season(er_state.collection_state, self, parent_region, target_region, SEASON_AUTUMN, set(), er_state.world.random)
+                if result[0]:
+                    er_state.world.autumn_graveyard = result[1].name
+                else:
+                    return False
+
+        if target_region.name == er_state.world.banana_stairs:
+            if not er_state.collection_state.can_reach_location("Mt. Cucco: Spring Banana Tree", er_state.world.player):  # Not spring already
+                result = can_bring_season(er_state.collection_state, self, parent_region, target_region, SEASON_SPRING, set(), er_state.world.random)
+                if result[0]:
+                    er_state.world.banana_stairs = result[1].name
+                else:
+                    return False
         return True
 
 
@@ -1043,3 +1049,33 @@ class SeasonRegion(Region):
         entrance = super().connect(connecting_region, name, rule)
         self.register_indirect_conditions(entrance, connecting_region)
         return entrance
+
+
+def can_carry_season(parent_region: SeasonRegion, target_region: SeasonRegion) -> bool:
+    if parent_region.super_region_name == target_region.super_region_name:
+        return True
+    return parent_region.super_region_name == "CAVES" or target_region.super_region_name == "CAVES"
+
+
+def can_bring_season(collection_state: CollectionState, entrance: SeasonEntrance, parent_region: SeasonRegion, target_region: SeasonRegion, season: int,
+                     considered_entrances: set[SeasonEntrance], random: Random) -> (bool, SeasonRegion):
+    if (not can_carry_season(parent_region, target_region)
+            or not entrance.test_access_rule(collection_state, season)[0]):
+        return False, None  # No way to get the season
+    if not collection_state.can_reach(parent_region.children_regions[season]):  # Season not accessible there yet
+        if parent_region in STUMP_REGIONS:
+            return True, None
+
+        # Can it still get season access ?
+        entrances = list(parent_region.entrances)
+        random.shuffle(entrances)
+        for other_entrance in entrances:
+            if other_entrance.parent_region is None:
+                return True, parent_region
+            elif entrance not in considered_entrances and isinstance(entrance, SeasonEntrance):
+                considered_entrances.add(entrance)
+                result = can_bring_season(collection_state, other_entrance, other_entrance.parent_region, parent_region,
+                                          season, considered_entrances, random)
+                if result[0]:
+                    return result
+    return False, None

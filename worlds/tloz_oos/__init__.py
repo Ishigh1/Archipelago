@@ -258,6 +258,7 @@ class OracleOfSeasonsWorld(World):
             "outside graveyard chimney",
             "enter hidden graveyard stairs"
         ][self.random.randrange(2)]
+        self.banana_stairs = "enter banana stairs"
 
         target_group_lookup = {
             OoSRandomizationGroup.Normal: [OoSRandomizationGroup.Normal],
