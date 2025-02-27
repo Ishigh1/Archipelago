@@ -65,9 +65,6 @@ EOB_ADDR = [
     0x4000,  # 3d
     0x4000,  # 3e
     0x314b,  # 3f - also here
-
-    # New banks
-    0x0750,  # 40 - rounded up to leave room for more warps, subject to change
 ]
 
 DEFINES = {
@@ -378,11 +375,10 @@ ASM_FILES = [
     "asm/map_menu.yaml",
     "asm/maku_tree.yaml",
     "asm/misc.yaml",
-    "asm/move_dest_warp_data.yaml",
     "asm/multi.yaml",
     "asm/new_game.yaml",
     "asm/new_treasures.yaml",
-    "asm/permanent_subrosia_pirate_ship.yaml"
+    "asm/permanent_subrosia_pirate_ship.yaml",
     "asm/progressives.yaml",
     "asm/remove_items_on_use.yaml",
     "asm/rings.yaml",
@@ -501,17 +497,6 @@ DUNGEON_EXITS = {
     "d8": 0x13a8d,
 }
 
-WARP_DEST_ADDR = [
-    0x100000,
-    0x100180,
-    0x100200,
-    0x1002C0,
-    0x1003B0,
-    0x1004D0,
-    0x1006F0,
-    0x100720
-]
-
 # Format = name: (transition_address, opposite entrance name)
 NORMAL_EXITS = {
     # # Group 0 / Overworld
@@ -549,6 +534,7 @@ NORMAL_EXITS = {
     "enter lake boulder": (0x13545, "inside lake boulder"),
 
     # Easter Suburbs
+    "enter guru guru": (0x13675, "inside guru guru"),
     "top of guru guru": (0x13525, "top guru guru staircase"),
     "enter winter guru guru": (0x13679, "inside winter guru guru"),
     "enter suburb spring cave": (0x13585, "inside suburb spring cave"),
@@ -655,6 +641,8 @@ NORMAL_EXITS = {
     "enter subrosian cook": (0x136D9, "inside subrosian cook"),
     "enter volcano cave": (0x13709, "inside volcano cave"),
     "enter dance hall": (0x136DD, "inside dance hall"),
+    "enter tower of spring": (0x13735, "inside tower of spring"),
+    "enter tower of spring staircase": (0x13739, "inside tower of spring staircase"),
     "enter smithy": (0x136E5, "inside smithy"),
 
     # Market area
@@ -765,6 +753,8 @@ NORMAL_EXITS = {
     "inside treasure hunter": (0x13861, "enter treasure hunter"),
     "inside bomb house": (0x13895, "enter bomb house"),
     "inside master diver house": (0x138B9, "enter master diver house"),
+    "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
+    "inside north sunken city dive spot": (0x13DE4, "enter north sunken city dive spot"),
 
     # Cucco Mountain
     "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),
@@ -774,6 +764,8 @@ NORMAL_EXITS = {
     "inside banana stairs": (0x13B95, "enter banana stairs"),
     "inside banana cave": (0x13B99, "enter banana cave"),
     "inside fast platform cave": (0x13B9D, "enter fast platform cave"),
+    "inside diving spot outside D4": (0x13DF0, "enter diving spot outside D4"),
+    "inside mount cucco dive spot": (0x13DE0, "enter mount cucco dive spot"),
 
     # Goron Mountain
     "inside goron mountain bottom": (0x13BD1, "enter goron mountain bottom"),

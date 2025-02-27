@@ -13,25 +13,6 @@ from .. import LOCATIONS_DATA, OracleOfSeasonsOldMenShuffle, OracleOfSeasonsGoal
 from pathlib import Path
 
 
-def copy_warp_dest_table(rom: RomData) -> None:
-    # group 0 warps : next id is 7B at 100174
-    rom.write_bytes(WARP_DEST_ADDR[0], rom.read_bytes(0x12D5E, 0x174))
-    # group 1 warps : next id is 27 at 1001F5
-    rom.write_bytes(WARP_DEST_ADDR[1], rom.read_bytes(0x12ED2, 0x075))
-    # group 2 warps : next id is 3C at 1002B4
-    rom.write_bytes(WARP_DEST_ADDR[2], rom.read_bytes(0x12F47, 0x0B4))
-    # group 3 warps : next id is 4C at 1003A4
-    rom.write_bytes(WARP_DEST_ADDR[3], rom.read_bytes(0x12FFB, 0x0E4))
-    # group 4 warps : next id is 5E at 1004CA (+1)
-    rom.write_bytes(WARP_DEST_ADDR[4], rom.read_bytes(0x130DF, 0x117))
-    # group 5 warps : next id is B4 at 1006EC (+4)
-    rom.write_bytes(WARP_DEST_ADDR[5], rom.read_bytes(0x131F6, 0x210))
-    # group 6 warps : next id is 10 at 100720
-    rom.write_bytes(WARP_DEST_ADDR[6], rom.read_bytes(0x13406, 0x030))
-    # group 7 warps : next id is 0B at 100741
-    rom.write_bytes(WARP_DEST_ADDR[7], rom.read_bytes(0x13436, 0x021))
-
-
 def get_asm_files(patch_data):
     asm_files = ASM_FILES.copy()
     if patch_data["options"]["quick_flute"]:
@@ -62,8 +43,9 @@ def get_asm_files(patch_data):
     if len(patch_data["misc_entrances"]) > 0:
         if not get_settings()["tloz_oos_options"]["rosa_quick_unlock"]:
             asm_files.append("asm/conditional/instant_rosa.yaml")
-        asm_files.append("asm/conditional/ER/keep_stairs.yaml")
-        asm_files.append("asm/conditional/ER/transition_on_quicksands.yaml")
+        asm_files.append("asm/conditional/er.yaml")
+    else:
+        asm_files.append("asm/conditional/non_er.yaml")
     return asm_files
 
 
@@ -769,9 +751,11 @@ def define_dungeon_items_text_constants(assembler: Z80Assembler, patch_data):
         assembler.add_floating_chunk(f"text.compassD{i}", compasses_text)
 
 
-def set_misc_warps(rom: RomData, patch_data):
+def set_misc_warps(assembler: Z80Assembler, rom: RomData, patch_data):
+    group_dest_addrs = {group: assembler.global_labels[f"warpDestGroup{group}"].address_in_rom() for group in range(8)}
+
     warp_matchings = patch_data["misc_entrances"]
-    trans_values = {}
+    trans_values = {}  # Shaped as destination : [group, warp index]
 
     for name, info in NORMAL_EXITS.items():
         if info[0] is not None:
@@ -786,18 +770,12 @@ def set_misc_warps(rom: RomData, patch_data):
             room = destination_values[1]
             position = destination_values[2]
             dest_transition = -1
-            warp_dest_data_addr = -1
             dest_id = -1
         elif to_name in SPECIAL_WARPS:
             destination_values = SPECIAL_WARPS[to_name]
             group_low = destination_values[1]
             group_high = group_low << 4
             dest_id = destination_values[0]
-            warp_dest_data_addr = WARP_DEST_ADDR[group_low] + dest_id * 3
-
-            room = rom.read_byte(warp_dest_data_addr + 1)
-            position = rom.read_byte(warp_dest_data_addr + 2)
-            dest_transition = rom.read_byte(warp_dest_data_addr + 3)
         else:
             if to_name in DIRECT_WARPS:
                 destination_data_name = DIRECT_WARPS[to_name][1]
@@ -807,20 +785,22 @@ def set_misc_warps(rom: RomData, patch_data):
             group_high = destination_values[1] & 0xF0
             group_low = group_high >> 4
             dest_id = destination_values[0]
-            warp_dest_data_addr = WARP_DEST_ADDR[group_low] + dest_id * 3
+
+        if dest_id >= 0:
+            warp_dest_data_addr = group_dest_addrs[group_low] + dest_id * 3
             room = rom.read_byte(warp_dest_data_addr)
             position = rom.read_byte(warp_dest_data_addr + 1)
             dest_transition = rom.read_byte(warp_dest_data_addr + 2)
 
         if to_name in SOFTLOCK_WARPS:
             position += SOFTLOCK_WARPS[to_name]
-            if warp_dest_data_addr >= 0:
+            if dest_id >= 0:
                 rom.write_byte(warp_dest_data_addr + 1, position)
 
         if to_name in SEASON_WARP:
             assert (dest_transition == 0x01)  # If this is false, then 0x02 doesn't handle it well
             dest_transition = 0x02
-            if warp_dest_data_addr >= 0:
+            if dest_id >= 0:
                 rom.write_byte(warp_dest_data_addr + 2, 0x02)
 
         if from_name in WATERFALL_WARPS:
@@ -843,12 +823,8 @@ def set_misc_warps(rom: RomData, patch_data):
             rom.write_byte(entrance_addr + 1, group_high | trans_type)
 
         if from_name == "inside dance hall":
-            group >>= 4
-            warp_dest_data_addr = WARP_DEST_ADDR[group] + destination_values[0] * 3
-            room = rom.read_byte(warp_dest_data_addr)
-            position = rom.read_byte(warp_dest_data_addr + 1)
             rom.write_bytes(0x25DCA, [
-                group | 0x80,
+                group_low | 0x80,
                 room,
                 0x00,
                 position

@@ -1,0 +1,188 @@
+# [Warp Group, Warp Dest, Arrival Position, Season to apply]
+# An arrival pos of "00" means it isn't checked
+# A season of "FF" means nothing changes
+04//specificWarpSeasons: |
+    db $80,$a7,$00,defaultSeason.EYEGLASS_LAKE     ; Warping to start
+    db $ff
+
+## Dive transitions
+08/118A/: db $6B # Makes it so that subid D uses the same code as above
+
+08/1286/: |
+  add a,a
+  ld hl,@warpDestLocations
+  rst 18 ; rst_addDoubleIndex
+  ld bc,wWarpDestGroup
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestRoom
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestPos
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition2
+  ld a,$03 ; Fadeout
+  ld (bc),a
+  jp interactionDelete
+  
+  @warpDestLocations: ; group, room, transition, position - 08:52A0
+  db $87,$e0,$01,$02
+  db $87,$e1,$01,$0b
+  db $87,$e4,$01,$02
+  db $87,$e6,$01,$02
+  db $87,$e7,$01,$0d
+  db $85,$12,$05,$29
+
+# 8:52B8 to 8:52D3 is now free
+
+## Keep moblin stairs
+24/1B44/: | # original : 02 90 83 84 86 53 76 85 84 B9 85 B9 B9 85 53 76 3F 7A B9 83 53 76 83 83 28 05 83 86
+  db $80,$07,$B9,$84,$83,$86,$53,$76,$85,$84,$85,$83,$53,$76,$83,$35,$7A,$B9,$E7,$E7,$83,$53,$76,$83,$83,$29,$05,$83
+
+## Quicksand transition
+09/0C67/: |
+  add a,a
+  ld hl,@warpDestLocations
+  rst 10  ; rst_addAToHL
+  ld bc,wWarpDestGroup
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestRoom
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition
+  ldi a,(hl)
+  ld (bc),a
+  inc c ; wWarpDestPos
+  ld a,(hl)
+  ld (bc),a
+  inc c ; wWarpTransition2
+  ld a,$03 ; Fadeout
+  ld (bc),a
+  jp interactionDelete
+
+  @warpDestLocations: ; group, room, transition, position
+  db $85,$d0,$05,$57
+  db $85,$d1,$05,$57
+  db $85,$d2,$05,$57
+  db $84,$f4,$05,$27
+
+40//warpDestGroup0: |
+  /copy s,$04,$2D5E,$174
+
+40//warpDestGroup1: |
+  /copy s,$04,$2ED2,$75
+
+40//warpDestGroup2: |
+  /copy s,$04,$2F47,$B4
+
+40//warpDestGroup3: |
+  /copy s,$04,$2FFB,$E4
+
+40//warpDestGroup4: |
+  /copy s,$04,$30DF,$117
+  db $f4,$27,$05 ; 5d samasa water quicksand
+
+40//warpDestGroup5: |
+  /copy s,$04,$31F6,$210
+  db $12,$29,$05 ; b0 one way to cave south of sunken
+  db $d0,$57,$05 ; b1 samasa like like quicksand
+  db $d1,$57,$05 ; b2 samasa deku quicksand
+  db $d2,$57,$05 ; b3 samasa bell quicksand
+
+40//warpDestGroup6: |
+  /copy s,$04,$3406,$30
+
+40//warpDestGroup7: |
+  /copy s,$04,$3436,$21
+
+40//warpDestTable: |
+  dw warpDestGroup0
+  dw warpDestGroup1
+  dw warpDestGroup2
+  dw warpDestGroup3
+  dw warpDestGroup4
+  dw warpDestGroup5
+  dw warpDestGroup6
+  dw warpDestGroup7
+
+40//applyWarpDest: |
+  ld a,(wWarpDestGroup)
+  bit 7,a
+  jr nz,reset_season_transition
+  and $0f
+  cp $02
+  jr nz,label_04_032
+  
+  ld hl,warpDestTable
+  rst 18      ; rst_addDoubleIndex
+  ldi a,(hl)
+  ld h,(hl)
+  ld l,a
+  ld a,(wWarpDestRoom)
+  ld b,a
+  ld a,($c6e5)
+  add a,b
+  jr label_04_033
+
+  label_04_032:
+  ld hl,warpDestTable
+  rst 18      ; rst_addDoubleIndex
+  ldi a,(hl)
+  ld h,(hl)
+  ld l,a
+  ld a,(wWarpDestRoom)
+  
+  label_04_033:
+  ld c,a
+  ld b,$00
+  add hl,bc
+  add hl,bc
+  add hl,bc
+  ldi a,(hl)
+  ld (wWarpDestRoom),a
+  ldi a,(hl)
+  ld (wWarpDestPos),a
+  ldi a,(hl)
+  or $80
+  ld (wWarpTransition),a
+  
+  reset_season_transition:
+  ld a,(wWarpTransition)
+  cp $82
+  jr nz,@natzu_transition
+  
+  @set_data:
+  sub a
+  ld (wWarpTransition),a
+  ld (wActiveRoomPack),a ; non-existent room pack to invalidate it
+  jr @reset_flags
+  
+  @natzu_transition:
+  ld b,a
+  ld a,(wActiveRoomPack)
+  cp $ff ; Natzu
+  jr nz,@end
+  
+  @reset_flags:
+  xor a ; same as ld a,$00
+  ld (wActiveGroup),a ; it needs to be < 3 to load the season
+  ld (wRoomStateModifier),a ; Natzu spring
+  
+  @end:
+  ld e,$04
+  ld hl,$460C
+  jp interBankCall
+
+# Call custom applyWarpDest_b04
+00/32C1/: |
+  ld a,$40
+  ldh (hRomBank),a
+  ld ($2222),a
+  call applyWarpDest
+
+# 04:45D0 to 04:460B is free

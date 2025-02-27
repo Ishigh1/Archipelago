@@ -16,12 +16,6 @@ class OoSPatchExtensions(APPatchExtension):
     @staticmethod
     def apply_patches(caller: APProcedurePatch, rom: bytes, patch_file: str) -> bytes:
         rom_data = RomData(rom)
-        for bank in range(0x40, 0x80):
-            rom_data.add_bank(bank)
-        rom_data.update_rom_size()
-
-        # Perform moves inside the assembly
-        copy_warp_dest_table(rom_data)
 
         patch_data = yaml.load(caller.get_file(patch_file).decode("utf-8"), yaml.Loader)
 
@@ -29,11 +23,13 @@ class OoSPatchExtensions(APPatchExtension):
             raise Exception(f"Invalid version: this patch was generated on v{patch_data['version']}, "
                             f"you are currently using v{VERSION}")
 
-        if patch_data["options"]["cross_items"]:
+        if patch_data["options"]["cross_items"] or len(patch_data["misc_entrances"]) > 0:
             for bank in range(0x40, 0x80):
                 rom_data.add_bank(bank)
+                EOB_ADDR.append(0)
             rom_data.update_rom_size()
 
+        if patch_data["options"]["cross_items"]:
             file_name = get_settings()["tloz_ooa_options"]["rom_file"]
             if not os.path.exists(file_name):
                 file_name = Utils.user_path(file_name)
@@ -78,7 +74,7 @@ class OoSPatchExtensions(APPatchExtension):
         set_old_men_rupee_values(rom_data, patch_data)
         set_dungeon_warps(rom_data, patch_data)
         set_portal_warps(rom_data, patch_data)
-        set_misc_warps(rom_data, patch_data)
+        set_misc_warps(assembler, rom_data, patch_data)
         apply_miscellaneous_options(rom_data, patch_data)
         set_fixed_subrosia_seaside_location(rom_data, patch_data)
 

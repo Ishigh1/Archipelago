@@ -34,24 +34,29 @@ class OracleOfSeasonsSettings(settings.Group):
         Putting "link" as a value uses the default game sprite.
         Putting "random" as a value randomly picks a sprite from your sprites directory for each generated ROM.
         """
+
     class OoSCharacterPalette(str):
         """
         The color palette used for character sprite throughout the game.
         Valid values are: "green", "red", "blue", "orange", and "random"
         """
+
     class OoSRevealDiggingSpots(str):
         """
         If enabled, hidden digging spots in Subrosia are revealed as diggable tiles.
         """
+
     class OoSHeartBeepInterval(str):
         """
         A factor applied to the infamous heart beep sound interval.
         Valid values are: "vanilla", "half", "quarter", "disabled"
         """
+
     class OoSRemoveMusic(str):
         """
         If true, no music will be played in the game while sound effects remain untouched
         """
+
     class OoSRosaQuickUnlock(str):
         """
         If true, rosa will instantly unlock all subrosia locks
@@ -77,7 +82,7 @@ class OracleOfSeasonsWeb(WebWorld):
         "oos_setup/en",
         ["Dinopony"]
     )
-    
+
     setup_fr = Tutorial(
         "Guide de configuration MultiWorld",
         "Un guide pour configurer Oracle of Seasons d'Archipelago sur votre PC.",
@@ -180,7 +185,7 @@ class OracleOfSeasonsWorld(World):
         # If some essence pedestal locations were excluded and essences are not shuffled,
         # remove those essences in priority
         if not self.options.shuffle_essences:
-            excluded_locations_data = {name: data for name,data in LOCATIONS_DATA.items() if name in self.options.exclude_locations.value}
+            excluded_locations_data = {name: data for name, data in LOCATIONS_DATA.items() if name in self.options.exclude_locations.value}
             for loc_name, loc_data in excluded_locations_data.items():
                 if "essence" in loc_data and loc_data["essence"] is True:
                     self.essences_in_game.remove(loc_data["vanilla_item"])
@@ -227,7 +232,7 @@ class OracleOfSeasonsWorld(World):
         else:
             decoupled = False
         for entrance in self.entrances_to_randomize:
-            if ((randomize_entrances_option > OracleOfSeasonsRandomizeEntrances.option_disabled and entrance.randomization_group <= OoSRandomizationGroup.Dive)
+            if ((randomize_entrances_option == OracleOfSeasonsRandomizeEntrances.option_disabled and entrance.randomization_group <= OoSRandomizationGroup.Dive)
                     or ((self.options.shuffle_dungeons == OracleOfSeasonsDungeonShuffle.option_false or decoupled)
                         and entrance.randomization_group == OoSRandomizationGroup.DungeonOutside
                         and entrance.randomization_group == OoSRandomizationGroup.DungeonInside)
@@ -245,6 +250,7 @@ class OracleOfSeasonsWorld(World):
                     for child in entrance.parent_region.children_regions:
                         self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(child_entrance)
             disconnect_entrance_for_randomization(entrance)
+
         self.spring_western_coast = [
             "enter old man near western coast house",
             "enter pirate ship",
@@ -535,7 +541,7 @@ class OracleOfSeasonsWorld(World):
         if self.options.exclude_dungeons_without_essence and not self.options.shuffle_essences:
             for i, essence_name in enumerate(ESSENCES):
                 if ESSENCES[i] not in self.essences_in_game:
-                    locations_to_exclude.extend(self.location_name_groups[f"D{i+1}"])
+                    locations_to_exclude.extend(self.location_name_groups[f"D{i + 1}"])
 
         for name in locations_to_exclude:
             self.multiworld.get_location(name, self.player).progress_type = LocationProgressType.EXCLUDED

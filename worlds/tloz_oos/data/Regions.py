@@ -904,17 +904,19 @@ class SeasonEntrance(Entrance):
             er_state.coupled = True
 
         if target_region.name == er_state.world.spring_western_coast:
-            if not er_state.collection_state.can_reach_location("_beat_golden_darknut", er_state.world.player):  # Not spring already
+            if not er_state.collection_state.has("_beat_golden_darknut", er_state.world.player):  # Not spring already
                 result = can_bring_season(er_state.collection_state, self, parent_region, target_region, SEASON_SPRING, set(), er_state.world.random)
                 if result[0]:
-                    er_state.world.spring_western_coast = result[1].name
+                    if result[1] is not None:
+                        er_state.world.spring_western_coast = result[1].name
                 else:
                     return False
         if target_region.name == er_state.world.autumn_graveyard:
             if not er_state.collection_state.can_reach_location("Western Coast: Item in Graveyard", er_state.world.player):  # Not autumn already
                 result = can_bring_season(er_state.collection_state, self, parent_region, target_region, SEASON_AUTUMN, set(), er_state.world.random)
                 if result[0]:
-                    er_state.world.autumn_graveyard = result[1].name
+                    if result[1] is not None:
+                        er_state.world.autumn_graveyard = result[1].name
                 else:
                     return False
 
@@ -922,7 +924,8 @@ class SeasonEntrance(Entrance):
             if not er_state.collection_state.can_reach_location("Mt. Cucco: Spring Banana Tree", er_state.world.player):  # Not spring already
                 result = can_bring_season(er_state.collection_state, self, parent_region, target_region, SEASON_SPRING, set(), er_state.world.random)
                 if result[0]:
-                    er_state.world.banana_stairs = result[1].name
+                    if result[1] is not None:
+                        er_state.world.banana_stairs = result[1].name
                 else:
                     return False
         return True
@@ -1078,4 +1081,4 @@ def can_bring_season(collection_state: CollectionState, entrance: SeasonEntrance
                                           season, considered_entrances, random)
                 if result[0]:
                     return result
-    return False, None
+    return True, None
