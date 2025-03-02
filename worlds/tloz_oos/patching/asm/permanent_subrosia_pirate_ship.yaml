@@ -1,4 +1,4 @@
-09/323F/: | # never delete the prow in the desert
+09/323C/: | # never delete the prow in the desert
   db $00,$00,$00
   
 09/2581/: | # Always delete the interaction that places a quicksand where the ship is

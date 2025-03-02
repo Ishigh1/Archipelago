@@ -754,7 +754,7 @@ NORMAL_EXITS = {
     "inside bomb house": (0x13895, "enter bomb house"),
     "inside master diver house": (0x138B9, "enter master diver house"),
     "inside sunken city, summer cave": (0x13B81, "enter sunken city, summer cave"),
-    "inside north sunken city dive spot": (0x13DE4, "enter north sunken city dive spot"),
+    "inside north sunken city dive spot": (0x13DE5, "enter north sunken city dive spot"),
 
     # Cucco Mountain
     "inside mountain fairy cave": (0x13A09, "enter mountain fairy cave"),
@@ -764,8 +764,8 @@ NORMAL_EXITS = {
     "inside banana stairs": (0x13B95, "enter banana stairs"),
     "inside banana cave": (0x13B99, "enter banana cave"),
     "inside fast platform cave": (0x13B9D, "enter fast platform cave"),
-    "inside diving spot outside D4": (0x13DF0, "enter diving spot outside D4"),
-    "inside mount cucco dive spot": (0x13DE0, "enter mount cucco dive spot"),
+    "inside diving spot outside D4": (0x13DF1, "enter diving spot outside D4"),
+    "inside mount cucco dive spot": (0x13DE1, "enter mount cucco dive spot"),
 
     # Goron Mountain
     "inside goron mountain bottom": (0x13BD1, "enter goron mountain bottom"),
@@ -807,7 +807,7 @@ NORMAL_EXITS = {
     "inside Closed cave": (0x13BC1, "enter Closed cave"),
     "inside useless subrosian house": (0x1383D, "enter useless subrosian house"),
     "inside subrosian cook": (0x13825, "enter subrosian cook"),
-    "inside volcano cave": (0x13709, "enter volcano cave"),
+    "inside volcano cave": (0x13A15, "enter volcano cave"),
     "inside dance hall": (0x13839, "enter dance hall"),
     "inside tower of spring": (0x13C59, "enter tower of spring"),
     "inside tower of spring staircase": (0x13DED, "enter tower of spring staircase"),

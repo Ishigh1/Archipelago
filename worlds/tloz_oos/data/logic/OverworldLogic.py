@@ -762,6 +762,7 @@ def make_holodrum_logic(player: int):
         ["inside moblin keep left", "moblin keep chest", OoSEntranceType.OneWay, lambda state: any([
             oos_has_bracelet(state, player)
         ])],
+        ["moblin keep chest", "moblin keep", OoSEntranceType.OneWay, None],
 
         ["moblin keep", "enter moblin keep right", OoSEntranceType.TwoWay, None],
         ["enter moblin keep right", "inside moblin keep right", OoSEntranceType.DoorTwoWay, None],
@@ -1022,15 +1023,18 @@ def make_holodrum_logic(player: int):
         ["inside goron ring cave", "goron's gift", OoSEntranceType.OneWay, None],
         ["enter goron ring cave", "goron blocked cave entrance", OoSEntranceType.OneWay, None],
 
-        ["goron mountain", "biggoron trade", OoSEntranceType.OneWay, lambda state: all([
-            oos_can_jump_1_wide_liquid(state, player, False),
-            any([
-                state.has("Lava Soup", player),
-                oos_self_locking_item(state, player, "biggoron trade", "Lava Soup")
-            ])
+
+        ["goron mountain entrance", "enter goron mountain bottom", OoSEntranceType.TwoWay, None],
+        ["enter goron mountain bottom", "inside goron mountain bottom", OoSEntranceType.DoorTwoWay, None],
+        ["inside goron mountain bottom", "inside goron mountain middle", OoSEntranceType.TwoWay, lambda state: any([
+            oos_has_flippers(state, player),
+            oos_can_jump_4_wide_liquid(state, player),
         ])],
 
-        ["goron mountain", "chest in goron mountain", OoSEntranceType.OneWay, lambda state: all([
+        ["enter goron mountain middle", "inside goron mountain middle", OoSEntranceType.DoorTwoWay, None],
+        ["goron mountain", "enter goron mountain middle", OoSEntranceType.TwoWay, None],
+
+        ["inside goron mountain middle", "chest in goron mountain", OoSEntranceType.OneWay, lambda state: all([
             oos_can_jump_3_wide_liquid(state, player),
             any([
                 oos_has_bombs(state, player),
@@ -1041,13 +1045,21 @@ def make_holodrum_logic(player: int):
                 ]),
             ])
         ])],
-        ["goron mountain", "old man in goron mountain", OoSEntranceType.OneWay, lambda state: \
-            oos_can_use_ember_seeds(state, player, False)],
+        ["inside goron mountain middle", "inside goron mountain top", OoSEntranceType.TwoWay, lambda state: oos_can_jump_1_wide_liquid(state, player, False)],
 
-        ["goron mountain entrance", "goron mountain", OoSEntranceType.TwoWay, lambda state: any([
-            oos_has_flippers(state, player),
-            oos_can_jump_4_wide_liquid(state, player),
+        ["inside goron mountain top", "enter goron mountain top", OoSEntranceType.DoorTwoWay, None],
+        ["enter goron mountain top", "biggoron trade", OoSEntranceType.OneWay, lambda state: all([
+            oos_can_jump_1_wide_liquid(state, player, False),
+            any([
+                state.has("Lava Soup", player),
+                oos_self_locking_item(state, player, "biggoron trade", "Lava Soup")
+            ])
         ])],
+
+        ["goron mountain", "enter goron old man", OoSEntranceType.TwoWay, None],
+        ["enter goron old man", "inside goron old man", OoSEntranceType.DoorTwoWay, lambda state: \
+            oos_can_use_ember_seeds(state, player, False)],
+        ["inside goron old man", "old man in goron mountain", OoSEntranceType.OneWay, None],
 
         ["goron mountain entrance", "temple remains lower stump", OoSEntranceType.TwoWay, lambda state: \
             oos_can_jump_3_wide_pit(state, player)],
