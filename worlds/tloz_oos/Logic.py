@@ -4,6 +4,7 @@ from worlds.tloz_oos.data.EntranceType import OoSRandomizationGroup
 from worlds.tloz_oos.data.logic.DungeonsLogic import *
 from worlds.tloz_oos.data.logic.OverworldLogic import make_holodrum_logic
 from worlds.tloz_oos.data.logic.SubrosiaLogic import make_subrosia_logic
+from worlds.tloz_oos.data.Regions import ENTRANCES
 
 
 def create_connections(multiworld: MultiWorld, player: int):
@@ -23,26 +24,42 @@ def create_connections(multiworld: MultiWorld, player: int):
         make_d8_logic(player),
     ]
 
+    shortcuts = {}
+
     # Create connections
     for logic_array in all_logic:
         for entrance_desc in logic_array:
-            region_1 = multiworld.get_region(entrance_desc[0], player)
-            region_2 = multiworld.get_region(entrance_desc[1], player)
             entrance_type = entrance_desc[2]
             if OoSEntranceType.CompanionEntrance & entrance_type != 0:
                 if OoSEntranceType.Ricky in entrance_type and oos_world.options.animal_companion != "ricky" \
                         or OoSEntranceType.Moosh in entrance_type and oos_world.options.animal_companion != "moosh" \
                         or OoSEntranceType.Dimitri in entrance_type and oos_world.options.animal_companion != "dimitri":
                     continue
-            if OoSEntranceType.D0Alt in entrance_type and oos_world.options.remove_d2_alt_entrance:
+            if OoSEntranceType.D0Alt in entrance_type and oos_world.options.remove_d0_alt_entrance:
                 continue
 
+            region_1_name = entrance_desc[0]
+            region_2_name = entrance_desc[1]
+
+            if region_1_name in shortcuts:
+                region_1 = shortcuts[region_1_name]
+            else:
+                region_1 = multiworld.get_region(region_1_name, player)
+
+            if region_2_name in ENTRANCES:
+                shortcuts[region_2_name] = region_1
+                continue
+            elif region_2_name in shortcuts:
+                region_2 = shortcuts[region_2_name]
+            else:
+                region_2 = multiworld.get_region(region_2_name, player)
             rule = entrance_desc[3]
+
             if (OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances \
                     and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance))\
                     or OoSEntranceType.DungeonFlag in entrance_type and oos_world.options.shuffle_dungeons\
                     or OoSEntranceType.PortalFlag in entrance_type and oos_world.options.shuffle_portals:
-                entrance = region_1.connect(region_2, entrance_desc[0], rule)
+                entrance = region_1.connect(region_2, region_1_name, rule)
 
                 if OoSEntranceType.Waterfall in entrance_type:
                     randomization_group = OoSRandomizationGroup.Waterfall
@@ -64,7 +81,7 @@ def create_connections(multiworld: MultiWorld, player: int):
                 if OoSEntranceType.TwoWay in entrance_type:
                     if OoSEntranceType.Asymmetric in entrance_type:
                         rule = None
-                    entrance = region_2.connect(region_1, entrance_desc[1], rule)
+                    entrance = region_2.connect(region_1, region_2_name, rule)
 
                     if (randomization_group == OoSRandomizationGroup.DungeonOutside
                             or randomization_group == OoSRandomizationGroup.PortalOverworld):

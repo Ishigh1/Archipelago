@@ -550,7 +550,7 @@ LOCATIONS_DATA = {
         "map_tile": 0xb0,
     },
     "Subrosia: Northwest Open Cave": {
-        "region_id": "subrosia, open cave",
+        "region_id": "inside subrosia open cave",
         "vanilla_item": "Gasha Seed",
         "flag_byte": 0xc9f1,
         "room": 0x04f1,

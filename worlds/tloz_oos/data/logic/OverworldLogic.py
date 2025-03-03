@@ -759,16 +759,15 @@ def make_holodrum_logic(player: int):
         ])],
         ["moblin keep", "enter moblin keep left", OoSEntranceType.TwoWay, None],
         ["enter moblin keep left", "inside moblin keep left", OoSEntranceType.DoorTwoWay, None],
+        ["moblin keep", "enter moblin keep right", OoSEntranceType.TwoWay, None],
+        ["enter moblin keep right", "inside moblin keep right", OoSEntranceType.DoorTwoWay, None],
+        ["inside moblin keep right", "inside moblin keep left", OoSEntranceType.TwoWay, None],
+
         ["inside moblin keep left", "moblin keep chest", OoSEntranceType.OneWay, lambda state: any([
             oos_has_bracelet(state, player)
         ])],
         ["moblin keep chest", "moblin keep", OoSEntranceType.OneWay, None],
 
-        ["moblin keep", "enter moblin keep right", OoSEntranceType.TwoWay, None],
-        ["enter moblin keep right", "inside moblin keep right", OoSEntranceType.DoorTwoWay, None],
-        ["inside moblin keep right", "inside moblin keep left", OoSEntranceType.TwoWay, None],
-
-        ["moblin keep chest", "moblin keep", OoSEntranceType.OneWay, None],
         ["moblin keep", "sunken city", OoSEntranceType.OneWay, lambda state: oos_can_warp(state, player)],
 
         ["natzu east", "natzu river bank", OoSEntranceType.TwoWayRicky, lambda state: oos_can_summon_ricky(state, player)],
@@ -1348,7 +1347,7 @@ def make_holodrum_logic(player: int):
 
         # GASHA TREES #############################################################################################
 
-        ["horon village", "horon gasha spot", OoSEntranceType.OneWay, None],
+        # ["horon village", "horon gasha spot", OoSEntranceType.OneWay, None],
         ["impa", "impa gasha spot", OoSEntranceType.OneWay, lambda state: oos_can_break_bush(state, player, True, True)],
         ["suburbs", "suburbs gasha spot", OoSEntranceType.OneWay, lambda state: oos_can_break_bush(state, player, True, True)],
         ["ghastly stump", "holodrum plain gasha spot", OoSEntranceType.OneWay, lambda state: all([

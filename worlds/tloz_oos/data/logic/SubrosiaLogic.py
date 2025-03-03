@@ -112,24 +112,23 @@ def make_subrosia_logic(player: int):
         ["enter temple of seasons", "inside temple of seasons", OoSEntranceType.DoorTwoWay, None],
         ["inside temple of seasons", "temple of seasons", OoSEntranceType.OneWay, None],
 
-        ["subrosia temple sector", "enter winter temple", OoSEntranceType.TwoWay, None],
-        ["enter winter temple", "inside winter temple", OoSEntranceType.DoorTwoWay, None],
-        ["inside winter temple", "tower of winter", OoSEntranceType.OneWay, lambda state: any([
+        ["subrosia temple sector", "enter temple of winter", OoSEntranceType.TwoWay, None],
+        ["enter temple of winter", "inside temple of winter", OoSEntranceType.DoorTwoWay, None],
+        ["inside temple of winter", "tower of winter", OoSEntranceType.OneWay, lambda state: any([
             oos_has_feather(state, player),
             oos_can_trigger_far_switch(state, player)
         ])],
 
-        ["subrosia temple sector", "enter Summer tower", OoSEntranceType.TwoWay, lambda state: oos_can_date_rosa(state, player)],
-        ["enter Summer tower", "inside Summer tower", OoSEntranceType.DoorComplexTwoWay, lambda state: oos_can_date_rosa(state, player)],
-        ["inside Summer tower", "enter Summer tower", OoSEntranceType.DoorComplexTwoWay, None],
-        ["inside Summer tower", "tower of summer", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],
+        ["subrosia temple sector", "enter tower of summer", OoSEntranceType.TwoWay, None],
+        ["enter tower of summer", "inside tower of summer", OoSEntranceType.DoorTwoWay, lambda state: oos_can_date_rosa(state, player)],
+        ["inside tower of summer", "tower of summer", OoSEntranceType.OneWay, lambda state: oos_has_bracelet(state, player)],
 
-        ["subrosia temple sector", "enter Autumn tower", OoSEntranceType.TwoWay, lambda state: all([
+        ["subrosia temple sector", "enter tower of autumn", OoSEntranceType.TwoWay, lambda state: all([
             oos_has_feather(state, player),
             state.has("Bomb Flower", player)
         ])],
-        ["enter Autumn tower", "inside Autumn tower", OoSEntranceType.DoorTwoWay, None],
-        ["inside Autumn tower", "tower of autumn", OoSEntranceType.OneWay, lambda state: oos_has_feather(state, player)],
+        ["enter tower of autumn", "inside tower of autumn", OoSEntranceType.DoorTwoWay, None],
+        ["inside tower of autumn", "tower of autumn", OoSEntranceType.OneWay, lambda state: oos_has_feather(state, player)],
 
         ["subrosia market sector", "subrosia seaside", OoSEntranceType.OneWay, lambda state: oos_has_shovel(state, player)],
         ["subrosia market sector", "enter subrosian market", OoSEntranceType.TwoWay, None],
@@ -188,14 +187,13 @@ def make_subrosia_logic(player: int):
         ["subrosia pirates sector", "enter subrosia ship", OoSEntranceType.TwoWay, None],
         ["enter subrosia ship", "inside subrosia ship", OoSEntranceType.DoorTwoWay, None],
 
-        ["subrosia bridge sector", "enter open cave", OoSEntranceType.TwoWay, None],
-        ["enter open cave", "inside open cave", OoSEntranceType.DoorTwoWay, None],
-        ["inside open cave", "subrosia, open cave", OoSEntranceType.OneWay, None],
+        ["subrosia bridge sector", "enter subrosia open cave", OoSEntranceType.TwoWay, None],
+        ["enter subrosia open cave", "inside subrosia open cave", OoSEntranceType.DoorTwoWay, None],
 
-        ["subrosia bridge sector", "enter Closed cave", OoSEntranceType.TwoWay, lambda state: oos_can_date_rosa(state, player)],
-        ["enter Closed cave", "inside Closed cave", OoSEntranceType.DoorComplexTwoWay, lambda state: oos_can_date_rosa(state, player)],
-        ["inside Closed cave", "enter Closed cave", OoSEntranceType.DoorComplexTwoWay, None],
-        ["inside Closed cave", "subrosia, locked cave", OoSEntranceType.OneWay, None],
+        ["subrosia bridge sector", "enter subrosia locked door", OoSEntranceType.TwoWay, lambda state: oos_can_date_rosa(state, player)],
+        ["enter subrosia locked door", "inside subrosia locked door", OoSEntranceType.DoorComplexTwoWay, lambda state: oos_can_date_rosa(state, player)],
+        ["inside subrosia locked door", "enter subrosia locked door", OoSEntranceType.DoorComplexTwoWay, None],
+        ["inside subrosia locked door", "subrosia, locked cave", OoSEntranceType.OneWay, None],
 
         ["subrosia bridge sector", "enter subrosian cook", OoSEntranceType.TwoWay, None],
         ["enter subrosian cook", "inside subrosian cook", OoSEntranceType.DoorTwoWay, None],

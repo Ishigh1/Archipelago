@@ -205,21 +205,9 @@ REGIONS = {
         "horon village SE chest",
         "horon village SW chest",
         "horon heart piece",
-        "horon gasha spot",
+        # "horon gasha spot",
 
-        "enter shop",
-        "enter tick tock",
-        "enter mayor's house",
-        "enter vasu",
-        "enter village portal room",
-        "enter know-it-all birds",
-        "enter bipin left",
-        "enter bipin right",
-        "enter advance shop",
-        "enter dr left old man",
-        "enter dr left",
         "enter dr left side",
-        "enter hidden stairs behind clock shop",
     ],
     "NATZU": [
         "natzu west",
@@ -304,14 +292,11 @@ REGIONS = {
         "subrosia bridge digging spot",
 
         # Temple area
-        "enter open cave",
+        "enter subrosia open cave",
         "enter boomerang cave",
-        "enter temple of seasons",
-        "enter winter temple",
         "enter Rosa corridor left",
-        "enter Summer tower",
-        "enter Autumn tower",
-        "enter Closed cave",
+        "enter tower of autumn",
+        "enter subrosia locked door",
         "enter useless subrosian house",
         "enter subrosian cook",
         "enter volcano cave",
@@ -388,7 +373,6 @@ REGIONS = {
         "tarm ruins, under tree",
         "temple remains heart piece",
         "temple remains upper portal",
-        "maku seed",
         "pirate captain",
         "bomb temple remains",
         "subrosian dance hall",
@@ -402,7 +386,6 @@ REGIONS = {
         "tower of autumn",
         "subrosia market star ore",
         "subrosia market ore chunks",
-        "subrosia, open cave",
         "subrosia, locked cave",
         "great furnace",
         "old man in horon",
@@ -554,14 +537,14 @@ REGIONS = {
 
         # Subrosia
         # Temple area
-        "inside open cave",
+        "inside subrosia open cave",
         "inside boomerang cave",
         "inside temple of seasons",
-        "inside winter temple",
+        "inside temple of winter",
         "inside Rosa corridor left",
-        "inside Summer tower",
-        "inside Autumn tower",
-        "inside Closed cave",
+        "inside tower of summer",
+        "inside tower of autumn",
+        "inside subrosia locked door",
         "inside useless subrosian house",
         "inside subrosian cook",
         "inside volcano cave",
@@ -595,6 +578,7 @@ REGIONS = {
         "maku tree, 3 essences",
         "maku tree, 5 essences",
         "maku tree, 7 essences",
+        "maku seed",
         "d9 entrance",
         "onox beaten",
         "ganon beaten",
@@ -804,6 +788,25 @@ REGIONS = {
         "inside d2 side entrance left",
         "inside d2 side entrance right",
     ]
+}
+
+ENTRANCES = {
+    "enter shop",
+    "enter tick tock",
+    "enter mayor's house",
+    "enter vasu",
+    "enter village portal room",
+    "enter know-it-all birds",
+    "enter bipin left",
+    "enter bipin right",
+    "enter advance shop",
+    "enter dr left old man",
+    "enter dr left",
+    "enter hidden stairs behind clock shop",
+
+    "enter temple of winter",
+    "enter tower of summer",
+    "enter temple of seasons",
 }
 
 STUMP_REGIONS = {

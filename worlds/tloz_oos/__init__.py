@@ -4,7 +4,6 @@ from typing import List, Union, ClassVar, Tuple
 import settings
 from BaseClasses import Tutorial, Region, Location, LocationProgressType, Item, ItemClassification, Entrance
 from Fill import fill_restrictive, FillError
-from Options import Accessibility
 from entrance_rando import randomize_entrances, disconnect_entrance_for_randomization
 from worlds.AutoWorld import WebWorld, World
 
