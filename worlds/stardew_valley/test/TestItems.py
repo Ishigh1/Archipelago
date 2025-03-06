@@ -20,13 +20,13 @@ class TestItems(SVTestCase):
 
         assert item.name == item_name
 
-    def test_items_table_footprint_is_between_717000_and_737000(self):
+    def test_items_table_footprint_is_between_717000_and_817000(self):
         item_with_lowest_id = min((item for item in item_table.values() if item.code is not None), key=lambda x: x.code)
         item_with_highest_id = max((item for item in item_table.values() if item.code is not None),
                                    key=lambda x: x.code)
 
         assert item_with_lowest_id.code >= 717000
-        assert item_with_highest_id.code < 737000
+        assert item_with_highest_id.code < 817000
 
     def test_babies_come_in_all_shapes_and_sizes(self):
         baby_permutations = set()

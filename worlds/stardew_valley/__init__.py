@@ -1,8 +1,10 @@
 import logging
+import typing
 from random import Random
 from typing import Dict, Any, Iterable, Optional, List, TextIO, cast
 
-from BaseClasses import Region, Entrance, Location, Item, Tutorial, ItemClassification, MultiWorld, CollectionState
+from BaseClasses import Region, Entrance, Location, Item, Tutorial, ItemClassification, MultiWorld, LocationProgressType, CollectionState
+import settings
 from Options import PerGameCommonOptions
 from worlds.AutoWorld import World, WebWorld
 from .bundles.bundle_room import BundleRoom
@@ -13,7 +15,7 @@ from .items import item_table, create_items, ItemData, Group, items_by_group, ge
 from .locations import location_table, create_locations, LocationData, locations_by_tag
 from .logic.logic import StardewLogic
 from .options import StardewValleyOptions, SeasonRandomization, Goal, BundleRandomization, EnabledFillerBuffs, NumberOfMovementBuffs, \
-    BuildingProgression, ExcludeGingerIsland, TrapItems, EntranceRandomization, FarmType
+    BuildingProgression, ExcludeGingerIsland, TrapItems, EntranceRandomization, FarmType, Tilesanity
 from .options.forced_options import force_change_options_if_incompatible
 from .options.option_groups import sv_option_groups
 from .options.presets import sv_options_presets
@@ -22,6 +24,7 @@ from .rules import set_rules
 from .stardew_rule import True_, StardewRule, HasProgressionPercent
 from .strings.ap_names.event_names import Event
 from .strings.goal_names import Goal as GoalName
+from .tilesanity import alternate_name
 
 logger = logging.getLogger(__name__)
 
@@ -29,6 +32,15 @@ STARDEW_VALLEY = "Stardew Valley"
 UNIVERSAL_TRACKER_SEED_PROPERTY = "ut_seed"
 
 client_version = 0
+
+
+class StardewSettings(settings.Group):
+    class AllowTilesanity(settings.Bool):
+        """
+        Do you allow Stardew Valley worlds to enable tilesanity ?
+        """
+
+    allow_tilesanity: typing.Union[AllowTilesanity, bool] = True
 
 
 class StardewLocation(Location):
@@ -63,6 +75,7 @@ class StardewValleyWorld(World):
     """
     game = STARDEW_VALLEY
     topology_present = False
+    settings: typing.ClassVar[StardewSettings]
 
     item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = {name: data.code for name, data in location_table.items()}
@@ -97,6 +110,7 @@ class StardewValleyWorld(World):
         # Taking the seed specified in slot data for UT, otherwise just generating the seed.
         self.seed = getattr(multiworld, "re_gen_passthrough", {}).get(STARDEW_VALLEY, self.random.getrandbits(64))
         self.random = Random(self.seed)
+        self.excluded_tiles = []
 
     def interpret_slot_data(self, slot_data: Dict[str, Any]) -> Optional[int]:
         # If the seed is not specified in the slot data, this mean the world was generated before Universal Tracker support.
@@ -106,7 +120,7 @@ class StardewValleyWorld(World):
         return seed
 
     def generate_early(self):
-        force_change_options_if_incompatible(self.options, self.player, self.player_name)
+        force_change_options_if_incompatible(self.options, self.player, self.player_name, self)
         self.content = create_content(self.options)
 
     def create_regions(self):
@@ -115,7 +129,7 @@ class StardewValleyWorld(World):
             region.exits = [Entrance(self.player, exit_name, region) for exit_name in exits]
             return region
 
-        world_regions, world_entrances, self.randomized_entrances = create_regions(create_region, self.random, self.options, self.content)
+        world_regions, world_entrances, self.randomized_entrances = create_regions(create_region, self.random, self.options, self.content, self)
 
         self.logic = StardewLogic(self.player, self.options, self.content, world_regions.keys())
         self.modified_bundles = get_all_bundles(self.random,
@@ -124,8 +138,23 @@ class StardewValleyWorld(World):
                                                 self.options)
 
         def add_location(name: str, code: Optional[int], region: str):
-            region: Region = world_regions[region]
+            if name.startswith("Tilesanity"):
+                if self.options.tilesanity_size == 1:
+                    tile_name = name
+                else:
+                    tile_name = name + " big"
+                if tile_name in world_regions:
+                    region = world_regions[tile_name]
+                else:
+                    if region in world_regions:
+                        region = world_regions[region]
+                    else:
+                        region = world_regions[alternate_name(region, self.options)]
+            else:
+                region: Region = world_regions[region]
             location = StardewLocation(self.player, name, code, region)
+            if self.options.tilesanity == Tilesanity.option_full and name in self.excluded_tiles:
+                location.progress_type = LocationProgressType.EXCLUDED
             region.locations.append(location)
 
         create_locations(add_location, self.modified_bundles, self.options, self.content, self.random)
@@ -151,7 +180,8 @@ class StardewValleyWorld(World):
 
         self.multiworld.itempool += created_items
 
-        setup_early_items(self.multiworld, self.options, self.content, self.player, self.random)
+        if self.options.tilesanity != Tilesanity.option_full:
+            setup_early_items(self.multiworld, self.options, self.content, self.player, self.random)
         self.setup_logic_events()
         self.setup_victory()
 
@@ -325,6 +355,27 @@ class StardewValleyWorld(World):
         else:
             return self.options.trap_items != TrapItems.option_no_traps, self.options.exclude_ginger_island == ExcludeGingerIsland.option_true
 
+    def post_fill(self) -> None:
+        spheres = [sphere for sphere in self.multiworld.get_spheres()]
+        for i in range(len(spheres) - 1, -1, -1):
+            sphere = spheres[i]
+            sorted_sphere = sorted(sphere)
+            self.random.shuffle(sorted_sphere)
+            for location in sphere:
+                item = location.item
+                if item.name == "Progressive Tile":
+                    item.name = self.tile_list.pop()
+                    item.code = self.item_name_to_id[item.name]
+        for item in self.multiworld.precollected_items[self.player]:
+            if item.name == "Progressive Tile":
+                item.name = self.tile_list.pop()
+                item.code = self.item_name_to_id[item.name]
+
+        for entrance in self.multiworld.get_entrances(self.player):
+            access_rule = entrance.access_rule
+            if hasattr(access_rule, 'switch_rule'):
+                access_rule.switch_rule(True)
+
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         """Write to the spoiler header. If individual it's right at the end of that player's options,
         if as stage it's right under the common header before per-player options."""
@@ -369,7 +420,8 @@ class StardewValleyWorld(World):
         excluded_option_names = [option.internal_name for option in excluded_options]
         generic_option_names = [option_name for option_name in PerGameCommonOptions.type_hints]
         excluded_option_names.extend(generic_option_names)
-        included_option_names: List[str] = [option_name for option_name in self.options_dataclass.type_hints if option_name not in excluded_option_names]
+        included_option_names: List[str] = [option_name for option_name in self.options_dataclass.type_hints if
+                                            option_name not in excluded_option_names]
         slot_data = self.options.as_dict(*included_option_names)
         slot_data.update({
             UNIVERSAL_TRACKER_SEED_PROPERTY: self.seed,
