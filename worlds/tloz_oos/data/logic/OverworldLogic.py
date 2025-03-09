@@ -7,17 +7,17 @@ def make_holodrum_logic(player: int):
         ["Menu", "impa", OoSEntranceType.OneWay, None],
 
         ["impa", "horon village", OoSEntranceType.TwoWay, None],
-        ["horon village", "enter mayor's house", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter mayor's house", OoSEntranceType.Compact, None],
         ["enter mayor's house", "inside mayor's house", OoSEntranceType.DoorTwoWay, None],
-        ["inside mayor's house", "mayor's gift", OoSEntranceType.OneWay, None],
+        ["inside mayor's house", "mayor's gift", OoSEntranceType.ReverseCompact, None],
         ["inside mayor's house", "mayor's house secret room", OoSEntranceType.OneWay, lambda state: oos_can_remove_rockslide(state, player, False)],
 
-        ["horon village", "enter vasu", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter vasu", OoSEntranceType.Compact, None],
         ["enter vasu", "inside vasu", OoSEntranceType.DoorTwoWay, None],
-        ["inside vasu", "vasu's gift", OoSEntranceType.OneWay, None],
+        ["inside vasu", "vasu's gift", OoSEntranceType.ReverseCompact, None],
 
         ["horon village", "horon heart piece", OoSEntranceType.OneWay, lambda state: oos_can_use_ember_seeds(state, player, False)],
-        ["horon village", "enter dr left", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter dr left", OoSEntranceType.Compact, None],
         ["enter dr left", "inside dr left", OoSEntranceType.DoorTwoWay, None],
         ["inside dr left", "dr. left reward", OoSEntranceType.OneWay, lambda state: oos_can_use_ember_seeds(state, player, True)],
         ["inside dr left", "inside dr left side", OoSEntranceType.TwoWay, lambda state: oos_can_remove_rockslide(state, player, False)],
@@ -28,18 +28,18 @@ def make_holodrum_logic(player: int):
             oos_can_jump_2_wide_liquid(state, player)
         ])],
 
-        ["horon village", "enter dr left old man", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter dr left old man", OoSEntranceType.Compact, None],
         ["enter dr left old man", "inside dr left old man", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
-        ["inside dr left old man", "old man in horon", OoSEntranceType.OneWay, None],
+        ["inside dr left old man", "old man in horon", OoSEntranceType.ReverseCompact, None],
 
-        ["horon village", "enter tick tock", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter tick tock", OoSEntranceType.Compact, None],
         ["enter tick tock", "inside tick tock", OoSEntranceType.DoorTwoWay, None],
         ["inside tick tock", "tick tock trade", OoSEntranceType.OneWay, lambda state: any([
             state.has("Wooden Bird", player),
             oos_self_locking_item(state, player, "tick tock trade", "Wooden Bird")
         ])],
-        ["horon village", "enter hidden stairs behind clock shop", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter hidden stairs behind clock shop", OoSEntranceType.Compact, None],
         ["enter hidden stairs behind clock shop", "inside hidden stairs behind clock shop", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_has_shovel(state, player)],
         ["inside hidden stairs behind clock shop", "clock shop secret", OoSEntranceType.OneWay, lambda state: any([
@@ -69,7 +69,7 @@ def make_holodrum_logic(player: int):
             ])
         ])],
 
-        ["horon village", "enter village portal room", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter village portal room", OoSEntranceType.Compact, None],
         ["enter village portal room", "inside village portal room", OoSEntranceType.DoorTwoWay, None],
         ["inside village portal room", "horon village portal", OoSEntranceType.OneWay, lambda state: any([
             oos_has_magic_boomerang(state, player),
@@ -82,10 +82,10 @@ def make_holodrum_logic(player: int):
 
         ["horon village", "horon village tree", OoSEntranceType.OneWay, lambda state: oos_can_harvest_tree(state, player, True)],
 
-        ["horon village", "enter shop", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter shop", OoSEntranceType.Compact, None],
         ["enter shop", "inside shop", OoSEntranceType.DoorTwoWay, None],
         ["inside shop", "horon shop", OoSEntranceType.OneWay, lambda state: oos_has_rupees_for_shop(state, player, "horonShop")],
-        ["horon village", "enter advance shop", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter advance shop", OoSEntranceType.Compact, None],
         ["enter advance shop", "inside advance shop", OoSEntranceType.DoorTwoWay, None],
         ["inside advance shop", "advance shop", OoSEntranceType.OneWay, lambda state: oos_has_rupees_for_shop(state, player, "advanceShop")],
         ["horon shop", "member's shop", OoSEntranceType.OneWay, lambda state: all([
@@ -93,14 +93,14 @@ def make_holodrum_logic(player: int):
             oos_has_rupees_for_shop(state, player, "memberShop")
         ])],
 
-        ["horon village", "enter know-it-all birds", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter know-it-all birds", OoSEntranceType.Compact, None],
         ["enter know-it-all birds", "inside know-it-all birds", OoSEntranceType.DoorTwoWay, None],
 
-        ["horon village", "enter bipin left", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter bipin left", OoSEntranceType.Compact, None],
         ["enter bipin left", "inside bipin left", OoSEntranceType.DoorTwoWay, None],
-        ["horon village", "enter bipin right", OoSEntranceType.TwoWay, None],
+        ["horon village", "enter bipin right", OoSEntranceType.Compact, None],
         ["enter bipin right", "inside bipin right", OoSEntranceType.DoorTwoWay, None],
-        ["inside bipin left", "inside bipin right", OoSEntranceType.TwoWay, None],
+        ["inside bipin left", "inside bipin right", OoSEntranceType.Compact, None],
 
         # WESTERN COAST ##############################################################################################
 
@@ -118,7 +118,7 @@ def make_holodrum_logic(player: int):
             ]),
         ])],
 
-        ["d0 entrance", "enter beach fairy cave", OoSEntranceType.TwoWay, None],
+        ["d0 entrance", "enter beach fairy cave", OoSEntranceType.Compact, None],
         ["enter beach fairy cave", "inside beach fairy cave", OoSEntranceType.DoorTwoWay, None],
 
         ["d0 entrance", "western coast after ship", OoSEntranceType.TwoWay, lambda state: all([
@@ -126,10 +126,13 @@ def make_holodrum_logic(player: int):
             state.has("_met_pirates", player)
         ])],
 
-        ["western coast after ship", "enter pirate ship", OoSEntranceType.TwoWay, None],
-        ["enter pirate ship", "inside pirate ship", OoSEntranceType.DoorTwoWay, lambda state: state.has("Pirate's Bell", player)],
+        ["western coast after ship", "enter pirate ship", OoSEntranceType.Compact, None],
+        ["enter pirate ship", "inside pirate ship", OoSEntranceType.DoorTwoWay, lambda state: all([
+            state.has("Pirate's Bell", player),
+            state.has("_met_pirates", player)
+        ])],
 
-        ["western coast after ship", "enter coast house", OoSEntranceType.TwoWay, None],
+        ["western coast after ship", "enter coast house", OoSEntranceType.Compact, None],
         ["enter coast house", "inside coast house", OoSEntranceType.DoorTwoWay, None],
         ["inside coast house", "inside coast house side", OoSEntranceType.TwoWay, lambda state: all([
             oos_can_remove_rockslide(state, player, False),
@@ -139,30 +142,30 @@ def make_holodrum_logic(player: int):
             ])
         ])],
         ["inside coast house side", "enter coast house side", OoSEntranceType.DoorTwoWay, None],
-        ["enter coast house side", "coast stump", OoSEntranceType.TwoWay, None],
+        ["enter coast house side", "coast stump", OoSEntranceType.ReverseCompact, None],
 
-        ["western coast after ship", "old man near western coast house", OoSEntranceType.OneWay, lambda state: \
+        ["western coast after ship", "enter old man near western coast house", OoSEntranceType.Compact, None],
+        ["enter old man near western coast house", "inside old man near western coast house", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
+        ["inside old man near western coast house", "old man near western coast house", OoSEntranceType.ReverseCompact, None],
 
-        ["western coast after ship", "graveyard", OoSEntranceType.OneWay, lambda state, season: season == SEASON_SUMMER],
-        ["graveyard", "western coast after ship", OoSEntranceType.OneWay, None],
-        ["western coast after ship", "enter graveyard cave", OoSEntranceType.TwoWay, None],
+        ["western coast after ship", "graveyard", OoSEntranceType.TwoWayAsymmetric, lambda state, season: season == SEASON_SUMMER],
+        ["western coast after ship", "enter graveyard cave", OoSEntranceType.Compact, None],
         ["enter graveyard cave", "inside graveyard cave", OoSEntranceType.DoorTwoWay, None],
         ["inside graveyard cave", "inside graveyard chimney", OoSEntranceType.TwoWay, lambda state: \
             oos_can_jump_3_wide_pit(state, player)],
         ["inside graveyard chimney", "outside graveyard chimney", OoSEntranceType.DoorOneWay, None],
-        ["outside graveyard chimney", "graveyard", OoSEntranceType.OneWay, None],
+        ["outside graveyard chimney", "graveyard", OoSEntranceType.ReverseCompact, None],
 
-        ["graveyard", "enter hidden graveyard stairs", OoSEntranceType.TwoWay, None],
+        ["graveyard", "enter hidden graveyard stairs", OoSEntranceType.Compact, None],
         ["enter hidden graveyard stairs", "inside hidden graveyard stairs", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_has_shovel(state, player)],
-        ["inside hidden graveyard stairs", "graveyard secret", OoSEntranceType.OneWay, None],
+        ["inside hidden graveyard stairs", "graveyard secret", OoSEntranceType.ReverseCompact, None],
 
-        ["graveyard", "d7 entrance", OoSEntranceType.OneWay, lambda state, season: any([
+        ["graveyard", "d7 entrance", OoSEntranceType.TwoWayAsymmetric, lambda state, season: any([
             oos_can_remove_snow(state, player, False),
             season != SEASON_WINTER
         ])],
-        ["d7 entrance", "graveyard", OoSEntranceType.OneWay, None],
 
         ["graveyard", "graveyard heart piece", OoSEntranceType.OneWay, lambda state, season: all([
             oos_can_break_mushroom(state, player, False),
@@ -173,14 +176,13 @@ def make_holodrum_logic(player: int):
 
         ["horon village", "suburbs", OoSEntranceType.TwoWay, lambda state: oos_can_use_ember_seeds(state, player, False)],
 
-        ["suburbs", "enter guru guru", OoSEntranceType.TwoWay, None],
-        ["suburbs", "enter winter guru guru", OoSEntranceType.OneWay, lambda state, season: season == SEASON_WINTER],
-        ["enter winter guru guru", "suburbs", OoSEntranceType.OneWay, None],
+        ["suburbs", "enter guru guru", OoSEntranceType.Compact, None],
+        ["suburbs", "enter winter guru guru", OoSEntranceType.TwoWayAsymmetric, lambda state, season: season == SEASON_WINTER],
         ["enter winter guru guru", "inside winter guru guru", OoSEntranceType.DoorTwoWay, None],
-        ["inside winter guru guru", "windmill heart piece", OoSEntranceType.OneWay, None],
+        ["inside winter guru guru", "windmill heart piece", OoSEntranceType.ReverseCompact, None],
         ["windmill heart piece", "inside guru guru", OoSEntranceType.OneWay, None],
         ["enter guru guru", "inside guru guru", OoSEntranceType.DoorTwoWay, None],
-        ["inside guru guru", "top guru guru staircase", OoSEntranceType.TwoWay, None],
+        ["inside guru guru", "top guru guru staircase", OoSEntranceType.Compact, None],
         ["top guru guru staircase", "top of guru guru", OoSEntranceType.DoorTwoWay, None],
         ["top of guru guru", "guru-guru trade", OoSEntranceType.OneWay, lambda state: any([
             state.has("Engine Grease", player),
@@ -222,13 +224,13 @@ def make_holodrum_logic(player: int):
         ["suburbs fairy fountain", "suburbs NE", OoSEntranceType.TwoWay, lambda state, season: season == SEASON_WINTER],
         ["suburbs NE", "moblin road", OoSEntranceType.TwoWay, None],
 
-        ["sunken city", "enter south sunken city dive spot", OoSEntranceType.OneWay, None],
+        ["sunken city", "enter south sunken city dive spot", OoSEntranceType.Compact, None],
         ["enter south sunken city dive spot", "inside south sunken city dive spot", OoSEntranceType.DiveOneWay,
          lambda state: oos_has_flippers(state, player)],
 
         ["inside south sunken city dive spot", "woods of winter, 2nd cave", OoSEntranceType.OneWay, lambda state: oos_has_flippers(state, player)],
 
-        ["moblin road", "enter first woods of winter cave", OoSEntranceType.TwoWay, None],
+        ["moblin road", "enter first woods of winter cave", OoSEntranceType.Compact, None],
         ["enter first woods of winter cave", "inside first woods of winter cave", OoSEntranceType.DoorTwoWay, lambda state, season: all([
             oos_can_remove_rockslide(state, player, True),
             season != SEASON_WINTER,
@@ -236,7 +238,7 @@ def make_holodrum_logic(player: int):
         ["inside first woods of winter cave", "woods of winter, 1st cave", OoSEntranceType.OneWay, lambda state: \
             oos_can_break_bush(state, player, False)],
 
-        ["moblin road", "enter second woods of winter cave", OoSEntranceType.TwoWay, None],
+        ["moblin road", "enter second woods of winter cave", OoSEntranceType.Compact, None],
         ["enter second woods of winter cave", "inside second woods of winter cave", OoSEntranceType.DoorTwoWay, None],
         ["inside second woods of winter cave", "woods of winter, 2nd cave", OoSEntranceType.TwoWay, lambda state: any([
             oos_can_swim(state, player, False),
@@ -246,15 +248,15 @@ def make_holodrum_logic(player: int):
         ["moblin road", "enter holly chimney", OoSEntranceType.TwoWay, lambda state, season: \
             season == SEASON_WINTER],
         ["enter holly chimney", "inside holly chimney", OoSEntranceType.DoorOneWay, None],
-        ["inside holly chimney", "holly's house", OoSEntranceType.OneWay, None],
-        ["moblin road", "enter holly house", OoSEntranceType.TwoWay, None],
+        ["inside holly chimney", "holly's house", OoSEntranceType.ReverseCompact, None],
+        ["moblin road", "enter holly house", OoSEntranceType.Compact, None],
         ["enter holly house", "inside holly house", OoSEntranceType.DoorTwoWay, lambda state, season: \
             season == SEASON_WINTER],
-        ["inside holly house", "holly's house", OoSEntranceType.TwoWay, None],
+        ["inside holly house", "holly's house", OoSEntranceType.ReverseCompact, None],
 
-        ["moblin road", "enter suburbs old man", OoSEntranceType.TwoWay, None],
+        ["moblin road", "enter suburbs old man", OoSEntranceType.Compact, None],
         ["enter suburbs old man", "inside suburbs old man", OoSEntranceType.DoorTwoWay, lambda state: oos_can_use_ember_seeds(state, player, False)],
-        ["inside suburbs old man", "old man near holly's house", OoSEntranceType.OneWay, None],
+        ["inside suburbs old man", "old man near holly's house", OoSEntranceType.ReverseCompact, None],
 
         ["enter suburbs old man", "woods of winter heart piece", OoSEntranceType.OneWay, lambda state: any([
             oos_can_swim(state, player, True),
@@ -263,17 +265,16 @@ def make_holodrum_logic(player: int):
         ])],
         ["enter suburbs old man", "suburbs fairy fountain", OoSEntranceType.TwoWay, lambda state, season: season == SEASON_WINTER],
 
-        ["suburbs fairy fountain", "central woods of winter", OoSEntranceType.OneWay, lambda state, season: any([
+        ["suburbs fairy fountain", "central woods of winter", OoSEntranceType.TwoWayAsymmetric, lambda state, season: any([
             oos_can_jump_1_wide_pit(state, player, True),
             oos_can_remove_snow(state, player, True),
             season != SEASON_WINTER
         ])],
-        ["central woods of winter", "suburbs fairy fountain", OoSEntranceType.OneWay, None],
 
         ["central woods of winter", "woods of winter tree", OoSEntranceType.OneWay, lambda state: oos_can_harvest_tree(state, player, True)],
         ["central woods of winter", "d2 entrance", OoSEntranceType.TwoWay, lambda state: oos_can_break_bush(state, player, True)],
 
-        ["central woods of winter", "enter peek cave near d2", OoSEntranceType.TwoWay, None],
+        ["central woods of winter", "enter peek cave near d2", OoSEntranceType.Compact, None],
         ["enter peek cave near d2", "inside peek cave near d2", OoSEntranceType.DoorTwoWay, lambda state, season: any([
             oos_can_jump_1_wide_liquid(state, player, False),
             oos_can_swim(state, player, False),
@@ -290,9 +291,7 @@ def make_holodrum_logic(player: int):
             oos_has_magnet_gloves(state, player)
         ])],
 
-        ["central woods of winter", "d2 stump", OoSEntranceType.TwoWay, None],
-
-        ["d2 stump", "d2 roof", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
+        ["central woods of winter", "d2 roof", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
         ["d2 roof", "d2 alt entrances", OoSEntranceType.TwoWay, lambda state: not oos_option_no_d2_alt_entrance(state, player)],
 
         # EYEGLASS LAKE SECTOR #########################################################################################
@@ -312,19 +311,19 @@ def make_holodrum_logic(player: int):
 
         ["impa", "d1 stump", OoSEntranceType.TwoWay, lambda state: oos_can_break_bush(state, player, True, True)],
         ["d1 stump", "north horon", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
-        ["d1 stump", "enter lon lon", OoSEntranceType.TwoWay, None],
+        ["d1 stump", "enter lon lon", OoSEntranceType.Compact, None],
         ["enter lon lon", "inside lon lon", OoSEntranceType.DoorTwoWay, None],
         ["inside lon lon", "malon trade", OoSEntranceType.OneWay, lambda state: any([
             state.has("Cuccodex", player),
             oos_self_locking_item(state, player, "malon trade", "Cuccodex")
         ])],
         ["d1 stump", "d1 island", OoSEntranceType.TwoWay, lambda state: oos_can_break_bush(state, player, True, True)],
-        ["d1 stump", "enter d1 old man", OoSEntranceType.TwoWay, None],
+        ["d1 stump", "enter d1 old man", OoSEntranceType.Compact, None],
         ["enter d1 old man", "inside d1 old man", OoSEntranceType.DoorTwoWay, lambda state: oos_can_use_ember_seeds(state, player, False)],
-        ["inside d1 old man", "old man near d1", OoSEntranceType.OneWay, None],
+        ["inside d1 old man", "old man near d1", OoSEntranceType.ReverseCompact, None],
 
         ["d1 island", "d1 entrance", OoSEntranceType.TwoWay, lambda state: state.has("Gnarled Key", player)],
-        ["d1 island", "enter red ring old man", OoSEntranceType.TwoWay, None],
+        ["d1 island", "enter red ring old man", OoSEntranceType.Compact, None],
         ["enter red ring old man", "inside red ring old man", OoSEntranceType.DoorTwoWay, lambda state, season: season == SEASON_SUMMER],
         ["inside red ring old man", "golden beasts old man", OoSEntranceType.OneWay, lambda state, season: \
             oos_can_beat_required_golden_beasts(state, player)],
@@ -404,13 +403,16 @@ def make_holodrum_logic(player: int):
             ])
         ])],
 
-        ["eyeglass lake", "enter lake bomb cave", OoSEntranceType.OneWay, None],
-        ["enter lake bomb cave", "eyeglass lake", OoSEntranceType.OneWay, lambda state, season: any([
-            season == SEASON_SUMMER,
-            all([
-                season != SEASON_SUMMER,
-                oos_can_swim(state, player, False)
-            ])
+        ["enter lake bomb cave", "eyeglass lake", OoSEntranceType.TwoWayAsymmetric, lambda state, season: all([
+            any([
+                season == SEASON_SUMMER,
+                oos_can_swim(state, player, False),
+                all([
+                    oos_can_summon_dimitri(state, player),
+                    oos_has_bracelet(state, player)
+                ])
+            ]),
+            oos_can_jump_1_wide_pit(state, player, True)
         ])],
         ["enter lake bomb cave", "inside lake bomb cave", OoSEntranceType.DoorTwoWay, lambda state, season: all([
             season == SEASON_SUMMER,
@@ -460,18 +462,18 @@ def make_holodrum_logic(player: int):
             oos_can_warp(state, player)
         ])],
 
-        ["d5 stump", "enter lake boulder", OoSEntranceType.TwoWay, None],
+        ["d5 stump", "enter lake boulder", OoSEntranceType.Compact, None],
         ["enter lake boulder", "inside lake boulder", OoSEntranceType.DoorTwoWay, lambda state, season: all([
             season == SEASON_SUMMER,
             oos_has_bracelet(state, player),
         ])],
-        ["inside lake boulder", "dry eyeglass lake, east cave", OoSEntranceType.OneWay, None],
+        ["inside lake boulder", "dry eyeglass lake, east cave", OoSEntranceType.ReverseCompact, None],
 
         # NORTH HORON / HOLODRUM PLAIN ###############################################################################
 
         ["north horon", "north horon tree", OoSEntranceType.OneWay, lambda state: oos_can_harvest_tree(state, player, True)],
 
-        ["north horon", "enter Blaino", OoSEntranceType.TwoWay, None],
+        ["north horon", "enter Blaino", OoSEntranceType.Compact, None],
         ["enter Blaino", "inside Blaino", OoSEntranceType.DoorTwoWay, None],
         ["inside Blaino", "blaino prize", OoSEntranceType.OneWay, lambda state: oos_can_farm_rupees(state, player)],
 
@@ -483,37 +485,35 @@ def make_holodrum_logic(player: int):
         ["enter autumn water cave", "inside autumn water cave", OoSEntranceType.DoorTwoWay, lambda state: oos_can_swim(state, player, False)],
         ["inside autumn water cave", "cave north of D1", OoSEntranceType.OneWay, lambda state: oos_can_swim(state, player, False)],
 
-        ["north horon", "enter old man near blaino", OoSEntranceType.OneWay, lambda state, season: any([
+        ["north horon", "enter old man near blaino", OoSEntranceType.TwoWayAsymmetric, lambda state, season: any([
             season == SEASON_SUMMER,
             oos_can_summon_ricky(state, player)
         ])],
-        ["enter old man near blaino", "north horon", OoSEntranceType.OneWay, None],
         ["enter old man near blaino", "inside old man near blaino", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
-        ["inside old man near blaino", "old man near blaino", OoSEntranceType.OneWay, None],
+        ["inside old man near blaino", "old man near blaino", OoSEntranceType.ReverseCompact, None],
 
         ["north horon", "underwater item below natzu bridge", OoSEntranceType.OneWay, lambda state: oos_can_swim(state, player, False)],
 
         ["north horon", "temple remains lower stump", OoSEntranceType.TwoWay, lambda state: oos_can_jump_3_wide_pit(state, player)],
 
-        ["ghastly stump", "enter Mrs Ruul", OoSEntranceType.TwoWay, None],
+        ["ghastly stump", "enter Mrs Ruul", OoSEntranceType.Compact, None],
         ["enter Mrs Ruul", "inside Mrs Ruul", OoSEntranceType.DoorTwoWay, None],
         ["inside Mrs Ruul", "mrs. ruul trade", OoSEntranceType.OneWay, lambda state: any([
             state.has("Ghastly Doll", player),
             oos_self_locking_item(state, player, "mrs. ruul trade", "Ghastly Doll")
         ])],
 
-        ["ghastly stump", "enter ruul old man", OoSEntranceType.TwoWay, None],
+        ["ghastly stump", "enter ruul old man", OoSEntranceType.Compact, None],
         ["enter ruul old man", "inside ruul old man", OoSEntranceType.DoorTwoWay, lambda state: oos_can_use_ember_seeds(state, player, False)],
-        ["inside ruul old man", "old man near mrs. ruul", OoSEntranceType.OneWay, None],
+        ["inside ruul old man", "old man near mrs. ruul", OoSEntranceType.ReverseCompact, None],
 
         ["north horon", "ghastly stump", OoSEntranceType.TwoWay, lambda state, season: any([
             oos_can_jump_1_wide_pit(state, player, True),
             season == SEASON_WINTER
         ])],
 
-        ["spool swamp north", "ghastly stump", OoSEntranceType.OneWay, None],
-        ["ghastly stump", "spool swamp north", OoSEntranceType.OneWay, lambda state, season: any([
+        ["ghastly stump", "spool swamp north", OoSEntranceType.TwoWayAsymmetric, lambda state, season: any([
             season == SEASON_SUMMER,
             oos_can_jump_4_wide_pit(state, player),
             oos_can_summon_ricky(state, player),
@@ -553,7 +553,7 @@ def make_holodrum_logic(player: int):
 
         ["spool swamp north", "spool swamp tree", OoSEntranceType.OneWay, lambda state: oos_can_harvest_tree(state, player, True)],
 
-        ["spool swamp north", "enter floodgate house", OoSEntranceType.TwoWay, None],
+        ["spool swamp north", "enter floodgate house", OoSEntranceType.Compact, None],
         ["enter floodgate house", "inside floodgate house", OoSEntranceType.DoorTwoWay, None],
         ["inside floodgate house", "floodgate keeper's house", OoSEntranceType.OneWay, lambda state: any([
             oos_can_trigger_lever(state, player),
@@ -673,7 +673,7 @@ def make_holodrum_logic(player: int):
             oos_has_bombs(state, player)],
         ["enter swamp bomb cave", "inside swamp bomb cave", OoSEntranceType.DoorTwoWay, lambda state: \
             state.has("_opened_swamp_bomb_cave", player)],
-        ["inside swamp bomb cave", "spool swamp cave", OoSEntranceType.OneWay, None],
+        ["inside swamp bomb cave", "spool swamp cave", OoSEntranceType.ReverseCompact, None],
 
         ["spool swamp south", "spool swamp heart piece", OoSEntranceType.OneWay, lambda state, season: all([
             season == SEASON_SPRING,
@@ -711,7 +711,7 @@ def make_holodrum_logic(player: int):
         ["natzu east", "enter natzu north stairs", OoSEntranceType.TwoWayDimitri, lambda state: \
             oos_can_jump_5_wide_liquid(state, player)],
         ["enter natzu north stairs", "inside natzu north stairs", OoSEntranceType.DoorTwoWay, None],
-        ["inside natzu north stairs", "natzu region, across water", OoSEntranceType.OneWay, None],
+        ["inside natzu north stairs", "natzu region, across water", OoSEntranceType.ReverseCompact, None],
 
         ["natzu west", "natzu east", OoSEntranceType.TwoWayRicky, lambda state: oos_can_summon_ricky(state, player)],
         ["natzu west", "natzu east", OoSEntranceType.TwoWayMoosh, lambda state: any([
@@ -757,11 +757,11 @@ def make_holodrum_logic(player: int):
             oos_has_flippers(state, player),
             oos_can_jump_4_wide_liquid(state, player)
         ])],
-        ["moblin keep", "enter moblin keep left", OoSEntranceType.TwoWay, None],
+        ["moblin keep", "enter moblin keep left", OoSEntranceType.Compact, None],
         ["enter moblin keep left", "inside moblin keep left", OoSEntranceType.DoorTwoWay, None],
-        ["moblin keep", "enter moblin keep right", OoSEntranceType.TwoWay, None],
+        ["moblin keep", "enter moblin keep right", OoSEntranceType.Compact, None],
         ["enter moblin keep right", "inside moblin keep right", OoSEntranceType.DoorTwoWay, None],
-        ["inside moblin keep right", "inside moblin keep left", OoSEntranceType.TwoWay, None],
+        ["inside moblin keep right", "inside moblin keep left", OoSEntranceType.Compact, None],
 
         ["inside moblin keep left", "moblin keep chest", OoSEntranceType.OneWay, lambda state: any([
             oos_has_bracelet(state, player)
@@ -806,8 +806,7 @@ def make_holodrum_logic(player: int):
         ["sunken city dimitri", "sunken city entrance", OoSEntranceType.OneWay, None],
 
         # This allows to reset the season
-        ["sunken city", "warp to sunken city", OoSEntranceType.OneWay, lambda state: oos_can_warp_using_gale_seeds(state, player)],
-        ["warp to sunken city", "sunken city", OoSEntranceType.OneWay, None],
+        ["sunken city", "warp to sunken city", OoSEntranceType.TwoWayAsymmetric, lambda state: oos_can_warp_using_gale_seeds(state, player)],
 
         ["sunken city", "sunken city tree", OoSEntranceType.OneWay, lambda state: \
             oos_can_harvest_tree(state, player, True)],
@@ -825,7 +824,7 @@ def make_holodrum_logic(player: int):
         ])],
         ["sunken city dimitri", "sunken city", OoSEntranceType.OneWay, None],
 
-        ["sunken city", "enter ingo", OoSEntranceType.TwoWay, None],
+        ["sunken city", "enter ingo", OoSEntranceType.Compact, None],
         ["enter ingo", "inside ingo", OoSEntranceType.DoorTwoWay, None],
         ["inside ingo", "ingo trade", OoSEntranceType.OneWay, lambda state: any([
             state.has("Goron Vase", player),
@@ -844,7 +843,7 @@ def make_holodrum_logic(player: int):
             oos_can_use_seeds(state, player)
         ])],
 
-        ["sunken city dimitri", "enter sunken left waterfall", OoSEntranceType.TwoWay, None],
+        ["sunken city dimitri", "enter sunken left waterfall", OoSEntranceType.Compact, None],
         ["enter sunken left waterfall", "inside sunken left waterfall", OoSEntranceType.Waterfall, None],
         ["inside sunken left waterfall", "master diver's challenge", OoSEntranceType.OneWay, lambda state: all([
             oos_has_sword(state, player, False),
@@ -854,7 +853,7 @@ def make_holodrum_logic(player: int):
             ])
         ])],
 
-        ["sunken city dimitri", "enter sunken right waterfall", OoSEntranceType.TwoWay, None],
+        ["sunken city dimitri", "enter sunken right waterfall", OoSEntranceType.Compact, None],
         ["enter sunken right waterfall", "inside sunken right waterfall", OoSEntranceType.Waterfall, None],
         ["inside sunken right waterfall", "master diver's reward", OoSEntranceType.OneWay, lambda state: any([
             state.has("Master's Plaque", player),
@@ -875,28 +874,27 @@ def make_holodrum_logic(player: int):
             oos_can_break_bush(state, player, False, True)
         ])],
 
-        ["sunken city", "enter north sunken city dive spot", OoSEntranceType.TwoWay, None],
+        ["sunken city", "enter north sunken city dive spot", OoSEntranceType.Compact, None],
         ["enter north sunken city dive spot", "inside north sunken city dive spot", OoSEntranceType.DiveTwoWay,
          lambda state: oos_has_flippers(state, player)],
-        ["inside north sunken city dive spot", "inside mount cucco dive spot", OoSEntranceType.TwoWay, None],
+        ["inside north sunken city dive spot", "inside mount cucco dive spot", OoSEntranceType.ReverseCompact, None],
         ["inside mount cucco dive spot", "enter mount cucco dive spot", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
 
         ["enter mount cucco dive spot", "mount cucco", OoSEntranceType.TwoWayAsymmetric, lambda state, season: season == SEASON_SUMMER],
         ["sunken city gasha spot", "sunken city stump", OoSEntranceType.OneWay, None],
-        ["sunken city gasha spot", "enter flooded house", OoSEntranceType.OneWay, lambda state: any([
+        ["sunken city gasha spot", "enter flooded house", OoSEntranceType.TwoWayAsymmetric, lambda state: any([
             oos_can_swim(state, player, False),
             oos_can_jump_3_wide_liquid(state, player)  # TODO : test that
         ])],
-        ["enter flooded house", "sunken city gasha spot", OoSEntranceType.OneWay, None],
         ["enter flooded house", "inside flooded house", OoSEntranceType.DoorTwoWay, None],
 
-        ["sunken city", "enter treasure hunter", OoSEntranceType.TwoWay, None],
+        ["sunken city", "enter treasure hunter", OoSEntranceType.Compact, None],
         ["enter treasure hunter", "inside treasure hunter", OoSEntranceType.DoorTwoWay, None],
 
-        ["sunken city", "enter bomb house", OoSEntranceType.TwoWay, None],
+        ["sunken city", "enter bomb house", OoSEntranceType.Compact, None],
         ["enter bomb house", "inside bomb house", OoSEntranceType.DoorTwoWay, None],
 
-        ["sunken city", "enter master diver house", OoSEntranceType.TwoWay, None],
+        ["sunken city", "enter master diver house", OoSEntranceType.Compact, None],
         ["enter master diver house", "inside master diver house", OoSEntranceType.DoorTwoWay, None],
 
         ["inside master diver house", "diver secret", OoSEntranceType.OneWay, lambda state: all([
@@ -939,11 +937,11 @@ def make_holodrum_logic(player: int):
         ["spring banana rooster", "rightmost rooster ledge", OoSEntranceType.OneWay, lambda state: \
             oos_has_bracelet(state, player)],
 
-        ["rightmost rooster ledge", "enter banana cave", OoSEntranceType.TwoWay, None],
+        ["rightmost rooster ledge", "enter banana cave", OoSEntranceType.Compact, None],
         ["enter banana cave", "inside banana cave", OoSEntranceType.DoorTwoWay, None],
         ["inside banana cave", "inside banana stairs", OoSEntranceType.TwoWay, lambda state: \
             oos_can_jump_1_wide_pit(state, player, False)],
-        ["inside banana stairs", "enter banana stairs", OoSEntranceType.DoorTwoWay, None],
+        ["enter banana stairs", "inside banana stairs", OoSEntranceType.DoorTwoWay, None],
         ["enter banana stairs", "spring banana tree", OoSEntranceType.OneWay, lambda state, season: all([
             season == SEASON_SPRING,
             any([  # can harvest tree
@@ -955,23 +953,23 @@ def make_holodrum_logic(player: int):
 
         ["rightmost rooster ledge", "enter fast platform cave", OoSEntranceType.OneWay, None],
         ["enter fast platform cave", "inside fast platform cave", OoSEntranceType.DoorTwoWay, None],
-        ["inside fast platform cave", "mt. cucco, platform cave", OoSEntranceType.OneWay, None],
+        ["inside fast platform cave", "mt. cucco, platform cave", OoSEntranceType.ReverseCompact, None],
 
-        ["enter fast platform cave", "rightmost rooster ledge", OoSEntranceType.OneWay, None],
+        ["enter fast platform cave", "spring banana rooster", OoSEntranceType.OneWay, None],
 
         ["mount cucco", "mt. cucco, talon's cave entrance", OoSEntranceType.OneWay, lambda state, season: \
             season == SEASON_SPRING],
 
-        ["mt. cucco, talon's cave entrance", "enter talon cave", OoSEntranceType.TwoWay, None],
+        ["mt. cucco, talon's cave entrance", "enter talon cave", OoSEntranceType.Compact, None],
         ["enter talon cave", "inside talon cave", OoSEntranceType.DoorTwoWay, lambda state, season: season != SEASON_WINTER],
         ["inside talon cave", "talon trade", OoSEntranceType.OneWay, lambda state: state.has("Megaphone", player)],
 
         ["mt. cucco, talon's cave entrance", "mt. cucco heart piece", OoSEntranceType.OneWay, None],
         ["mt. cucco heart piece", "mount cucco", OoSEntranceType.OneWay, None],
 
-        ["mt. cucco, talon's cave entrance", "enter diving spot outside D4", OoSEntranceType.OneWay, None],
+        ["mt. cucco, talon's cave entrance", "enter diving spot outside D4", OoSEntranceType.Compact, None],
         ["enter diving spot outside D4", "inside diving spot outside D4", OoSEntranceType.DiveTwoWay, lambda state: oos_has_flippers(state, player)],
-        ["inside diving spot outside D4", "diving spot outside D4", OoSEntranceType.OneWay, None],
+        ["inside diving spot outside D4", "diving spot outside D4", OoSEntranceType.ReverseCompact, None],
 
         ["mt. cucco, talon's cave entrance", "enter winter cave in cucco mountain", OoSEntranceType.TwoWay, None],
         ["enter winter cave in cucco mountain", "inside winter cave in cucco mountain", OoSEntranceType.DoorTwoWay,
@@ -1006,24 +1004,23 @@ def make_holodrum_logic(player: int):
 
         ["goron blocked cave entrance", "goron mountain", OoSEntranceType.TwoWay, lambda state: oos_has_bracelet(state, player)],
 
-        ["goron blocked cave entrance", "enter goron mountain bomb cave", OoSEntranceType.TwoWay, None],
+        ["goron blocked cave entrance", "enter goron mountain bomb cave", OoSEntranceType.Compact, None],
         ["enter goron mountain bomb cave", "inside goron mountain bomb cave", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_remove_rockslide(state, player, False)],
-        ["inside goron mountain bomb cave", "inside goron outside stairs", OoSEntranceType.TwoWay, None],
+        ["inside goron mountain bomb cave", "inside goron outside stairs", OoSEntranceType.Compact, None],
         ["inside goron outside stairs", "enter goron outside stairs", OoSEntranceType.DoorTwoWay, None],
-        ["enter goron outside stairs", "enter left cave to lynel in goron mountain", OoSEntranceType.TwoWay, None],
+        ["enter goron outside stairs", "enter left cave to lynel in goron mountain", OoSEntranceType.Compact, None],
         ["enter left cave to lynel in goron mountain", "inside left cave to lynel in goron mountain", OoSEntranceType.DoorTwoWay, None],
-        ["enter goron outside stairs", "enter right cave to lynel in goron mountain", OoSEntranceType.TwoWay, None],
+        ["enter goron outside stairs", "enter right cave to lynel in goron mountain", OoSEntranceType.Compact, None],
         ["enter right cave to lynel in goron mountain", "inside right cave to lynel in goron mountain", OoSEntranceType.DoorTwoWay, None],
-        ["inside right cave to lynel in goron mountain", "inside lynel stairs in goron mountain", OoSEntranceType.TwoWay, None],
+        ["inside right cave to lynel in goron mountain", "inside lynel stairs in goron mountain", OoSEntranceType.Compact, None],
         ["inside lynel stairs in goron mountain", "enter lynel stairs in goron mountain", OoSEntranceType.DoorTwoWay, None],
         ["enter lynel stairs in goron mountain", "enter goron ring cave", OoSEntranceType.OneWay, None],
         ["enter goron ring cave", "inside goron ring cave", OoSEntranceType.DoorTwoWay, None],
-        ["inside goron ring cave", "goron's gift", OoSEntranceType.OneWay, None],
+        ["inside goron ring cave", "goron's gift", OoSEntranceType.ReverseCompact, None],
         ["enter goron ring cave", "goron blocked cave entrance", OoSEntranceType.OneWay, None],
 
-
-        ["goron mountain entrance", "enter goron mountain bottom", OoSEntranceType.TwoWay, None],
+        ["goron mountain entrance", "enter goron mountain bottom", OoSEntranceType.Compact, None],
         ["enter goron mountain bottom", "inside goron mountain bottom", OoSEntranceType.DoorTwoWay, None],
         ["inside goron mountain bottom", "inside goron mountain middle", OoSEntranceType.TwoWay, lambda state: any([
             oos_has_flippers(state, player),
@@ -1031,7 +1028,7 @@ def make_holodrum_logic(player: int):
         ])],
 
         ["enter goron mountain middle", "inside goron mountain middle", OoSEntranceType.DoorTwoWay, None],
-        ["goron mountain", "enter goron mountain middle", OoSEntranceType.TwoWay, None],
+        ["goron mountain", "enter goron mountain middle", OoSEntranceType.Compact, None],
 
         ["inside goron mountain middle", "chest in goron mountain", OoSEntranceType.OneWay, lambda state: all([
             oos_can_jump_3_wide_liquid(state, player),
@@ -1047,18 +1044,15 @@ def make_holodrum_logic(player: int):
         ["inside goron mountain middle", "inside goron mountain top", OoSEntranceType.TwoWay, lambda state: oos_can_jump_1_wide_liquid(state, player, False)],
 
         ["inside goron mountain top", "enter goron mountain top", OoSEntranceType.DoorTwoWay, None],
-        ["enter goron mountain top", "biggoron trade", OoSEntranceType.OneWay, lambda state: all([
-            oos_can_jump_1_wide_liquid(state, player, False),
-            any([
-                state.has("Lava Soup", player),
-                oos_self_locking_item(state, player, "biggoron trade", "Lava Soup")
-            ])
+        ["enter goron mountain top", "biggoron trade", OoSEntranceType.OneWay, lambda state: any([
+            state.has("Lava Soup", player),
+            oos_self_locking_item(state, player, "biggoron trade", "Lava Soup")
         ])],
 
-        ["goron mountain", "enter goron old man", OoSEntranceType.TwoWay, None],
+        ["goron mountain", "enter goron old man", OoSEntranceType.Compact, None],
         ["enter goron old man", "inside goron old man", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_use_ember_seeds(state, player, False)],
-        ["inside goron old man", "old man in goron mountain", OoSEntranceType.OneWay, None],
+        ["inside goron old man", "old man in goron mountain", OoSEntranceType.ReverseCompact, None],
 
         ["goron mountain entrance", "temple remains lower stump", OoSEntranceType.TwoWay, lambda state: \
             oos_can_jump_3_wide_pit(state, player)],
@@ -1069,6 +1063,14 @@ def make_holodrum_logic(player: int):
         ["tarm ruins", "lost woods plateau", OoSEntranceType.OneWay, lambda state, season: season == SEASON_SUMMER],
         ["lost woods plateau", "tarm ruins", OoSEntranceType.OneWay, None],
         ["lost woods plateau", "lost woods statue", OoSEntranceType.OneWay, lambda state, season: season != SEASON_WINTER],
+
+        ["lost woods plateau", "enter lost woods deku", OoSEntranceType.TwoWay, lambda state, season: all([
+            season == SEASON_AUTUMN,
+            oos_can_break_mushroom(state, player, False)
+        ])],
+        ["enter lost woods deku", "inside lost woods deku", OoSEntranceType.DoorTwoWay, None],
+        ["inside lost woods deku", "lost woods deku", OoSEntranceType.OneWay, lambda state: oos_has_shield(state, player)],
+
         ["tarm ruins", "lost woods statues stump", OoSEntranceType.OneWay, lambda state, season: all([
             season == SEASON_WINTER,
             state.has("_pushed_lost_woods_statue", player)
@@ -1079,27 +1081,21 @@ def make_holodrum_logic(player: int):
             oos_can_swim(state, player, False)
         ])],
         ["lost woods statues stump", "lost woods post statues stump", OoSEntranceType.OneWay, lambda state, season: \
-            season == SEASON_WINTER],
-        ["lost woods post statues stump", "enter lost woods bomb cave", OoSEntranceType.TwoWay, lambda state, season: all([
+            all([
+                season == SEASON_WINTER,
+                oos_can_remove_season(state, player, SEASON_WINTER)
+            ])],
+
+        ["lost woods post statues stump", "lost woods stump", OoSEntranceType.TwoWay, lambda state, season: all([
             season == SEASON_AUTUMN,
             oos_can_break_mushroom(state, player, False)
         ])],
+
+        ["lost woods stump", "enter lost woods bomb cave", OoSEntranceType.Compact, None],
         ["enter lost woods bomb cave", "inside lost woods bomb cave", OoSEntranceType.DoorTwoWay, lambda state: \
             oos_can_remove_rockslide(state, player, False)],
 
-        ["enter lost woods bomb cave", "lost woods stump", OoSEntranceType.TwoWay, lambda state, season: any([
-            season != SEASON_WINTER,
-            oos_can_remove_snow(state, player, False)
-        ])],
-
-        ["lost woods plateau", "enter lost woods deku", OoSEntranceType.TwoWay, lambda state, season: all([
-            season == SEASON_AUTUMN,
-            oos_can_break_mushroom(state, player, False)
-        ])],
-        ["enter lost woods deku", "inside lost woods deku", OoSEntranceType.DoorTwoWay, None],
-        ["inside lost woods deku", "lost woods deku", OoSEntranceType.OneWay, lambda state: oos_has_shield(state, player)],
-
-        ["lost woods stump", "enter phonograph deku", OoSEntranceType.OneWay, None],
+        ["lost woods stump", "enter phonograph deku", OoSEntranceType.Compact, None],
         ["enter phonograph deku", "inside phonograph deku", OoSEntranceType.DoorTwoWay, lambda state: oos_can_use_ember_seeds(state, player, False)],
         ["inside phonograph deku", "phonograph deku", OoSEntranceType.OneWay, lambda state: state.has("Phonograph", player)],
 
@@ -1148,39 +1144,39 @@ def make_holodrum_logic(player: int):
         # SAMASA DESERT ######################################################################################
 
         ["suburbs", "samasa desert", OoSEntranceType.OneWay, lambda state: state.has("_met_pirates", player)],
-        ["samasa desert", "enter desert cave", OoSEntranceType.TwoWay, None],
+        ["samasa desert", "enter desert cave", OoSEntranceType.Compact, None],
         ["enter desert cave", "inside desert cave", OoSEntranceType.DoorTwoWay, None],
 
-        ["samasa desert", "enter like like quicksand", OoSEntranceType.TwoWay, None],
+        ["samasa desert", "enter like like quicksand", OoSEntranceType.Compact, None],
         ["enter like like quicksand", "inside like like quicksand", OoSEntranceType.DoorOneWay, None],
-        ["inside like like quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["inside like like quicksand", "inside desert cave", OoSEntranceType.ReverseCompact, None],
 
-        ["samasa desert", "enter deku quicksand", OoSEntranceType.TwoWay, None],
+        ["samasa desert", "enter deku quicksand", OoSEntranceType.Compact, None],
         ["enter deku quicksand", "inside deku quicksand", OoSEntranceType.DoorOneWay, None],
         ["inside deku quicksand", "samasa desert scrub", OoSEntranceType.OneWay, lambda state:
         oos_has_rupees_for_shop(state, player, "samasaCaveScrub")],
-        ["inside deku quicksand", "inside desert cave", OoSEntranceType.OneWay, None],
+        ["inside deku quicksand", "inside desert cave", OoSEntranceType.ReverseCompact, None],
 
-        ["samasa desert", "enter bell quicksand", OoSEntranceType.TwoWay, None],
+        ["samasa desert", "enter bell quicksand", OoSEntranceType.Compact, None],
         ["enter bell quicksand", "inside bell quicksand", OoSEntranceType.DoorOneWay, lambda state: all([
             oos_has_bracelet(state, player),
             state.has("_met_pirate_head", player)
         ])],
-        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.OneWay, None],
+        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.Compact, None],
         ["samasa desert pit", "inside desert cave", OoSEntranceType.OneWay, None],
 
-        ["samasa desert", "enter treasure quicksand", OoSEntranceType.TwoWay, None],
+        ["samasa desert", "enter treasure quicksand", OoSEntranceType.Compact, None],
         ["enter treasure quicksand", "inside treasure quicksand", OoSEntranceType.DoorOneWay, None],
         ["inside treasure quicksand", "inside stairs near desert chest", OoSEntranceType.TwoWay, lambda state: oos_has_flippers(state, player)],
         ["inside stairs near desert chest", "enter stairs near desert chest", OoSEntranceType.DoorTwoWay, None],
-        ["enter stairs near desert chest", "samasa desert chest", OoSEntranceType.OneWay, None],
+        ["enter stairs near desert chest", "samasa desert chest", OoSEntranceType.ReverseCompact, None],
         ["samasa desert chest", "samasa desert", OoSEntranceType.OneWay, None],
         ["samasa desert", "enter desert fairy cave", OoSEntranceType.TwoWay, lambda state: any([
             oos_can_swim(state, player, False),
             oos_has_feather(state, player)  # It's a liquid but the jump distance is 1.5
         ])],
         ["enter desert fairy cave", "inside desert fairy cave", OoSEntranceType.DoorTwoWay, lambda state: oos_has_bombs(state, player)],
-        ["samasa desert", "enter desert ship", OoSEntranceType.TwoWay, None],
+        ["samasa desert", "enter desert ship", OoSEntranceType.Compact, None],
         ["enter desert ship", "inside desert ship", OoSEntranceType.DoorTwoWay, None],
         ["inside desert ship", "inside subrosia ship", OoSEntranceType.OneWay, None],
 
@@ -1267,16 +1263,16 @@ def make_holodrum_logic(player: int):
             oos_can_jump_6_wide_pit(state, player)
         ])],
         ["inside right stairs in top of temple remains", "enter right stairs in top of temple remains", OoSEntranceType.DoorTwoWay, None],
-        ["enter right stairs in top of temple remains", "enter middle stairs in top of temple remains", OoSEntranceType.TwoWay, None],
+        ["enter right stairs in top of temple remains", "enter middle stairs in top of temple remains", OoSEntranceType.Compact, None],
         ["enter middle stairs in top of temple remains", "inside middle stairs in top of temple remains", OoSEntranceType.DoorTwoWay, None],
         ["inside middle stairs in top of temple remains", "inside left stairs in top of temple remains", OoSEntranceType.TwoWay, lambda state: any([
             oos_has_feather(state, player),
             oos_option_hard_logic(state, player)
         ])],
         ["inside left stairs in top of temple remains", "enter left stairs in top of temple remains", OoSEntranceType.DoorTwoWay, None],
-        ["enter left stairs in top of temple remains", "enter d8 fairy room", OoSEntranceType.TwoWay, None],
+        ["enter left stairs in top of temple remains", "enter d8 fairy room", OoSEntranceType.Compact, None],
         ["enter d8 fairy room", "inside d8 fairy room", OoSEntranceType.DoorTwoWay, None],
-        ["inside d8 fairy room", "temple remains upper portal", OoSEntranceType.TwoWay, None],
+        ["inside d8 fairy room", "temple remains upper portal", OoSEntranceType.ReverseCompact, None],
 
         ["enter d8 fairy room", "enter temple remains bomb cave", OoSEntranceType.OneWay, lambda state: \
             oos_can_warp(state, player)],

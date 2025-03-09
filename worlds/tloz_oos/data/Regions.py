@@ -21,11 +21,7 @@ REGIONS = {
         "impa gasha spot",
         "eyeglass lake gasha spot",
 
-        "enter lon lon",
-        "enter d1 old man",
-        "enter red ring old man",
         "enter lake bomb cave",
-        "enter lake boulder",
     ],
     "HOLODRUM_PLAIN": [
         "ghastly stump",
@@ -37,9 +33,6 @@ REGIONS = {
         "holodrum plain waters",
 
         "enter treehouse",
-        "enter Mrs Ruul",
-        "enter ruul old man",
-        "enter Blaino",
         "enter old man near blaino",
         "enter ruul water cave",
         "enter autumn water cave",
@@ -52,28 +45,21 @@ REGIONS = {
         "woods of winter heart piece",
         "suburbs gasha spot",
 
-        "enter guru guru",
         "enter winter guru guru",
         "top of guru guru",
         "enter suburb spring cave",
-        "enter suburbs old man",
     ],
     "WOODS_OF_WINTER": [
         "moblin road",
         "central woods of winter",
         "woods of winter tree",
         "d2 entrance",
-        "d2 stump",
         "d2 roof",
         "golden moblin",
 
-        "enter peek cave near d2",
         "enter magnet cave near d2",
-        "enter first woods of winter cave",
-        "enter second woods of winter cave",
         "enter d2 side entrance left",
         "enter d2 side entrance right",
-        "enter holly house",
         "enter holly chimney",
     ],
     "SUNKEN_CITY": [  # / Cucco Mountain
@@ -84,18 +70,9 @@ REGIONS = {
         "sunken city dimitri",
         "sunken city gasha spot",
 
-        "enter ingo",
         "enter syrup",
         "enter flooded house",
-        "enter treasure hunter",
-        "enter bomb house",
-        "enter master diver house",
         "enter sunken city, summer cave",
-        "enter sunken left waterfall",
-        "enter sunken right waterfall",
-
-        "enter south sunken city dive spot",
-        "enter north sunken city dive spot",
 
         "mount cucco",
         "mt. cucco portal",
@@ -110,14 +87,11 @@ REGIONS = {
         "spring banana rooster",
 
         "enter mountain fairy cave",
-        "enter talon cave",
         "enter winter cave in cucco mountain",
         "enter top of cucco mountain",
         "enter banana stairs",
-        "enter banana cave",
         "enter fast platform cave",
         "enter mount cucco dive spot",
-        "enter diving spot outside D4"
     ],
     "WESTERN_COAST": [
         "black beast's chest",
@@ -130,15 +104,7 @@ REGIONS = {
         "golden darknut",
         "western coast gasha spot",
 
-        "enter old man near western coast house",
         "enter d0 chimney",
-        "enter pirate ship",
-        "enter beach fairy cave",
-        "enter coast house",
-        "enter coast house side",
-        "enter graveyard cave",
-        "outside graveyard chimney",
-        "enter hidden graveyard stairs",
     ],
     "SPOOL_SWAMP": [
         "spool swamp north",
@@ -160,7 +126,6 @@ REGIONS = {
 
         "enter floodgate left",
         "enter floodgate right",
-        "enter floodgate house",
         "enter swamp bomb cave",
     ],
     "TEMPLE_REMAINS": [
@@ -169,10 +134,8 @@ REGIONS = {
         "temple remains lower portal",
         "temple remains lower portal access",
 
-        "enter d8 fairy room",
         "enter temple remains cave",
         "enter right stairs in top of temple remains",
-        "enter middle stairs in top of temple remains",
         "enter left stairs in top of temple remains",
         "enter temple remains bomb cave",
     ],
@@ -186,8 +149,6 @@ REGIONS = {
         "golden lynel",
 
         "enter lost woods deku",
-        "enter phonograph deku",
-        "enter lost woods bomb cave",
     ],
     "TARM_RUINS": [
         "d6 sector",
@@ -218,8 +179,6 @@ REGIONS = {
         "natzu region, across water",
 
         "enter natzu north stairs",
-        "enter moblin keep left",
-        "enter moblin keep right",
         "enter ricky fairy",
         "enter moosh fairy",
         "enter dimitri fairy",
@@ -237,11 +196,6 @@ REGIONS = {
         "enter desert fairy cave",
         "enter desert cave",
         "enter stairs near desert chest",
-        "enter desert ship",
-        "enter like like quicksand",
-        "enter deku quicksand",
-        "enter bell quicksand",
-        "enter treasure quicksand",
     ],
     "GORON_MOUNTAIN": [
         "biggoron trade",
@@ -250,14 +204,8 @@ REGIONS = {
         "goron mountain, across pits",
         "goron mountain left gasha spot",
 
-        "enter goron mountain bottom",
-        "enter goron mountain middle",
         "enter goron mountain top",
-        "enter goron old man",
-        "enter goron mountain bomb cave",
         "enter goron outside stairs",
-        "enter left cave to lynel in goron mountain",
-        "enter right cave to lynel in goron mountain",
         "enter lynel stairs in goron mountain",
         "enter goron ring cave",
     ],
@@ -292,37 +240,16 @@ REGIONS = {
         "subrosia bridge digging spot",
 
         # Temple area
-        "enter subrosia open cave",
         "enter boomerang cave",
-        "enter Rosa corridor left",
         "enter tower of autumn",
-        "enter subrosia locked door",
-        "enter useless subrosian house",
-        "enter subrosian cook",
-        "enter volcano cave",
-        "enter dance hall",
-        "enter tower of spring",
         "enter tower of spring staircase",
-        "enter smithy",
-
-        # Market area
-        "enter subrosian market",
-        "enter Rosa corridor right",
 
         # Furnace area
         "enter red ore cave",
-        "enter red ore stairs",
-        "enter furnace",
-        "enter sign guy",
 
         # Pirate area
-        "enter house above hide and seek",
         "enter staircase to tower of spring",
         "enter strange brothers left",
-        "enter strange brothers right",
-        "enter pirate house",
-        "enter pirate staircase",
-        "enter subrosia ship",
     ],
     "CAVES": [
         "horon village portal",
@@ -398,46 +325,37 @@ REGIONS = {
         "old man near d6",
         "golden beasts old man",
 
+        "graveyard secret",
+
         # ER ################################################################
         # Horon Village
         "inside shop",
         "inside tick tock",
-        "inside mayor's house",
-        "inside vasu",
         "inside village portal room",
         "inside know-it-all birds",
         "inside bipin left",
-        "inside bipin right",
         "inside advance shop",
-        "inside dr left old man",
         "inside dr left",
         "inside dr left side",
         "inside hidden stairs behind clock shop",
 
         # Western Coast
-        "inside old man near western coast house",
         "inside pirate ship",
         "inside beach fairy cave",
         "inside coast house",
         "inside coast house side",
         "inside graveyard cave",
         "inside graveyard chimney",
-        "inside hidden graveyard stairs",
 
         # Eastern Suburbs
-        "top guru guru staircase",
         "inside guru guru",
-        "inside winter guru guru",
         "inside suburb spring cave",
-        "inside suburbs old man",
 
         # Samasa Desert
         "inside desert fairy cave",
         "inside desert cave",
         "inside stairs near desert chest",
         "inside desert ship",
-        "inside like like quicksand",
-        "inside deku quicksand",
         "inside bell quicksand",
         "inside treasure quicksand",
 
@@ -446,22 +364,16 @@ REGIONS = {
         "inside magnet cave near d2",
         "inside first woods of winter cave",
         "inside second woods of winter cave",
-        "inside holly house",
-        "inside holly chimney",
 
         # Eyeglass Lake
         "inside lon lon",
-        "inside d1 old man",
         "inside red ring old man",
         "inside lake bomb cave",
-        "inside lake boulder",
 
         # Holodrum Plain
         "inside treehouse",
         "inside Mrs Ruul",
         "inside Blaino",
-        "inside old man near blaino",
-        "inside ruul old man",
         "inside ruul water cave",
         "inside autumn water cave",
 
@@ -469,11 +381,8 @@ REGIONS = {
         "inside floodgate left",
         "inside floodgate right",
         "inside floodgate house",
-        "inside swamp bomb cave",
 
         # Natzu
-        "inside natzu north stairs",
-        "inside moblin keep left",
         "inside moblin keep right",
         "inside ricky fairy",
         "inside moosh fairy",
@@ -493,7 +402,6 @@ REGIONS = {
         "inside sunken left waterfall",
         "inside sunken right waterfall",
         "inside south sunken city dive spot",
-        "inside north sunken city dive spot",
 
         # Cucco Mountain
         "inside mountain fairy cave",
@@ -502,21 +410,15 @@ REGIONS = {
         "inside top of cucco mountain",
         "inside banana stairs",
         "inside banana cave",
-        "inside fast platform cave",
         "inside mount cucco dive spot",
-        "inside diving spot outside D4",
 
         # Goron Mountain
         "inside goron mountain bottom",
         "inside goron mountain middle",
         "inside goron mountain top",
-        "inside goron old man",
         "inside goron mountain bomb cave",
-        "inside goron outside stairs",
         "inside left cave to lynel in goron mountain",
         "inside right cave to lynel in goron mountain",
-        "inside lynel stairs in goron mountain",
-        "inside goron ring cave",
 
         # Lost Woods
         "inside lost woods deku",
@@ -528,7 +430,6 @@ REGIONS = {
         "inside tarm old man",
 
         # Temple Ruins
-        "inside d8 fairy room",
         "inside temple remains cave",
         "inside right stairs in top of temple remains",
         "inside middle stairs in top of temple remains",
@@ -539,18 +440,13 @@ REGIONS = {
         # Temple area
         "inside subrosia open cave",
         "inside boomerang cave",
-        "inside temple of seasons",
         "inside temple of winter",
-        "inside Rosa corridor left",
         "inside tower of summer",
         "inside tower of autumn",
-        "inside subrosia locked door",
         "inside useless subrosian house",
         "inside subrosian cook",
         "inside volcano cave",
-        "inside dance hall",
         "inside tower of spring",
-        "inside tower of spring staircase",
         "inside smithy",
 
         # Market area
@@ -559,17 +455,13 @@ REGIONS = {
 
         # Furnace area
         "inside red ore cave",
-        "inside red ore stairs",
         "inside furnace",
         "inside sign guy",
 
         # Pirate area
         "inside house above hide and seek",
         "inside staircase to tower of spring",
-        "inside strange brothers left",
         "inside strange brothers right",
-        "inside pirate house",
-        "inside pirate staircase",
         "inside subrosia ship",
     ],
     "SPECIAL": [  # Seasons don't exist here
@@ -747,7 +639,6 @@ REGIONS = {
         "d7 entrance wild embers",
 
         "clock shop secret",
-        "graveyard secret",
         "subrosian secret",
         "diver secret",
         "smith secret",
@@ -790,25 +681,6 @@ REGIONS = {
     ]
 }
 
-ENTRANCES = {
-    "enter shop",
-    "enter tick tock",
-    "enter mayor's house",
-    "enter vasu",
-    "enter village portal room",
-    "enter know-it-all birds",
-    "enter bipin left",
-    "enter bipin right",
-    "enter advance shop",
-    "enter dr left old man",
-    "enter dr left",
-    "enter hidden stairs behind clock shop",
-
-    "enter temple of winter",
-    "enter tower of summer",
-    "enter temple of seasons",
-}
-
 STUMP_REGIONS = {
     "horon village",
     "d1 stump",
@@ -816,7 +688,7 @@ STUMP_REGIONS = {
     "suburbs fairy fountain",
     "moblin road",
     "enter suburbs old man",
-    "d2 stump",
+    "central woods of winter",
     "ghastly stump",
     "spool stump",
     "sunken city stump",

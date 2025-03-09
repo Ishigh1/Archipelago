@@ -4,7 +4,6 @@ from worlds.tloz_oos.data.EntranceType import OoSRandomizationGroup
 from worlds.tloz_oos.data.logic.DungeonsLogic import *
 from worlds.tloz_oos.data.logic.OverworldLogic import make_holodrum_logic
 from worlds.tloz_oos.data.logic.SubrosiaLogic import make_subrosia_logic
-from worlds.tloz_oos.data.Regions import ENTRANCES
 
 
 def create_connections(multiworld: MultiWorld, player: int):
@@ -28,7 +27,7 @@ def create_connections(multiworld: MultiWorld, player: int):
 
     # Create connections
     for logic_array in all_logic:
-        for entrance_desc in logic_array:
+        for entrance_desc in sorted(logic_array, key=lambda entrance: 0 if OoSEntranceType.Compact in entrance[2] else 1):
             entrance_type = entrance_desc[2]
             if OoSEntranceType.CompanionEntrance & entrance_type != 0:
                 if OoSEntranceType.Ricky in entrance_type and oos_world.options.animal_companion != "ricky" \
@@ -40,20 +39,27 @@ def create_connections(multiworld: MultiWorld, player: int):
 
             region_1_name = entrance_desc[0]
             region_2_name = entrance_desc[1]
+            rule = entrance_desc[3]
+
+            if OoSEntranceType.DoorTransition in entrance_type and not oos_world.options.randomize_entrances and rule is None:
+                entrance_type = OoSEntranceType.Compact
+
+            if OoSEntranceType.ReverseCompact in entrance_type:
+                region_2_name, region_1_name = region_1_name, region_2_name
 
             if region_1_name in shortcuts:
                 region_1 = shortcuts[region_1_name]
             else:
                 region_1 = multiworld.get_region(region_1_name, player)
 
-            if region_2_name in ENTRANCES:
+            if OoSEntranceType.Compact in entrance_type:
                 shortcuts[region_2_name] = region_1
+                assert rule is None
                 continue
             elif region_2_name in shortcuts:
                 region_2 = shortcuts[region_2_name]
             else:
                 region_2 = multiworld.get_region(region_2_name, player)
-            rule = entrance_desc[3]
 
             if (OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances \
                     and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance))\

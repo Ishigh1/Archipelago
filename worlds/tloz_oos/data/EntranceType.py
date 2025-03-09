@@ -10,9 +10,12 @@ class OoSEntranceType(Flag):
     DoorTransition = auto()
     DoorTwoWayFlag = auto()  # Flags that the entrance is two-way for ER purpose
     DoorOneWay = DoorTransition | OneWay
-    DoorTwoWaySymmetric = DoorTwoWayFlag | DoorTransition | TwoWay
-    DoorTwoWay = DoorTwoWaySymmetric | Asymmetric
+    DoorTwoWaySymmetric = DoorTwoWayFlag | DoorTransition | TwoWay  # Rule from right to left is the same
+    DoorTwoWay = DoorTwoWaySymmetric | Asymmetric  # Rule from right to left is None
     DoorComplexTwoWay = DoorTwoWayFlag | DoorTransition | OneWay  # The entrance is both way but the logic of each isn't None
+
+    Compact = auto()  # Second "region" is now considered the same as the first one, doesn't support any rule
+    ReverseCompact = Compact | TwoWay  # First "region" is now considered the same as the second one, doesn't support any rule
 
     Ricky = auto()
     Moosh = auto()

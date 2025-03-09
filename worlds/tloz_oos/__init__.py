@@ -239,10 +239,12 @@ class OracleOfSeasonsWorld(World):
                         and entrance.randomization_group >= OoSRandomizationGroup.PortalOverworld)):
                 continue
             assert isinstance(entrance.parent_region, SeasonRegion)
+            assert entrance.parent_region.super_region_name != "SPECIAL"
             if entrance.parent_region.children_regions:
                 for child in entrance.parent_region.children_regions:
                     self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(entrance)
             assert isinstance(entrance.connected_region, SeasonRegion)
+            assert entrance.connected_region.super_region_name != "SPECIAL", f"{entrance.connected_region.name} shouldn't SPECIAL"
             for child_entrance in entrance.connected_region.children_entrances:
                 self.multiworld.indirect_connections.get(entrance.parent_region, set()).discard(child_entrance)
                 if entrance.parent_region.children_regions:
@@ -456,16 +458,6 @@ class OracleOfSeasonsWorld(World):
         location.place_locked_item(Item(event_item_name, ItemClassification.progression, None, self.player))
 
     def create_events(self):
-        # Events to indicate a given tree stump is reachable
-        self.create_event("spool stump", "_reached_spool_stump")
-        self.create_event("temple remains lower stump", "_reached_remains_stump")
-        self.create_event("temple remains upper stump", "_reached_remains_stump")
-        self.create_event("d1 stump", "_reached_eyeglass_stump")
-        self.create_event("d2 stump", "_reached_d2_stump")
-        self.create_event("d5 stump", "_reached_eyeglass_stump")
-        self.create_event("sunken city dimitri", "_saved_dimitri_in_sunken_city")
-        self.create_event("ghastly stump", "_reached_ghastly_stump")
-        self.create_event("coast stump", "_reached_coast_stump")
         # Events for beating golden beasts
         self.create_event("golden darknut", "_beat_golden_darknut")
         self.create_event("golden lynel", "_beat_golden_lynel")
