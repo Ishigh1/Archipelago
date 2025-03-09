@@ -1162,7 +1162,7 @@ def make_holodrum_logic(player: int):
             oos_has_bracelet(state, player),
             state.has("_met_pirate_head", player)
         ])],
-        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.Compact, None],
+        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.ReverseCompact, None],
         ["samasa desert pit", "inside desert cave", OoSEntranceType.OneWay, None],
 
         ["samasa desert", "enter treasure quicksand", OoSEntranceType.Compact, None],
@@ -1343,7 +1343,7 @@ def make_holodrum_logic(player: int):
 
         # GASHA TREES #############################################################################################
 
-        # ["horon village", "horon gasha spot", OoSEntranceType.OneWay, None],
+        ["horon village", "horon gasha spot", OoSEntranceType.OneWay, None],
         ["impa", "impa gasha spot", OoSEntranceType.OneWay, lambda state: oos_can_break_bush(state, player, True, True)],
         ["suburbs", "suburbs gasha spot", OoSEntranceType.OneWay, lambda state: oos_can_break_bush(state, player, True, True)],
         ["ghastly stump", "holodrum plain gasha spot", OoSEntranceType.OneWay, lambda state: all([

@@ -166,7 +166,7 @@ REGIONS = {
         "horon village SE chest",
         "horon village SW chest",
         "horon heart piece",
-        # "horon gasha spot",
+        "horon gasha spot",
 
         "enter dr left side",
     ],
@@ -687,7 +687,6 @@ STUMP_REGIONS = {
     "suburbs",
     "suburbs fairy fountain",
     "moblin road",
-    "enter suburbs old man",
     "central woods of winter",
     "ghastly stump",
     "spool stump",

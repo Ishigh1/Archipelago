@@ -418,7 +418,7 @@ LOCATION_GROUPS = {
 
 GASHA_SPOT_REGIONS = [
     "impa gasha spot",
-    "horon village",
+    "horon gasha spot",
     "suburbs gasha spot",
     "holodrum plain gasha spot",
     "holodrum plain island gasha spot",

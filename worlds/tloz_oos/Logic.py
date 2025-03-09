@@ -41,9 +41,6 @@ def create_connections(multiworld: MultiWorld, player: int):
             region_2_name = entrance_desc[1]
             rule = entrance_desc[3]
 
-            if OoSEntranceType.DoorTransition in entrance_type and not oos_world.options.randomize_entrances and rule is None:
-                entrance_type = OoSEntranceType.Compact
-
             if OoSEntranceType.ReverseCompact in entrance_type:
                 region_2_name, region_1_name = region_1_name, region_2_name
 
@@ -97,11 +94,18 @@ def create_connections(multiworld: MultiWorld, player: int):
                     oos_world.entrances_to_randomize.append(entrance)
 
                 continue
-            region_1.connect(region_2, rule=rule)
-            if OoSEntranceType.TwoWay in entrance_type:
-                if OoSEntranceType.Asymmetric in entrance_type:
-                    rule = None
-                region_2.connect(region_1, rule=rule)
+
+            for exit in region_1.exits:
+                if exit.connected_region.name == region_2.name:
+                    break
+            else:
+                region_1.connect(region_2, rule=rule)
+                if OoSEntranceType.TwoWay in entrance_type:
+                    if OoSEntranceType.Asymmetric in entrance_type:
+                        rule = None
+                    region_2.connect(region_1, rule=rule)
+
+    oos_world.shortcuts = shortcuts
 
 
 def apply_self_locking_rules(multiworld: MultiWorld, player: int):
