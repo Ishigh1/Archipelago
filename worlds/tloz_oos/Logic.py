@@ -27,7 +27,8 @@ def create_connections(multiworld: MultiWorld, player: int):
 
     # Create connections
     for logic_array in all_logic:
-        for entrance_desc in sorted(logic_array, key=lambda entrance: 0 if OoSEntranceType.Compact in entrance[2] else 1):
+
+        for entrance_desc in sorted(logic_array, key=lambda entrance: 1 if OoSEntranceType.DoorTransition in entrance[2] else 0 if OoSEntranceType.Compact in entrance[2] else 2):
             entrance_type = entrance_desc[2]
             if OoSEntranceType.CompanionEntrance & entrance_type != 0:
                 if OoSEntranceType.Ricky in entrance_type and oos_world.options.animal_companion != "ricky" \
@@ -41,7 +42,7 @@ def create_connections(multiworld: MultiWorld, player: int):
             region_2_name = entrance_desc[1]
             rule = entrance_desc[3]
 
-            if OoSEntranceType.ReverseCompact in entrance_type:
+            if OoSEntranceType.CompactFlagRight in entrance_type:
                 region_2_name, region_1_name = region_1_name, region_2_name
 
             if region_1_name in shortcuts:
@@ -49,7 +50,10 @@ def create_connections(multiworld: MultiWorld, player: int):
             else:
                 region_1 = multiworld.get_region(region_1_name, player)
 
-            if OoSEntranceType.Compact in entrance_type:
+            if (OoSEntranceType.Compact in entrance_type
+                    and (not oos_world.options.randomize_entrances or OoSEntranceType.DoorTransition not in entrance_type)):
+                if region_2_name in shortcuts:
+                    region_2_name = shortcuts[region_2_name].name
                 shortcuts[region_2_name] = region_1
                 assert rule is None
                 continue
@@ -59,8 +63,8 @@ def create_connections(multiworld: MultiWorld, player: int):
                 region_2 = multiworld.get_region(region_2_name, player)
 
             if (OoSEntranceType.DoorTransition in entrance_type and oos_world.options.randomize_entrances \
-                    and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance))\
-                    or OoSEntranceType.DungeonFlag in entrance_type and oos_world.options.shuffle_dungeons\
+                and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance)) \
+                    or OoSEntranceType.DungeonFlag in entrance_type and oos_world.options.shuffle_dungeons \
                     or OoSEntranceType.PortalFlag in entrance_type and oos_world.options.shuffle_portals:
                 entrance = region_1.connect(region_2, region_1_name, rule)
 
@@ -95,15 +99,11 @@ def create_connections(multiworld: MultiWorld, player: int):
 
                 continue
 
-            for exit in region_1.exits:
-                if exit.connected_region.name == region_2.name:
-                    break
-            else:
-                region_1.connect(region_2, rule=rule)
-                if OoSEntranceType.TwoWay in entrance_type:
-                    if OoSEntranceType.Asymmetric in entrance_type:
-                        rule = None
-                    region_2.connect(region_1, rule=rule)
+            region_1.connect(region_2, rule=rule)
+            if OoSEntranceType.TwoWay in entrance_type:
+                if OoSEntranceType.Asymmetric in entrance_type:
+                    rule = None
+                region_2.connect(region_1, rule=rule)
 
     oos_world.shortcuts = shortcuts
 

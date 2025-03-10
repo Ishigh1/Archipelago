@@ -163,9 +163,6 @@ REGIONS = {
     "HORON_VILLAGE": [
         "horon village",
         "horon village tree",
-        "horon village SE chest",
-        "horon village SW chest",
-        "horon heart piece",
         "horon gasha spot",
 
         "enter dr left side",
@@ -254,23 +251,8 @@ REGIONS = {
     "CAVES": [
         "horon village portal",
         "advance shop",
-        "dr. left reward",
-        "old man trade",
-        "malon trade",
-        "talon trade",
-        "syrup trade",
-        "syrup shop",
-        "mrs. ruul trade",
-        "maple trade",
-        "subrosian chef trade",
-        "tick tock trade",
-        "ingo trade",
-        "guru-guru trade",
         "mayor's gift",
         "vasu's gift",
-        "mayor's house secret room",
-        "horon shop",
-        "member's shop",
         "windmill heart piece",
         "holly's house",
         "cave outside D2",
@@ -323,7 +305,6 @@ REGIONS = {
         "old man near holly's house",
         "old man near mrs. ruul",
         "old man near d6",
-        "golden beasts old man",
 
         "graveyard secret",
 
@@ -356,7 +337,6 @@ REGIONS = {
         "inside desert cave",
         "inside stairs near desert chest",
         "inside desert ship",
-        "inside bell quicksand",
         "inside treasure quicksand",
 
         # Woods of Winter
@@ -387,9 +367,6 @@ REGIONS = {
         "inside ricky fairy",
         "inside moosh fairy",
         "inside dimitri fairy",
-        "inside ricky deku",
-        "inside moosh deku",
-        "inside natzu waterfall",
 
         # Sunken City
         "inside ingo",
@@ -466,6 +443,28 @@ REGIONS = {
     ],
     "SPECIAL": [  # Seasons don't exist here
         "Menu",
+
+        "horon heart piece",
+        "horon village SW chest",
+        "horon village SE chest",
+        "dr. left reward",
+        "old man trade",
+        "malon trade",
+        "talon trade",
+        "syrup trade",
+        "syrup shop",
+        "mrs. ruul trade",
+        "maple trade",
+        "subrosian chef trade",
+        "tick tock trade",
+        "ingo trade",
+        "guru-guru trade",
+        "mayor's house secret room",
+        "horon shop",
+        "member's shop",
+
+        "golden beasts old man",
+
         "maku tree",
         "maku tree, 3 essences",
         "maku tree, 5 essences",
@@ -704,6 +703,9 @@ STUMP_REGIONS = {
     "temple remains upper stump",
 }
 
+SEASON_CAVE = -1
+SEASON_NONE = -2
+SEASON_VOID = -3
 
 class SeasonEntrance(Entrance):
     def __init__(self, player: int, name: str = "", parent: Region = None, randomization_group: int = 0,
@@ -736,7 +738,7 @@ class SeasonEntrance(Entrance):
             if self.access_rule.__code__.co_argcount == 1:
                 return self.access_rule(state), -1
             else:
-                if season == -1:
+                if season == SEASON_NONE or season == SEASON_CAVE:
                     for season in range(4):
                         if isinstance(self.parent_region, SeasonRegion):
                             if (self.parent_region.children_regions[season].can_reach(state)
@@ -824,14 +826,20 @@ class SeasonRegion(Region):
         elif super_region_name == "GORON_MOUNTAIN":
             self.default_season = SEASON_WINTER
             self.force_season = True
-        elif super_region_name == "SPECIAL":
-            self.default_season = -2
+        elif super_region_name == "SPECIAL" \
+                or not world.options.randomize_entrances and (super_region_name == "SUBROSIA"
+                                                              or super_region_name == "DUNGEONS"
+                                                              or super_region_name == "CAVES"):
+            self.default_season = SEASON_VOID
             self.force_season = False
             self.children_regions = None
             self.children_entrances = None
             return
+        elif super_region_name == "CAVES":
+            self.default_season = SEASON_CAVE
+            self.force_season = False
         else:
-            self.default_season = -1
+            self.default_season = SEASON_NONE
             self.force_season = False
         self.children_regions = {}
         self.children_entrances = {}
@@ -849,7 +857,7 @@ class SeasonRegion(Region):
                 else:
                     def rule(state: CollectionState) -> Tuple[bool, Entrance, int]:
                         return False, -1, None
-            elif self.default_season == -1:
+            elif self.default_season == SEASON_NONE:
                 def rule(state: CollectionState, season: int = i) -> Tuple[bool, Entrance, int]:
                     for entrance in self.entrances:
                         assert isinstance(entrance, SeasonEntrance)
@@ -867,7 +875,7 @@ class SeasonRegion(Region):
                         assert isinstance(entrance, SeasonEntrance)
                         if isinstance(entrance.parent_region, SeasonRegion):
                             parent_super_region_name = entrance.parent_region.super_region_name
-                            if parent_super_region_name == self.super_region_name or parent_super_region_name == "CAVES":
+                            if parent_super_region_name == self.super_region_name or entrance.parent_region.default_season == SEASON_CAVE:
                                 access, season = entrance.test_access_rule(state, season)
                                 if access:
                                     return True, season, entrance
@@ -891,7 +899,7 @@ class SeasonRegion(Region):
                         assert isinstance(entrance, SeasonEntrance)
                         if isinstance(entrance.parent_region, SeasonRegion):
                             parent_super_region_name = entrance.parent_region.super_region_name
-                            if parent_super_region_name == self.super_region_name or parent_super_region_name == "CAVES":
+                            if parent_super_region_name == self.super_region_name or entrance.parent_region.default_season == SEASON_CAVE:
                                 if entrance.parent_region.children_regions[season].can_reach(state):
                                     if entrance.test_access_rule(state, season)[0]:
                                         return True, season, entrance
@@ -907,10 +915,10 @@ class SeasonRegion(Region):
                 if season != 4:
                     if self.children_regions and entrance.access_rule.__code__.co_argcount == 2:
                         self.multiworld.register_indirect_condition(self.children_regions[season], entrance)
-                if region.default_season == -2 or region.force_season:
+                if region.default_season == SEASON_VOID or region.force_season:
                     continue
-                elif (self.super_region_name == "CAVES" or self.super_region_name == region.super_region_name
-                      or region.default_season == -1 or region.default_season == 255):
+                elif (region.default_season == SEASON_CAVE or self.super_region_name == region.super_region_name
+                      or region.default_season == SEASON_NONE or region.default_season == SEASON_CHAOTIC):
                     if season == 4:
                         continue
                     season_2 = season
@@ -931,7 +939,7 @@ class SeasonRegion(Region):
 def can_carry_season(parent_region: SeasonRegion, target_region: SeasonRegion) -> bool:
     if parent_region.super_region_name == target_region.super_region_name:
         return True
-    return parent_region.super_region_name == "CAVES" or target_region.super_region_name == "CAVES"
+    return parent_region.default_season == SEASON_CAVE or target_region.default_season == SEASON_CAVE
 
 
 def can_bring_season(collection_state: CollectionState, entrance: SeasonEntrance, parent_region: SeasonRegion, target_region: SeasonRegion, season: int,

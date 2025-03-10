@@ -178,13 +178,13 @@ def make_subrosia_logic(player: int):
         ["inside tower of spring", "tower of spring", OoSEntranceType.OneWay, lambda state: oos_has_feather(state, player)],
 
         ["subrosia pirates sector", "enter pirate house", OoSEntranceType.Compact, None],
-        ["enter pirate house", "inside pirate house", OoSEntranceType.DoorTwoWay, None],
+        ["enter pirate house", "inside pirate house", OoSEntranceType.DoorTwoWayReverseCompactable, None],
         ["inside pirate house", "pirate captain", OoSEntranceType.ReverseCompact, None],
         ["enter pirate staircase", "subrosia pirates sector", OoSEntranceType.ReverseCompact, None],
-        ["enter pirate staircase", "inside pirate staircase", OoSEntranceType.DoorTwoWay, None],
+        ["enter pirate staircase", "inside pirate staircase", OoSEntranceType.DoorTwoWayReverseCompactable, None],
         ["inside pirate staircase", "pirate captain", OoSEntranceType.ReverseCompact, None],
         ["subrosia pirates sector", "enter subrosia ship", OoSEntranceType.Compact, None],
-        ["enter subrosia ship", "inside subrosia ship", OoSEntranceType.DoorTwoWay, None],
+        ["enter subrosia ship", "inside subrosia ship", OoSEntranceType.DoorTwoWayCompactable, None],
 
         ["subrosia bridge sector", "enter subrosia open cave", OoSEntranceType.Compact, None],
         ["enter subrosia open cave", "inside subrosia open cave", OoSEntranceType.DoorTwoWay, None],

@@ -239,17 +239,17 @@ class OracleOfSeasonsWorld(World):
                         and entrance.randomization_group >= OoSRandomizationGroup.PortalOverworld)):
                 continue
             assert isinstance(entrance.parent_region, SeasonRegion)
-            assert entrance.parent_region.super_region_name != "SPECIAL"
-            if entrance.parent_region.children_regions:
-                for child in entrance.parent_region.children_regions:
-                    self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(entrance)
-            assert isinstance(entrance.connected_region, SeasonRegion)
-            assert entrance.connected_region.super_region_name != "SPECIAL", f"{entrance.connected_region.name} shouldn't SPECIAL"
-            for child_entrance in entrance.connected_region.children_entrances:
-                self.multiworld.indirect_connections.get(entrance.parent_region, set()).discard(child_entrance)
+            if entrance.parent_region.default_season != -3:
                 if entrance.parent_region.children_regions:
                     for child in entrance.parent_region.children_regions:
-                        self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(child_entrance)
+                        self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(entrance)
+            assert isinstance(entrance.connected_region, SeasonRegion)
+            if entrance.connected_region.default_season != -3:
+                for child_entrance in entrance.connected_region.children_entrances:
+                    self.multiworld.indirect_connections.get(entrance.parent_region, set()).discard(child_entrance)
+                    if entrance.parent_region.children_regions:
+                        for child in entrance.parent_region.children_regions:
+                            self.multiworld.indirect_connections.get(entrance.parent_region.children_regions[child], set()).discard(child_entrance)
             disconnect_entrance_for_randomization(entrance)
 
         self.spring_western_coast = [
