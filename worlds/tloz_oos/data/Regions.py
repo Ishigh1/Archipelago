@@ -105,6 +105,7 @@ REGIONS = {
         "western coast gasha spot",
 
         "enter d0 chimney",
+        "outside graveyard chimney"  # TODO: Remove
     ],
     "SPOOL_SWAMP": [
         "spool swamp north",
@@ -337,9 +338,11 @@ REGIONS = {
         "inside desert cave",
         "inside stairs near desert chest",
         "inside desert ship",
+        "inside bell quicksand",  # TODO: remove
         "inside treasure quicksand",
 
         # Woods of Winter
+        "inside holly chimney",  # TODO: remove
         "inside peek cave near d2",
         "inside magnet cave near d2",
         "inside first woods of winter cave",
@@ -706,6 +709,7 @@ STUMP_REGIONS = {
 SEASON_CAVE = -1
 SEASON_NONE = -2
 SEASON_VOID = -3
+
 
 class SeasonEntrance(Entrance):
     def __init__(self, player: int, name: str = "", parent: Region = None, randomization_group: int = 0,

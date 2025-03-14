@@ -298,7 +298,7 @@ class OracleOfSeasonsWorld(World):
                     new_portal_connections[target] = portal
             self.portal_connections = new_portal_connections
 
-        if randomize_entrances_option != OracleOfSeasonsRandomizeEntrances.option_decoupled:
+        if randomize_entrances_option != OracleOfSeasonsRandomizeEntrances.option_disabled:
             self.randomized_entrances = [pairing for pairing in randomized_entrances.pairings if
                                          self.get_entrance(pairing[0]).randomization_group <= OoSRandomizationGroup.Dive]
 

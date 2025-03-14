@@ -752,6 +752,8 @@ def define_dungeon_items_text_constants(assembler: Z80Assembler, patch_data):
 
 
 def set_misc_warps(assembler: Z80Assembler, rom: RomData, patch_data):
+    if len(patch_data["misc_entrances"]) == 0:
+        return
     group_dest_addrs = {group: assembler.global_labels[f"warpDestGroup{group}"].address_in_rom() for group in range(8)}
 
     warp_matchings = patch_data["misc_entrances"]

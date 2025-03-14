@@ -66,6 +66,10 @@ def create_connections(multiworld: MultiWorld, player: int):
                 and not (OoSEntranceType.D2Stairs in entrance_type and oos_world.options.remove_d2_alt_entrance)) \
                     or OoSEntranceType.DungeonFlag in entrance_type and oos_world.options.shuffle_dungeons \
                     or OoSEntranceType.PortalFlag in entrance_type and oos_world.options.shuffle_portals:
+                # Make sure to use the original names for the entrances names
+                region_1_name = entrance_desc[0]
+                region_2_name = entrance_desc[1]
+
                 entrance = region_1.connect(region_2, region_1_name, rule)
 
                 if OoSEntranceType.Waterfall in entrance_type:

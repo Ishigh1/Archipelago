@@ -155,7 +155,7 @@ def make_holodrum_logic(player: int):
         ["inside graveyard cave", "inside graveyard chimney", OoSEntranceType.TwoWay, lambda state: \
             oos_can_jump_3_wide_pit(state, player)],
         ["inside graveyard chimney", "outside graveyard chimney", OoSEntranceType.DoorOneWay, None],
-        ["outside graveyard chimney", "graveyard", OoSEntranceType.ReverseCompact, None],
+        ["outside graveyard chimney", "graveyard", OoSEntranceType.OneWay, None],  # TODO : ReverseCompact once GER is fixed on OneWays
 
         ["graveyard", "enter hidden graveyard stairs", OoSEntranceType.Compact, None],
         ["enter hidden graveyard stairs", "inside hidden graveyard stairs", OoSEntranceType.DoorTwoWay, lambda state: \
@@ -248,7 +248,7 @@ def make_holodrum_logic(player: int):
         ["moblin road", "enter holly chimney", OoSEntranceType.TwoWay, lambda state, season: \
             season == SEASON_WINTER],
         ["enter holly chimney", "inside holly chimney", OoSEntranceType.DoorOneWay, None],
-        ["inside holly chimney", "holly's house", OoSEntranceType.ReverseCompact, None],
+        ["inside holly chimney", "holly's house", OoSEntranceType.OneWay, None],  # TODO : ReverseCompact once GER is fixed on OneWays
         ["moblin road", "enter holly house", OoSEntranceType.Compact, None],
         ["enter holly house", "inside holly house", OoSEntranceType.DoorTwoWay, lambda state, season: \
             season == SEASON_WINTER],
@@ -1162,7 +1162,7 @@ def make_holodrum_logic(player: int):
             oos_has_bracelet(state, player),
             state.has("_met_pirate_head", player)
         ])],
-        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.ReverseCompact, None],
+        ["inside bell quicksand", "samasa desert pit", OoSEntranceType.OneWay, None],  # TODO : ReverseCompact once GER is fixed on OneWays
         ["samasa desert pit", "inside desert cave", OoSEntranceType.OneWay, None],
 
         ["samasa desert", "enter treasure quicksand", OoSEntranceType.Compact, None],
