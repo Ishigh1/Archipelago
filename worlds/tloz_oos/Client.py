@@ -221,7 +221,8 @@ class OracleOfSeasonsClient(BizHawkClient):
             next_item_name = self.item_id_to_name[ctx.items_received[num_received_items].item]
             await bizhawk.write(ctx.bizhawk_ctx, [(0xCBFB, [
                 ITEMS_DATA[next_item_name]["id"],
-                ITEMS_DATA[next_item_name]["subid"] if "subid" in ITEMS_DATA[next_item_name] else 0
+                ITEMS_DATA[next_item_name]["subid"] if "subid" in ITEMS_DATA[next_item_name] else 0,
+                1
             ], "System Bus")])
 
     async def process_game_completion(self, ctx: "BizHawkClientContext", flag_bytes, current_room: int):

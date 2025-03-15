@@ -116,6 +116,7 @@ DEFINES = {
     "wRingMenu_mode": "$cbd3",
     "wStatusBarNeedsRefresh": "$cbea",
     "wNetTreasureIn": "$cbfb",  # Custom address
+    "wNetSkipTextbox": "$cbfd",  # Custom address
     "wFrameCounter": "$cc00",
     "wIsLinkedGame": "$cc01",
     "wMenuDisabled": "$cc02",

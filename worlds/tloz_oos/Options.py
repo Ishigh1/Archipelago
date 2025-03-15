@@ -549,6 +549,14 @@ class OracleOfSeasonsStartingMapsCompasses(Toggle):
     include_in_patch = True
 
 
+class OracleOfSeasonsSkipAnimation(Toggle):
+    """
+    When enabled, items the others get don't trigger an animation
+    """
+    display_name = "Disable Animations from other Players"
+    include_in_patch = True
+
+
 class OracleOfSeasonsRemoveItemsFromPool(ItemDict):
     """
     Removes specified amount of given items from the item pool, replacing them with random filler items.
@@ -629,6 +637,7 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     quick_flute: OracleOfSeasonsQuickFlute
     rosa_quick_unlock: OracleOfSeasonsRosaQuickUnlock
     starting_maps_compasses: OracleOfSeasonsStartingMapsCompasses
+    skip_animation: OracleOfSeasonsSkipAnimation
 
     remove_items_from_pool: OracleOfSeasonsRemoveItemsFromPool
     death_link: DeathLink
