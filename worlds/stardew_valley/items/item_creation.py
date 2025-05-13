@@ -6,6 +6,7 @@ from BaseClasses import Item, ItemClassification
 from .fillers import generate_resource_packs_and_traps, generate_unique_filler_items
 from .filters import remove_excluded
 from .item_data import StardewItemFactory, items_by_group, Group, item_table, ItemData
+from .. import data
 from ..content.feature import friendsanity
 from ..content.game_content import StardewContent
 from ..content.vanilla.ginger_island import ginger_island_content_pack
@@ -17,6 +18,12 @@ from ..options import StardewValleyOptions, FestivalLocations, SpecialOrderLocat
     Chefsanity, Craftsanity, BundleRandomization, EntranceRandomization, Shipsanity, Walnutsanity, Moviesanity
 from ..options.options import IncludeEndgameLocations, Friendsanity
 from ..strings.ap_names.ap_option_names import WalnutsanityOptionName, SecretsanityOptionName, EatsanityOptionName, ChefsanityOptionName, StartWithoutOptionName
+from ..options.options import IncludeEndgameLocations, Friendsanity, ToolProgression
+from ..strings.ap_names.ap_option_names import WalnutsanityOptionName, SecretsanityOptionName, EatsanityOptionName
+from ..options import StardewValleyOptions, FestivalLocations, ExcludeGingerIsland, SpecialOrderLocations, SeasonRandomization, Museumsanity, \
+    ElevatorProgression, BackpackProgression, ArcadeMachineLocations, Monstersanity, Goal, Tilesanity, \
+    Chefsanity, Craftsanity, BundleRandomization, EntranceRandomization, Shipsanity, Walnutsanity, EnabledFillerBuffs, TrapDifficulty
+from ..strings.ap_names.ap_option_names import BuffOptionName, WalnutsanityOptionName
 from ..strings.ap_names.ap_weapon_names import APWeapon
 from ..strings.ap_names.buff_names import Buff
 from ..strings.ap_names.community_upgrade_names import CommunityUpgrade, Bookseller
@@ -26,14 +33,15 @@ from ..strings.building_names import Building
 from ..strings.currency_names import Currency
 from ..strings.tool_names import Tool
 from ..strings.wallet_item_names import Wallet
+from ..tilesanity import alternate_name
 
 logger = logging.getLogger(__name__)
 
 
 def create_items(item_factory: StardewItemFactory, locations_count: int, items_to_exclude: List[Item],
-                 options: StardewValleyOptions, content: StardewContent, random: Random) -> List[Item]:
+                 options: StardewValleyOptions, content: StardewContent, random: Random, world) -> List[Item]:
     items = []
-    unique_items = create_unique_items(item_factory, options, content, random)
+    unique_items = create_unique_items(item_factory, options, content, random, world)
 
     remove_items(items_to_exclude, unique_items)
 
@@ -81,7 +89,7 @@ def remove_items_if_no_room_for_them(unique_items: List[Item], locations_count: 
     remove_items(items_to_remove, unique_items)
 
 
-def create_unique_items(item_factory: StardewItemFactory, options: StardewValleyOptions, content: StardewContent, random: Random) -> List[Item]:
+def create_unique_items(item_factory: StardewItemFactory, options: StardewValleyOptions, content: StardewContent, random: Random, world) -> List[Item]:
     items = []
 
     items.extend(item_factory(item) for item in items_by_group[Group.COMMUNITY_REWARD])
@@ -129,6 +137,7 @@ def create_unique_items(item_factory: StardewItemFactory, options: StardewValley
     create_goal_items(item_factory, options, items)
     items.append(item_factory("Golden Egg"))
     items.append(item_factory(CommunityUpgrade.mr_qi_plane_ride))
+    create_tilesanity_items(world, item_factory, options, items)
 
     items.append(item_factory(Wallet.mens_locker_key))
     items.append(item_factory(Wallet.womens_locker_key))
@@ -658,6 +667,14 @@ def create_quest_rewards_sve(item_factory: StardewItemFactory, options: StardewV
     if not ginger_island_included:
         return
     items.extend([item_factory(item) for item in SVEQuestItem.sve_quest_items_ginger_island])
+
+
+def create_tilesanity_items(world, item_factory: StardewItemFactory, options: StardewValleyOptions, items: List[Item]):
+    if options.tilesanity < Tilesanity.option_full:
+        return
+
+    for _ in range(int(len(world.tile_list) * (100 - options.tilesanity_local) / 100)):
+        items.append(item_factory("Progressive Tile"))
 
 
 def weapons_count(content: StardewContent):

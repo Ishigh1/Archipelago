@@ -47,7 +47,8 @@ class QuestLogic(BaseLogic):
             Quest.forging_ahead: self.logic.has(Ore.copper) & self.logic.has(Machine.furnace),
             Quest.smelting: self.logic.has(MetalBar.copper),
             Quest.initiation: self.logic.mine.can_mine_in_the_mines_floor_1_40(),
-            Quest.robins_lost_axe: self.logic.season.has(Season.spring) & self.logic.relationship.can_meet(NPC.robin),
+            Quest.robins_lost_axe: self.logic.season.has(Season.spring) & self.logic.relationship.can_meet(NPC.robin) &
+                                   self.logic.region.can_reach(Region.forest),
             Quest.jodis_request: self.logic.season.has(Season.spring) & self.logic.has(Vegetable.cauliflower) & self.logic.relationship.can_meet(NPC.jodi),
             Quest.mayors_shorts: self.logic.has(SpecialItem.lucky_purple_shorts) &
                                  self.logic.relationship.can_meet(NPC.lewis),

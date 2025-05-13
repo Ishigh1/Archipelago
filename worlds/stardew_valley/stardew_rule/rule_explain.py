@@ -70,6 +70,8 @@ class RuleExplanation:
         return line
 
     def __str__(self, depth=0):
+        if depth == 20:
+            return "                                        <recursion limit reached>"
         if not self.sub_rules:
             return self.summary(depth)
 

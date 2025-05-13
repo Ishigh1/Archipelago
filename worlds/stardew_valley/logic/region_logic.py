@@ -30,7 +30,8 @@ class RegionLogic(BaseLogic):
 
     @cache_self1
     def can_reach(self, region_name: str) -> StardewRule:
-        if region_name in always_regions_by_setting[self.options.entrance_randomization]:
+        if (self.options.tilesanity < 2 and
+                region_name in always_regions_by_setting[self.options.entrance_randomization]):
             return true_
 
         if region_name not in self.regions:
@@ -39,7 +40,8 @@ class RegionLogic(BaseLogic):
         return Reach(region_name, "Region", self.player)
 
     def can_reach_any(self, *region_names: str) -> StardewRule:
-        if any(r in always_regions_by_setting[self.options.entrance_randomization] for r in region_names):
+        if (self.options.tilesanity < 2 and
+                any(r in always_regions_by_setting[self.options.entrance_randomization] for r in region_names)):
             return true_
 
         return self.logic.or_(*(self.logic.region.can_reach(spot) for spot in region_names))
