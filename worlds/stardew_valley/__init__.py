@@ -8,6 +8,8 @@ from typing import Dict, List, Any, ClassVar, TextIO, Optional
 
 import entrance_rando
 from BaseClasses import Region, Location, Item, Tutorial, ItemClassification, MultiWorld, CollectionState
+import settings
+from BaseClasses import Region, Entrance, Location, Item, Tutorial, ItemClassification, MultiWorld, CollectionState
 from Options import PerGameCommonOptions
 from worlds.AutoWorld import World, WebWorld
 from worlds.LauncherComponents import components, Component, icon_paths, Type
@@ -23,19 +25,21 @@ from .logic.combat_logic import valid_weapons
 from .logic.logic import StardewLogic
 from .options import StardewValleyOptions, SeasonRandomization, Goal, BundleRandomization, EnabledFillerBuffs, \
     NumberOfMovementBuffs, BuildingProgression, EntranceRandomization, FarmType, ToolProgression, BackpackProgression, TrapDistribution, BundlePrice, \
-    BundlePlando, BundlePerRoom
+    BundlePlando, BundlePerRoom, NumberOfMovementBuffs, BuildingProgression, EntranceRandomization, FarmType, Tilesanity
 from .options.forced_options import force_change_options_if_incompatible, force_change_options_if_banned
 from .options.jojapocalypse_options import JojaAreYouSure
+from .options.forced_options import force_change_options_if_incompatible
 from .options.option_groups import sv_option_groups
 from .options.presets import sv_options_presets
 from .options.settings import StardewSettings
 from .options.worlds_group import apply_most_restrictive_options
 from .regions import create_regions, prepare_mod_data
 from .rules import set_rules
-from .stardew_rule import True_, StardewRule, HasProgressionPercent
+from .stardew_rule import True_, StardewRule, HasProgressionPercent, Reach
 from .strings.ap_names.ap_weapon_names import APWeapon
 from .strings.ap_names.event_names import Event
 from .strings.goal_names import Goal as GoalName
+from .tilesanity import alternate_name
 
 logger = logging.getLogger(__name__)
 
@@ -115,7 +119,8 @@ class StardewValleyWorld(World):
     befriend villagers, and uncover dark secrets.
     """
     game = STARDEW_VALLEY
-    topology_present = False
+    topology_present = True
+    settings: typing.ClassVar[StardewSettings]
 
     item_name_to_id = {name: data.code for name, data in item_table.items()}
     location_name_to_id = {name: data.code for name, data in location_table.items()}
@@ -177,12 +182,14 @@ class StardewValleyWorld(World):
         force_change_options_if_banned(self.options, self.settings, self.player, self.player_name)
         force_change_options_if_incompatible(self.options, self.player, self.player_name)
         self.content = create_content(self.options)
+        if self.options.tilesanity > 1:
+            self.content.registered_packs.add("Tilesanity")
 
     def create_regions(self):
         def create_region(name: str) -> Region:
             return Region(name, self.player, self.multiworld)
 
-        world_regions = create_regions(create_region, self.options, self.content)
+        world_regions = create_regions(create_region, self.options, self.content, self)
 
         self.logic = StardewLogic(self.player, self.options, self.content, world_regions.keys())
         self.modified_bundles = get_all_bundles(self.random, self.logic, self.content, self.options, self.player_name)
@@ -192,8 +199,21 @@ class StardewValleyWorld(World):
             bundle_room.special_behavior(self)
 
         def add_location(name: str, code: Optional[int], region: str):
-            assert region in world_regions, f"Location {name} cannot be created in region {region}, because the region does not exist in this slot"
-            region: Region = world_regions[region]
+            if name.startswith("Tilesanity"):
+                if self.options.tilesanity_size == 1:
+                    tile_name = name
+                else:
+                    tile_name = name + " big"
+                if tile_name in world_regions:
+                    region = world_regions[tile_name]
+                else:
+                    if region in world_regions:
+                        region = world_regions[region]
+                    else:
+                        region = world_regions[alternate_name(region, self.options)]
+            else:
+                assert region in world_regions, f"Location {name} cannot be created in region {region}, because the region does not exist in this slot"
+                region: Region = world_regions[region]
             location = StardewLocation(self.player, name, code, region)
             region.locations.append(location)
 
@@ -216,13 +236,15 @@ class StardewValleyWorld(World):
 
         locations_count = len([location
                                for location in self.multiworld.get_locations(self.player)
-                               if location.address is not None])
+                               if location.address is not None and not location.locked])
+        locations_count -= len(self.tile_list) - int(len(self.tile_list) * (100 - self.options.tilesanity_local) / 100)
 
         created_items = create_items(self.create_item, locations_count, items_to_exclude, self.options, self.content, self.random)
 
         self.multiworld.itempool += created_items
 
-        setup_early_items(self.multiworld, self.options, self.content, self.player, self.random)
+        if self.options.tilesanity != Tilesanity.option_full:
+            setup_early_items(self.multiworld, self.options, self.content, self.player, self.random)
         self.setup_logic_events()
         self.setup_victory()
 
@@ -233,9 +255,9 @@ class StardewValleyWorld(World):
         # with plando where additional progression items can be created without being accounted for, which impact the real amount of progression items. This can
         # ultimately create unwinnable seeds where some items (like Blueberry seeds) are locked in Shipsanity: Blueberry, but world is deemed winnable as the
         # winning rule only check the count of collected progression items.
-        self.total_progression_items += sum(1 for i in self.multiworld.precollected_items[self.player] if i.advancement)
-        self.total_progression_items += sum(1 for i in self.multiworld.get_filled_locations(self.player) if i.advancement)
-        self.total_progression_items += sum(1 for i in created_items if i.advancement)
+        self.total_progression_items += sum(1 for i in self.multiworld.precollected_items[self.player] if i.advancement and i.name != "Progressive Tile")
+        self.total_progression_items += sum(1 for i in self.multiworld.get_filled_locations(self.player) if i.advancement and i.item.name != "Progressive Tile")
+        self.total_progression_items += sum(1 for i in created_items if i.advancement and i.name != "Progressive Tile")
         self.total_progression_items -= 1  # -1 for the victory event
 
     def precollect_early_keys(self):
@@ -388,6 +410,8 @@ class StardewValleyWorld(World):
     def create_item(self, item: str | ItemData,
                     classification_pre_fill: ItemClassification = None,
                     classification_post_fill: ItemClassification = None) -> StardewItem:
+        if item == "Progressive Tile":
+            return StardewItem(item, ItemClassification.progression_skip_balancing, 0, self.player)
         if isinstance(item, str):
             item = item_table[item]
 
@@ -419,12 +443,38 @@ class StardewValleyWorld(World):
     def set_rules(self):
         set_rules(self)
 
+        # Place local tiles
+        if self.options.tilesanity == Tilesanity.option_full and self.options.tilesanity_local.value > 0:
+            local_tiles = len(self.tile_list) - int(len(self.tile_list) * (100 - self.options.tilesanity_local) / 100)
+            tiles = self.tile_list[:-1] + [tile.name for tile in self.get_region("Farmhouse").get_locations()]
+            for location_name in self.random.sample(tiles, local_tiles):
+                location = self.get_location(location_name)
+                location.place_locked_item(self.create_item("Progressive Tile"))
+
     def connect_entrances(self) -> None:
         no_target_groups = {0: [0]}
         placement = entrance_rando.randomize_entrances(self, coupled=True, target_group_lookup=no_target_groups)
         self.randomized_entrances = prepare_mod_data(placement)
 
     def generate_basic(self):
+        from worlds.stardew_valley.stardew_rule.rule_explain import explain
+        s = self.multiworld.get_all_state()
+        unreachable_regions = []
+
+        for region in self.multiworld.get_regions(self.player):
+            if not region.can_reach(s):
+                unreachable_regions.append(region)
+                explanation = explain(Reach(region.name, "Region", self.player), s)
+                print(f"{region.name} is unrachable: {explanation}")
+        assert len(unreachable_regions) == 0
+
+        unreachable_locations = []
+        for location in self.multiworld.get_locations(self.player):
+            if not location.can_reach(s):
+                unreachable_locations.append(location)
+                explanation = explain(Reach(location.name, "Location", self.player), s)
+                print(f"{location.name} is unrachable: {explanation}")
+        assert len(unreachable_locations) == 0
         pass
 
     def post_fill(self) -> None:
@@ -436,6 +486,35 @@ class StardewValleyWorld(World):
         if not self.filler_item_pool_names:
             self.filler_item_pool_names = generate_filler_choice_pool(self.options, self.content)
         return self.random.choice(self.filler_item_pool_names)
+
+    @classmethod
+    def stage_post_fill(cls, multiworld: MultiWorld):
+        spheres = [sphere for sphere in multiworld.get_spheres()]
+        for i in range(len(spheres) - 1, -1, -1):
+            sphere = spheres[i]
+            sorted_sphere = sorted(sphere)
+            multiworld.random.shuffle(sorted_sphere)
+            for location in sphere:
+                item = location.item
+                if item.game == StardewValleyWorld.game and item.name == "Progressive Tile":
+                    world = multiworld.worlds[item.player]
+                    item.name = world.tile_list.pop()
+                    item.code = world.item_name_to_id[item.name]
+        for player, game in multiworld.game.items():
+            if game != StardewValleyWorld.game:
+                continue
+            world: StardewValleyWorld = multiworld.worlds[player]
+            if world.options.tilesanity != Tilesanity.option_full:
+                continue
+            for item in multiworld.precollected_items[player]:
+                if item.name == "Progressive Tile":
+                    item.name = world.tile_list.pop()
+                    item.code = world.item_name_to_id[item.name]
+
+            for entrance in multiworld.get_entrances(player):
+                access_rule = entrance.access_rule
+                if hasattr(access_rule, 'switch_rule'):
+                    access_rule.switch_rule(True)
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         """Write to the spoiler header. If individual it's right at the end of that player's options,

@@ -6,6 +6,7 @@ from .jojapocalypse_options import Jojapocalypse, JojaAreYouSure
 from ..mods.mod_data import ModNames, mod_combination_is_valid, get_invalid_mod_combination
 from ..options.settings import StardewSettings
 from ..strings.ap_names.ap_option_names import EatsanityOptionName
+from .. import Tilesanity
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +53,11 @@ def force_change_options_if_banned(world_options: options.StardewValleyOptions, 
         world_options.mods.value.remove(ModNames.sve)
         message = f"Stardew Valley Expanded {message_template} Removed from Mods."
         logger.warning(message)
+    if world_options.tilesanity > Tilesanity.option_nope and not settings.allow_tilesanity:
+        raise Exception(f"Tilesanity is not allowed by the host.yaml. The yaml of player {player} ({player_name}) contains tilesanity")
+    if world_options.tilesanity_local < settings.minimum_tilesanity_local:
+        logger.warning(f"Player {player} ({player_name}) has a tilesanity_local lower than the minimum set by the host.yaml.\n"
+                       f"Set tilesanity_local to {settings.minimum_tilesanity_local}.")
     prevent_illegal_mod_combinations(world_options, player, player_name)
 
 

@@ -1,0 +1,1825 @@
+{
+  "Backwoods": [
+    {
+      "Position": "14, 39",
+      "RequiredItems": [],
+      "Entrances": [
+        "Backwoods to Farm",
+        "Farm to Backwoods!exit"
+      ]
+    },
+    {
+      "Position": "23, 30",
+      "RequiredItems": [],
+      "Entrances": [
+        "Tunnel Entrance to Bus Tunnel"
+      ]
+    },
+    {
+      "Position": "26, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Backwoods"
+      ]
+    },
+    {
+      "Position": "28, 27",
+      "RequiredItems": [],
+      "Entrances": [
+        "Tunnel Entrance"
+      ]
+    },
+    {
+      "Position": "48, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Backwoods!exit"
+      ]
+    },
+    {
+      "Position": "48, 30",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Tunnel Entrance!exit"
+      ]
+    },
+    {
+      "Position": "49, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Backwoods to Mountain"
+      ]
+    },
+    {
+      "Position": "49, 30",
+      "RequiredItems": [],
+      "Entrances": [
+        "Tunnel Entrance to Bus Stop"
+      ]
+    }
+  ],
+  "Blacksmith": [
+    {
+      "Position": "3, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Clint's Blacksmith"
+      ]
+    },
+    {
+      "Position": "4, 9",
+      "RequiredItems": [
+        "Clint <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "5, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Clint's Blacksmith!exit",
+        "Clint's Blacksmith to Town"
+      ]
+    }
+  ],
+  "Bus Stop": [
+    {
+      "Position": "10, 23",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Farm"
+      ]
+    },
+    {
+      "Position": "11, 23",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Bus Stop!exit"
+      ]
+    },
+    {
+      "Position": "13, 8",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Tunnel Entrance"
+      ]
+    },
+    {
+      "Position": "14, 4",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop"
+      ]
+    },
+    {
+      "Position": "14, 8",
+      "RequiredItems": [],
+      "Entrances": [
+        "Tunnel Entrance to Bus Stop!exit"
+      ]
+    },
+    {
+      "Position": "17, 12",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Desert"
+      ]
+    },
+    {
+      "Position": "22, 10",
+      "RequiredItems": [],
+      "Entrances": [
+        "Desert to Bus Stop!exit"
+      ]
+    },
+    {
+      "Position": "42, 23",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Bus Stop!exit"
+      ]
+    },
+    {
+      "Position": "43, 23",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Town"
+      ]
+    }
+  ],
+  "Calico Desert": [
+    {
+      "Position": "6, 52",
+      "RequiredItems": [],
+      "Entrances": [
+        "Desert to Oasis"
+      ]
+    },
+    {
+      "Position": "8, 6",
+      "RequiredItems": [],
+      "Entrances": [
+        "Desert to Skull Cavern Entrance"
+      ]
+    },
+    {
+      "Position": "18, 27",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Desert!exit",
+        "Desert to Bus Stop"
+      ]
+    },
+    {
+      "Position": "35, 43",
+      "RequiredItems": [],
+      "Entrances": [
+        "Use Desert Obelisk!exit"
+      ]
+    },
+    {
+      "Position": "37, 11",
+      "RequiredItems": [],
+      "Entrances": [
+        "Desert"
+      ]
+    }
+  ],
+  "Cindersap Forest": [
+    {
+      "Position": "0, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Secret Woods",
+        "Secret Woods to Forest!exit"
+      ]
+    },
+    {
+      "Position": "1, 6",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "1, 7",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "2, 6",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "2, 7",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "5, 27",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Wizard Tower"
+      ]
+    },
+    {
+      "Position": "27, 12",
+      "RequiredItems": [],
+      "Entrances": [
+        "Buy from Traveling Merchant"
+      ]
+    },
+    {
+      "Position": "51, 98",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest"
+      ]
+    },
+    {
+      "Position": "56, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Giant Stump"
+      ]
+    },
+    {
+      "Position": "68, 0",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Forest!exit",
+        "Forest to Farm"
+      ]
+    },
+    {
+      "Position": "90, 16",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Marnie's Ranch"
+      ]
+    },
+    {
+      "Position": "94, 100",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Sewer"
+      ]
+    },
+    {
+      "Position": "101, 73",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Mastery Cave"
+      ]
+    },
+    {
+      "Position": "104, 33",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Leah's Cottage"
+      ]
+    },
+    {
+      "Position": "118, 25",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Forest!exit"
+      ]
+    },
+    {
+      "Position": "119, 25",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Town"
+      ]
+    }
+  ],
+  "Community Center": [
+    {
+      "Position": "2, 12",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "2, 13",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "3, 12",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "4, 12",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "4, 13",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "9, 6",
+      "RequiredItems": [
+        "Complete Pantry!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "9, 9",
+      "RequiredItems": [
+        "Complete Pantry!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "12, 27",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "14, 5",
+      "RequiredItems": [
+        "Complete Pantry!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "14, 6",
+      "RequiredItems": [],
+      "Entrances": [
+        "Access Pantry"
+      ]
+    },
+    {
+      "Position": "14, 22",
+      "RequiredItems": [],
+      "Entrances": [
+        "Access Crafts Room"
+      ]
+    },
+    {
+      "Position": "14, 23",
+      "RequiredItems": [
+        "Complete Crafts Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "23, 10",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "23, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "23, 20",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "24, 9",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "24, 10",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "24, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "24, 20",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "25, 9",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "25, 10",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "25, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "25, 20",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "26, 9",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "26, 10",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "27, 10",
+      "RequiredItems": [
+        "Complete Pantry!loc",
+        "Complete Crafts Room!loc",
+        "Complete Fish Tank!loc",
+        "Complete Boiler Room!loc",
+        "Complete Vault!loc",
+        "Complete Bulletin Board!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "32, 23",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Community Center!exit",
+        "Community Center to Town"
+      ]
+    },
+    {
+      "Position": "34, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "34, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "35, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "35, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "36, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "36, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "39, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "40, 10",
+      "RequiredItems": [
+        "Complete Fish Tank!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "40, 11",
+      "RequiredItems": [],
+      "Entrances": [
+        "Access Fish Tank"
+      ]
+    },
+    {
+      "Position": "40, 16",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "41, 16",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "42, 16",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "42, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Complete Bulletin Board!loc"
+      ]
+    },
+    {
+      "Position": "46, 7",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "46, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Access Bulletin Board"
+      ]
+    },
+    {
+      "Position": "47, 7",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "48, 4",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "48, 7",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "49, 4",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "55, 6",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "55, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Access Vault"
+      ]
+    },
+    {
+      "Position": "57, 7",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "57, 8",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "58, 7",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "59, 7",
+      "RequiredItems": [
+        "Complete Vault!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "63, 14",
+      "RequiredItems": [
+        "Complete Boiler Room!loc"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "63, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Access Boiler Room"
+      ]
+    }
+  ],
+  "Farm": [
+    {
+      "Position": "28, 16",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Greenhouse"
+      ]
+    },
+    {
+      "Position": "34, 6",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Farmcave"
+      ]
+    },
+    {
+      "Position": "40, 0",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Backwoods",
+        "Backwoods to Farm!exit"
+      ]
+    },
+    {
+      "Position": "40, 64",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Forest",
+        "Forest to Farm!exit"
+      ]
+    },
+    {
+      "Position": "48, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Use Farm Obelisk!exit"
+      ]
+    },
+    {
+      "Position": "64, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farmhouse to Farm!exit"
+      ]
+    },
+    {
+      "Position": "68, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm"
+      ]
+    },
+    {
+      "Position": "71, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Use Shipping Bin"
+      ]
+    },
+    {
+      "Position": "78, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Bus Stop to Farm!exit"
+      ]
+    },
+    {
+      "Position": "79, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Farm to Bus Stop"
+      ]
+    }
+  ],
+  "Harvey's Clinic": [
+    {
+      "Position": "6, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Hospital"
+      ]
+    },
+    {
+      "Position": "9, 5",
+      "RequiredItems": [
+        "Harvey <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "10, 2",
+      "RequiredItems": [],
+      "Entrances": [
+        "Hospital to Harvey's Room",
+        "Harvey's Room to Hospital!exit"
+      ]
+    },
+    {
+      "Position": "10, 5",
+      "RequiredItems": [
+        "Harvey <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "10, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "Hospital to Town",
+        "Town to Hospital!exit"
+      ]
+    }
+  ],
+  "HarveyRoom": [
+    {
+      "Position": "6, 12",
+      "RequiredItems": [],
+      "Entrances": [
+        "Hospital to Harvey's Room!exit",
+        "Harvey's Room to Hospital",
+        "Harvey's Room"
+      ]
+    }
+  ],
+  "Home of Emily & Haley": [
+    {
+      "Position": "2, 24",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Haley's House!exit",
+        "Haley's House to Town"
+      ]
+    },
+    {
+      "Position": "5, 13",
+      "RequiredItems": [
+        "Haley <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "13, 24",
+      "RequiredItems": [],
+      "Entrances": [
+        "Haley's House"
+      ]
+    },
+    {
+      "Position": "16, 12",
+      "RequiredItems": [
+        "Emily <3!2"
+      ],
+      "Entrances": []
+    }
+  ],
+  "Home of George, Evelyn & Alex": [
+    {
+      "Position": "5, 9",
+      "RequiredItems": [
+        "Evelyn <3!2 OR George <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "9, 24",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Alex's House!exit",
+        "Alex's House to Town"
+      ]
+    },
+    {
+      "Position": "10, 9",
+      "RequiredItems": [
+        "Alex <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "16, 22",
+      "RequiredItems": [],
+      "Entrances": [
+        "Alex's House to Town"
+      ]
+    }
+  ],
+  "Home of Jodi, Kent & Sam": [
+    {
+      "Position": "4, 23",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Sam's House!exit",
+        "Sam's House to Town"
+      ]
+    },
+    {
+      "Position": "11, 18",
+      "RequiredItems": [
+        "Vincent <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "11, 21",
+      "RequiredItems": [],
+      "Entrances": [
+        "Home of Jodi, Kent & Sam (??Foroguemon??)",
+        "Sam's House"
+      ]
+    },
+    {
+      "Position": "12, 14",
+      "RequiredItems": [
+        "Sam <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "17, 6",
+      "RequiredItems": [
+        "Caroline <3!2 OR Kent <3!2"
+      ],
+      "Entrances": []
+    }
+  ],
+  "Home of Pam & Penny": [
+    {
+      "Position": "4, 18",
+      "RequiredItems": [
+        "Penny <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "13, 24",
+      "RequiredItems": [
+        "Pam House"
+      ],
+      "Entrances": [
+        "Town to Trailer!exit",
+        "Trailer to Town"
+      ]
+    },
+    {
+      "Position": "20, 21",
+      "RequiredItems": [
+        "Pam <3!2"
+      ],
+      "Entrances": []
+    }
+  ],
+  "LewisBasement": [
+    {
+      "Position": "4, 4",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mayor's Manor to Purple Shorts Maze!exit",
+        "Purple Shorts Maze to Mayor's Manor"
+      ]
+    },
+    {
+      "Position": "17, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Purple Shorts Maze"
+      ]
+    }
+  ],
+  "Mayor's Manor": [
+    {
+      "Position": "4, 11",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Mayor's Manor!exit",
+        "Mayor's Manor to Town"
+      ]
+    },
+    {
+      "Position": "9, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mayor's Manor"
+      ]
+    },
+    {
+      "Position": "16, 9",
+      "RequiredItems": [
+        "Lewis <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "22, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Purple Shorts Maze to Mayor's Manor!exit",
+        "Mayor's Manor to Purple Shorts Maze"
+      ]
+    }
+  ],
+  "Mountains": [
+    {
+      "Position": "0, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Backwoods to Mountain!exit",
+        "Mountain to Backwoods"
+      ]
+    },
+    {
+      "Position": "8, 21",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Maru's Room"
+      ]
+    },
+    {
+      "Position": "9, 0",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Railroad",
+        "Railroad to Mountain!exit"
+      ]
+    },
+    {
+      "Position": "9, 4",
+      "RequiredItems": [
+        "Railroad Boulder Removed"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "10, 4",
+      "RequiredItems": [
+        "Railroad Boulder Removed"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "12, 26",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Carpenter Shop"
+      ]
+    },
+    {
+      "Position": "15, 40",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Town",
+        "Town to Mountain!exit"
+      ]
+    },
+    {
+      "Position": "16, 8",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Leo TreeHouse"
+      ]
+    },
+    {
+      "Position": "29, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Tent"
+      ]
+    },
+    {
+      "Position": "54, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to The Mines"
+      ]
+    },
+    {
+      "Position": "68, 24",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain"
+      ]
+    },
+    {
+      "Position": "76, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Adventurer's Guild"
+      ]
+    },
+    {
+      "Position": "94, 26",
+      "RequiredItems": [
+        "Bridge Repair"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "94, 27",
+      "RequiredItems": [
+        "Bridge Repair"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "97, 26",
+      "RequiredItems": [
+        "Bridge Repair"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "97, 27",
+      "RequiredItems": [
+        "Bridge Repair"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "103, 16",
+      "RequiredItems": [],
+      "Entrances": [
+        "Quarry to Quarry Mine Entrance"
+      ]
+    },
+    {
+      "Position": "119, 26",
+      "RequiredItems": [],
+      "Entrances": [
+        "Quarry"
+      ]
+    }
+  ],
+  "Pelican Beach": [
+    {
+      "Position": "30, 34",
+      "RequiredItems": [],
+      "Entrances": [
+        "Beach to Willy's Fish Shop"
+      ]
+    },
+    {
+      "Position": "38, 0",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Beach!exit"
+      ]
+    },
+    {
+      "Position": "49, 11",
+      "RequiredItems": [],
+      "Entrances": [
+        "Beach to Elliott's House"
+      ]
+    },
+    {
+      "Position": "56, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Beach"
+      ]
+    },
+    {
+      "Position": "58, 13",
+      "RequiredItems": [
+        "Beach Bridge"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "90, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Tide Pools"
+      ]
+    }
+  ],
+  "Pelican Town": [
+    {
+      "Position": "0, 54",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Bus Stop",
+        "Bus Stop to Town!exit"
+      ]
+    },
+    {
+      "Position": "0, 90",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Town!exit",
+        "Town to Forest"
+      ]
+    },
+    {
+      "Position": "10, 86",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Sam's House"
+      ]
+    },
+    {
+      "Position": "20, 89",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Haley's House"
+      ]
+    },
+    {
+      "Position": "35, 97",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Sewer"
+      ]
+    },
+    {
+      "Position": "36, 56",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Hospital"
+      ]
+    },
+    {
+      "Position": "42, 57",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town"
+      ]
+    },
+    {
+      "Position": "43, 57",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Pierre's General Store"
+      ]
+    },
+    {
+      "Position": "45, 71",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Saloon"
+      ]
+    },
+    {
+      "Position": "52, 20",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Community Center"
+      ]
+    },
+    {
+      "Position": "54, 109",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Beach"
+      ]
+    },
+    {
+      "Position": "57, 64",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Alex's House"
+      ]
+    },
+    {
+      "Position": "58, 86",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Mayor's Manor"
+      ]
+    },
+    {
+      "Position": "72, 69",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Trailer"
+      ]
+    },
+    {
+      "Position": "81, 0",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Town!exit",
+        "Town to Mountain"
+      ]
+    },
+    {
+      "Position": "91, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Fish In Waterfall"
+      ]
+    },
+    {
+      "Position": "94, 82",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Clint's Blacksmith"
+      ]
+    },
+    {
+      "Position": "95, 51",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to JojaMart",
+        "Enter Abandoned Joja Mart",
+        "Enter Movie Theater"
+      ]
+    },
+    {
+      "Position": "98, 52",
+      "RequiredItems": [],
+      "Entrances": [
+        "Purchase Movie Ticket"
+      ]
+    },
+    {
+      "Position": "101, 90",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Museum"
+      ]
+    },
+    {
+      "Position": "107, 51",
+      "RequiredItems": [
+        "Progressive Movie Theater!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "108, 50",
+      "RequiredItems": [
+        "Progressive Movie Theater!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "109, 27",
+      "RequiredItems": [],
+      "Entrances": [
+        "Buy Experience Books from the bookseller",
+        "Buy Year 1 Books from the Bookseller",
+        "Buy Year 3 Books from the Bookseller"
+      ]
+    },
+    {
+      "Position": "109, 51",
+      "RequiredItems": [
+        "Progressive Movie Theater!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "110, 20",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "110, 21",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "111, 20",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "111, 21",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "116, 20",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "117, 20",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "120, 64",
+      "RequiredItems": [
+        "Pickaxe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "120, 69",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "121, 64",
+      "RequiredItems": [
+        "Pickaxe$3"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "121, 69",
+      "RequiredItems": [
+        "Axe$3"
+      ],
+      "Entrances": []
+    }
+  ],
+  "Pierre's General Store": [
+    {
+      "Position": "4, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "NOTE: Pierre's General Store (counter)"
+      ]
+    },
+    {
+      "Position": "5, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "Pierre's General Store"
+      ]
+    },
+    {
+      "Position": "6, 29",
+      "RequiredItems": [],
+      "Entrances": [
+        "Pierre's General Store to Town",
+        "Town to Pierre's General Store!exit"
+      ]
+    },
+    {
+      "Position": "7, 19",
+      "RequiredItems": [],
+      "Entrances": [
+        "NOTE: Pierre's General Store (backpack)"
+      ]
+    },
+    {
+      "Position": "13, 11",
+      "RequiredItems": [
+        "Abigail <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "20, 11",
+      "RequiredItems": [
+        "Pierre <3!2 OR Caroline <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "32, 4",
+      "RequiredItems": [],
+      "Entrances": [
+        "Pierre's General Store to Sunroom",
+        "Sunroom to Pierre's General Store!exit"
+      ]
+    }
+  ],
+  "Railroad": [
+    {
+      "Position": "10, 57",
+      "RequiredItems": [],
+      "Entrances": [
+        "Railroad to Bathhouse Entrance"
+      ]
+    },
+    {
+      "Position": "29, 37",
+      "RequiredItems": [],
+      "Entrances": [
+        "Railroad"
+      ]
+    },
+    {
+      "Position": "29, 59",
+      "RequiredItems": [],
+      "Entrances": [
+        "Mountain to Railroad!exit"
+      ]
+    },
+    {
+      "Position": "29, 61",
+      "RequiredItems": [],
+      "Entrances": [
+        "Railroad to Mountain"
+      ]
+    },
+    {
+      "Position": "54, 34",
+      "RequiredItems": [],
+      "Entrances": [
+        "Railroad to Witch Warp Cave"
+      ]
+    },
+    {
+      "Position": "54, 35",
+      "RequiredItems": [
+        "Dark Talisman"
+      ],
+      "Entrances": []
+    }
+  ],
+  "Secret Woods": [
+    {
+      "Position": "9, 8",
+      "RequiredItems": [],
+      "Entrances": [
+        "Secret Woods"
+      ]
+    },
+    {
+      "Position": "58, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Secret Woods!exit"
+      ]
+    },
+    {
+      "Position": "59, 15",
+      "RequiredItems": [],
+      "Entrances": [
+        "Secret Woods to Forest"
+      ]
+    }
+  ],
+  "Sewer": [
+    {
+      "Position": "3, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Sewer to Mutant Bug Lair"
+      ]
+    },
+    {
+      "Position": "3, 48",
+      "RequiredItems": [],
+      "Entrances": [
+        "Forest to Sewer!exit"
+      ]
+    },
+    {
+      "Position": "16, 11",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Sewer!exit"
+      ]
+    },
+    {
+      "Position": "31, 18",
+      "RequiredItems": [],
+      "Entrances": [
+        "Sewer"
+      ]
+    }
+  ],
+  "Stardrop Saloon": [
+    {
+      "Position": "14, 24",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Saloon!exit",
+        "Saloon to Town"
+      ]
+    },
+    {
+      "Position": "18, 17",
+      "RequiredItems": [],
+      "Entrances": [
+        "Stardrop Saloon (fridge)"
+      ]
+    },
+    {
+      "Position": "20, 9",
+      "RequiredItems": [
+        "Gus <3!2"
+      ],
+      "Entrances": []
+    },
+    {
+      "Position": "29, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Stardrop Saloon (Pinky Lemon)"
+      ]
+    },
+    {
+      "Position": "33, 18",
+      "RequiredItems": [],
+      "Entrances": [
+        "Stardrop Saloon (JotPK)"
+      ]
+    },
+    {
+      "Position": "35, 18",
+      "RequiredItems": [],
+      "Entrances": [
+        "Stardrop Saloon (JK)",
+        "Saloon"
+      ]
+    }
+  ],
+  "Stardew Valley Museum & Library": [
+    {
+      "Position": "3, 10",
+      "RequiredItems": [],
+      "Entrances": [
+        "Museum (curator)",
+        "Museum"
+      ]
+    },
+    {
+      "Position": "3, 14",
+      "RequiredItems": [],
+      "Entrances": [
+        "Town to Museum!exit",
+        "Museum to Town"
+      ]
+    },
+    {
+      "Position": "8, 7",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 7"
+      ]
+    },
+    {
+      "Position": "8, 8",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 6"
+      ]
+    },
+    {
+      "Position": "8, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 5"
+      ]
+    },
+    {
+      "Position": "8, 10",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 4"
+      ]
+    },
+    {
+      "Position": "8, 11",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 3"
+      ]
+    },
+    {
+      "Position": "8, 12",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 2"
+      ]
+    },
+    {
+      "Position": "8, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 1"
+      ]
+    },
+    {
+      "Position": "9, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 8"
+      ]
+    },
+    {
+      "Position": "10, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 9"
+      ]
+    },
+    {
+      "Position": "11, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 10"
+      ]
+    },
+    {
+      "Position": "11, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 19"
+      ]
+    },
+    {
+      "Position": "12, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 11"
+      ]
+    },
+    {
+      "Position": "12, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 20"
+      ]
+    },
+    {
+      "Position": "13, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 12"
+      ]
+    },
+    {
+      "Position": "13, 9",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 21"
+      ]
+    },
+    {
+      "Position": "15, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 13"
+      ]
+    },
+    {
+      "Position": "16, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 14"
+      ]
+    },
+    {
+      "Position": "17, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 15"
+      ]
+    },
+    {
+      "Position": "19, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 16"
+      ]
+    },
+    {
+      "Position": "20, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 17"
+      ]
+    },
+    {
+      "Position": "21, 5",
+      "RequiredItems": [],
+      "Entrances": [
+        "Lost Book 18"
+      ]
+    }
+  ],
+  "Sunroom": [
+    {
+      "Position": "5, 13",
+      "RequiredItems": [],
+      "Entrances": [
+        "Pierre's General Store to Sunroom!exit",
+        "Sunroom to Pierre's General Store"
+      ]
+    },
+    {
+      "Position": "6, 8",
+      "RequiredItems": [],
+      "Entrances": [
+        "Sunroom"
+      ]
+    }
+  ]
+}

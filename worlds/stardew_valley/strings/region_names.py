@@ -197,6 +197,7 @@ class LogicRegion:
     night_market = "Night Market"
     winter_star = "Feast of the Winter Star"
     squidfest = "SquidFest"
+    giant_stump = "Giant Stump"
     raccoon_daddy = "Raccoon Bundles"
     raccoon_request_1 = "Raccoon Request 1"
     raccoon_request_2 = "Raccoon Request 2"

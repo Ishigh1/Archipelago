@@ -342,7 +342,7 @@ id,region,name,tags,content_packs
 546,Mutant Bug Lair,Quest: Dark Talisman,"STORY_QUEST",
 547,Witch's Swamp,Quest: Goblin Problem,"STORY_QUEST",
 548,Witch's Hut,Quest: Magic Ink,"STORY_QUEST",
-549,Forest,Quest: The Giant Stump,"STORY_QUEST",
+549,Giant Stump,Quest: The Giant Stump,"STORY_QUEST",
 550,Farm,Quest: Feeding Animals,"STORY_QUEST",
 551,Community Center,Quest: Rat Problem,"STORY_QUEST",
 601,JotPK World 1,JotPK: Boots 1,"ARCADE_MACHINE,JOTPK",

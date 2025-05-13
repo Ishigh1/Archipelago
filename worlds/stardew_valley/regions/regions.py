@@ -6,7 +6,7 @@ from .entrance_rando import create_player_randomization_flag, connect_regions
 from .model import ConnectionData, RegionData
 from ..content import StardewContent
 from ..content.vanilla.ginger_island import ginger_island_content_pack
-from ..options import StardewValleyOptions
+from ..options import StardewValleyOptions, Tilesanity
 
 
 class RegionFactory(Protocol):
@@ -14,18 +14,24 @@ class RegionFactory(Protocol):
         raise NotImplementedError
 
 
-def create_regions(region_factory: RegionFactory, world_options: StardewValleyOptions, content: StardewContent) -> dict[str, Region]:
+def create_regions(region_factory: RegionFactory, world_options: StardewValleyOptions, content: StardewContent, world) -> dict[str, Region]:
     connection_data_by_name, region_data_by_name = create_connections_and_regions(content.registered_packs)
 
-    regions_by_name: dict[str: Region] = {
-        region_name: region_factory(region_name)
-        for region_name in region_data_by_name
-    }
+    if world_options.tilesanity < Tilesanity.option_full:
+        regions_by_name: dict[str: Region] = {
+            region_name: region_factory(region_name)
+            for region_name in region_data_by_name
+        }
 
-    randomization_flag = create_player_randomization_flag(world_options.entrance_randomization, content)
-    connect_regions(region_data_by_name, connection_data_by_name, regions_by_name, randomization_flag)
+        randomization_flag = create_player_randomization_flag(world_options.entrance_randomization, content)
+        connect_regions(region_data_by_name, connection_data_by_name, regions_by_name, randomization_flag)
 
-    return regions_by_name
+        return regions_by_name
+    else:
+        from ..tilesanity import create_regions_tilesanity
+        regions_by_name = create_regions_tilesanity(world, region_factory, region_data_by_name,
+                                                                       world.player, world.random)
+        return regions_by_name
 
 
 def create_connections_and_regions(active_content_packs: set[str]) -> tuple[dict[str, ConnectionData], dict[str, RegionData]]:

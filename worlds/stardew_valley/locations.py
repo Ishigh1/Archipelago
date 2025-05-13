@@ -12,7 +12,7 @@ from .content.vanilla.qi_board import qi_board_content_pack
 from .data.game_item import ItemTag
 from .data.museum_data import all_museum_items
 from .mods.mod_data import ModNames
-from .options import ArcadeMachineLocations, SpecialOrderLocations, Museumsanity, \
+from .options import ArcadeMachineLocations, SpecialOrderLocations, Museumsanity, Tilesanity, \
     FestivalLocations, ElevatorProgression, BackpackProgression, FarmType
 from .options import StardewValleyOptions, Craftsanity, Chefsanity, Cooksanity, Shipsanity, Monstersanity
 from .options.options import BackpackSize, Moviesanity, Eatsanity, IncludeEndgameLocations, Friendsanity, ToolProgression
@@ -22,6 +22,7 @@ from .strings.goal_names import Goal
 from .strings.quest_names import ModQuest, Quest
 from .strings.region_names import Region, LogicRegion
 from .strings.villager_names import NPC
+from .tilesanity import list_all_ap_ids, tilesanity_coord_from_name
 
 LOCATION_CODE_OFFSET = 717000
 
@@ -142,6 +143,11 @@ class LocationTags(enum.Enum):
     REQUIRES_FRIENDSANITY_MARRIAGE = enum.auto()
 
     BEACH_FARM = enum.auto()
+
+    # Tilesanity
+    TILESANITY = enum.auto()
+    NOT_TILE = enum.auto()
+
     # Mods
     # Skill Mods
     LUCK_LEVEL = enum.auto()
@@ -190,6 +196,10 @@ def load_location_csv() -> List[LocationData]:
                 content_packs |= {qi_board_content_pack.name}
 
             locations.append(LocationData(location_id, location["region"], location["name"], content_packs, groups))
+
+    for tile_name, tile_id in list_all_ap_ids().items():
+        region, _, _ = tilesanity_coord_from_name(tile_name)
+        locations.append(LocationData(tile_id - LOCATION_CODE_OFFSET, region, tile_name, [], {LocationTags.TILESANITY}))
 
     return locations
 
@@ -410,7 +420,8 @@ def extend_backpack_locations(randomized_locations: List[LocationData], options:
 
     no_start_tools = options.tool_progression & ToolProgression.value_no_starting_tools
     if options.backpack_size == BackpackSize.option_12:
-        backpack_locations = [location for location in locations_by_tag[LocationTags.BACKPACK_TIER] if no_start_tools or LocationTags.STARTING_TOOLS not in location.tags]
+        backpack_locations = [location for location in locations_by_tag[LocationTags.BACKPACK_TIER] if
+                              no_start_tools or LocationTags.STARTING_TOOLS not in location.tags]
     else:
         num_per_tier = options.backpack_size.count_per_tier()
         backpack_tier_names = Backpack.get_purchasable_tiers(ModNames.big_backpack in content.registered_packs, no_start_tools)
@@ -649,6 +660,34 @@ def extend_endgame_locations(randomized_locations: List[LocationData], options: 
     randomized_locations.extend(endgame_locations)
 
 
+def extend_tilesanity_locations(randomized_locations, options):
+    if options.tilesanity == Tilesanity.option_nope:
+        return
+    from .tilesanity import alternate_name, tilesanity_name_from_coord
+    from importlib.resources import files
+    import json
+
+    tile_locations = []
+    tile_names = set()
+    tile_size = options.tilesanity_size
+    farm_name = alternate_name("Farm", options)
+
+    with files(data).joinpath("tiles.json").open() as file:
+        tiles = json.load(file)
+        for area in tiles:
+            if area.endswith("Farm"):
+                if area != farm_name:
+                    continue
+            for position in tiles[area]:
+                position = position.split(", ")
+                x, y = int(position[0]), int(position[1])
+                tile_name = tilesanity_name_from_coord(area, int(x / tile_size), int(y / tile_size))
+                if tile_name not in tile_names:
+                    tile_names.add(tile_name)
+                    tile_locations.append(location_table[tile_name])
+    randomized_locations.extend(tile_locations)
+
+
 def create_locations(location_collector: StardewLocationCollector,
                      bundle_rooms: List[BundleRoom],
                      trash_bear_requests: Dict[str, List[str]],
@@ -698,6 +737,7 @@ def create_locations(location_collector: StardewLocationCollector,
     extend_craftsanity_locations(randomized_locations, options, content)
     extend_quests_locations(randomized_locations, options, content)
     extend_book_locations(randomized_locations, content)
+    extend_tilesanity_locations(randomized_locations, options)
     extend_walnutsanity_locations(randomized_locations, options)
     extend_movies_locations(randomized_locations, options, content)
     extend_secrets_locations(randomized_locations, options, content)
