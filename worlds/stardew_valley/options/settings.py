@@ -29,6 +29,17 @@ class StardewSettings(Group):
     class AllowSVE(Bool):
         """Allow players to include the mod 'Stardew Valley Expanded'. If disallowed, it will be removed from the mods"""
 
+    class AllowTilesanity(Bool):
+        """
+        Do you allow Stardew Valley worlds to enable tilesanity ?
+        """
+
+    class MinimumTilesanityLocal(int):
+        """
+        Minimum value for tilesanity_local in player's yamls
+        """
+
+
     allow_allsanity: Union[AllowAllsanityGoal, bool] = True
     allow_perfection: Union[AllowPerfectionGoal, bool] = True
     allow_max_bundles: Union[AllowMaxPriceBundles, bool] = True
@@ -37,3 +48,5 @@ class StardewSettings(Group):
     allow_hatsanity_perfection: Union[AllowHatsanityNearOrPostPerfection, bool] = True
     allow_jojapocalypse: Union[AllowJojapocalypse, bool] = False
     allow_sve: Union[AllowSVE, bool] = True
+    allow_tilesanity: Union[AllowTilesanity, bool] = True
+    minimum_tilesanity_local: Union[MinimumTilesanityLocal, int] = 0

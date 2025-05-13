@@ -4,12 +4,13 @@ import csv
 import enum
 from dataclasses import dataclass, field
 from functools import reduce
-from typing import Protocol
+from typing import Protocol, Optional, Union
 
 from BaseClasses import ItemClassification, Item
 from .. import data
 from ..content.vanilla.ginger_island import ginger_island_content_pack
 from ..logic.logic_event import all_events
+from ..tilesanity import list_all_ap_ids
 
 ITEM_CODE_OFFSET = 717000
 
@@ -89,6 +90,7 @@ class Group(enum.Enum):
     ENDGAME_LOCATION_ITEMS = enum.auto()
     REQUIRES_FRIENDSANITY_MARRIAGE = enum.auto()
     BOOKSELLER = enum.auto()
+    TILESANITY = enum.auto()
 
     # Types of filler
     FILLER_FARMING = enum.auto()
@@ -123,15 +125,15 @@ class ItemData:
     name: str
     classification: ItemClassification
     content_packs: frozenset[str] = frozenset()
-    """All the content packs required for this item to be available."""
-    groups: set[Group] = field(default_factory=frozenset)
+    mod_name: Optional[str] = None
+    groups: frozenset[Group] = field(default_factory=frozenset)
 
     def __post_init__(self):
         if not isinstance(self.groups, frozenset):
             super().__setattr__("groups", frozenset(self.groups))
 
     @property
-    def code(self) -> int | None:
+    def code(self) -> Optional[int]:
         return ITEM_CODE_OFFSET + self.code_without_offset if self.code_without_offset is not None else None
 
     def has_any_group(self, *group: Group) -> bool:
@@ -149,7 +151,7 @@ class ItemData:
 def load_item_csv():
     from importlib.resources import files
 
-    items = []
+    items: list[ItemData] = []
     with files(data).joinpath("items.csv").open() as file:
         item_reader = csv.DictReader(file)
         for item in item_reader:
@@ -168,6 +170,9 @@ def load_item_csv():
                 content_packs |= {ginger_island_content_pack.name}
 
             items.append(ItemData(item_id, item_name, classification, content_packs, groups))
+
+    for tile_name, tile_id in list_all_ap_ids().items():
+        items.append(ItemData(tile_id - ITEM_CODE_OFFSET, tile_name, ItemClassification.progression_skip_balancing, frozenset(), None, {Group.TILESANITY}))
     return items
 
 
@@ -184,7 +189,7 @@ items_by_group: dict[Group, list[ItemData]] = {}
 def initialize_groups():
     for item in all_items:
         for group in item.groups:
-            item_group = items_by_group.get(group, list())
+            item_group = items_by_group.get(group, [])
             item_group.append(item)
             items_by_group[group] = item_group
 

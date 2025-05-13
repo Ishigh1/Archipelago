@@ -41,3 +41,5 @@ def _(rule: Reach, regions: Set[str], depth: int):
     assert depth < 50, "Recursion depth exceeded"
     if rule.resolution_hint == "Region":
         regions.add(rule.spot)
+    elif rule.resolution_hint == "Location":
+        regions.add("Location " + rule.spot)
