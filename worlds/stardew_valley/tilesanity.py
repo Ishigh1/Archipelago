@@ -467,7 +467,7 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regio
     free_locations = 0
     queue = [menu]
     explored_regions = set(queue)
-    state = CollectionState(world.multiworld)
+    state = CollectionState(world.multiworld, allow_partial_entrances=True)
     itempool = [item for item in world.multiworld.get_items() if item.player == world.player and item.name != "Progressive Tile" and item.advancement]
     random.shuffle(itempool)
     blocked_connections = []
