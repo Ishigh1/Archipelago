@@ -95,7 +95,7 @@ class StardewRuleCollector:
             if old_rule is entrance.__class__.access_rule:
                 _set_rule(entrance, rule)
             else:
-                _set_rule(entrance, old_rule & rule)
+                _set_rule(entrance, rule & old_rule)
         except KeyError as ex:
             logger.error(f"""Failed to evaluate indirect connection in: {explain(rule, CollectionState(self.multiworld))}""")
             raise ex

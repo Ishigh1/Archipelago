@@ -12321,9 +12321,7 @@
       "Position": "109, 27",
       "RequiredItems": [],
       "Entrances": [
-        "Buy Experience Books from the bookseller",
-        "Buy Year 1 Books from the Bookseller",
-        "Buy Year 3 Books from the Bookseller"
+        "Buy from the bookseller"
       ]
     },
     {

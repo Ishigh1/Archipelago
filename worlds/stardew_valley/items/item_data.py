@@ -169,7 +169,7 @@ def load_item_csv():
             if Group.GINGER_ISLAND in groups:
                 content_packs |= {ginger_island_content_pack.name}
 
-            items.append(ItemData(item_id, item_name, classification, content_packs, groups))
+            items.append(ItemData(item_id, item_name, classification, content_packs, None, groups))
 
     for tile_name, tile_id in list_all_ap_ids().items():
         items.append(ItemData(tile_id - ITEM_CODE_OFFSET, tile_name, ItemClassification.progression_skip_balancing, frozenset(), None, {Group.TILESANITY}))

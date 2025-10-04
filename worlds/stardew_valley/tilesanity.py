@@ -2,20 +2,25 @@ import json
 import re
 from importlib.resources import files
 from random import Random
-from typing import Tuple, List, Hashable, Callable, Optional
+from typing import List, Hashable, Optional, TYPE_CHECKING, Tuple
 
-from BaseClasses import Entrance, Region, CollectionState
+from BaseClasses import Region, CollectionState
 from Options import OptionError
+from .stardew_rule import CombinableStardewRule, StardewRule, BaseStardewRule, true_
 from . import data
 from .logic.monster_logic import MonsterLogic
 from .logic.quest_logic import QuestLogic
 from .options.options import FarmType, StardewValleyOptions, IncludeEndgameLocations, ExcludeGingerIsland
 from .regions.model import ConnectionData, RegionData, reverse_connection_name, RandomizationFlag
 from .regions.vanilla_data import ginger_island_connections, vanilla_connections
-from .stardew_rule import Received, StardewRule, True_, False_
+from .stardew_rule import Received, True_, False_
+from .stardew_rule.rule_explain import explain
 from .strings.entrance_names import Entrance as StardewEntrance
 from .strings.region_names import Region as StardewRegion
 from .strings.tool_names import ToolMaterial
+
+if TYPE_CHECKING:
+    from . import StardewValleyWorld
 
 directions = ["Left", "Up", "Right", "Down"]
 direction_to_coord = {
@@ -127,7 +132,7 @@ def tilesanity_coord_from_name(name: str) -> tuple[str, int, int]:
     return result[1], int(result[2]), int(result[3])
 
 
-def list_all_ap_ids() -> dict[str, id]:
+def list_all_ap_ids() -> dict[str, int]:
     global all_tiles
     if all_tiles is not None:
         return all_tiles
@@ -167,26 +172,21 @@ def list_all_tiles(options: "StardewValleyOptions", maps_to_exclude: set[str]):
 
     return all_tiles
 
-vanilla = 0
-ered = 0
 
 def connect(region1: Region, region2: Region, exit_name: str | None = None):
     region1.connect(region2, exit_name)
-    global vanilla
-    vanilla += 1
 
 
 def er_connect(region1: Region, region2: Region, exit_name: str):
     region1.create_exit(exit_name)
     region2.create_er_target(reverse_connection_name(exit_name))
 
-    global ered
-    ered += 1
+
+tile_coords = tuple[str, int, int]
 
 
 def create_regions_tilesanity(world: "StardewValleyWorld", region_factory: "RegionFactory",
                               region_data: dict[str, RegionData], player: int, random: Random, randomization_flag: RandomizationFlag):
-    tile_coords = tuple[str, int, int]
     regions_by_name: dict[str, Region] = {}
     tiles_by_coords: dict[tile_coords, Region] = {}
     required_items: dict[tile_coords, List[str]] = {}
@@ -343,8 +343,7 @@ def create_regions_tilesanity(world: "StardewValleyWorld", region_factory: "Regi
     world.tile_list = remaining_coords  # Just to be able to transmit how many tiles exist
 
     world.tilesanity_rulebuilder = lambda: define_tilesanity_item_rules(world, player, regions_by_name, tiles_by_coords, random, tile_to_coord,
-                                                                        remaining_coords,
-                                                                        required_items)
+                                                                        remaining_coords, required_items)
     world.location_origin_override = location_origin
 
     return regions_by_name
@@ -438,28 +437,54 @@ def requirement_rule(requirement: str, world: "StardewValleyWorld", player: int)
 
 
 def define_tilesanity_item_rules(world: "StardewValleyWorld", player: int, regions_by_name: dict[str, Region],
-                                 tiles_by_coords: dict[tuple[str, int, int], Region],
-                                 random: Random, tile_to_coord, remaining_coords, required_items):
+                                 tiles_by_coords: dict[tile_coords, Region],
+                                 random: Random, tile_to_coord: dict[Region, tile_coords],
+                                 remaining_coords: set[tile_coords], required_items: dict[tile_coords, List[str]]):
     from worlds.stardew_valley.rules import StardewRuleCollector
     rule_collector = StardewRuleCollector(world.multiworld, world.player, world.content)
-    for tile in required_items:
-        requirements = required_items[tile]
-        access_rule = True_()
-        for requirement in requirements:
-            access_rule &= requirement_rule(requirement, world, player)
+    for tile in tiles_by_coords:
         region = tiles_by_coords[tile]
+        coord = tile_to_coord[region]
+        tile_rule = TilesanityRule(player, tilesanity_name_from_coord(coord[0], coord[1], coord[2]))
+        if tile in required_items:
+            requirements = required_items[tile]
+            access_rule = True_()
+            for requirement in requirements:
+                access_rule &= requirement_rule(requirement, world, player)
+            tile_rule.access_rule = access_rule
         for entrance in region.entrances:
-            rule_collector.set_entrance_rule(entrance.name, access_rule)
-    world.tilesanity_rulebuilder = lambda: define_tilesanity_tile_rules(world, player, regions_by_name, tiles_by_coords, random, tile_to_coord,
+            rule_collector.set_entrance_rule(entrance.name, tile_rule)
+    world.tilesanity_rulebuilder = lambda: define_tilesanity_tile_rules(world, regions_by_name, tiles_by_coords, random, tile_to_coord,
                                                                         remaining_coords)
 
 
-def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regions_by_name: dict[str, Region],
-                                 tiles_by_coords: dict[tuple[str, int, int], Region],
-                                 random: Random, tile_to_coord, remaining_coords):
-    from .rules import StardewRuleCollector
-    rule_collector = StardewRuleCollector(world.multiworld, world.player, world.content)
+class TilesanityRule(BaseStardewRule):
+    player: int
+    tile_name: str
+    sub_rule: StardewRule = true_
 
+    def __init__(self, player: int, tile_name: str):
+        self.player = player
+        self.tile_name = tile_name
+
+    def evaluate_while_simplifying(self, state: CollectionState) -> Tuple[StardewRule, bool]:
+        return self, self.__call__(state)
+
+    def __call__(self, state: CollectionState) -> bool:
+        return state.has(self.tile_name, self.player) and self.sub_rule(state)
+
+    def __repr__(self) -> str:
+        return f"Received {self.tile_name}"
+
+    def __and__(self, other):
+        self.sub_rule &= other
+        return self
+
+
+def define_tilesanity_tile_rules(world: "StardewValleyWorld", regions_by_name: dict[str, Region],
+                                 tiles_by_coords: dict[tile_coords, Region],
+                                 random: Random, tile_to_coord: dict[Region, tile_coords],
+                                 remaining_coords: set[tile_coords]):
     menu = regions_by_name["Menu"]
     tile_order = []  # This list is sorted
     tile_size = world.options.tilesanity_size
@@ -478,7 +503,9 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regio
         i = int(bias * len(queue))
         if i >= len(queue):
             i = len(queue) - 1
-            assert i != -1, f"No tile in {remaining_coords} is valid, {blocked_connections} are locked"
+            if i == -1:
+                explains = [explain(entrance.access_rule, state) for entrance in blocked_connections]
+                assert i != -1, f"No tile in {remaining_coords} is valid, {blocked_connections} are locked"
         current_region = queue.pop(i)
 
         if current_region in tile_to_coord:
@@ -488,6 +515,9 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regio
                 assert free_locations >= 0
                 remaining_coords.remove(coord)
                 tile_order.append(coord)
+                state.prog_items[world.player][tilesanity_name_from_coord(coord[0], coord[1], coord[2])] = 1
+                state.stale[world.player] = True
+                state.sweep_for_advancements()
                 item_score += item_score_per_tile
 
         while item_score >= 1 and len(itempool) > 0 and free_locations >= 2:
@@ -498,56 +528,19 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regio
         for entrance in list(current_region.exits) + blocked_connections:
             exit_region = entrance.connected_region
             if exit_region not in explored_regions:
-                if entrance.access_rule(state):
+                access_rule = entrance.access_rule
+                if isinstance(access_rule, TilesanityRule):
+                    reachable = access_rule.sub_rule(state)
+                else:
+                    reachable = access_rule(state)
+
+                if reachable:
                     explored_regions.add(exit_region)
                     queue.append(exit_region)
                     free_locations += len(exit_region.get_locations())
                 else:
                     new_blocked_connections.append(entrance)
         blocked_connections = new_blocked_connections
-
-    from worlds.stardew_valley.stardew_rule import CombinableStardewRule, StardewRule
-
-    class TilesanityRule(CombinableStardewRule):
-        player: int
-        tile_name: str
-        tile_count: int
-        access_rule: Callable[[CollectionState], bool]
-        specific_rule: bool
-
-        def __init__(self, player: int, tile_name: str, tile_count: int):
-            self.player = player
-            self.tile_name = tile_name
-            self.tile_count = tile_count
-            self.access_rule = lambda state: state.has("Progressive Tile", self.player, self.tile_count)
-            self.specific_rule = False
-
-        @property
-        def combination_key(self) -> Hashable:
-            return "Progressive Tile"
-
-        @property
-        def value(self) -> int:
-            return self.tile_count
-
-        def __call__(self, state: CollectionState) -> bool:
-            return self.access_rule(state)
-
-        def evaluate_while_simplifying(self, state: CollectionState) -> Tuple[StardewRule, bool]:
-            return self, self(state)
-
-        def __repr__(self) -> str:
-            if self.specific_rule:
-                return f"Received {self.tile_name} ({self.tile_count} Progressive Tile)"
-            else:
-                return f"Received {self.tile_count} Progressive Tile ({self.tile_name})"
-
-        def switch_rule(self, specific: bool) -> None:
-            self.specific_rule = specific
-            if specific:
-                self.access_rule = lambda state: state.has(self.tile_name, self.player)
-            else:
-                self.access_rule = lambda state: state.has("Progressive Tile", self.player, self.tile_count)
 
     tile_names = []
     for i in range(len(tile_order)):
@@ -566,11 +559,6 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regio
 
         tile_name = tilesanity_name_from_coord(tile[0], tile[1], tile[2])
         tile_names.append(tile_name)
-
-        access_rule = TilesanityRule(player, tile_name, i + 1)
-        for region in tile_regions:
-            for entrance in region.entrances:
-                rule_collector.set_entrance_rule(entrance.name, access_rule)
 
     world.tile_list = tile_names
     del world.tilesanity_rulebuilder

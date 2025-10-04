@@ -2,6 +2,7 @@ from functools import singledispatch
 from typing import Set
 
 from . import StardewRule, Reach, Count, AggregatingStardewRule, Has
+from ..tilesanity import TilesanityRule
 
 
 def look_for_indirect_connection(rule: StardewRule) -> Set[str]:
@@ -43,3 +44,9 @@ def _(rule: Reach, regions: Set[str], depth: int):
         regions.add(rule.spot)
     elif rule.resolution_hint == "Location":
         regions.add("Location " + rule.spot)
+
+
+@_find.register
+def _(rule: TilesanityRule, regions: Set[str], depth: int):
+    assert depth < 50, "Recursion depth exceeded"
+    _find(rule.sub_rule, regions, depth + 1)
