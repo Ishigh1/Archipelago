@@ -1,5 +1,6 @@
 {
   "game": "Into the Breach",
+  "authors": ["Ishigh"],
   "minimum_ap_version": "0.6.0",
-  "world_version": "0.15.18"
+  "world_version": "0.15.19"
 }
