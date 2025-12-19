@@ -5,7 +5,7 @@ from typing import List, Dict, Set
 
 from BaseClasses import MultiWorld, CollectionState
 from worlds.generic.Rules import set_rule as _set_rule
-from . import locations
+from . import locations, Tilesanity
 from .bundles.bundle_room import BundleRoom
 from .content import StardewContent
 from .content.feature import friendsanity
@@ -83,11 +83,19 @@ class StardewRuleCollector:
             potentially_required_regions = look_for_indirect_connection(rule)
             if potentially_required_regions:
                 for region in potentially_required_regions:
+                    if region.startswith("Location "):
+                        region = self.multiworld.get_location(region[9:], self.player).parent_region.name
+
                     logger.debug(f"Registering indirect condition for {region} -> {entrance_name}")
                     self.multiworld.register_indirect_condition(self.multiworld.get_region(region, self.player),
                                                                 self.multiworld.get_entrance(entrance_name, self.player))
 
-            _set_rule(self.multiworld.get_entrance(entrance_name, self.player), rule)
+            entrance = self.multiworld.get_entrance(entrance_name, self.player)
+            old_rule = entrance.access_rule
+            if old_rule is entrance.__class__.access_rule:
+                _set_rule(entrance, rule)
+            else:
+                _set_rule(entrance, old_rule & rule)
         except KeyError as ex:
             logger.error(f"""Failed to evaluate indirect connection in: {explain(rule, CollectionState(self.multiworld))}""")
             raise ex
@@ -151,6 +159,8 @@ def set_rules(world):
     set_deepwoods_rules(logic, rule_collector, world_content)
     set_magic_spell_rules(logic, rule_collector, world_content)
     set_sve_rules(logic, rule_collector, world_content)
+    if world.options.tilesanity == 2:
+        world.tilesanity_rulebuilder()
 
 
 def set_isolated_locations_rules(logic: StardewLogic, rule_collector: StardewRuleCollector, trash_bear_requests: Dict[str, List[str]]):
@@ -245,11 +255,11 @@ def set_entrance_rules(logic: StardewLogic, rule_collector: StardewRuleCollector
     set_traveling_merchant_day_entrance_rules(logic, rule_collector)
     set_dangerous_mine_rules(logic, rule_collector, content)
 
-    rule_collector.set_entrance_rule(Entrance.enter_tide_pools, logic.received("Beach Bridge") | logic.mod.magic.can_blink())
+    if world_options.tilesanity != Tilesanity.option_full:
+        rule_collector.set_entrance_rule(Entrance.enter_tide_pools, logic.received("Beach Bridge") | (logic.mod.magic.can_blink()))
+        rule_collector.set_entrance_rule(Entrance.enter_quarry, logic.received("Bridge Repair") | (logic.mod.magic.can_blink() & logic.tool.has_tool(Tool.pickaxe)))
+        rule_collector.set_entrance_rule(Entrance.enter_secret_woods, logic.tool.has_tool(Tool.axe, ToolMaterial.iron) | (logic.mod.magic.can_blink()))
     rule_collector.set_entrance_rule(Entrance.mountain_to_outside_adventure_guild, logic.received("Landslide Removed"))
-    rule_collector.set_entrance_rule(Entrance.enter_quarry,
-                                     (logic.received("Bridge Repair") | logic.mod.magic.can_blink()) & logic.tool.has_tool(Tool.pickaxe))
-    rule_collector.set_entrance_rule(Entrance.enter_secret_woods, logic.tool.has_tool(Tool.axe, ToolMaterial.iron) | (logic.mod.magic.can_blink()))
     rule_collector.set_entrance_rule(Entrance.town_to_community_center, logic.received("Community Center Key"))
     rule_collector.set_entrance_rule(Entrance.forest_to_wizard_tower, logic.received("Wizard Invitation"))
     rule_collector.set_entrance_rule(Entrance.forest_to_sewer, logic.wallet.has_rusty_key())
@@ -294,7 +304,8 @@ def set_entrance_rules(logic: StardewLogic, rule_collector: StardewRuleCollector
     rule_collector.set_entrance_rule(LogicEntrance.watch_queen_of_sauce, logic.action.can_watch(Channel.queen_of_sauce))
     rule_collector.set_entrance_rule(Entrance.forest_to_mastery_cave, logic.skill.can_enter_mastery_cave)
     set_bookseller_rules(logic, rule_collector)
-    rule_collector.set_entrance_rule(Entrance.adventurer_guild_to_bedroom, logic.monster.can_kill_max(Generic.any))
+    if world_options.tilesanity != Tilesanity.option_full:
+        rule_collector.set_entrance_rule(Entrance.adventurer_guild_to_bedroom, logic.monster.can_kill_max(Generic.any))
     if world_options.include_endgame_locations == IncludeEndgameLocations.option_true:
         rule_collector.set_entrance_rule(LogicEntrance.purchase_wizard_blueprints, logic.quest.has_magic_ink())
     rule_collector.set_entrance_rule(LogicEntrance.search_garbage_cans, logic.time.has_lived_months(MAX_MONTHS / 2))
@@ -369,7 +380,8 @@ def set_bedroom_entrance_rules(logic, rule_collector: StardewRuleCollector, cont
     rule_collector.set_entrance_rule(Entrance.enter_elliott_house, logic.relationship.has_hearts(NPC.elliott, 2))
     rule_collector.set_entrance_rule(Entrance.enter_sunroom, logic.relationship.has_hearts(NPC.caroline, 2))
     rule_collector.set_entrance_rule(Entrance.enter_wizard_basement, logic.relationship.has_hearts(NPC.wizard, 4))
-    rule_collector.set_entrance_rule(Entrance.enter_lewis_bedroom, logic.relationship.has_hearts(NPC.lewis, 2))
+    if not content.is_enabled("Tilesanity"):
+        rule_collector.set_entrance_rule(Entrance.enter_lewis_bedroom, logic.relationship.has_hearts(NPC.lewis, 2))
     if content.is_enabled(ModNames.alec):
         rule_collector.set_entrance_rule(AlecEntrance.petshop_to_bedroom, (logic.relationship.has_hearts(ModNPC.alec, 2) | logic.mod.magic.can_blink()))
     if content.is_enabled(ModNames.lacey):
