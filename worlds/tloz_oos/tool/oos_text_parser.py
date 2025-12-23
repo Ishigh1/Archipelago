@@ -9,7 +9,7 @@ from worlds.tloz_oos.patching.text.encoding import write_text_data, encode_dict
 if __name__ == "__main__":
     if not os.path.isdir("output"):
         os.mkdir("output")
-    file_name = get_settings()["tloz_oos_options"]["rom_file"]
+    file_name = get_settings().tloz_oos_options.rom_file
     rom = RomData(bytes(open(file_name, "rb").read()))
     dict_seasons = parse_text_dict(rom, True)
     text = parse_all_texts(rom, dict_seasons, True)

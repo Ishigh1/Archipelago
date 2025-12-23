@@ -40,52 +40,56 @@ class ImageApp(MDApp):
 
         bar = BoxLayout(
             orientation="horizontal",
-            size_hint_y=None,
             height=48
         )
         layout.add_widget(bar)
 
-        load_link = MDButton(MDButtonText(
+        bar.add_widget(MDButton(MDButtonText(
             text="Load Link"),
             on_release=self.load_link
-        )
-        bar.add_widget(load_link)
+        ))
 
-        load_sprite = MDButton(MDButtonText(
+        bar.add_widget(MDButton(MDButtonText(
             text="Load Sprite"),
             on_release=self.load_sprite
-        )
-        bar.add_widget(load_sprite)
+        ))
 
-        switch_palette = MDButton(MDButtonText(
+        bar.add_widget(MDButton(MDButtonText(
             text="Switch Palette"),
             on_release=self.switch_palette
-        )
-        bar.add_widget(switch_palette)
+        ))
 
-        switch_separator = MDButton(MDButtonText(
+        bar.add_widget(MDButton(MDButtonText(
             text="Switch Separator"),
             on_release=self.switch_separator
-        )
-        bar.add_widget(switch_separator)
+        ))
 
-        export_image = MDButton(MDButtonText(
+        bar.add_widget(MDButton(MDButtonText(
             text="Export Image"),
             on_release=self.export_image
-        )
-        bar.add_widget(export_image)
+        ))
 
-        export_binary = MDButton(MDButtonText(
+        bar.add_widget(MDButton(MDButtonText(
             text="Export Binary"),
             on_release=self.export_binary
+        ))
+
+        bar2 = BoxLayout(
+            orientation="horizontal",
+            height=48
         )
-        bar.add_widget(export_binary)
+        layout.add_widget(bar2)
+
+        bar2.add_widget(MDButton(MDButtonText(
+            text="Select sprite as default"),
+            on_release=self.select_sprite
+        ))
         return layout
 
     def load_link(self, *_) -> None:
         file_name = str(self.sprite_folder.joinpath(f"link.png"))
 
-        rom_file = get_settings()["tloz_oos_options"]["rom_file"]
+        rom_file = get_settings().tloz_oos_options.rom_file
         rom = RomData(bytes(open(rom_file, "rb").read()))
         sprite_data = load_link_data(rom)
         image = load_link_sprite(sprite_data)
@@ -94,8 +98,8 @@ class ImageApp(MDApp):
 
         self.img.source = file_name
         self.img.reload()
-        self.img.texture.mag_filter = 'nearest'   # prevents blur when scaling up
-        self.img.texture.min_filter = 'nearest'   # prevents blur when scaling down
+        self.img.texture.mag_filter = 'nearest'  # prevents blur when scaling up
+        self.img.texture.min_filter = 'nearest'  # prevents blur when scaling down
 
     def load_sprite(self, *_) -> None:
         file_name = Utils.open_filename("Select sprite file", (
@@ -117,8 +121,8 @@ class ImageApp(MDApp):
             image.save(new_file_name)
         self.img.source = new_file_name
         self.img.reload()
-        self.img.texture.mag_filter = 'nearest'   # prevents blur when scaling up
-        self.img.texture.min_filter = 'nearest'   # prevents blur when scaling down
+        self.img.texture.mag_filter = 'nearest'  # prevents blur when scaling up
+        self.img.texture.min_filter = 'nearest'  # prevents blur when scaling down
 
     def switch_palette(self, *_) -> None:
         if self.img.source == "":
@@ -133,8 +137,8 @@ class ImageApp(MDApp):
             image.putpalette(bw_palette, "RGBA")
             image.save(self.img.source)
         self.img.reload()
-        self.img.texture.mag_filter = 'nearest'   # prevents blur when scaling up
-        self.img.texture.min_filter = 'nearest'   # prevents blur when scaling down
+        self.img.texture.mag_filter = 'nearest'  # prevents blur when scaling up
+        self.img.texture.min_filter = 'nearest'  # prevents blur when scaling down
 
     def switch_separator(self, *_) -> None:
         if self.img.source == "":
@@ -152,8 +156,8 @@ class ImageApp(MDApp):
         image.putpalette(palette, "RGBA")
         image.save(self.img.source)
         self.img.reload()
-        self.img.texture.mag_filter = 'nearest'   # prevents blur when scaling up
-        self.img.texture.min_filter = 'nearest'   # prevents blur when scaling down
+        self.img.texture.mag_filter = 'nearest'  # prevents blur when scaling up
+        self.img.texture.min_filter = 'nearest'  # prevents blur when scaling down
 
     def export_image(self, *_) -> None:
         if self.img.source == "":
@@ -178,3 +182,8 @@ class ImageApp(MDApp):
 
         with open(file_path, "wb") as f:
             f.write(encoded)
+
+    def select_sprite(self, *_) -> None:
+        if self.img.source == "":
+            return
+        # todo

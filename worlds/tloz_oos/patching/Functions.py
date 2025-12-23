@@ -37,7 +37,7 @@ def get_asm_files(patch_data):
         files += asm_files["ganon_goal"]
     if patch_data["options"]["rosa_quick_unlock"]:
         files += asm_files["instant_rosa"]
-    if get_settings()["tloz_oos_options"]["remove_music"]:
+    if get_settings().tloz_oos_options.remove_music:
         files += asm_files["mute_music"]
     if patch_data["options"]["cross_items"]:
         files += asm_files["cross_items"]
@@ -171,7 +171,7 @@ def define_additional_tile_replacements(assembler: Z80Assembler, patch_data):
     """
     table = []
     # Reveal hidden subrosia digging spots if required
-    if get_settings()["tloz_oos_options"]["reveal_hidden_subrosia_digging_spots"]:
+    if get_settings().tloz_oos_options.reveal_hidden_subrosia_digging_spots:
         table.extend([
             0x01, 0x06, 0x00, 0x18, 0x2f,  # Bath digging spot
             0x01, 0x57, 0x00, 0x38, 0x2f,  # Market portal digging spot
@@ -860,7 +860,7 @@ def set_heart_beep_interval_from_settings(rom: RomData):
 
 
 def set_character_sprite_from_settings(rom: RomData):
-    sprite = get_settings()["tloz_oos_options"]["character_sprite"]
+    sprite = get_settings().tloz_oos_options.character_sprite
     sprite_dir = Path(Utils.local_path(os.path.join("data", "sprites", "oos_ooa")))
     if sprite == "random":
         sprite_weights = {f: 1 for f in os.listdir(sprite_dir) if sprite_dir.joinpath(f).is_file() and f.endswith(".bin")}
@@ -875,7 +875,7 @@ def set_character_sprite_from_settings(rom: RomData):
         if weights < 0:
             break
 
-    palette_option = get_settings()["tloz_oos_options"]["character_palette"]
+    palette_option = get_settings().tloz_oos_options.character_palette
     if palette_option == "random":
         palette_weights = {palette: 1 for palette in get_available_random_colors_from_sprite_name(sprite)}
     elif isinstance(palette_option, str):

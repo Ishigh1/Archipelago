@@ -9,7 +9,7 @@ from worlds.tloz_oos.spriter.sprite.encoding import encode_sprite
 if __name__ == "__main__":
     if not os.path.isdir("output"):
         os.mkdir("output")
-    file_name = get_settings()["tloz_oos_options"]["rom_file"]
+    file_name = get_settings().tloz_oos_options.rom_file
     rom = RomData(bytes(open(file_name, "rb").read()))
     sprite_data = load_link_data(rom)
     image = load_link_sprite(sprite_data, True)
