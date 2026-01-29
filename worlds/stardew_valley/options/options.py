@@ -707,9 +707,10 @@ class TilesanityLucky(Range):
     range_end = 100
     default = 5
 
+
 # Conditional Setting - Tilesanity is full
 class TilesanityLocal(Range):
-    """Minimum percentage of tile items placed in local tiles."""
+    """Minimum percentage of tile items placed in local tiles (not lucky tiles)."""
     internal_name = "tilesanity_local"
     display_name = "Tilesanity Local"
     range_start = 0

@@ -715,7 +715,7 @@ def extend_tilesanity_locations(randomized_locations: list[str], options: Starde
 
     randomized_locations.extend(tile_locations)
     num_lucky_tiles = int(round(options.tilesanity_lucky * len(tile_locations) / 100))
-    randomized_locations.extend([tile_name + " (lucky)" for tile_name in random.sample(tile_names, num_lucky_tiles)])
+    randomized_locations.extend([location_table[tile_name + " (lucky)"] for tile_name in random.sample(sorted(tile_names), num_lucky_tiles)])
 
 
 def create_locations(location_collector: StardewLocationCollector,
