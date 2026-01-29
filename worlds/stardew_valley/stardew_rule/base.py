@@ -304,6 +304,11 @@ class AggregatingStardewRule(BaseStardewRule, ABC):
 
         return hash((*self.combinable_rules.values(), self.simplification_state.original_simplifiable_rules))
 
+    def switch_rule(self, specific: bool) -> None:
+        # This allows to change which rule is used with Tilesanity
+        for rule in self.original_rules:
+            if hasattr(rule, 'switch_rule'):
+                rule.switch_rule(specific)
 
 class Or(AggregatingStardewRule):
     identity = false_

@@ -676,6 +676,47 @@ class Eatsanity(OptionSet):
             return typing.cast(bool, self.value == other)
 
 
+class Tilesanity(Choice):
+    """Enables tilesanity. You need the permission of the host to enable it.
+    Locations means every tile will hold an item with no consequence on the game
+    Full means both every tile additionally requires to be unlocked"""
+    internal_name = "tilesanity"
+    display_name = "Tilesanity"
+    option_nope = 0
+    option_locations = 1
+    option_full = 2
+    default = option_nope
+
+
+# Conditional Setting - Tilesanity is not nope
+class TilesanitySize(Range):
+    """Changes the size of tiles for tilesanity."""
+    internal_name = "tilesanity_size"
+    display_name = "Tilesanity Size"
+    range_start = 1
+    range_end = 10
+    default = 5
+
+
+# Conditional Setting - Tilesanity is not nope
+class TilesanityLucky(Range):
+    """Percentage of tiles containing two locations instead of just one"""
+    internal_name = "tilesanity_lucky"
+    display_name = "Tilesanity Lucky"
+    range_start = 0
+    range_end = 100
+    default = 5
+
+# Conditional Setting - Tilesanity is full
+class TilesanityLocal(Range):
+    """Minimum percentage of tile items placed in local tiles."""
+    internal_name = "tilesanity_local"
+    display_name = "Tilesanity Local"
+    range_start = 0
+    range_end = 100
+    default = 0
+
+
 class Booksanity(Choice):
     """Shuffle Books?
     None: All books behave like vanilla
@@ -1218,6 +1259,10 @@ class StardewValleyOptions(PerGameCommonOptions):
     secretsanity: Secretsanity
     hatsanity: Hatsanity
     include_endgame_locations: IncludeEndgameLocations
+    tilesanity: Tilesanity
+    tilesanity_size: TilesanitySize
+    tilesanity_lucky: TilesanityLucky
+    tilesanity_local: TilesanityLocal
     exclude_ginger_island: ExcludeGingerIsland
     quick_start: QuickStart
     starting_money: StartingMoney

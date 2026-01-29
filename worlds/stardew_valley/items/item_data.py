@@ -4,12 +4,13 @@ import csv
 import enum
 from dataclasses import dataclass, field
 from functools import reduce
-from typing import Protocol
+from typing import Protocol, Optional, Union
 
 from BaseClasses import ItemClassification, Item
 from .. import data
 from ..content.vanilla.ginger_island import ginger_island_content_pack
 from ..logic.logic_event import all_events
+from ..tilesanity import list_all_ap_ids
 
 ITEM_CODE_OFFSET = 717000
 
@@ -89,6 +90,7 @@ class Group(enum.Enum):
     ENDGAME_LOCATION_ITEMS = enum.auto()
     REQUIRES_FRIENDSANITY_MARRIAGE = enum.auto()
     BOOKSELLER = enum.auto()
+    TILESANITY = enum.auto()
 
     # Types of filler
     FILLER_FARMING = enum.auto()
@@ -149,7 +151,7 @@ class ItemData:
 def load_item_csv():
     from importlib.resources import files
 
-    items = []
+    items: list[ItemData] = []
     with files(data).joinpath("items.csv").open() as file:
         item_reader = csv.DictReader(file)
         for item in item_reader:
@@ -168,6 +170,9 @@ def load_item_csv():
                 content_packs |= {ginger_island_content_pack.name}
 
             items.append(ItemData(item_id, item_name, classification, content_packs, groups))
+
+    for tile_name, tile_id in list_all_ap_ids().items():
+        items.append(ItemData(tile_id - ITEM_CODE_OFFSET, tile_name, ItemClassification.progression_skip_balancing, frozenset(), {Group.TILESANITY}))
     return items
 
 
