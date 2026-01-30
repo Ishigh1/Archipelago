@@ -521,7 +521,7 @@ class StardewValleyWorld(World):
                 item = location.item
                 if item.game == StardewValleyWorld.game and item.name == "Progressive Tile":
                     world = multiworld.worlds[item.player]
-                    item.name = world.tile_list.pop()
+                    item.name = world.tile_order.pop()
                     item.code = world.item_name_to_id[item.name]
         for player, game in multiworld.game.items():
             if game != StardewValleyWorld.game:
@@ -531,13 +531,8 @@ class StardewValleyWorld(World):
                 continue
             for item in multiworld.precollected_items[player]:
                 if item.name == "Progressive Tile":
-                    item.name = world.tile_list.pop()
+                    item.name = world.tile_order.pop()
                     item.code = world.item_name_to_id[item.name]
-
-            for entrance in multiworld.get_entrances(player):
-                access_rule = entrance.access_rule
-                if hasattr(access_rule, 'switch_rule'):
-                    access_rule.switch_rule(True)
 
     def write_spoiler_header(self, spoiler_handle: TextIO) -> None:
         """Write to the spoiler header. If individual it's right at the end of that player's options,
@@ -610,6 +605,9 @@ class StardewValleyWorld(World):
         if item.name in APWeapon.all_weapons:
             player_state[Event.received_progressive_weapon] = max(player_state[Event.received_progressive_weapon], player_state[item.name])
 
+        if item.name == "Progressive Tile" and len(self.tile_list):
+            player_state[self.tile_order[player_state["Progressive Tile"] - 1]] += 1
+
         return True
 
     def remove(self, state: CollectionState, item: StardewItem) -> bool:
@@ -624,6 +622,9 @@ class StardewValleyWorld(World):
 
         if item.name in APWeapon.all_weapons:
             player_state[Event.received_progressive_weapon] = max(player_state[weapon] for weapon in APWeapon.all_weapons)
+
+        if item.name == "Progressive Tile" and len(self.tile_list):
+            player_state[self.tile_order[player_state["Progressive Tile"]]] -= 0
 
         return True
 

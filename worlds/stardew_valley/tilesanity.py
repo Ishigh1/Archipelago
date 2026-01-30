@@ -1,10 +1,11 @@
 import json
+import logging
 import re
 from importlib.resources import files
 from random import Random
-from typing import Tuple, List, Hashable, Callable, Optional
+from typing import List, Optional
 
-from BaseClasses import Entrance, Region, CollectionState
+from BaseClasses import Region, CollectionState, ItemClassification
 from Options import OptionError
 from . import data
 from .logic.monster_logic import MonsterLogic
@@ -170,8 +171,10 @@ def list_all_tiles(options: "StardewValleyOptions", maps_to_exclude: set[str]):
 
     return all_tiles
 
+
 vanilla = 0
-ered = 0
+randomized = 0
+
 
 def connect(region1: Region, region2: Region, exit_name: str | None = None):
     region1.connect(region2, exit_name)
@@ -183,8 +186,8 @@ def er_connect(region1: Region, region2: Region, exit_name: str):
     region1.create_exit(exit_name)
     region2.create_er_target(reverse_connection_name(exit_name))
 
-    global ered
-    ered += 1
+    global randomized
+    randomized += 1
 
 
 def create_regions_tilesanity(world: "StardewValleyWorld", region_factory: "RegionFactory",
@@ -453,108 +456,10 @@ def define_tilesanity_item_rules(world: "StardewValleyWorld", player: int, regio
         region = tiles_by_coords[tile]
         for entrance in region.entrances:
             rule_collector.set_entrance_rule(entrance.name, access_rule)
-    world.tilesanity_rulebuilder = lambda: define_tilesanity_tile_rules(world, player, regions_by_name, tiles_by_coords, random, tile_to_coord,
-                                                                        remaining_coords)
 
-
-def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regions_by_name: dict[str, Region],
-                                 tiles_by_coords: dict[tuple[str, int, int], Region],
-                                 random: Random, tile_to_coord, remaining_coords):
-    from .rules import StardewRuleCollector
-    rule_collector = StardewRuleCollector(world.multiworld, world.player, world.content)
-
-    menu = regions_by_name["Menu"]
-    tile_order = []  # This list is sorted
     tile_size = world.options.tilesanity_size
-
-    free_locations = 0
-    queue = [menu]
-    explored_regions = set(queue)
-    state = CollectionState(world.multiworld, allow_partial_entrances=True)
-    itempool = [item for item in world.multiworld.get_items() if item.player == world.player and item.name != "Progressive Tile" and item.advancement]
-    random.shuffle(itempool)
-    blocked_connections = []
-    item_score_per_tile = len(itempool) / len(remaining_coords) * 2
-    item_score = -len(itempool) / 2
-    while len(remaining_coords) > 0:
-        bias = random.betavariate(7, 1)
-        i = int(bias * len(queue))
-        if i >= len(queue):
-            i = len(queue) - 1
-            assert i != -1, f"No tile in {remaining_coords} is valid, {blocked_connections} are locked"
-        current_region = queue.pop(i)
-
-        if current_region in tile_to_coord:
-            coord = tile_to_coord[current_region]
-            if coord in remaining_coords:
-                free_locations -= 1
-                assert free_locations >= 0
-                remaining_coords.remove(coord)
-                tile_order.append(coord)
-                item_score += item_score_per_tile
-
-        while item_score >= 1 and len(itempool) > 0 and free_locations >= 2:
-            free_locations -= 1
-            state.collect(itempool.pop())
-
-        new_blocked_connections = []
-        for entrance in list(current_region.exits) + blocked_connections:
-            exit_region = entrance.connected_region
-            if exit_region not in explored_regions:
-                if entrance.access_rule(state):
-                    explored_regions.add(exit_region)
-                    queue.append(exit_region)
-                    free_locations += len(exit_region.get_locations())
-                else:
-                    new_blocked_connections.append(entrance)
-        blocked_connections = new_blocked_connections
-
-    from worlds.stardew_valley.stardew_rule import CombinableStardewRule, StardewRule
-
-    class TilesanityRule(CombinableStardewRule):
-        player: int
-        tile_name: str
-        tile_count: int
-        access_rule: Callable[[CollectionState], bool]
-        specific_rule: bool
-
-        def __init__(self, player: int, tile_name: str, tile_count: int):
-            self.player = player
-            self.tile_name = tile_name
-            self.tile_count = tile_count
-            self.access_rule = lambda state: state.has("Progressive Tile", self.player, self.tile_count)
-            self.specific_rule = False
-
-        @property
-        def combination_key(self) -> Hashable:
-            return "Progressive Tile"
-
-        @property
-        def value(self) -> int:
-            return self.tile_count
-
-        def __call__(self, state: CollectionState) -> bool:
-            return self.access_rule(state)
-
-        def evaluate_while_simplifying(self, state: CollectionState) -> Tuple[StardewRule, bool]:
-            return self, self(state)
-
-        def __repr__(self) -> str:
-            if self.specific_rule:
-                return f"Received {self.tile_name} ({self.tile_count} Progressive Tile)"
-            else:
-                return f"Received {self.tile_count} Progressive Tile ({self.tile_name})"
-
-        def switch_rule(self, specific: bool) -> None:
-            self.specific_rule = specific
-            if specific:
-                self.access_rule = lambda state: state.has(self.tile_name, self.player)
-            else:
-                self.access_rule = lambda state: state.has("Progressive Tile", self.player, self.tile_count)
-
-    tile_names = []
-    for i in range(len(tile_order)):
-        tile = tile_order[i]
+    world.tile_order = tile_order = []  # This list is sorted
+    for tile in tiles_by_coords:
         x_min = tile[1] * tile_size
         y_min = tile[2] * tile_size
         x_max = x_min + tile_size
@@ -568,14 +473,57 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", player: int, regio
                     tile_regions.add(region)
 
         tile_name = tilesanity_name_from_coord(tile[0], tile[1], tile[2])
-        tile_names.append(tile_name)
 
-        access_rule = TilesanityRule(player, tile_name, i + 1)
+        access_rule = Received(tile_name, player, 1)
+        tile_order.append(tile_name)
         for region in tile_regions:
             for entrance in region.entrances:
                 rule_collector.set_entrance_rule(entrance.name, access_rule)
+    world.tilesanity_rulebuilder = lambda: define_tilesanity_tile_rules(world, random, tile_to_coord,
+                                                                        remaining_coords)
 
-    world.tile_list = tile_names
+
+def define_tilesanity_tile_rules(world: "StardewValleyWorld", random: Random, tile_to_coord, remaining_coords):
+    world.tile_order = tile_order = []  # This list is sorted
+
+    state = CollectionState(world.multiworld, allow_partial_entrances=True)
+    state.sweep_for_advancements()
+    itempool = [item for item in world.multiworld.get_items() if item.player == world.player and item.name != "Progressive Tile" and item.advancement]
+    from worlds.stardew_valley import StardewItem
+    progressive_tile = StardewItem("Progressive Tile", ItemClassification.progression, None, world.player)
+    random.shuffle(itempool)
+    blocked_connections = sorted(state.blocked_connections[1], key=lambda entrance: entrance.name)
+    random.shuffle(blocked_connections)
+    item_score_per_tile = len(itempool) / len(remaining_coords) * 2
+    item_score = -len(itempool) / 2
+    logging.info(f"Ordering tilesanity tiles for {world.player_name} : {len(remaining_coords)} tiles left")
+    while len(remaining_coords) > 0:
+        bias = random.betavariate(7, 1)
+        i = int(bias * len(blocked_connections))
+        if i >= len(blocked_connections):
+            i = len(blocked_connections) - 1
+            assert i != -1, f"No tile in {remaining_coords} is valid, no blocked connections"
+        current_region = blocked_connections.pop(i).connected_region
+
+        if current_region in tile_to_coord:
+            coord = tile_to_coord[current_region]
+            if coord in remaining_coords:
+                remaining_coords.remove(coord)
+                tile_order.append(tilesanity_name_from_coord(coord[0], coord[1], coord[2]))
+                item_score += item_score_per_tile
+
+                while item_score >= 1 and len(itempool) > 0:
+                    state.collect(itempool.pop(), True)
+                state.collect(progressive_tile)
+
+                new_blocked_connections = sorted(state.blocked_connections[1].difference(blocked_connections), key=lambda entrance: entrance.name)
+                random.shuffle(new_blocked_connections)
+                blocked_connections += new_blocked_connections
+
+                if len(remaining_coords) % 1000 == 0:
+                    logging.info(f"Ordering tilesanity tiles for {world.player_name} : {len(remaining_coords)} tiles left")
+
+    logging.info(f"Finished ordering tilesanity tiles for {world.player_name}")
     del world.tilesanity_rulebuilder
 
 
