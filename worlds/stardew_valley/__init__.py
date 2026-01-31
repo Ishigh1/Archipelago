@@ -481,6 +481,13 @@ class StardewValleyWorld(World):
     def set_rules(self):
         set_rules(self)
 
+    def get_pre_fill_items(self) -> List["Item"]:
+        if self.options.tilesanity == Tilesanity.option_full and self.options.tilesanity_local.value > 0:
+            local_tiles = len(self.tile_order) - int(len(self.tile_order) * (100 - self.options.tilesanity_local) / 100)
+            return [self.create_item("Progressive Tile")] * local_tiles
+        else:
+            return []
+
     def connect_entrances(self) -> None:
         no_target_groups = {0: [0]}
         placement = entrance_rando.randomize_entrances(self, coupled=True, target_group_lookup=no_target_groups)
@@ -605,7 +612,7 @@ class StardewValleyWorld(World):
         if item.name in APWeapon.all_weapons:
             player_state[Event.received_progressive_weapon] = max(player_state[Event.received_progressive_weapon], player_state[item.name])
 
-        if item.name == "Progressive Tile":
+        if item.name == "Progressive Tile" and len(self.tile_order) >= player_state["Progressive Tile"]:
             player_state[self.tile_order[player_state["Progressive Tile"] - 1]] += 1
 
         return True
@@ -623,7 +630,7 @@ class StardewValleyWorld(World):
         if item.name in APWeapon.all_weapons:
             player_state[Event.received_progressive_weapon] = max(player_state[weapon] for weapon in APWeapon.all_weapons)
 
-        if item.name == "Progressive Tile":
+        if item.name == "Progressive Tile" and len(self.tile_order) > player_state["Progressive Tile"]:
             player_state[self.tile_order[player_state["Progressive Tile"]]] -= 1
 
         return True

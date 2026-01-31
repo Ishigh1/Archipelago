@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+import typing
 from importlib.resources import files
 from random import Random
 from typing import List, Optional
@@ -17,6 +18,10 @@ from .stardew_rule import Received, StardewRule, True_, False_
 from .strings.entrance_names import Entrance as StardewEntrance
 from .strings.region_names import Region as StardewRegion
 from .strings.tool_names import ToolMaterial
+
+if typing.TYPE_CHECKING:
+    from .regions import RegionFactory
+    from . import StardewValleyWorld
 
 directions = ["Left", "Up", "Right", "Down"]
 direction_to_coord = {
@@ -128,7 +133,7 @@ def tilesanity_coord_from_name(name: str) -> tuple[str, int, int]:
     return result[1], int(result[2]), int(result[3])
 
 
-def list_all_ap_ids() -> dict[str, id]:
+def list_all_ap_ids() -> dict[str, int]:
     global all_tiles
     if all_tiles is not None:
         return all_tiles
@@ -172,22 +177,16 @@ def list_all_tiles(options: "StardewValleyOptions", maps_to_exclude: set[str]):
     return all_tiles
 
 
-vanilla = 0
-randomized = 0
-
-
 def connect(region1: Region, region2: Region, exit_name: str | None = None):
     region1.connect(region2, exit_name)
-    global vanilla
-    vanilla += 1
 
 
-def er_connect(region1: Region, region2: Region, exit_name: str):
+def er_connect(region1: Region, region2: Region, exit_name: str, regions_by_name: dict[str, Region], region_factory: "RegionFactory"):
     region1.create_exit(exit_name)
-    region2.create_er_target(reverse_connection_name(exit_name))
-
-    global randomized
-    randomized += 1
+    buffer_region = region_factory(exit_name)
+    regions_by_name[exit_name] = buffer_region
+    buffer_region.create_er_target(reverse_connection_name(exit_name))
+    connect(buffer_region, region2)
 
 
 def create_regions_tilesanity(world: "StardewValleyWorld", region_factory: "RegionFactory",
@@ -302,7 +301,7 @@ def create_regions_tilesanity(world: "StardewValleyWorld", region_factory: "Regi
         origin, tile_destination = door_connections.pop(entrance_name)
         connection_data = connections[entrance_name]
         if connection_data.is_eligible_for_randomization(randomization_flag):
-            er_connect(regions_by_name[origin], regions_by_name[region_name], entrance_name)
+            er_connect(regions_by_name[origin], regions_by_name[region_name], entrance_name, regions_by_name, region_factory)
         else:
             connect(regions_by_name[origin], regions_by_name[region_name], entrance_name)
         connect(regions_by_name[region_name], regions_by_name[tile_destination], f"{region_name} to tile")
@@ -310,7 +309,7 @@ def create_regions_tilesanity(world: "StardewValleyWorld", region_factory: "Regi
     for entrance_name, (origin, destination) in door_connections.items():
         connection_data = connections[entrance_name]
         if connection_data.is_eligible_for_randomization(randomization_flag):
-            er_connect(regions_by_name[origin], regions_by_name[destination], entrance_name)
+            er_connect(regions_by_name[origin], regions_by_name[destination], entrance_name, regions_by_name, region_factory)
         else:
             connect(regions_by_name[origin], regions_by_name[destination], entrance_name)
 
@@ -477,17 +476,11 @@ def define_tilesanity_item_rules(world: "StardewValleyWorld", player: int, regio
         access_rule = Received(tile_name, player, 1)
         tile_order.append(tile_name)
         for region in tile_regions:
-            if region.name == 'Tilesanity: Forest Farm (63-16)':
-                pass
             for entrance in region.entrances:
-                rule_collector.set_entrance_rule(entrance.name, access_rule)
+                rule_collector.set_entrance_rule(entrance, access_rule)
 
     state = CollectionState(world.multiworld, allow_partial_entrances=True)
     state.sweep_for_advancements()
-    for region in state.reachable_regions[1]:
-        if region in tile_to_coord:
-            coord = tile_to_coord[region]
-            assert coord not in remaining_coords
     world.tilesanity_rulebuilder = lambda: define_tilesanity_tile_rules(world, random, tile_to_coord,
                                                                         remaining_coords)
 
@@ -532,8 +525,7 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", random: Random, ti
                 state.collect(progressive_tile, False)
                 state.update_reachable_regions(world.player)
                 for blocked_connection in state.blocked_connections[world.player]:
-                    if blocked_connection.access_rule(state):
-                        raise Exception(len(remaining_coords), blocked_connection.access_rule)
+                    assert not blocked_connection.access_rule(state), f"{blocked_connection}: {blocked_connection.access_rule}"
 
                 new_blocked_connections = sorted(state.blocked_connections[world.player].difference(blocked_connections), key=lambda entrance: entrance.name)
                 random.shuffle(new_blocked_connections)

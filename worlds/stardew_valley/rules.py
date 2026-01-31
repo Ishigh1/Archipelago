@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import List, Dict, Set
 
 from BaseClasses import MultiWorld, CollectionState
+from BaseClasses import Entrance as ApEntrance
 from worlds.generic.Rules import set_rule as _set_rule
 from . import locations, Tilesanity
 from .bundles.bundle_room import BundleRoom
@@ -78,27 +79,31 @@ class StardewRuleCollector:
     player: int
     content: StardewContent
 
-    def set_entrance_rule(self, entrance_name: str, rule: StardewRule) -> None:
+    def register_indirect_connections(self, entrance: ApEntrance, rule: StardewRule) -> None:
         try:
             potentially_required_regions = look_for_indirect_connection(rule)
             if potentially_required_regions:
                 for region in potentially_required_regions:
                     if region.startswith("Location "):
-                        region = self.multiworld.get_location(region[9:], self.player).parent_region.name
+                        location = self.multiworld.get_location(region[9:], self.player)
+                        self.register_indirect_connections(entrance, location.access_rule)
+                        region = location.parent_region.name
 
-                    logger.debug(f"Registering indirect condition for {region} -> {entrance_name}")
-                    self.multiworld.register_indirect_condition(self.multiworld.get_region(region, self.player),
-                                                                self.multiworld.get_entrance(entrance_name, self.player))
-
-            entrance = self.multiworld.get_entrance(entrance_name, self.player)
-            old_rule = entrance.access_rule
-            if old_rule is entrance.__class__.access_rule:
-                _set_rule(entrance, rule)
-            else:
-                _set_rule(entrance, old_rule & rule)
+                    logger.debug(f"Registering indirect condition for {region} -> {entrance.name}")
+                    self.multiworld.register_indirect_condition(self.multiworld.get_region(region, self.player), entrance)
         except KeyError as ex:
             logger.error(f"""Failed to evaluate indirect connection in: {explain(rule, CollectionState(self.multiworld))}""")
             raise ex
+
+    def set_entrance_rule(self, entrance: str | ApEntrance, rule: StardewRule) -> None:
+        if isinstance(entrance, str):
+            entrance = self.multiworld.get_entrance(entrance, self.player)
+        self.register_indirect_connections(entrance, rule)
+        old_rule = entrance.access_rule
+        if old_rule is entrance.__class__.access_rule:
+            _set_rule(entrance, rule)
+        else:
+            _set_rule(entrance, old_rule & rule)
 
     def set_island_entrance_rule(self, entrance_name: str, rule: StardewRule) -> None:
         if not self.content.is_enabled(ginger_island_content_pack):
