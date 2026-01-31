@@ -459,7 +459,7 @@ def define_tilesanity_item_rules(world: "StardewValleyWorld", player: int, regio
 
     tile_size = world.options.tilesanity_size
     world.tile_order = tile_order = []  # This list is sorted
-    for tile in tiles_by_coords:
+    for tile in remaining_coords:
         x_min = tile[1] * tile_size
         y_min = tile[2] * tile_size
         x_max = x_min + tile_size
@@ -477,8 +477,17 @@ def define_tilesanity_item_rules(world: "StardewValleyWorld", player: int, regio
         access_rule = Received(tile_name, player, 1)
         tile_order.append(tile_name)
         for region in tile_regions:
+            if region.name == 'Tilesanity: Forest Farm (63-16)':
+                pass
             for entrance in region.entrances:
                 rule_collector.set_entrance_rule(entrance.name, access_rule)
+
+    state = CollectionState(world.multiworld, allow_partial_entrances=True)
+    state.sweep_for_advancements()
+    for region in state.reachable_regions[1]:
+        if region in tile_to_coord:
+            coord = tile_to_coord[region]
+            assert coord not in remaining_coords
     world.tilesanity_rulebuilder = lambda: define_tilesanity_tile_rules(world, random, tile_to_coord,
                                                                         remaining_coords)
 
@@ -492,16 +501,22 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", random: Random, ti
     from worlds.stardew_valley import StardewItem
     progressive_tile = StardewItem("Progressive Tile", ItemClassification.progression, None, world.player)
     random.shuffle(itempool)
-    blocked_connections = sorted(state.blocked_connections[1], key=lambda entrance: entrance.name)
+    blocked_connections = sorted(state.blocked_connections[world.player], key=lambda entrance: entrance.name)
     random.shuffle(blocked_connections)
     item_score_per_tile = len(itempool) / len(remaining_coords) * 2
     item_score = -len(itempool) / 2
     logging.info(f"Ordering tilesanity tiles for {world.player_name} : {len(remaining_coords)} tiles left")
+    for region in state.reachable_regions[1]:
+        if region in tile_to_coord:
+            coord = tile_to_coord[region]
+            assert coord not in remaining_coords
     while len(remaining_coords) > 0:
         bias = random.betavariate(7, 1)
         i = int(bias * len(blocked_connections))
         if i >= len(blocked_connections):
             i = len(blocked_connections) - 1
+            if i == -1:
+                raise Exception(f"Failed at {len(remaining_coords)}")
             assert i != -1, f"No tile in {remaining_coords} is valid, no blocked connections"
         current_region = blocked_connections.pop(i).connected_region
 
@@ -513,17 +528,20 @@ def define_tilesanity_tile_rules(world: "StardewValleyWorld", random: Random, ti
                 item_score += item_score_per_tile
 
                 while item_score >= 1 and len(itempool) > 0:
-                    state.collect(itempool.pop(), True)
-                state.collect(progressive_tile)
+                    state.collect(itempool.pop(), False)
+                state.collect(progressive_tile, False)
+                state.update_reachable_regions(world.player)
+                for blocked_connection in state.blocked_connections[world.player]:
+                    if blocked_connection.access_rule(state):
+                        raise Exception(len(remaining_coords), blocked_connection.access_rule)
 
-                new_blocked_connections = sorted(state.blocked_connections[1].difference(blocked_connections), key=lambda entrance: entrance.name)
+                new_blocked_connections = sorted(state.blocked_connections[world.player].difference(blocked_connections), key=lambda entrance: entrance.name)
                 random.shuffle(new_blocked_connections)
                 blocked_connections += new_blocked_connections
 
                 if len(remaining_coords) % 1000 == 0:
                     logging.info(f"Ordering tilesanity tiles for {world.player_name} : {len(remaining_coords)} tiles left")
 
-    logging.info(f"Finished ordering tilesanity tiles for {world.player_name}")
     del world.tilesanity_rulebuilder
 
 

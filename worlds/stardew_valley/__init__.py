@@ -491,8 +491,8 @@ class StardewValleyWorld(World):
 
         # Place local tiles
         if self.options.tilesanity == Tilesanity.option_full and self.options.tilesanity_local.value > 0:
-            local_tiles = len(self.tile_list) - int(len(self.tile_list) * (100 - self.options.tilesanity_local) / 100)
-            tiles = self.tile_list[:-1] + [tile.name for tile in self.get_region("Farmhouse").get_locations()]
+            local_tiles = len(self.tile_order) - int(len(self.tile_order) * (100 - self.options.tilesanity_local) / 100)
+            tiles = self.tile_order[:-1] + [tile.name for tile in self.get_region("Farmhouse").get_locations()]
             for location_name in self.random.sample(tiles, local_tiles):
                 location = self.get_location(location_name)
                 location.place_locked_item(self.create_item("Progressive Tile"))
@@ -605,7 +605,7 @@ class StardewValleyWorld(World):
         if item.name in APWeapon.all_weapons:
             player_state[Event.received_progressive_weapon] = max(player_state[Event.received_progressive_weapon], player_state[item.name])
 
-        if item.name == "Progressive Tile" and len(self.tile_list):
+        if item.name == "Progressive Tile":
             player_state[self.tile_order[player_state["Progressive Tile"] - 1]] += 1
 
         return True
@@ -623,8 +623,8 @@ class StardewValleyWorld(World):
         if item.name in APWeapon.all_weapons:
             player_state[Event.received_progressive_weapon] = max(player_state[weapon] for weapon in APWeapon.all_weapons)
 
-        if item.name == "Progressive Tile" and len(self.tile_list):
-            player_state[self.tile_order[player_state["Progressive Tile"]]] -= 0
+        if item.name == "Progressive Tile":
+            player_state[self.tile_order[player_state["Progressive Tile"]]] -= 1
 
         return True
 
