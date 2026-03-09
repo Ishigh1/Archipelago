@@ -50,6 +50,7 @@ CAVE_DATA: list[int | list[int | list[int]]] = [
         [0x1435, 0x1464],  # Trade item (0x41) data
         [0x1e5d, 0x1edd],  # Strange bros stealing feathers, companions in swamp
         0x392d
+        0x392d,
     ],
     0x3a07,  # 16
     0x3f3a,  # 17
@@ -627,4 +628,131 @@ SEASON_STRINGS = {
     SEASON_SUMMER: "Summer",
     SEASON_AUTUMN: "Autumn",
     SEASON_WINTER: "Winter"
+}
+
+FOREIGN_ITEMS_SPRITES = {
+    # Rupee 1 (small green): 0x00
+    # Rupee 20-30 (blue): 0x01
+    # Rupee 200 (big red): 0x02
+    # Ore chunk 1-25 (blue): 0x03
+
+    "bomb": 0x05,
+    "ember": 0x06,
+    "scent": 0x07,
+    "pegasus": 0x08,
+    "gale": 0x09,
+    "mystery": 0x0A,
+
+    "gasha": 0x0D,
+    "ring": 0x0E,
+
+    "sword": 0x10,
+    # Noble sword: 0x11
+    # Master sword: 0x12
+    "shield": 0x13,
+    # Iron shield: 0x14
+    # Mirror shield: 0x15
+    "feather": 0x16,
+    "cape": 0x17,
+    "magnet": 0x18,
+    "bracelet": 0x19,
+    # Blue ore again: 0x1a
+    "shovel": 0x1b,
+    "boomerang": 0x1c,
+    # Magic boomerang: 0x1d
+    "rod": 0x1e,
+    "summer": 0x1e,
+    # dupe of hook: 0x1f
+    "satchel": 0x20,
+    "slingshot": 0x21,
+    # Hyper slingshot: 0x22
+    "flute": 0x23,
+    "bombchu": 0x24,
+    "biggoron": 0x25,
+    "plaque": 0x26,
+
+    # 1 rupee, again: 0x28
+    # Rupee 5 (small blue): 0x29
+    # Rupee 10 (small red): 0x2a
+    # Rupee 20-30 (blue), again: 0x2b
+    # Rupee 5 (red): 0x2c
+    # Rupee 100 (big blue): 0x2d
+    # Rupee 200 (big red, again): 0x2e
+    # Ore chunk 50 (orange): 0x2f
+    # Left of a green potion: 0x30
+    "flippers": 0x31,
+    # Black flipper: 0x32
+    # Green ring box: 0x33
+    # Blue ring box: 0x34
+    # Red ring box: 0x35
+    "round": 0x36,
+    "pyramid": 0x37,
+    "square": 0x38,
+    "x-shaped": 0x39,
+    "piece of heart": 0x3A,
+    "heart container": 0x3B,
+    "ricky's flute": 0x3C,
+    "dimitri's flute": 0x3D,
+    "moosh's flute": 0x3E,
+    "peach": 0x3F,
+    "map": 0x40,
+    "compass": 0x41,
+    "key": 0x42,
+    "boss key": 0x43,
+    "nightmare key": 0x43,  # While I'm at it
+    "gnarled key": 0x44,
+    "floodgate key": 0x45,
+    "dragon key": 0x46,
+    "nut": 0x47,
+    "member's": 0x48,
+    "treasure map": 0x49,
+    "fool's ore": 0x4A,
+    "potion": 0x4B,
+    "ribbon": 0x4C,
+    # Ore chunk 10 (red): 0x4d
+    # blue ore: 0x4e
+    "spring": 0x4f,
+    "autumn": 0x50,
+    "winter": 0x51,
+    # AP prog: 0x52
+    # AP non-prog: 0x53
+    "banana": 0x54,
+    "glove": 0x55,
+    "bomb flower": 0x56,
+    "star": 0x57,
+    "blue ore": 0x58,
+    "red ore": 0x59,
+    "hard ore": 0x5A,
+    "rusty bell": 0x5B,
+    "bell": 0x5C,
+    # Blue gloves: 0x5d
+    # cane in cross: 0x5E,
+    # nut: 0x5f
+    "fertile soil": 0x60,
+    "gift of time": 0x61,
+    "bright sun": 0x62,
+    "soothing rain": 0x63,
+    "nurturing warmth": 0x64,
+    "blowing wind": 0x65,
+    "seed of life": 0x66,
+    "changing seasons": 0x67,
+    # Hook in cross: 0x68
+    # shooter in cross: 0x69
+
+    "cuccodex": 0x70,
+    "egg": 0x71,
+    "doll": 0x72,
+    "pot": 0x73,
+    "soup": 0x74,
+    "vase": 0x75,
+    "fish": 0x76,
+    "megaphone": 0x77,
+    "mushroom": 0x78,
+    "bird": 0x79,
+    "grease": 0x7A,
+    "phonograph": 0x7B,
+    # phonograph: 0x7c
+    # phonograph: 0x7d
+    # phonograph: 0x7e
+    # phonograph: 0x7f
 }

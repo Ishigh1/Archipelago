@@ -45,6 +45,15 @@ def define_foreign_item_data(assembler: Z80Assembler, texts: dict[str, str], pat
         }
         current_subid += 1
 
+    foreign_item_data = []
+    for i in range(0x100):
+        foreign_item_data.extend([
+            0x00, # grab mode, doesn't really matter
+            i, # parameter, not sure it matters
+            i, # text id, will need special handling
+            i
+        ])
+
     assembler.add_floating_chunk("archipelago_items", foreign_item_data)
     return item_data
 
