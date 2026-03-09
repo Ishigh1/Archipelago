@@ -21,7 +21,7 @@ from .content.feature.walnutsanity import get_walnut_amount
 from .items import item_table, ItemData, Group, items_by_group, create_items, generate_filler_choice_pool, \
     setup_early_items
 from .items.item_data import FILLER_GROUPS
-from .locations import location_table, create_locations, LocationData, locations_by_tag
+from .locations import location_table, create_locations, LocationData, locations_by_tag, LocationTags
 from .logic.combat_logic import valid_weapons
 from .logic.logic import StardewLogic
 from .options import StardewValleyOptions, SeasonRandomization, Goal, BundleRandomization, EnabledFillerBuffs, \
@@ -132,11 +132,11 @@ class StardewValleyWorld(World):
 
     item_name_groups = {
         group.name.replace("_", " ").title() + (" Group" if group.name.replace("_", " ").title() in item_table else ""):
-            [item.name for item in items] for group, items in items_by_group.items()
+            [item.name for item in items] for group, items in items_by_group.items() if group != Group.TILESANITY
     }
     location_name_groups = {
         group.name.replace("_", " ").title() + (" Group" if group.name.replace("_", " ").title() in locations_by_tag else ""):
-            [location.name for location in locations] for group, locations in locations_by_tag.items()
+            [location.name for location in locations] for group, locations in locations_by_tag.items() if group != LocationTags.TILESANITY
     }
 
     required_client_version = (0, 4, 0)
