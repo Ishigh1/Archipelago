@@ -1,0 +1,3 @@
+[submodule "worlds/tloz_oos/common"]
+	path = worlds/tloz_oos/common
+	url = https://github.com/Ishigh1/Tloz_oo-common.git
