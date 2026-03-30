@@ -1,7 +1,8 @@
 from .LogicPredicates import *
+from ...Options import OracleOfSeasonsOptions
 
 
-def make_subrosia_logic():
+def make_subrosia_logic(options: OracleOfSeasonsOptions):
     return [
         # Portals ###############################################################
 
@@ -87,7 +88,7 @@ def make_subrosia_logic():
             Has("Rusty Bell"),
             oos_self_locking_item("Subrosia: Smithy Rusty Bell Reforge", "Rusty Bell")
         )],
-        ["subrosia temple sector", "smith secret", False, oos_has_shield()],
+        ["subrosia temple sector", "smith secret", False, oos_has_shield(), options.secret_locations],
 
         ["subrosia temple sector", "temple of seasons", False, None],
         ["subrosia temple sector", "tower of winter", False, Or(
@@ -105,7 +106,7 @@ def make_subrosia_logic():
         ["subrosia temple sector", "subrosian secret", False, And(
             oos_can_jump_1_wide_pit(False),
             oos_has_magic_boomerang()
-        )],
+        ), options.secret_locations],
 
         ["subrosia market sector", "subrosia seaside", False, oos_has_shovel()],
         ["subrosia market sector", "subrosia market star ore", False, Or(

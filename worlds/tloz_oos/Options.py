@@ -369,7 +369,7 @@ class OracleOfSeasonsRemoveD2AltEntrance(Toggle):
     include_in_slot_data = True
 
 
-class OraclesOfSeasonsTreehouseOldManRequirement(Range):
+class OracleOfSeasonsTreehouseOldManRequirement(Range):
     """
     The amount of essences that you need to bring to the treehouse old man for him to give his item.
     """
@@ -383,7 +383,7 @@ class OraclesOfSeasonsTreehouseOldManRequirement(Range):
     include_in_slot_data = True
 
 
-class OraclesOfSeasonsTarmGateRequirement(Range):
+class OracleOfSeasonsTarmGateRequirement(Range):
     """
     The number of jewels that you need to bring to Tarm Ruins gate to be able to open it.
     """
@@ -397,7 +397,7 @@ class OraclesOfSeasonsTarmGateRequirement(Range):
     include_in_slot_data = True
 
 
-class OraclesOfSeasonsGoldenBeastsRequirement(Range):
+class OracleOfSeasonsGoldenBeastsRequirement(Range):
     """
     The amount of golden beasts that need to be beaten for the golden old man to give his item.
     Golden beasts are 4 unique enemies that appear at specific spots on specific seasons, and beating all four of them
@@ -803,9 +803,9 @@ class OracleOfSeasonsOptions(PerGameCommonOptions):
     starting_maps_compasses: OracleOfSeasonsStartingMapsCompasses
 
     # Numeric requirements for some checks / access to regions
-    treehouse_old_man_requirement: OraclesOfSeasonsTreehouseOldManRequirement
-    tarm_gate_required_jewels: OraclesOfSeasonsTarmGateRequirement
-    golden_beasts_requirement: OraclesOfSeasonsGoldenBeastsRequirement
+    treehouse_old_man_requirement: OracleOfSeasonsTreehouseOldManRequirement
+    tarm_gate_required_jewels: OracleOfSeasonsTarmGateRequirement
+    golden_beasts_requirement: OracleOfSeasonsGoldenBeastsRequirement
     sign_guy_requirement: OracleOfSeasonsSignGuyRequirement
     gasha_nut_kill_requirement: OracleOfSeasonsGashaNutKillRequirement
 
@@ -884,9 +884,9 @@ oos_option_groups = [
         OracleOfSeasonsStartingMapsCompasses
     ]),
     OptionGroup("Numeric Requirements", [
-        OraclesOfSeasonsTreehouseOldManRequirement,
-        OraclesOfSeasonsTarmGateRequirement,
-        OraclesOfSeasonsGoldenBeastsRequirement,
+        OracleOfSeasonsTreehouseOldManRequirement,
+        OracleOfSeasonsTarmGateRequirement,
+        OracleOfSeasonsGoldenBeastsRequirement,
         OracleOfSeasonsSignGuyRequirement,
         OracleOfSeasonsGashaNutKillRequirement,
     ]),

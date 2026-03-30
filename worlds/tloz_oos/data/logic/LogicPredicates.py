@@ -1,9 +1,12 @@
-from rule_builder.rules import And, Or, CanReachRegion
+from rule_builder.field_resolvers import FromOption
+from rule_builder.rules import And, Or, CanReachRegion, AtLeast
 from .Rulebuilder import *
 from ..Constants import *
+from ..Regions import GASHA_SPOT_REGIONS
 from ...Options import OracleOfSeasonsLogicDifficulty, OracleOfSeasonsDefaultSeedType, OracleOfSeasonsMasterKeys, OracleOfSeasonsDungeonShuffle, \
     OracleOfSeasonsRemoveD0AltEntrance, OracleOfSeasonsRemoveD2AltEntrance, OracleOfSeasonsAnimalCompanion, OracleOfSeasonsLostWoodsItemSequence, \
-    OracleOfSeasonsLostWoodsMainSequence, OracleOfSeasonsHoronSeason
+    OracleOfSeasonsLostWoodsMainSequence, OracleOfSeasonsHoronSeason, OracleOfSeasonsRequiredEssences, OracleOfSeasonsTreehouseOldManRequirement, \
+    OracleOfSeasonsTarmGateRequirement, OracleOfSeasonsGoldenBeastsRequirement
 
 
 # Items predicates ############################################################
@@ -225,7 +228,7 @@ def oos_is_companion_dimitri() -> Rule:
 
 
 def oos_is_default_season(area_name: str, season: int, is_season: bool = True) -> Rule:
-    return Season(area_name, season, is_season)
+    return from_world_field(f"default_seasons.{area_name}", season, "eq" if is_season else "ne")
 
 
 def oos_can_remove_season(season: int) -> Rule:
@@ -240,15 +243,15 @@ def oos_has_essences(target_count: int) -> Rule:
 
 
 def oos_has_essences_for_maku_seed() -> Rule:
-    return HasGroupOption("Essences", "required_essences")
+    return HasGroup("Essences", FromOption(OracleOfSeasonsRequiredEssences))
 
 
 def oos_has_essences_for_treehouse() -> Rule:
-    return HasGroupOption("Essences", "treehouse_old_man_requirement")
+    return HasGroup("Essences", FromOption(OracleOfSeasonsTreehouseOldManRequirement))
 
 
 def oos_has_required_jewels() -> Rule:
-    return HasGroupOption("Jewels", "tarm_gate_required_jewels")
+    return HasGroup("Jewels", FromOption(OracleOfSeasonsTarmGateRequirement))
 
 
 def oos_can_reach_lost_woods_pedestal(allow_default: bool = False) -> Rule:
@@ -280,14 +283,14 @@ def oos_can_complete_lost_woods_main_sequence(allow_default: bool = False) -> Ru
 
 
 def oos_can_beat_required_golden_beasts() -> Rule:
-    return HasFromListOption("_beat_golden_darknut", "_beat_golden_lynel", "_beat_golden_moblin", "_beat_golden_octorok",
-                             option_name="golden_beasts_requirement")
+    return HasFromList("_beat_golden_darknut", "_beat_golden_lynel", "_beat_golden_moblin", "_beat_golden_octorok",
+                             count=FromOption(OracleOfSeasonsGoldenBeastsRequirement))
 
 
 def oos_can_complete_d11_puzzle() -> Rule:
     return Or(
         from_option(OracleOfSeasonsDungeonShuffle, OracleOfSeasonsDungeonShuffle.option_false),
-        CanReachNumRegions([f"enter d{i}" for i in range(1, 9)], 7)  # And then deduce the last
+        AtLeast(7, *[CanReachRegion(f"enter d{i}") for i in range(1, 9)])  # And then deduce the last
     )
 
 
@@ -298,7 +301,11 @@ def oos_has_rupees_for_shop(shop_name: str) -> Rule:
             oos_option_hard_logic(),
             oos_has_shovel()
         ),
-        HasRupeesForShop(shop_name)
+        from_world_field(f"shop_rupee_requirements.{shop_name}", 0, "eq"),
+        And(
+            oos_can_farm_rupees(),
+            Has("Rupees", FromWorldAttr(f"shop_rupee_requirements.{shop_name}"))
+        )
     )
 
 
@@ -311,7 +318,16 @@ def oos_can_farm_rupees() -> Rule:
 
 
 def oos_can_buy_market() -> Rule:
-    return HasOresForShop()
+    return Or(
+        from_world_field(f"shop_prices.subrosianMarket", 0, "eq"),
+        And(
+            oos_can_farm_ore_chunks(),
+            Or(
+                Has("Ore Chunks", FromWorldAttr(f"shop_prices.subrosianMarket")),
+                from_option(OracleOfSeasonsGoldenOreSpotsShuffle, OracleOfSeasonsGoldenOreSpotsShuffle.option_false, "eq"),
+            )
+        )
+    )
 
 
 def oos_can_farm_ore_chunks() -> Rule:
@@ -1324,7 +1340,7 @@ def oos_roosters(region: str, any_amount: int = 0, top_amount: int = 0, bottom_a
                 oos_roosters("horon", any_amount + 1, top_amount, bottom_amount, set(visited_regions)),
                 oos_season_in_eyeglass_lake(SEASON_WINTER),
                 Or(
-                    Season("EYEGLASS_LAKE", SEASON_SUMMER, True),
+                    oos_is_default_season("EYEGLASS_LAKE", SEASON_SUMMER, True),
                     oos_can_remove_season(SEASON_SUMMER)
                 ),
                 oos_can_swim(True)

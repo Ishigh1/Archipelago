@@ -32,12 +32,12 @@ def create_randomizable_connections(world: OracleOfSeasonsWorld, prefix: str,
 def create_connections(world: OracleOfSeasonsWorld, origin_name: str, options):
     all_logic = [
         make_holodrum_logic(origin_name, options),
-        make_subrosia_logic(),
+        make_subrosia_logic(options),
         make_d0_logic(),
         make_d1_logic(),
-        make_d2_logic(),
+        make_d2_logic(options),
         make_d3_logic(),
-        make_d4_logic(),
+        make_d4_logic(options),
         make_d5_logic(),
         make_d6_logic(),
         make_d7_logic(),
@@ -71,6 +71,11 @@ def create_connections(world: OracleOfSeasonsWorld, origin_name: str, options):
     # Create connections
     for logic_array in all_logic:
         for entrance_desc in logic_array:
+            if len(entrance_desc) == 5:
+                # This is a conditional transition
+                if not entrance_desc[4]:
+                    continue
+
             region_1 = world.get_region(entrance_desc[0])
             region_2 = world.get_region(entrance_desc[1])
             is_two_way = entrance_desc[2]

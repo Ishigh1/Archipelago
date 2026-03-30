@@ -88,7 +88,7 @@ def make_d1_logic():
     ]
 
 
-def make_d2_logic():
+def make_d2_logic(options: OracleOfSeasonsOptions):
     return [
         # 0 keys
         ["enter d2", "d2 torch room", True, None],
@@ -125,7 +125,7 @@ def make_d2_logic():
                 )
             )
         )],
-        ["d2 alt entrances", "d2 scrub", False, oos_has_rupees_for_shop("d2Scrub")],
+        ["d2 alt entrances", "d2 scrub", False, oos_has_rupees_for_shop("d2Scrub"), options.shuffle_business_scrubs],
 
         # 2 keys
         ["d2 roller chest", "d2 spinner", False, And(
@@ -255,7 +255,7 @@ def make_d3_logic():
     ]
 
 
-def make_d4_logic():
+def make_d4_logic(options: OracleOfSeasonsOptions):
     return [
         # 0 keys
         ["enter d4", "d4 north of entrance", False, Or(
@@ -362,7 +362,7 @@ def make_d4_logic():
         )],
 
         ["d4 stalfos stairs", "d4 terrace", False, None],
-        ["d4 terrace", "d4 scrub", False, oos_has_rupees_for_shop("d4Scrub")],
+        ["d4 terrace", "d4 scrub", False, oos_has_rupees_for_shop("d4Scrub"), options.shuffle_business_scrubs],
 
         ["d4 stalfos stairs", "d4 torch chest", False, And(
             oos_has_seed_thrower(),
