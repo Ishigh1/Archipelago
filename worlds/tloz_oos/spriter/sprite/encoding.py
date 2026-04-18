@@ -1,24 +1,27 @@
-from PIL.Image import Image
+import math
+from typing import cast
+
+from worlds.tloz_oos.spriter.microbmp import MicroBMP
 
 from . import bw_palette, link_palette
 
 
-def has_separator(image: Image) -> bool:
-    if image.width > 8:
-        return image.getpixel((8, 0)) == 4
-    else:
-        # Just to cover the case where it's a single column
-        return image.getpixel((0, 8)) == 4
+def has_separator(image: MicroBMP) -> bool:
+    if cast(int, image.DIB_w) > 8:
+        return image[8, 0] == 4
+
+    # Just to cover the case where it's a single column
+    return image[0, 8] == 4
 
 
-def encode_tile(img: Image, x: int, y: int) -> bytes:
+def encode_tile(image: MicroBMP, x: int, y: int) -> bytearray:
     data = bytearray(32)
 
     for j in range(16):
         b1 = 0
         b2 = 0
         for i in range(8):
-            c = img.getpixel((x + (7 - i), y + j))
+            c = cast(int, image[x + (7 - i), y + j])
             assert c < 4
 
             b1 |= (c & 1) << i
@@ -30,81 +33,58 @@ def encode_tile(img: Image, x: int, y: int) -> bytes:
     return data
 
 
-def encode_sprite(image: Image) -> bytes:
+def encode_sprite(image: MicroBMP) -> bytearray:
     x = y = 0
-    sprite_data = []
+    sprite_data = bytearray()
     if has_separator(image):
         x_step = 9
         y_step = 17
     else:
         x_step = 8
         y_step = 16
-    for sprite_id in range(279):
-        sprite_data.append(encode_tile(image, x, y))
+
+    for _sprite_id in range(279):
+        sprite_data.extend(encode_tile(image, x, y))
         x += x_step
-        if x >= image.width:
+        if x >= cast(int, image.DIB_w):
             x = 0
             y += y_step
-    return b"".join(sprite_data)
+    return sprite_data
 
 
-def remap_sprite(image: Image) -> Image:
-    img_palette = image.getpalette("RGB")
-    if img_palette is None or len(img_palette) > 15:
-        image = image.convert("RGBA")
-        image = image.quantize(5)
-    img_palette = image.getpalette("RGBA")
-    mapping = list(range(5))
+def remap_sprite(image: MicroBMP) -> None:
+    image_palette = cast(list[bytearray], image.palette)
+    candidate_palettes = [bw_palette, link_palette]
+    mapping_attempt: dict[int, tuple[int, list[int]]] = {key: (0, []) for key in range(len(candidate_palettes))}
+    for palette_color in image_palette:
+        for palette_id in range(len(candidate_palettes)):
+            palette = candidate_palettes[palette_id]
+            error = 0x1000
+            match = -1
+            for color_id in range(5):
+                color = palette[color_id]
+                current_error = 0
+                for component in range(3):
+                    current_error += abs(color[component] - palette_color[component])
+                if current_error < error:
+                    error = current_error
+                    match = color_id
 
-    transparent_tiles = []
-    if len(img_palette) > 3:
-        for i in range(3, len(img_palette), 4):
-            if img_palette[i] < 0x80:
-                transparent_tiles.append(img_palette[i // 4])
-    elif isinstance(image.info["transparency"], int):
-        transparent_tiles.append(image.info["transparency"])
-    elif isinstance(image.info["transparency"], bytes):
-        for i in range(len(image.info["transparency"])):
-            if image.info["transparency"][i] < 0x80:  # Why not leave a margin, not like we expect anything other than 0xff or 0x00
-                transparent_tiles.append(image.info["transparency"])
-    else:
-        raise TypeError("transparency_data must be either int or bytes")
+            previous_error, palette_mapping = mapping_attempt[palette_id]
+            palette_mapping.append(match)
+            mapping_attempt[palette_id] = (previous_error + error, palette_mapping)
 
-    if len(transparent_tiles) == 0:
-        # Assume bw
-        palette = bw_palette
-        for i in range(0, len(img_palette), 4):
-            r = img_palette[i]
-            if r < 0x20:
-                mapping[0] = i // 4
-            elif r < 0x80:
-                mapping[1] = i // 4
-            elif r < 0xc0:
-                mapping[2] = i // 4
-            elif img_palette[i + 1] < 0x20:
-                mapping[4] = i // 4  # Dead
-            else:
-                mapping[3] = i // 4
-    elif len(transparent_tiles) == 1:
-        # Assume green
-        palette = link_palette
-        mapping[0] = transparent_tiles[0]
-        for i in range(0, len(img_palette), 4):
-            r = img_palette[i]
-            g = img_palette[i + 1]
-            if transparent_tiles[0] == i:
-                continue
-            elif r < 0x80 and g < 0x80:
-                mapping[1] = i // 4  # Black
-            elif r < 0x80 <= g:
-                mapping[2] = i // 4  # Green
-            elif r >= 0x80 and g >= 0x80:
-                mapping[3] = i // 4  # White/Yellow
-            else:
-                mapping[4] = i // 4  # Dead
-    else:
-        raise TypeError("Too many transparent tiles")
+    chosen_palette = []
+    best_error = math.inf
+    best_mapping: list[int] = []
+    for palette_id in range(len(candidate_palettes)):
+        error, mapping = mapping_attempt[palette_id]
+        if error < best_error:
+            best_error = error
+            best_mapping = mapping
+            chosen_palette = candidate_palettes[palette_id]
 
-    image = image.remap_palette(mapping)
-    image.putpalette(palette, "RGBA")
-    return image
+    image.palette = chosen_palette
+    for x in range(cast(int, image.DIB_w)):
+        for y in range(cast(int, image.DIB_h)):
+            image[x, y] = best_mapping[cast(int, image[x, y])]

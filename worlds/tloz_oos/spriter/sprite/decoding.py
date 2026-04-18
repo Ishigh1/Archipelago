@@ -1,10 +1,10 @@
-from PIL.Image import Image
-from PIL.Image import new as new_image
+from collections.abc import Sequence
 
 from ...patching.RomData import RomData
+from ..microbmp import MicroBMP
 
 
-def draw_tile(img: Image, sprite_data: bytes, x: int, y: int, address: int) -> None:
+def draw_tile(image: MicroBMP, sprite_data: Sequence[int], x: int, y: int, address: int) -> None:
     if address >= len(sprite_data):
         return
 
@@ -16,14 +16,14 @@ def draw_tile(img: Image, sprite_data: bytes, x: int, y: int, address: int) -> N
             b1 >>= 1
             b2 >>= 1
 
-            img.putpixel((x + (7 - i), y + j), c)
+            image[x + (7 - i), y + j] = c
 
 
-def load_link_data(rom_data: RomData) -> bytes:
+def load_link_data(rom_data: RomData) -> Sequence[int]:
     return rom_data.read_bytes(0x68000, 0x22E0)
 
 
-def load_link_sprite(sprite_data: bytes, separator: bool = False) -> Image:
+def load_link_sprite(sprite_data: Sequence[int], separator: bool = False) -> MicroBMP:
     # Standalone uses 16, 18
     # Vanilla data is 279, or 3 * 3 * 31
     target_width = 16
@@ -31,11 +31,17 @@ def load_link_sprite(sprite_data: bytes, separator: bool = False) -> Image:
     if separator:
         tile_shift_x = 9
         tile_shift_y = 17
-        link_sprite = new_image("P", (target_width * 9 - 1, target_height * 17 - 1), color=4)
+        link_sprite = MicroBMP(target_width * 9 - 1, target_height * 17 - 1, depth=8)
     else:
         tile_shift_x = 8
         tile_shift_y = 16
-        link_sprite = new_image("P", (target_width * 8, target_height * 16), color=4)
+        link_sprite = MicroBMP(target_width * 8, target_height * 16, depth=8)
+
+    assert isinstance(link_sprite.DIB_w, int)
+    assert isinstance(link_sprite.DIB_h, int)
+    for i in range(link_sprite.DIB_w):
+        for j in range(link_sprite.DIB_h):
+            link_sprite[i, j] = 4
 
     for y in range(target_height):
         for x in range(target_width):

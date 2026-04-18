@@ -2,9 +2,10 @@ import os
 
 from settings import get_settings
 from worlds.tloz_oos.patching.RomData import RomData
+from worlds.tloz_oos.spriter.microbmp import MicroBMP
 from worlds.tloz_oos.spriter.sprite import bw_palette, link_palette
 from worlds.tloz_oos.spriter.sprite.decoding import load_link_data, load_link_sprite
-from worlds.tloz_oos.spriter.sprite.encoding import encode_sprite
+from worlds.tloz_oos.spriter.sprite.encoding import encode_sprite, remap_sprite
 
 if __name__ == "__main__":
     if not os.path.isdir("output"):
@@ -13,14 +14,21 @@ if __name__ == "__main__":
     rom = RomData(bytes(open(file_name, "rb").read()))
     sprite_data = load_link_data(rom)
     image = load_link_sprite(sprite_data, True)
-    image.putpalette(bw_palette, "RGBA")
-    image.save("output/link_bw.png")
-    image.putpalette(link_palette, "RGBA")
-    image.save("output/link_g.png")
+    image.palette = bw_palette
+    image.save("output/link_bw.bmp")
+    image.palette = link_palette
+    image.save("output/link_g.bmp")
 
     # Test encoder
     encoded = encode_sprite(image)
     image = load_link_sprite(encoded, True)
-    image.putpalette(bw_palette, "RGBA")
-    image.save("output/link_bw_2.png")
+    image.palette = bw_palette
+    image.save("output/link_bw_2.bmp")
 
+    # Test remapping
+    image = MicroBMP().load("output/link_bw.bmp")
+    remap_sprite(image)
+    image.save("output/link_bw3.bmp")
+    image = MicroBMP().load("output/link_g.bmp")
+    remap_sprite(image)
+    image.save("output/link_g3.bmp")

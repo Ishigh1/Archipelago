@@ -1,5 +1,5 @@
 # Import autoregistered classes
-from .World import OracleOfSeasonsWorld
-from .Client import OracleOfSeasonsClient
-from .patching.ProcedurePatch import OoSPatchExtensions
-from .spriter.ui import component
+from .Client import OracleOfSeasonsClient  # noqa: F401
+from .patching.ProcedurePatch import OoSPatchExtensions  # noqa: F401
+from .spriter.ui import component  # noqa: F401
+from .World import OracleOfSeasonsWorld  # noqa: F401

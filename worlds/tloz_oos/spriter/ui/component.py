@@ -2,7 +2,7 @@ import asyncio
 
 import colorama
 
-from worlds.LauncherComponents import components, Component, Type, launch
+from worlds.LauncherComponents import Component, Type, components, launch
 
 component_name = "Oracle of Seasons sprite editor"
 
