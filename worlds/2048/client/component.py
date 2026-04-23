@@ -6,8 +6,8 @@ import colorama
 from worlds.LauncherComponents import Component, Type, components, launch
 
 
-def run_client() -> None:
-    launch(launch_client, name="2048")
+def run_client(*args: str) -> None:
+    launch(launch_client, name="2048", args= args)
 
 
 def launch_client(*args: Sequence[str]) -> None:
