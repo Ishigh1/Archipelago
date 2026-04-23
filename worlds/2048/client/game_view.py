@@ -9,10 +9,6 @@ from kivymd.uix.label import MDLabel
 
 from CommonClient import logger
 
-INPUT_MAP_STR = {
-    "r": "reset",
-}
-
 INPUT_MAP_SPECIAL_INT = {
     273: "up",
     274: "down",
@@ -22,7 +18,6 @@ INPUT_MAP_SPECIAL_INT = {
 
 
 class TwoThousandAndFortyEightGameView(BoxLayout):
-    focused: bool = True
     input_function: Callable[[Any], None]
     grid_layout: GridLayout
     score_label: MDLabel
@@ -60,21 +55,9 @@ class TwoThousandAndFortyEightGameView(BoxLayout):
         self.add_widget(self.grid_layout)
 
         Window.bind(on_key_down=self._on_keyboard_down)
-        Window.bind(on_touch_down=self.check_focus)
 
-    def check_focus(self, _, touch, *args, **kwargs) -> None:
-        if self.parent and self.collide_point(*touch.pos):
-            self.focused = True
-            self.opacity = 1
-        else:
-            self.focused = False
-            self.opacity = 0.7
-
-    def _on_keyboard_down(self, _: Any, keycode_int: int, _2: Any, keycode: str, _4: Any) -> bool:
-        if not self.focused:
-            return False
-
-        direction = INPUT_MAP_STR.get(keycode) or INPUT_MAP_SPECIAL_INT.get(keycode_int)
+    def _on_keyboard_down(self, _: Any, keycode_int: int, _2: Any, _3: str, _4: Any) -> bool:
+        direction = INPUT_MAP_SPECIAL_INT.get(keycode_int)
         if direction:
             self.input_function(direction)
             return True
