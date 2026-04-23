@@ -11,7 +11,7 @@ class TwoThousandAndFortyEightGame:
     def __init__(self) -> None:
         self.checked_locations: set[int] = set()
         self.owned_merges: set[int] = set()
-        self.luck = 0.1
+        self.luck = 1
         self.reset_grid()
 
     def reset_grid(self) -> None:
@@ -26,7 +26,16 @@ class TwoThousandAndFortyEightGame:
         assert empty_cells
         x, y = random.choice(empty_cells)
         if cell_value == 0:
-            cell_value = 4 if random.random() < self.luck else 2
+            if 2 not in self.checked_locations or (
+                4 in self.checked_locations and 4 not in self.owned_merges and 2 in self.owned_merges
+            ):
+                # Never got a 2? Make help them get one (with 10 lucks, that check would otherwise be impossible)
+                # Otherwise, if 4 are useless, make 2s more likely if they can be merged.
+                # (If 2s can't merge, the player could be wanting to accumulate 4s for when that merge is unlocked)
+                cell_value = 4 if random.random() < (0.11 - 0.01 * self.luck) else 2
+            else:
+                # Make 4s more likely
+                cell_value = 4 if random.random() < 0.1 * self.luck else 2
         self.grid[y][x] = cell_value
         self.checked_locations.add(cell_value)
 
@@ -112,7 +121,7 @@ class TwoThousandAndFortyEightGame:
         if math.log2(item_id).is_integer():
             self.owned_merges.add(item_id)
         elif item_id == 13:
-            self.luck += 0.1
+            self.luck += 1
         elif item_id == 666:
             all_tiles = []
             for line in self.grid:
