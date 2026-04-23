@@ -110,7 +110,7 @@ class TwoThousandAndFortyEightGame:
         # Only spawn a new tile and return True if the board changed
         if refresh:
             for score_goal in SCORE_THRESHOLDS:
-                if score_goal < self.score:
+                if score_goal <= self.score:
                     self.checked_locations.add(score_goal)
             self.spawn_tile()
             return True
