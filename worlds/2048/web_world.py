@@ -13,3 +13,5 @@ class TwoThousandAndFortyEightWebWorld(WebWorld):
         "setup/en",
         ["Ishigh"],
     )
+
+    tutorials = [setup_en]
