@@ -7,8 +7,6 @@ from kivy.uix.gridlayout import GridLayout
 from kivymd.uix.button import MDButton, MDButtonText
 from kivymd.uix.label import MDLabel
 
-from CommonClient import logger
-
 INPUT_MAP_SPECIAL_INT = {
     273: "up",
     274: "down",
@@ -24,7 +22,6 @@ class TwoThousandAndFortyEightGameView(BoxLayout):
 
     def __init__(self, input_function: Callable[[Any], None], **kwargs: Any) -> None:
         super().__init__(**kwargs)
-        logger.info("View: Initializing TwoThousandAndFortyEightGameView")
         self.input_function = input_function
         self.orientation = "vertical"
         self.padding = 20

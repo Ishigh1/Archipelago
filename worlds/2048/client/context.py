@@ -2,7 +2,7 @@ import asyncio
 from typing import Any
 
 import kvui
-from CommonClient import CommonContext, logger
+from CommonClient import CommonContext
 from NetUtils import ClientStatus
 
 from .game import TwoThousandAndFortyEightGame
@@ -36,25 +36,22 @@ class TwoThousandAndFortyEightContext(CommonContext):
             await asyncio.sleep(0.5)
             if not self.connected:
                 continue
-            try:
-                await self.check_locations(self.game_logic.checked_locations)
+            await self.check_locations(self.game_logic.checked_locations)
 
-                rerender = False
+            rerender = False
 
-                new_items = self.items_received[self.highest_processed_item_index:]
-                for item in new_items:
-                    self.highest_processed_item_index += 1
-                    self.game_logic.receive_item(item.item)
-                    rerender = True
+            new_items = self.items_received[self.highest_processed_item_index:]
+            for item in new_items:
+                self.highest_processed_item_index += 1
+                self.game_logic.receive_item(item.item)
+                rerender = True
 
-                if rerender:
-                    self.render()
+            if rerender:
+                self.render()
 
-                if 2048 in self.game_logic.checked_locations and not self.finished_game:
-                    await self.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
-                    self.finished_game = True
-            except Exception as e:
-                logger.exception(e)
+            if 2048 in self.game_logic.checked_locations and not self.finished_game:
+                await self.send_msgs([{"cmd": "StatusUpdate", "status": ClientStatus.CLIENT_GOAL}])
+                self.finished_game = True
 
     def on_package(self, cmd: str, args: dict[str, Any]) -> None:
         if cmd == "RoomInfo":

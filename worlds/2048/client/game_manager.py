@@ -2,7 +2,6 @@ from typing import TYPE_CHECKING
 
 from kivy.uix.layout import Layout
 
-from CommonClient import logger
 from kvui import GameManager
 
 from .game import TwoThousandAndFortyEightGame
@@ -32,22 +31,18 @@ class TwoThousandAndFortyEightManager(GameManager):
                 self.tile_widgets[x][y].set_value(val)
 
     def build(self) -> Layout:
-        try:
-            container = super().build()
-            game_view = TwoThousandAndFortyEightGameView(self.ctx.input_and_rerender)
-            self.game_view = game_view
-            self.tile_widgets = []
+        container = super().build()
+        game_view = TwoThousandAndFortyEightGameView(self.ctx.input_and_rerender)
+        self.game_view = game_view
+        self.tile_widgets = []
+        for _ in range(4):
+            row = []
             for _ in range(4):
-                row = []
-                for _ in range(4):
-                    tile = TileWidget()
-                    self.game_view.grid_layout.add_widget(tile)
-                    row.append(tile)
-                self.tile_widgets.append(row)
+                tile = TileWidget()
+                self.game_view.grid_layout.add_widget(tile)
+                row.append(tile)
+            self.tile_widgets.append(row)
 
-            self.add_client_tab("2048 Game", game_view)
-            self.render(self.ctx.game_logic)
-            return container
-        except Exception as e:
-            logger.error(e)
-            raise e
+        self.add_client_tab("2048 Game", game_view)
+        self.render(self.ctx.game_logic)
+        return container
