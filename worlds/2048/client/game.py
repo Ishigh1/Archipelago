@@ -1,17 +1,19 @@
 import math
 import random
 
-from ..locations import SCORE_THRESHOLDS
-
 
 class TwoThousandAndFortyEightGame:
     score: int
     grid: list[list[int]]
 
-    def __init__(self) -> None:
+    def __init__(self, missing_locations: set[int]) -> None:
         self.checked_locations: set[int] = set()
         self.owned_merges: set[int] = set()
+        self.unmet_score_thresholds: list[int] = sorted(
+            [location for location in missing_locations if not math.log2(location).is_integer()]
+        )
         self.luck = 1
+        self.got_2048 = False
         self.reset_grid()
 
     def reset_grid(self) -> None:
@@ -59,6 +61,8 @@ class TwoThousandAndFortyEightGame:
                 new_line.append(new_digit)
                 updated = True
                 prev_digit = 0
+                if new_digit == 2048:
+                    self.got_2048 = True
             elif prev_digit:
                 new_line.append(prev_digit)
                 prev_digit = digit
@@ -109,9 +113,12 @@ class TwoThousandAndFortyEightGame:
 
         # Only spawn a new tile and return True if the board changed
         if refresh:
-            for score_goal in SCORE_THRESHOLDS:
-                if score_goal <= self.score:
-                    self.checked_locations.add(score_goal)
+            while self.unmet_score_thresholds:
+                score_goal = self.unmet_score_thresholds[0]
+                if score_goal > self.score:
+                    break
+                del self.unmet_score_thresholds[0]
+                self.checked_locations.add(score_goal)
             self.spawn_tile()
             return True
 
