@@ -43,7 +43,7 @@ class TwoThousandAndFortyEightContext(CommonContext):
 
             rerender = False
 
-            new_items = self.items_received[self.highest_processed_item_index:]
+            new_items = self.items_received[self.highest_processed_item_index :]
             for item in new_items:
                 self.highest_processed_item_index += 1
                 self.game_logic.receive_item(item.item)
@@ -95,7 +95,7 @@ class TwoThousandAndFortyEightContext(CommonContext):
     def on_print_json(self, args: dict[str, Any]) -> None:
         super().on_print_json(args)
 
-        if args["type"] == "ItemSend":
+        if args.get("type") == "ItemSend":
             item: NetworkItem = args["item"]
             if item.player == self.slot and args["receiving"] != self.slot:
                 item_name = self.item_names.lookup_in_slot(item.item, args["receiving"])
