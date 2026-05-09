@@ -4,5 +4,8 @@
   "world_version": "1.1.1",
   "authors": [
     "Ishigh"
-  ]
+  ],
+
+  "license": "MIT",
+  "repo_url": "https://github.com/Ishigh1/Archipelago/tree/2048"
 }
