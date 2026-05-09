@@ -54,7 +54,7 @@ class TwoThousandAndFortyEightContext(CommonContext):
                         f"Found {TwoThousandAndFortyEightWorld.item_id_to_name[item.item]} ({location_name})"
                     )
                 else:
-                    location_name = self.item_names.lookup_in_slot(item.location, item.player)
+                    location_name = self.location_names.lookup_in_slot(item.location, item.player)
                     player_name = self.player_names[item.player]
                     self.ui.game_view.show_popup(
                         f"Received {TwoThousandAndFortyEightWorld.item_id_to_name[item.item]} from {player_name} "

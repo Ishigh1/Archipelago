@@ -28,16 +28,67 @@ class TwoThousandAndFortyEightGame:
         assert empty_cells
         x, y = random.choice(empty_cells)
         if cell_value == 0:
-            if 2 not in self.checked_locations or (
-                4 in self.checked_locations and 4 not in self.owned_merges and 2 in self.owned_merges
-            ):
-                # Never got a 2? Make help them get one (with 10 lucks, that check would otherwise be impossible)
-                # Otherwise, if 4 are useless, make 2s more likely if they can be merged.
-                # (If 2s can't merge, the player could be wanting to accumulate 4s for when that merge is unlocked)
-                cell_value = 4 if random.random() < (0.11 - 0.01 * self.luck) else 2
+            wanted = 4
+            if 4 not in self.checked_locations:
+                pass
+            elif 2 not in self.checked_locations:
+                wanted = 2
+            elif 2 not in self.owned_merges:
+                pass
+            elif 4 not in self.owned_merges:
+                wanted = 2
             else:
-                # Make 4s more likely
-                cell_value = 4 if random.random() < 0.1 * self.luck else 2
+                for i in range(x-1, -1, -1):
+                    if self.grid[y][i] == 2:
+                        wanted = 2
+                        break
+                    if self.grid[y][i] != 0:
+                        break
+
+                if wanted == 4:
+                    for i in range(x+1, 4, 1):
+                        if self.grid[y][i] == 2:
+                            wanted = 2
+                            break
+                        if self.grid[y][i] != 0:
+                            break
+
+                if wanted == 4:
+                    for i in range(y-1, -1, -1):
+                        if self.grid[i][x] == 2:
+                            wanted = 2
+                            break
+                        if self.grid[i][x] != 0:
+                            break
+
+                if wanted == 4:
+                    for i in range(y+1, 4, 1):
+                        if self.grid[i][x] == 2:
+                            wanted = 2
+                            break
+                        if self.grid[i][x] != 0:
+                            break
+
+                if wanted == 4 and self.unmet_score_thresholds:
+                    max_value = 2
+                    grid_space = 14
+                    while max_value in self.owned_merges:
+                        max_value *= 2
+                        grid_space -= 1.5
+                        if max_value not in self.checked_locations or (max_value == 2048 and not self.got_2048):
+                            break
+                    else:
+                        log = math.log2(max_value) - 2
+                        score_4s = max_value * grid_space * log
+                        score_2s = max_value * (grid_space - 2) * 2 * log
+                        if score_4s < self.unmet_score_thresholds[0] < score_2s:
+                            wanted = 2
+
+            if wanted == 2:
+                luck = (0.11 - 0.01 * self.luck)
+            else:
+                luck = 0.1 * self.luck
+            cell_value = 4 if random.random() < luck else 2
         self.grid[y][x] = cell_value
         self.checked_locations.add(cell_value)
 
