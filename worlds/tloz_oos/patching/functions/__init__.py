@@ -40,7 +40,7 @@ from ...Options import (
     OracleOfSeasonsOldMenShuffle,
     OracleOfSeasonsShowDungeonsWithEssence,
 )
-from ...World import OracleOfSeasonsWorld
+from ...world import OracleOfSeasonsWorld
 from ..asm import asm_files
 from ..Constants import (
     CALL_SCRIPT,
@@ -860,10 +860,8 @@ def set_character_sprite_from_settings(rom: RomData) -> None:
         sprite_bytes = list(Path(sprite_path).read_bytes())
         rom.write_bytes(0x68000, sprite_bytes)
 
-    # noinspection PyUnboundLocalVariable
     if palette == "green":
         return  # Nothing to change
-    # noinspection PyUnboundLocalVariable
     if palette not in PALETTE_BYTES:
         raise ValueError(f"Palette color '{palette}' doesn't exist (must be 'green', 'blue', 'red' or 'orange')")
     palette_byte = PALETTE_BYTES[palette]
