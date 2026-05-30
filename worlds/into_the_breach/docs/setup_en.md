@@ -38,4 +38,5 @@ It means you didn't install the dependencies to randomize squads.
 It means you didn't run the makeitso command, check [above](#mod-setup)
 
 ### I am getting a Script Error with "attempt to index a global 'modapiext' (a nil value)'" (third line)
-It means you installed the source code of the modloader instead of the release. You need to get "ITB-ModLoader-XXXXXX.zip"
+In mod content > configure mods, develop Mod Loader Extensions and check if both modApiExt and memedit are ticked (it should have been done in step 4)
+If it isn't there, it means you installed the source code of the modloader instead of the release. You need to get "ITB-ModLoader-XXXXXX.zip"
