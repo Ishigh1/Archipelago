@@ -1,3 +1,4 @@
+import logging
 import math
 import random
 
@@ -176,10 +177,13 @@ class TwoThousandAndFortyEightGame:
         return False
 
     def receive_item(self, item_id: int) -> None:
+        logging.info(f"Received item {item_id}")
         if math.log2(item_id).is_integer():
             self.owned_merges.add(item_id)
+            logging.info(f"Owned merge: {item_id}")
         elif item_id == 13:
             self.luck += 1
+            logging.info(f"Luck: {self.luck}")
         elif item_id == 666:
             all_tiles = []
             for line in self.grid:
@@ -190,5 +194,7 @@ class TwoThousandAndFortyEightGame:
                 for x in range(4):
                     self.grid[y][x] = all_tiles[i]
                     i += 1
+            logging.info("Got shuffle trap")
         elif item_id < 100:
             self.spawn_tile(item_id)
+            logging.info(f"Spawn tile: {item_id}")

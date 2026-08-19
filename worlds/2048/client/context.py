@@ -41,13 +41,10 @@ class TwoThousandAndFortyEightContext(CommonContext):
             assert self.game_logic is not None
             await self.check_locations(self.game_logic.checked_locations)
 
-            rerender = False
-
             new_items = self.items_received[self.highest_processed_item_index :]
             for item in new_items:
                 self.highest_processed_item_index += 1
                 self.game_logic.receive_item(item.item)
-                rerender = True
                 if item.player == self.slot:
                     location_name = TwoThousandAndFortyEightWorld.location_id_to_name[item.location]
                     self.ui.game_view.show_popup(
@@ -61,7 +58,7 @@ class TwoThousandAndFortyEightContext(CommonContext):
                         f"({location_name})"
                     )
 
-            if rerender:
+            if new_items:
                 self.render()
 
             if not self.finished_game and self.game_logic.got_2048:
