@@ -21,7 +21,7 @@ Note: if you previously installed this apworld by putting it in the lib folder (
 - Go in mod content>configure mods then enable the randomizer mod, Mod Loader Extensions > modApiExt and Mod Loader Extensions > memedit
   - If it is asking to disable mods to do calibration: 
     - Close the game
-    - Download and unzip the [latest memedit release](https://github.com/itb-community/memedit/releases/tag/1.2.0) into your Into The Breach/scripts/mod_loader/extensions/modLoaderExtensions/mods/memedit/ 
+    - Download and unzip the [latest memedit release](https://github.com/itb-community/memedit/releases/latest) into your Into The Breach/scripts/mod_loader/extensions/modLoaderExtensions/mods/memedit/ 
     - Relaunch the game
 - Open the console with ` (if you don't have it on your keyboard, switch to the english one)
 - Type the command "makeitso". This command is linked to your current profile, so if you change it afterward, you will need to do the command again.
