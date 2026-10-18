@@ -1,6 +1,6 @@
 import dataclasses
 from collections.abc import Callable, Iterable, Mapping
-from typing import TYPE_CHECKING, Any, ClassVar, Final, Generic, Never, Self, cast
+from typing import TYPE_CHECKING, Any, ClassVar, Final, Generic, Never, Self, cast, Sequence, Iterator
 
 from typing_extensions import TypeVar, dataclass_transform, override
 
@@ -619,7 +619,7 @@ class And(NestedRule[TWorld], game="Archipelago"):
                     del clauses[i]
                     if len(intersection) > 1 or child != intersection[0]:
                         # This intersection might have new properties
-                        children_to_process[:0] = intersection
+                        children_to_reprocess[:0] = intersection
                         break
             else:
                 # Only happens when break didn't happen
@@ -707,7 +707,7 @@ class Or(NestedRule[TWorld], game="Archipelago"):
                     del clauses[i]
                     if len(intersection) > 1 or child != intersection[0]:
                         # This intersection might have new properties
-                        children_to_process[:0] = intersection
+                        children_to_reprocess[:0] = intersection
                         break
             else:
                 # Only happens when break didn't happen
@@ -937,7 +937,9 @@ class Has(Rule[TWorld], game="Archipelago"):
                     if self.count < other_rule.count:
                         return [other_rule]
                     return [self]
-                return [HasAllCounts({self.item_name: self.count, other_rule.item_name: other_rule.count}).resolve(world)]
+                return [
+                    HasAllCounts({self.item_name: self.count, other_rule.item_name: other_rule.count}).resolve(world)
+                ]
 
             if isinstance(other_rule, HasAll.Resolved):
                 if self.count > 1:
@@ -969,7 +971,9 @@ class Has(Rule[TWorld], game="Archipelago"):
                     if self.count > other_rule.count:
                         return [other_rule]
                     return [self]
-                return [HasAnyCount({self.item_name: self.count, other_rule.item_name: other_rule.count}).resolve(world)]
+                return [
+                    HasAnyCount({self.item_name: self.count, other_rule.item_name: other_rule.count}).resolve(world)
+                ]
 
             if isinstance(other_rule, HasAny.Resolved):
                 if self.item_name in other_rule.item_names:
