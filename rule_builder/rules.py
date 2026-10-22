@@ -2,7 +2,7 @@ import dataclasses
 from collections.abc import Callable, Iterable, Mapping
 from typing import TYPE_CHECKING, Any, ClassVar, Final, Generic, Never, Self, cast, Sequence, Iterator
 
-from typing_extensions import TypeVar, dataclass_transform, override
+from typing_extensions import TypeVar, dataclass_transform, deprecated, override
 
 from BaseClasses import CollectionState
 from NetUtils import JSONMessagePart
@@ -141,7 +141,7 @@ class Rule(Generic[TWorld]):
                 result[name] = value
         return result
 
-    def __and__(self, other: "Rule[Any] | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
+    def __and__(self, other: "Rule[Any] | Rule.Resolved | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
         """Combines two rules or a rule and an option filter into an And rule"""
         if isinstance(other, OptionFilter):
             other = (other,)
@@ -149,7 +149,7 @@ class Rule(Generic[TWorld]):
             if not other:
                 return self
             return Filtered(self, options=other)
-        if self.options == other.options:
+        if isinstance(other, Rule) and self.options == other.options:
             if isinstance(self, And):
                 if isinstance(other, And):
                     return And(*self.children, *other.children, options=self.options)
@@ -158,10 +158,10 @@ class Rule(Generic[TWorld]):
                 return And(self, *other.children, options=other.options)
         return And(self, other)
 
-    def __rand__(self, other: "Rule[Any] | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
+    def __rand__(self, other: "Rule[Any] | Rule.Resolved | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
         return self.__and__(other)
 
-    def __or__(self, other: "Rule[Any] | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
+    def __or__(self, other: "Rule[Any] | Rule.Resolved | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
         """Combines two rules or a rule and an option filter into an Or rule"""
         if isinstance(other, OptionFilter):
             other = (other,)
@@ -169,7 +169,7 @@ class Rule(Generic[TWorld]):
             if not other:
                 return self
             return Or(self, True_(options=other))
-        if self.options == other.options:
+        if isinstance(other, Rule) and self.options == other.options:
             if isinstance(self, Or):
                 if isinstance(other, Or):
                     return Or(*self.children, *other.children, options=self.options)
@@ -178,7 +178,7 @@ class Rule(Generic[TWorld]):
                 return Or(self, *other.children, options=self.options)
         return Or(self, other)
 
-    def __ror__(self, other: "Rule[Any] | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
+    def __ror__(self, other: "Rule[Any] | Rule.Resolved | Iterable[OptionFilter] | OptionFilter") -> "Rule[TWorld]":
         return self.__or__(other)
 
     def __bool__(self) -> Never:
@@ -346,12 +346,12 @@ class False_(Rule[TWorld], game="Archipelago"):  # noqa: N801
 class NestedRule(Rule[TWorld], game="Archipelago"):
     """A base rule class that takes an iterable of other rules as an argument and does logic based on them"""
 
-    children: tuple[Rule[TWorld], ...]
+    children: tuple[Rule[TWorld] | Rule.Resolved, ...]
     """The child rules this rule's logic is based on"""
 
     def __init__(
         self,
-        *children: Rule[TWorld],
+        *children: Rule[TWorld] | Rule.Resolved,
         options: Iterable[OptionFilter] = (),
         filtered_resolution: bool = False,
     ) -> None:
@@ -360,7 +360,8 @@ class NestedRule(Rule[TWorld], game="Archipelago"):
 
     @override
     def _instantiate(self, world: TWorld) -> Rule.Resolved:
-        children = [c.resolve(world) for c in self.children]
+        children = [c.resolve(world) if isinstance(c, Rule) else c for c in self.children]
+        assert all(c.player == world.player for c in children), "Incorrect player found in passed resolved rules"
         return self.Resolved(
             tuple(children),
             player=world.player,
@@ -369,9 +370,12 @@ class NestedRule(Rule[TWorld], game="Archipelago"):
 
     @override
     def to_dict(self) -> dict[str, Any]:
+        assert all(isinstance(c, Rule) for c in self.children), (
+            f"Cannot serialize rule as it contains resolved rules: {self}"
+        )
         data = super().to_dict()
         del data["args"]
-        data["children"] = [c.to_dict() for c in self.children]
+        data["children"] = [c.to_dict() for c in cast("tuple[Rule, ...]", self.children)]
         return data
 
     @override
@@ -452,7 +456,7 @@ class AtLeast(NestedRule[TWorld], game="Archipelago"):
     def __init__(
         self,
         count: int | FieldResolver,
-        *children: Rule[TWorld],
+        *children: Rule[TWorld] | Rule.Resolved,
         options: Iterable[OptionFilter] = (),
         filtered_resolution: bool = False,
     ) -> None:
@@ -468,43 +472,41 @@ class AtLeast(NestedRule[TWorld], game="Archipelago"):
         if count > num_clauses:
             return False_().resolve(world)
 
-        children_to_process = (c.resolve(world) for c in self.children)
-        return AtLeast.from_resolved(count, world, children_to_process, num_clauses)
-
-    @classmethod
-    def from_resolved(
-        cls, count: int, world: TWorld, children_to_process: Iterator[Rule.Resolved], num_clauses: int
-    ) -> Rule.Resolved:
         clauses: list[Rule.Resolved] = []
-
-        for child in children_to_process:
+        for child in self.children:
+            if isinstance(child, Rule):
+                child = child.resolve(world)  # noqa: PLW2901 this is on purpose
+            else:
+                assert child.player == world.player, "Incorrect player found in passed resolved rules"
             if child.always_true:
                 if count == 1:
                     return child
                 count -= 1
                 continue
             if child.always_false:
-                # falses can be ignored
-                if num_clauses == count:
-                    # Not enough clauses to ever be true
+                if num_clauses <= count:
                     return child
                 num_clauses -= 1
                 continue
-
             clauses.append(child)
 
         if count == 1:
             # Switch to Or which has more optimized handling
-            return Or.from_resolved(world, clauses.__iter__())
+            return Or(*clauses).resolve(world)
         if count == len(clauses):
             # Switch to And which has more optimized handling
-            return And.from_resolved(world, clauses.__iter__())
+            return And(*clauses).resolve(world)
         return AtLeast.Resolved(
             tuple(clauses),
             count=count,
             player=world.player,
             caching_enabled=getattr(world, "rule_caching_enabled", False),
         )
+
+    @classmethod
+    @deprecated("Resolved rules can be passed directly to AtLeast")
+    def from_resolved(cls, count: int, world: TWorld, children_to_process: list[Rule.Resolved]) -> Rule.Resolved:
+        return AtLeast(count, *children_to_process).resolve(world)
 
     @override
     def to_dict(self) -> dict[str, Any]:
@@ -582,22 +584,16 @@ class And(NestedRule[TWorld], game="Archipelago"):
 
     @override
     def _instantiate(self, world: TWorld) -> Rule.Resolved:
-        return And.from_resolved(world, (c.resolve(world) for c in self.children))
-
-    @classmethod
-    def from_resolved(cls, world: TWorld, children_to_process: Iterator[Rule.Resolved]) -> Rule.Resolved:
-        children_to_reprocess: list[Rule.Resolved] = []
+        children_to_process = list(self.children)
         clauses: list[Rule.Resolved] = []
         true_rule: Rule.Resolved | None = None
 
-        while True:
-            if children_to_reprocess:
-                child = children_to_reprocess.pop(0)
+        while children_to_process:
+            child = children_to_process.pop(0)
+            if isinstance(child, Rule):
+                child = child.resolve(world)
             else:
-                child = next(children_to_process, None)
-                if child is None:
-                    break
-
+                assert child.player == world.player, "Incorrect player found in passed resolved rules"
             if child.always_false:
                 # false always wins
                 return child
@@ -637,6 +633,11 @@ class And(NestedRule[TWorld], game="Archipelago"):
             caching_enabled=getattr(world, "rule_caching_enabled", False),
         )
 
+    @classmethod
+    @deprecated("Resolved rules can be passed directly to And")
+    def from_resolved(cls, world: TWorld, children_to_process: list[Rule.Resolved]) -> Rule.Resolved:
+        return And(*children_to_process).resolve(world)
+
     class Resolved(NestedRule.Resolved):
         @override
         def _evaluate(self, state: CollectionState) -> bool:
@@ -672,21 +673,15 @@ class Or(NestedRule[TWorld], game="Archipelago"):
 
     @override
     def _instantiate(self, world: TWorld) -> Rule.Resolved:
-        return Or.from_resolved(world, (c.resolve(world) for c in self.children))
-
-    @classmethod
-    def from_resolved(cls, world: TWorld, children_to_process: Iterator[Rule.Resolved]) -> Rule.Resolved:
-        children_to_reprocess: list[Rule.Resolved] = []
+        children_to_process = list(self.children)
         clauses: list[Rule.Resolved] = []
 
-        while True:
-            if children_to_reprocess:
-                child = children_to_reprocess.pop(0)
+        while children_to_process:
+            child = children_to_process.pop(0)
+            if isinstance(child, Rule):
+                child = child.resolve(world)
             else:
-                child = next(children_to_process, None)
-                if child is None:
-                    break
-
+                assert child.player == world.player, "Incorrect player found in passed resolved rules"
             if child.always_true:
                 # true always wins
                 return child
@@ -724,6 +719,11 @@ class Or(NestedRule[TWorld], game="Archipelago"):
             player=world.player,
             caching_enabled=getattr(world, "rule_caching_enabled", False),
         )
+
+    @classmethod
+    @deprecated("Resolved rules can be passed directly to Or")
+    def from_resolved(cls, world: TWorld, children_to_process: list[Rule.Resolved]) -> Rule.Resolved:
+        return Or(*children_to_process).resolve(world)
 
     class Resolved(NestedRule.Resolved):
         @override
