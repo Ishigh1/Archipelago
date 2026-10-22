@@ -602,7 +602,7 @@ class And(NestedRule[TWorld], game="Archipelago"):
                 true_rule = child
                 continue
             if isinstance(child, And.Resolved):
-                children_to_reprocess.extend(child.children)
+                children_to_process.extend(child.children)
                 continue
 
             for i in range(len(clauses) - 1, -1, -1):
@@ -615,7 +615,7 @@ class And(NestedRule[TWorld], game="Archipelago"):
                     del clauses[i]
                     if len(intersection) > 1 or child != intersection[0]:
                         # This intersection might have new properties
-                        children_to_reprocess[:0] = intersection
+                        children_to_process[:0] = intersection
                         break
             else:
                 # Only happens when break didn't happen
@@ -689,7 +689,7 @@ class Or(NestedRule[TWorld], game="Archipelago"):
                 # falses can be ignored
                 continue
             if isinstance(child, Or.Resolved):
-                children_to_reprocess.extend(child.children)
+                children_to_process.extend(child.children)
                 continue
 
             for i in range(len(clauses) - 1, -1, -1):
@@ -702,7 +702,7 @@ class Or(NestedRule[TWorld], game="Archipelago"):
                     del clauses[i]
                     if len(intersection) > 1 or child != intersection[0]:
                         # This intersection might have new properties
-                        children_to_reprocess[:0] = intersection
+                        children_to_process[:0] = intersection
                         break
             else:
                 # Only happens when break didn't happen
