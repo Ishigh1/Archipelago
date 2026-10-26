@@ -11,9 +11,10 @@ import urllib.parse
 import urllib.request
 from collections import Counter
 from itertools import chain
-from typing import Any
+from typing import Any, Literal
 
 import ModuleUpdate
+from settings import get_settings
 
 ModuleUpdate.update()
 
@@ -457,6 +458,8 @@ def roll_meta_option(option_key, game: str, category_dict: dict) -> Any:
         if option_key == "triggers":
             return category_dict[option_key]
     raise Options.OptionError(f"Error generating meta option {option_key} for {game}.")
+        f"Error generating meta for {game}. Game unrecognized and Meta Unknown World Handling {meta_unknown_world_handling} not recognized."
+    )
 
 
 def roll_linked_options(weights: dict) -> dict:
